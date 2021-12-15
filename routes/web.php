@@ -20,3 +20,12 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+// Audiences
+Route::get('/audiencia', [App\Http\Controllers\AudienceController::class, 'index'])->name('audience');
+Route::get('/audiencia/nueva-audiencia', [App\Http\Controllers\AudienceController::class, 'create'])->name('crate-audience');
+
+// Centro de justicia
+Route::get('/ajustes/centro-justicia', [App\Http\Controllers\CentroJusticiaController::class, 'index'])->name('centro-justicia');
+Route::get('/ajustes/centro-justicia/nuevo', [App\Http\Controllers\CentroJusticiaController::class, 'create'])->name('create-centro');
+Route::post('/ajustes/centro-justicia/nuevo', [App\Http\Controllers\CentroJusticiaController::class, 'store'])->name('centro-post');
