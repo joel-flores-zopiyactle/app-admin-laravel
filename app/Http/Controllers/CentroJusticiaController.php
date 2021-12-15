@@ -14,7 +14,8 @@ class CentroJusticiaController extends Controller
      */
     public function index()
     {
-        return view('ajustes.centro_justicia.index');
+        $centros = CentroJusticia::orderBy('id', 'desc')->paginate(15);
+        return view('ajustes.centro_justicia.index', compact('centros'));
     }
 
     /**
@@ -40,12 +41,21 @@ class CentroJusticiaController extends Controller
             'descripcion' => ['required'],
         ]);
 
-        $newCentro = CentroJusticia::create([
-            'nombre' => $request->nombre,
-            'decsripcion' => $request->descripcion
-        ]);
+        try {
 
-        return $newCentro;
+            $newCentro = CentroJusticia::create([
+                'nombre' => $request->nombre,
+                'descripcion' => $request->descripcion
+            ]);
+    
+            if($newCentro) {
+                return back()->with('success', 'Centro de justicia registrado exitosamente!');;
+            }
+            
+        } catch (\Throwable $th) {
+            return back()->with('danger', 'Fallo al registrar los datos!');;
+        }
+
     }
 
     /**
@@ -56,7 +66,7 @@ class CentroJusticiaController extends Controller
      */
     public function show($id)
     {
-        //
+       
     }
 
     /**
@@ -67,7 +77,10 @@ class CentroJusticiaController extends Controller
      */
     public function edit($id)
     {
-        //
+        $centro = CentroJusticia::findOrFail($id);
+
+        return view('ajustes.centro_justicia.create', compact('centro'));
+
     }
 
     /**
@@ -78,8 +91,17 @@ class CentroJusticiaController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {
-        //
+    {   
+        //return $request->estado;
+
+        $updateCentro = CentroJusticia::find($id);
+        $updateCentro->nombre = $request->nombre;
+        $updateCentro->descripcion = $request->descripcion;
+        $updateCentro->estado = $request->estado ?? 0;
+
+        if($updateCentro->save()) {
+            return back()->with('success', 'Centro de justicia actualizado exitosamente!');;
+        }
     }
 
     /**
@@ -90,6 +112,10 @@ class CentroJusticiaController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $centroDelete = CentroJusticia::find($id);
+
+        if($centroDelete->delete()) {
+            return back()->with('success', 'Dato eliminado correctamente!');;
+        }
     }
 }
