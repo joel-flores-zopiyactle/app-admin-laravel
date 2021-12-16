@@ -34,8 +34,6 @@
             <ul class="dropdown-menu">
               <li><a class="dropdown-item" href="{{ route('audience') }}">Audiencia</a></li>
               <li><a class="dropdown-item" href="#">Sala</a></li>
-              <li><a class="dropdown-item" href="#">Roles</a></li>
-              <li><a class="dropdown-item" href="#">Tipo de Audiencia</a></li>
             </ul>
         </li>
     </div>  
@@ -46,8 +44,8 @@
             <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Configuraciones</a>
             <ul class="dropdown-menu">
               <li><a class="dropdown-item" href="{{ route('centro-justicia') }}">Centro de justicia</a></li>
-              <li><a class="dropdown-item" href="#">Sala</a></li>
-              <li><a class="dropdown-item" href="#">Roles</a></li>
+              <li><a class="dropdown-item" href="{{ route('salas') }}">Sala</a></li>
+              <li><a class="dropdown-item" href="{{ route('roles') }}">Roles</a></li>
               <li><a class="dropdown-item" href="#">Tipo de Audiencia</a></li>
             </ul>
         </li>

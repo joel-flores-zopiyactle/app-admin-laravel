@@ -32,3 +32,20 @@ Route::post('/ajustes/centro-justicia/nuevo', [App\Http\Controllers\CentroJustic
 Route::get('/ajustes/centro-justicia/editar/{id}', [App\Http\Controllers\CentroJusticiaController::class, 'edit'])->name('edit-centro');
 Route::put('/ajustes/centro-justicia/editar/{id}', [App\Http\Controllers\CentroJusticiaController::class, 'update'])->name('update-centro');
 Route::delete('/ajustes/centro-justicia/{id}', [App\Http\Controllers\CentroJusticiaController::class, 'destroy'])->name('delete-centro');
+
+// Roles
+Route::get('/ajustes/roles', [App\Http\Controllers\RolController::class, 'index'])->name('roles');
+Route::get('/ajustes/rol/nuevo', [App\Http\Controllers\RolController::class, 'create'])->name('create-rol');
+Route::post('/ajustes/rol/nuevo', [App\Http\Controllers\RolController::class, 'store'])->name('post-rol');
+Route::get('/ajustes/rol/editar/{id}', [App\Http\Controllers\RolController::class, 'edit'])->name('edit-rol');
+Route::put('/ajustes/rol/editar/{id}', [App\Http\Controllers\RolController::class, 'update'])->name('update-rol');
+Route::delete('/ajustes/rol/{id}', [App\Http\Controllers\RolController::class, 'destroy'])->name('delete-rol');
+
+
+// Sala
+Route::get('/ajustes/salas', [App\Http\Controllers\SalaController::class, 'index'])->name('salas');
+Route::get('/ajustes/sala/nuevo', [App\Http\Controllers\SalaController::class, 'create'])->name('create-sala');
+Route::post('/ajustes/sala/nuevo', [App\Http\Controllers\SalaController::class, 'store'])->name('post-sala');
+Route::get('/ajustes/sala/editar/{id}', [App\Http\Controllers\SalaController::class, 'edit'])->name('edit-sala');
+Route::put('/ajustes/sala/editar/{id}', [App\Http\Controllers\SalaController::class, 'update'])->name('update-sala');
+Route::delete('/ajustes/sala/{id}', [App\Http\Controllers\SalaController::class, 'destroy'])->name('delete-sala');
