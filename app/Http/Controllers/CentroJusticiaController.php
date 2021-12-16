@@ -14,7 +14,7 @@ class CentroJusticiaController extends Controller
      */
     public function index()
     {
-        $centros = CentroJusticia::orderBy('id', 'desc')->paginate(15);
+        $centros = CentroJusticia::orderBy('id', 'desc')->paginate(5);
         return view('ajustes.centro_justicia.index', compact('centros'));
     }
 
@@ -49,11 +49,13 @@ class CentroJusticiaController extends Controller
             ]);
     
             if($newCentro) {
-                return back()->with('success', 'Centro de justicia registrado exitosamente!');;
+                return back()->with('success', 'Nuevo Centro de justicia registrado exitosamente!');
             }
+
+            return back()->with('warning', 'Hubo un error al guardar los datos por favor verifique sus datos.');
             
         } catch (\Throwable $th) {
-            return back()->with('danger', 'Fallo al registrar los datos!');;
+            return back()->with('error', 'Fallo al registrar los datos!, verifique su conexion a Internet o recarga la página');
         }
 
     }
@@ -94,13 +96,20 @@ class CentroJusticiaController extends Controller
     {   
         //return $request->estado;
 
-        $updateCentro = CentroJusticia::find($id);
-        $updateCentro->nombre = $request->nombre;
-        $updateCentro->descripcion = $request->descripcion;
-        $updateCentro->estado = $request->estado ?? 0;
+        try {
+            $updateCentro = CentroJusticia::find($id);
+            $updateCentro->nombre = $request->nombre;
+            $updateCentro->descripcion = $request->descripcion;
+            $updateCentro->estado = $request->estado ?? 0;
 
-        if($updateCentro->save()) {
-            return back()->with('success', 'Centro de justicia actualizado exitosamente!');;
+            if($updateCentro->save()) {
+                return back()->with('success', 'Datos del Centro de justicia actualizados exitosamente!');
+            }
+
+            return back()->with('warning', 'Hubo un error al actualizar los datos por favor verifique de nuevo sus datos.');
+
+        } catch (\Throwable $th) {
+            return back()->with('error', 'Fallo al actualizar los datos!, verifique su conexion a Internet o recarga la página');
         }
     }
 
@@ -112,10 +121,17 @@ class CentroJusticiaController extends Controller
      */
     public function destroy($id)
     {
-        $centroDelete = CentroJusticia::find($id);
+       try {
+            $centroDelete = CentroJusticia::find($id);
 
-        if($centroDelete->delete()) {
-            return back()->with('success', 'Dato eliminado correctamente!');;
-        }
+            if($centroDelete->delete()) {
+                return back()->with('success', "$centroDelete->nombre eliminado correctamente!");
+            } 
+
+            return back()->with('warning', "$centroDelete->nombre no se pudo eliminar, Intente de nuevo!");
+
+       } catch (\Throwable $th) {
+            return back()->with('error', 'Hubo un error al eliminar el dato.');
+       }
     }
 }

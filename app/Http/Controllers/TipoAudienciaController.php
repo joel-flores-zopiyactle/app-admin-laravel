@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Sala;
+use App\Models\TipoAudiencia;
 use Illuminate\Http\Request;
 
-class SalaController extends Controller
+class TipoAudienciaController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +14,8 @@ class SalaController extends Controller
      */
     public function index()
     {
-        $salas = Sala::orderBy('id', 'desc')->paginate(15);
-        return view('ajustes.sala.index', compact('salas'));
+        $audiencias = TipoAudiencia::orderBy('id', 'desc')->paginate(15);
+        return view('ajustes.tipo_audiencia.index', compact('audiencias'));
     }
 
     /**
@@ -25,7 +25,7 @@ class SalaController extends Controller
      */
     public function create()
     {
-        return view('ajustes.sala.create');
+        return view('ajustes.tipo_audiencia.create');
     }
 
     /**
@@ -37,23 +37,19 @@ class SalaController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'sala' => ['required', 'unique:salas', 'max:255'],
-            'numero' => ['required'],
-            'capacidad' => ['required'],
-            'ubicacion' => ['required'],
+            'nombre' => ['required', 'unique:centro_justicias', 'max:255'],
+            'descripcion' => ['required'],
         ]);
 
         try {
 
-            $newSala = Sala::create([
-                'sala' => $request->sala,
-                'numero' => $request->numero,
-                'capacidad' => $request->capacidad,
-                'ubicacion' => $request->ubicacion
+            $newAudiencia = TipoAudiencia::create([
+                'nombre' => $request->nombre,
+                'descripcion' => $request->descripcion
             ]);
     
-            if($newSala) {
-                return back()->with('success', 'Nuevo Sala registrado exitosamente!');
+            if($newAudiencia) {
+                return back()->with('success', 'Nuevo Audiencia registrado exitosamente!');
             }
 
             return back()->with('warning', 'Hubo un error al guardar los datos por favor verifique sus datos.');
@@ -82,9 +78,9 @@ class SalaController extends Controller
      */
     public function edit($id)
     {
-        $sala = Sala::findOrFail($id);
+        $audiencia = TipoAudiencia::findOrFail($id);
 
-        return view('ajustes.sala.create', compact('sala'));
+        return view('ajustes.tipo_audiencia.create', compact('audiencia'));
     }
 
     /**
@@ -97,16 +93,14 @@ class SalaController extends Controller
     public function update(Request $request, $id)
     {
         try {
-            
-            $updateSala = Sala::find($id);
-            $updateSala->sala = $request->sala;
-            $updateSala->numero = $request->numero;
-            $updateSala->capacidad = $request->capacidad;
-            $updateSala->ubicacion = $request->ubicacion;
-            $updateSala->estado = $request->estado ?? 0;
 
-            if($updateSala->save()) {
-                return back()->with('success', 'Datos de la Sala actualizados exitosamente!');
+            $updateAudiencia = TipoAudiencia::find($id);
+            $updateAudiencia->nombre = $request->nombre;
+            $updateAudiencia->descripcion = $request->descripcion;
+            $updateAudiencia->estado = $request->estado ?? 0;
+
+            if($updateAudiencia->save()) {
+                return back()->with('success', 'Datos de la Audiencia actualizados exitosamente!');
             }
 
             return back()->with('warning', 'Hubo un error al actualizar los datos por favor verifique de nuevo sus datos.');
@@ -124,18 +118,17 @@ class SalaController extends Controller
      */
     public function destroy($id)
     {
-        try {
+       try {
+            $audienciaDelete = TipoAudiencia::find($id);
 
-            $salaDelete = Sala::find($id);
-
-            if($salaDelete->delete()) {
-                return back()->with('success', "$salaDelete->sala eliminado correctamente!");
+            if($audienciaDelete->delete()) {
+                return back()->with('success', "$audienciaDelete->nombre eliminado correctamente!");
             }
 
-            return back()->with('warning', "$salaDelete->sala no se pudo eliminar, Intente de nuevo!");
+            return back()->with('warning', "$audienciaDelete->nombre no se pudo eliminar, Intente de nuevo!");
 
-        } catch (\Throwable $th) {
-            return back()->with('error', 'Fallo al eliminar los datos!, verifique su conexion a Internet o recarga la página');
-        }
+       } catch (\Throwable $th) {
+             return back()->with('error', 'Fallo al eliminar los datos!, verifique su conexion a Internet o recarga la página');
+       }
     }
 }

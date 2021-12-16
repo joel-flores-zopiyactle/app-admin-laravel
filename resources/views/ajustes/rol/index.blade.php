@@ -11,20 +11,13 @@
 
     <hr>
 
-    {{-- Lista de datos  --}}
-    @if (session('success'))
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            {{ session('success') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    @endif
+    <x-alert-message />
 
-   
-   
-    <div class="card p-2 mt-3">
+   {{-- Lista de datos  --}}
+    <div class="shadow p-3 mb-5 bg-body rounded card">
         @if (count($roles) > 0)
             <table class="table table-hover">
-                <thead class="table-primary">
+                <thead class="table-success">
                 <tr>
                     <th scope="col">Rol</th>
                     <th scope="col">Descripción</th>
@@ -53,7 +46,8 @@
                                 <form class="ml-2" action="{{route('delete-rol', $rol->id)}}" method="post">
                                     @csrf
                                     @method('DELETE')
-                                    <button class="btn btn-sm btn-light rounded-circle d-flex justify-content-center align-items-center p-1" type="submit" onclick="return confirm('¿Estas seguro de eliminar el datos?')">
+                                    <button class="btn btn-sm btn-light rounded-circle d-flex justify-content-center align-items-center p-1" type="submit" 
+                                    onclick="return confirm('¿Estas seguro de eliminar {{$rol->rol}}?')">
                                         <span class="iconify h5 m-0" data-icon="fluent:delete-20-filled"></span>
                                     </button>
                                 </form>
@@ -61,7 +55,11 @@
                         </tr>       
                     @endforeach              
                 </tbody>
-            </table>     
+            </table>   
+            
+            <div>
+                {{ $roles->links() }}  
+            </div>
         @else
             <div class="p-3">
                 <h3>No hay Roles todabia</h3>

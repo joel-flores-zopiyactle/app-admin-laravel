@@ -4,20 +4,17 @@
 <div class="container-fluid">
     
     @if (isset($sala))
-        <h3>Editar Sala</h3>
+        <h3 class="fs-5 text-uppercase">Actualizar datos de la Sala</h3>
     @else
-       <h3>Agregar nuevo Sala</h3> 
+       <h3 class="fs-5 text-uppercase">Agregar nuevo Sala</h3> 
     @endif
    
     <hr>
-    @if (session('success'))
-        <div class="alert alert-success">
-            {{ session('success') }}
-        </div>
-    @endif
     
+
     <form action="{{ isset($sala) ? route('update-sala', $sala->id) : route('post-sala') }}" method="POST" class="w-50">
         @csrf
+        <x-alert-message />
 
         {{-- SI ACTUALIZAMOS LOS DATOS ENVIAMOS EL METODO PUT --}}
         @isset($sala)
@@ -31,7 +28,7 @@
             --}}
 
             <label for="sala" class="form-label">Sala:</label>
-            <input type="text" class="form-control @error('sala') is-invalid @enderror" id="sala" name="sala" placeholder="Nombre de la sala" 
+            <input type="text" class="form-control @error('sala') is-invalid @enderror" id="sala" name="sala" placeholder="Ingrese el nombre de la sala" 
             aria-describedby="sala"  value="{{ isset($sala) ? $sala->sala : old('sala') }}"> 
             @error('sala')
                     <div class="alert alert-danger">{{ $message }}</div>
@@ -42,8 +39,8 @@
 
             <div class="col-6">
                 <div class="mb-3">
-                    <label for="numero" class="form-label">Numero de sala:</label>
-                    <input type="number" class="form-control @error('numero') is-invalid @enderror" id="numero" name="numero" placeholder="Numero de sala" 
+                    <label for="numero" class="form-label">Número de sala:</label>
+                    <input type="number" class="form-control @error('numero') is-invalid @enderror" id="numero" name="numero" placeholder="Número de sala" 
                     aria-describedby="numero"  value="{{ isset($sala) ? $sala->numero : old('numero') }}"> 
                     @error('numero')
                             <div class="alert alert-danger">{{ $message }}</div>
@@ -67,7 +64,7 @@
         <div class="mb-3">
             <label for="ubicacion" class="form-label">Ubicación:</label>
             <textarea name="ubicacion" id="ubicacion" class="form-control  @error('ubicacion') is-invalid @enderror" 
-            cols="30" rows="2">{{ isset($sala) ? $sala->ubicacion : old('ubicacion') }}</textarea>
+            cols="30" rows="2" placeholder="Agregue un breve descripción de la ubicación de la sala...">{{ isset($sala) ? $sala->ubicacion : old('ubicacion') }}</textarea>
 
             @error('ubicacion')
                 <div class="alert alert-danger">{{ $message }}</div>
@@ -88,9 +85,10 @@
         <button type="submit" class="btn btn-primary"> {{ isset($sala) ? 'Actualizar' : 'Registrar' }} </button>
     </form>
 
-    <div class="mt-5 d-flex align-items-center">
-        <a href="{{ route('salas') }}">
-            <span class="iconify h3" data-icon="bx:bxs-left-arrow-circle"></span> Regresar
+    <div class="mt-5">
+        <a class="d-flex align-content-center" href="{{ route('salas') }}">
+            <span class="iconify h3 mr-2" data-icon="bx:bxs-left-arrow-circle"></span> 
+            <span>regresar</span>
         </a>
     </div>
 </div>

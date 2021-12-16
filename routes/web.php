@@ -49,3 +49,20 @@ Route::post('/ajustes/sala/nuevo', [App\Http\Controllers\SalaController::class, 
 Route::get('/ajustes/sala/editar/{id}', [App\Http\Controllers\SalaController::class, 'edit'])->name('edit-sala');
 Route::put('/ajustes/sala/editar/{id}', [App\Http\Controllers\SalaController::class, 'update'])->name('update-sala');
 Route::delete('/ajustes/sala/{id}', [App\Http\Controllers\SalaController::class, 'destroy'])->name('delete-sala');
+
+// Tipo de Audiencia
+Route::get('/ajustes/audiencias', [App\Http\Controllers\TipoAudienciaController::class, 'index'])->name('audiencias');
+Route::get('/ajustes/audiencia/nuevo', [App\Http\Controllers\TipoAudienciaController::class, 'create'])->name('create-audiencia');
+Route::post('/ajustes/audiencia/nuevo', [App\Http\Controllers\TipoAudienciaController::class, 'store'])->name('post-audiencia');
+Route::get('/ajustes/audiencia/editar/{id}', [App\Http\Controllers\TipoAudienciaController::class, 'edit'])->name('edit-audiencia');
+Route::put('/ajustes/audiencia/editar/{id}', [App\Http\Controllers\TipoAudienciaController::class, 'update'])->name('update-audiencia');
+Route::delete('/ajustes/audiencia/{id}', [App\Http\Controllers\TipoAudienciaController::class, 'destroy'])->name('delete-audiencia');
+
+
+// Tipo juicio
+Route::get('/ajustes/juicios', [App\Http\Controllers\JuiciosController::class, 'index'])->name('juicios');
+Route::get('/ajustes/juicio/nuevo', [App\Http\Controllers\JuiciosController::class, 'create'])->name('create-juicio');
+Route::post('/ajustes/juicio/nuevo', [App\Http\Controllers\JuiciosController::class, 'store'])->name('post-juicio');
+Route::get('/ajustes/juicio/editar/{id}', [App\Http\Controllers\JuiciosController::class, 'edit'])->name('edit-juicio');
+Route::put('/ajustes/juicio/editar/{id}', [App\Http\Controllers\JuiciosController::class, 'update'])->name('update-juicio');
+Route::delete('/ajustes/juicio/{id}', [App\Http\Controllers\JuiciosController::class, 'destroy'])->name('delete-juicio');

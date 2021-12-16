@@ -16,6 +16,7 @@ class CreateTipoJuiciosTable extends Migration
         Schema::create('tipo_juicios', function (Blueprint $table) {
             $table->id();
             $table->string('nombre');
+            $table->text('descripcion');
             $table->boolean('estado')->default(true);
             $table->timestamps();
         });
