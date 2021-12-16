@@ -46,7 +46,8 @@
               <li><a class="dropdown-item" href="{{ route('centro-justicia') }}">Centro de justicia</a></li>
               <li><a class="dropdown-item" href="{{ route('salas') }}">Sala</a></li>
               <li><a class="dropdown-item" href="{{ route('roles') }}">Roles</a></li>
-              <li><a class="dropdown-item" href="#">Tipo de Audiencia</a></li>
+              <li><a class="dropdown-item" href="{{ route('audiencias') }}">Tipo de Audiencia</a></li>
+              <li><a class="dropdown-item" href="{{ route('juicios') }}">Tipo de Juicios</a></li>
             </ul>
         </li>
     </div>   

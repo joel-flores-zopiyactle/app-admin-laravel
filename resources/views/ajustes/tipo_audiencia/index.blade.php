@@ -3,41 +3,36 @@
 @section('content')
 <div class="container-fluid">
     <div class="con d-flex justify-content-between align-items-center">
-        <h4>Lista de salas</h4>
+        <h4>Lista de Audiencias</h4>
         <div>
-            <a class="btn btn-primary btn-sm" href="{{ route('create-sala') }}">Agregar nuevo sala</a>
+            <a class="btn btn-primary btn-sm" href="{{ route('create-audiencia') }}">Agregar nuevo audiencia</a>
         </div>
     </div>
 
     <hr>
 
     {{-- Lista de datos  --}}
-   <x-alert-message />
-
+    <x-alert-message />
    
    
     <div class="shadow p-3 mb-5 bg-body rounded card">
-        @if (count($salas) > 0)
+        @if (count($audiencias) > 0)
             <table class="table table-hover">
-                <thead class="table-success">
+                <thead class="table-primary">
                 <tr>
-                    <th scope="col">Sala</th>
-                    <th scope="col">Numero</th>
-                    <th scope="col">Ubicación</th>
-                    <th scope="col">Capacidad</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Descripción</th>
                     <th scope="col">Estado</th>
                     <th class="text-center" scope="col">Acciones</th>
                 </tr>
                 </thead>
                 <tbody>
-                    @foreach ($salas as $sala)
+                    @foreach ($audiencias as $audiencia)
                         <tr>
-                            <td>{{ $sala->sala }}</td>
-                            <td>{{ $sala->numero}}</td>
-                            <td>{{ $sala->ubicacion}}</td>
-                            <td>{{ $sala->capacidad}}</td>
+                            <td>{{ $audiencia->nombre }}</td>
+                            <td>{{ $audiencia->descripcion}}</td>
                             <td>
-                                @if ($sala->estado)
+                                @if ($audiencia->estado)
                                     Disponible
                                 @else
                                     No disponible
@@ -45,15 +40,15 @@
 
                             </td>
                             <td class="text-center d-flex justify-content-center">
-                                <a class="btn btn-sm btn-light rounded-circle d-flex justify-content-center align-items-center p-1" href="{{ route('edit-sala', $sala->id) }}" title="Editar"> 
+                                <a class="btn btn-sm btn-light rounded-circle d-flex justify-content-center align-items-center p-1" href="{{ route('edit-audiencia', $audiencia->id) }}" title="Editar"> 
                                     <span class="iconify h5 m-0" data-icon="akar-icons:edit"></span>
                                 </a>
 
-                                <form class="ml-2" action="{{route('delete-sala', $sala->id)}}" method="post">
+                                <form class="ml-2" action="{{route('delete-audiencia', $audiencia->id)}}" method="post">
                                     @csrf
                                     @method('DELETE')
                                     <button class="btn btn-sm btn-light rounded-circle d-flex justify-content-center align-items-center p-1" type="submit" 
-                                    onclick="return confirm('¿Estas seguro de eliminar: {{$sala->sala}}?')">
+                                    onclick="return confirm('¿Estas seguro de eliminar: {{ $audiencia->nombre }}?')">
                                         <span class="iconify h5 m-0" data-icon="fluent:delete-20-filled"></span>
                                     </button>
                                 </form>
@@ -62,13 +57,13 @@
                     @endforeach              
                 </tbody>
             </table>  
-            
+
             <div>
-                {{ $salas->links() }}  
-            </div>
+                {{ $audiencias->links() }}  
+            </div>   
         @else
             <div class="p-3">
-                <h3>No hay salas todabia</h3>
+                <h3>No hay centros de justacia todabia</h3>
             </div>
         @endif
     </div>
