@@ -19,7 +19,7 @@
     </li>
 
     <li class="nav-item">
-        <a class="nav-link" href="{{ route('home') }}">
+        <a class="nav-link" href="#">
             <span class="iconify" data-icon="fluent:people-audience-20-filled"></span>  <span>Ingresar sala</span>
         </a>
     </li>
@@ -27,21 +27,16 @@
     <!-- Divider -->
     <hr class="sidebar-divider">
 
-    <div class="sidebar-heading">
-        <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Audiencia</a>
-            
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="{{ route('audience') }}">Audiencia</a></li>
-              <li><a class="dropdown-item" href="#">Sala</a></li>
-            </ul>
-        </li>
-    </div>  
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('reservas-salas') }}">
+            <span class="iconify" data-icon="ic:round-meeting-room"></span>  <span>Reservacion de sala</span>
+        </a>
+    </li>
 
     <!-- Heading -->
     <div class="sidebar-heading">
         <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Configuraciones</a>
+            <a class="nav-link" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Configuraciones</a>
             <ul class="dropdown-menu">
               <li><a class="dropdown-item" href="{{ route('centro-justicia') }}">Centro de justicia</a></li>
               <li><a class="dropdown-item" href="{{ route('salas') }}">Sala</a></li>

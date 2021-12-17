@@ -12,9 +12,7 @@
     <hr>
 
     {{-- Lista de datos  --}}
-    <x-alert-message />
-
-   
+    <x-alert-message />   
    
     <div class="shadow p-3 mb-5 bg-body rounded card">
         @if (count($centros) > 0)

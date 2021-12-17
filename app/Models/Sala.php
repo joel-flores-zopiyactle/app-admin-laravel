@@ -14,4 +14,9 @@ class Sala extends Model
         'ubicacion',
         'capacidad'
     ];
+
+    public function expediente()
+    {
+        return $this->belongsTo(Audiencia::class);
+    }
 }

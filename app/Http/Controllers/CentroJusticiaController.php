@@ -14,7 +14,7 @@ class CentroJusticiaController extends Controller
      */
     public function index()
     {
-        $centros = CentroJusticia::orderBy('id', 'desc')->paginate(5);
+        $centros = CentroJusticia::orderBy('id', 'desc')->paginate(15);
         return view('ajustes.centro_justicia.index', compact('centros'));
     }
 
