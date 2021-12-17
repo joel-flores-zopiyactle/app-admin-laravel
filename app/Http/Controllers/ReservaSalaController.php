@@ -10,6 +10,7 @@ use App\Models\TipoAudiencia as TipoAudienciaModel;
 use App\Models\TipoJuicio as TipoJuicioModel;
 use Illuminate\Http\Request;
 
+
 class ReservaSalaController extends Controller
 {
     /**
@@ -100,7 +101,12 @@ class ReservaSalaController extends Controller
                     $newAudiencia->horaFinalizar      = $request->horaFinalizar;
 
                     if($newAudiencia->save()) {
-                        return back()->with('success', 'Audiencia programada exitosamente!');
+                        $audiencia_id = $newAudiencia->id;
+                        
+                        //return view(('reservas.participantes'));
+                        return redirect("/agregar/participantes/$audiencia_id");
+                        
+                        //return back()->with('success', 'Audiencia programada exitosamente!');
                     } 
                     // Si no se pudo registrar los datos a la tabla Audiencia Elimanos el expediente anterior registrado y repetimos el proceso
                     $deleteExpediente = ExpedienteModel::find($newExpediente->id);

@@ -188,6 +188,8 @@
 
         <hr>
 
+        <hr>
+
         <div class="mb-5 d-flex justify-content-end">
             <button type="submit" class="btn btn-primary">Crear nueva audiencia</button>
         </div>

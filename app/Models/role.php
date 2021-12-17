@@ -13,4 +13,9 @@ class role extends Model
         'rol',
         'descripcion'
     ];
+
+    public function participante()
+    {
+        return $this->belongsTo(Participantes::class);
+    }
 }
