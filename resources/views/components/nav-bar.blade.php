@@ -1,49 +1,57 @@
-<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+<div class="flex-shrink-0 p-3 bg-primary vh-100 sticky-top" style="width: 250px;">
 
-    <!-- Sidebar - Brand -->
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('home') }}">
-        <div class="sidebar-brand-icon rotate-n-15">
-            <span class="iconify" data-icon="fontelico:emo-happy"></span>
-        </div>
-        <div class="sidebar-brand-text mx-3">{{ config('app.name', 'Laravel') }}</div>
+    <a href="/" class="d-flex align-items-center pb-3 mb-3 link-dark text-decoration-none border-bottom">
+      <svg class="bi me-2" width="30" height="24"><use xlink:href="#bootstrap"/></svg>
+      <span class="fs-5 fw-semibold">Sinjo</span>
     </a>
-
-    <!-- Divider -->
-    <hr class="sidebar-divider my-0">
-
-    <!-- Nav Item - Dashboard -->
-    <li class="nav-item active">
-        <a class="nav-link" href="{{ route('home') }}">
-            <span class="iconify" data-icon="fluent:home-16-filled"></span>  <span>Inicio</span>
-        </a>
-    </li>
-
-    <li class="nav-item">
-        <a class="nav-link" href="#">
-            <span class="iconify" data-icon="fluent:people-audience-20-filled"></span>  <span>Ingresar sala</span>
-        </a>
-    </li>
-
-    <!-- Divider -->
-    <hr class="sidebar-divider">
-
-    <li class="nav-item">
-        <a class="nav-link" href="{{ route('reservas-salas') }}">
-            <span class="iconify" data-icon="ic:round-meeting-room"></span>  <span>Reservacion de sala</span>
-        </a>
-    </li>
-
-    <!-- Heading -->
-    <div class="sidebar-heading">
-        <li class="nav-item dropdown">
-            <a class="nav-link" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Configuraciones</a>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="{{ route('centro-justicia') }}">Centro de justicia</a></li>
-              <li><a class="dropdown-item" href="{{ route('salas') }}">Sala</a></li>
-              <li><a class="dropdown-item" href="{{ route('roles') }}">Roles</a></li>
-              <li><a class="dropdown-item" href="{{ route('audiencias') }}">Tipo de Audiencia</a></li>
-              <li><a class="dropdown-item" href="{{ route('juicios') }}">Tipo de Juicios</a></li>
-            </ul>
+    <ul class="list-unstyled ps-0">
+        <li>
+            <a class="btn align-items-center rounded collapsed fw-bolder text-white" href="{{ route('home') }}">
+                <span class="iconify h4 mr-1" data-icon="bx:bx-home-alt"></span>Inicio
+            </a>
         </li>
-    </div>   
-</ul>
+    
+        <li>
+            <a class="btn align-items-center rounded collapsed fw-bolder text-white" href="#"> 
+                <span class="iconify h4 mr-1" data-icon="fluent:people-audience-24-regular"></span>Ingresar Sala
+            </a>
+        </li>
+      
+        <li class="border-top my-3"></li>
+
+        <ul class="list-unstyled fw-normal pb-1 small">
+            <li >
+                <a class="btn align-items-center rounded collapsed fs-6 fw-bolder text-white" href="{{ route('reservas-salas') }}">
+                    <span class="iconify h4 mr-1" data-icon="majesticons:file-report-line"></span>Reservar Sala
+                </a>
+            </li>
+        </ul>
+
+        <li class="mb-1">
+            <button class="btn align-items-center rounded collapsed fw-bolder text-white" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false">
+                <span class="iconify h4 mr-1" data-icon="eva:settings-outline"></span>Configuraciones
+            </button>
+            <div class="collapse" id="dashboard-collapse">
+            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                <li><a href="{{ route('centro-justicia') }}" class="link-dark rounded text-white">
+                    <span class="iconify h5 mr-1" data-icon="ps:justice"></span>Centro de Justicia</a>
+                </li>
+                <li><a href="{{ route('salas') }}" class="link-dark rounded text-white">
+                    <span class="iconify h5 mr-1" data-icon="fluent:conference-room-24-regular"></span>Salas</a>
+                </li>
+                <li><a href="{{ route('roles') }}" class="link-dark rounded text-white">
+                    <span class="iconify h5 mr-1" data-icon="eos-icons:role-binding-outlined"></span>Roles</a>
+                </li>
+                <li><a href="{{ route('audiencias') }}" class="link-dark rounded text-white">
+                    <span class="iconify h5 mr-1" data-icon="akar-icons:people-multiple"></span>Tipo de Audiencia</a>
+                </li>
+                <li><a href="{{ route('juicios') }}" class="link-dark rounded text-white">
+                    <span class="iconify h4 mr-1" data-icon="healthicons:justice"></span>Tipo de Juicio
+                </a></li>
+            </ul>
+            </div>
+        </li>  
+    </ul>
+  </div>
+
+

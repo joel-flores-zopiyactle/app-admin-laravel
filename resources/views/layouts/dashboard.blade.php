@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
 
@@ -9,11 +9,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
-
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script> 
-    <script src="https://code.iconify.design/2/2.1.0/iconify.min.js"></script>
+    <title>{{ config('app.name', 'Laravel') }} | @yield('title') </title>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -22,6 +18,11 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/sb-admin-2.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/sidebars.css') }}" rel="stylesheet">
+
+    @yield('css')
+
+    
 
 </head>
 
@@ -94,9 +95,9 @@
                 </nav>
                 <!-- End of Topbar -->
                 <!-- Begin Page Content -->
-                <div class="container-fluid">
+                <div class="container-fluid  vh-100">
 
-                    <main class="py-4">
+                    <main data-bs-spy="scroll"  data-bs-offset="0"  class="scrollspy-example py-4" tabindex="0">
                         @yield('content')
                     </main>
                 </div>
@@ -117,6 +118,13 @@
         <!-- End of Content Wrapper -->
 
     </div>
-    <!-- End of Page Wrapper -->    
+    <!-- End of Page Wrapper -->  
+    
+    <!-- Scripts -->
+    <script src="{{ asset('js/app.js') }}" defer></script> 
+    <script src="https://code.iconify.design/2/2.1.0/iconify.min.js"></script>
+    <script src=""{{ asset('js/sidebars.js') }}"></script>
+
+    @yield('js')
     </body>
 </html>
