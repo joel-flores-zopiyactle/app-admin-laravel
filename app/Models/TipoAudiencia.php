@@ -13,4 +13,9 @@ class TipoAudiencia extends Model
         'nombre',
         'descripcion'
     ];
+
+    public function audiencia()
+    {
+        return $this->belongsTo(Audiencia::class);
+    }
 }
