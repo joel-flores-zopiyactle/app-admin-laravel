@@ -68,3 +68,7 @@ Route::delete('/ajustes/juicio/{id}', [App\Http\Controllers\JuiciosController::c
 Route::get('/salas/reservadas', [App\Http\Controllers\ReservaSalaController::class, 'index'])->name('reservas-salas');
 Route::get('/salas/reservar-nueva-sala', [App\Http\Controllers\ReservaSalaController::class, 'create'])->name('book-new-room');
 Route::post('/salas/reservar-nueva-sala', [App\Http\Controllers\ReservaSalaController::class, 'store'])->name('post-room');
+
+// Participantes
+Route::get('/agregar/participantes/{id}', [App\Http\Controllers\ParticipanteController::class, 'create'])->name('add-participante');
+Route::post('/agregar/participantes/', [App\Http\Controllers\ParticipanteController::class, 'store'])->name('post-participante');
