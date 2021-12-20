@@ -27,6 +27,7 @@
                     center: 'title',
                     right: 'dayGridMonth,timeGridWeek,listWeek'
                 },
+                events: baseURL +'/agenda/eventos'
             });
             calendar.render();
         });
