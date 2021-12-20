@@ -95,7 +95,7 @@ class ReservaSalaController extends Controller
                     $newAudiencia->sala_id            = $request->sala_id;
                     $newAudiencia->tipo_id            = $request->tipo_id;
                     $newAudiencia->expediente_id      = $newExpediente->id;
-                    $newAudiencia->estadoAudiencia_id = 2; //Por Defecto es el Uno "Programado" ['Programado, 'En progreso', 'Cancelado', 'Reprogramado', 'Finalizado']
+                    $newAudiencia->estadoAudiencia_id = 1; //Por Defecto es el Uno "Programado" ['Programado, 'En progreso', 'Cancelado', 'Reprogramado', 'Finalizado']
                     $newAudiencia->fechaCelebracion   = $request->fechaCelebracion;
                     $newAudiencia->horaInicio         = $request->horaInicio;
                     $newAudiencia->horaFinalizar      = $request->horaFinalizar;
