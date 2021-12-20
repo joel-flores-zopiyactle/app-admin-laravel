@@ -28,7 +28,13 @@
 
             <li >
                 <a class="btn align-items-center rounded collapsed fs-6 fw-bolder text-white" href="{{ route('buscar-expediente') }}">
-                    <span class="iconify  h4 mr-1" data-icon="bx:bx-search"></span>Buscar Expediente
+                    <span class="iconify h4 mr-1" data-icon="bx:bx-search"></span>Buscar Expediente
+                </a>
+            </li>
+
+            <li >
+                <a class="btn align-items-center rounded collapsed fs-6 fw-bolder text-white" href="{{ route('agenda') }}">
+                    <span class="iconify  h4 mr-1" data-icon="uil:calender"></span>Agenda
                 </a>
             </li>
         </ul>
