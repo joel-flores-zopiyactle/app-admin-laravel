@@ -22,6 +22,10 @@
 
     @yield('css')
 
+    <script type="text/javascript">
+        const baseURL = {!! json_encode(url('/'))  !!}
+    </script>
+
     
 
 </head>

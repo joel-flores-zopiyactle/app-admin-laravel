@@ -15,7 +15,7 @@ typeSearch.addEventListener('change', () => {
 
     switch (typeForm) {
         case '1': // Numero de expediente
-            searchExpediente.innerHTML = '<input type="text" class="form-control" name="buscar" id="buscar" placeholder="Numero de expediente">';
+            searchExpediente.innerHTML = '<input type="number" class="form-control" name="buscar" id="buscar" placeholder="Número de expediente">';
             //  console.log('add form text');
             break;
         
@@ -59,7 +59,7 @@ typeSearch.addEventListener('change', () => {
 
 function getTipoAudiencias() {
     // TODO: Cambiar url local a uno mas generico
-    const url = 'http://localhost:8000/buscar/expediente/tipo-audiencias/all';
+    const url = baseURL + '/buscar/expediente/tipo-audiencias/all';
     fetch(url)
     .then(response => response.json())
     .then(data => {
