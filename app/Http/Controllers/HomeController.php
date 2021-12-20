@@ -45,23 +45,23 @@ class HomeController extends Controller
             $data = [
                 [
                  'estado' => 'Agendada',
-                 'color' => 'verde',
+                 'color' => '#04f281',
                 ],
                 [
                  'estado' => 'Reagendada',
-                 'color' => 'azul',
+                 'color' => '#2094d8',
                 ],
                 [
                  'estado' => 'Celebrándose',
-                 'color' => 'amarrillo',
+                 'color' => '#f5fe67',
                 ],
                 [
                  'estado' => 'Pausadas',
-                 'color' => 'rojo',
+                 'color' => '#9b266e',
                 ],
                 [
                  'estado' => 'Canceladas',
-                 'color' => 'gris',
+                 'color' => '#d90156',
                 ],
             ];
 
