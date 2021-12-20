@@ -88,3 +88,4 @@ Route::get('/expediente/pdf/{id}', [App\Http\Controllers\ExpedientePDFController
 
 // Agenda
 Route::get('/agenda', [App\Http\Controllers\AgendaController::class, 'show'])->name('agenda');
+Route::get('/agenda/eventos', [App\Http\Controllers\AgendaController::class, 'getEventosAudiencia'])->name('agenda-eventos');

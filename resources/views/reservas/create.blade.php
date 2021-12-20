@@ -184,16 +184,6 @@
                     @enderror
                 </div>
             </div>
-
-            <div class="col-3">
-                <div class="mb-4">
-                    <label for="horaFinalizar" class="form-label">Hora a Finalizar</label>
-                    <input type="time" class="form-control  @error('horaFinalizar') is-invalid @enderror" name="horaFinalizar" id="horaFinalizar" value="{{ old('horaFinalizar') }}">
-                    @error('horaFinalizar')
-                        <div class="alert alert-danger mt-1">{{ $message }}</div>
-                    @enderror
-                </div>
-            </div>
         </div>
 
         <hr>
