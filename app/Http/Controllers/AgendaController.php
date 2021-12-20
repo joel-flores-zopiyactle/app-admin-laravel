@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Audiencia as AudienciaModel;
+use App\Models\EstadoAudiencia as EstadoAudienciaModel;
+use App\Models\TipoAudiencia as TipoAudienciaModel;
 use Illuminate\Http\Request;
 
 class AgendaController extends Controller
@@ -16,12 +18,17 @@ class AgendaController extends Controller
     {
         $eventos = [];
 
-        $audiencias  =  AudienciaModel::where('estado', 1)->select('id', 'fechaCelebracion', 'horaInicio')->get();
+        $audiencias  =  AudienciaModel::where('estado', 1)->select('id','tipo_id', 'estadoAudiencia_id', 'fechaCelebracion', 'horaInicio')->get();
 
         foreach ($audiencias as $event ) {
+
+            $tipoAudiencia = TipoAudienciaModel::find($event->tipo_id);
+            $estadoAudiencia = EstadoAudienciaModel::find($event->estadoAudiencia_id);
+
             $data = array(
-                'title' => $event->id,
+                'title' => $tipoAudiencia->nombre,
                 'start' => $event->fechaCelebracion."T".$event->horaInicio,
+                'color' => $estadoAudiencia->color,
                 'allDay' => false
             );
 
