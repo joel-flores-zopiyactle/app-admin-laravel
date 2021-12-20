@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\TipoAudiencia;
 use App\Models\Sala;
+use App\Models\CentroJusticia;
+use App\Models\Participantes;
 
 class Audiencia extends Model
 {
@@ -36,6 +38,11 @@ class Audiencia extends Model
         return $this->belongsTo(Expediente::class);
     }
 
+    public function centroJusticia()
+    {
+        return $this->hasOne(CentroJusticia::class, 'id', 'centroJusticia_id');
+    }
+
     public function tipoAudiencia()
     {
         return $this->hasOne(TipoAudiencia::class, 'id', 'tipo_id');
@@ -49,5 +56,10 @@ class Audiencia extends Model
     public function estadoAudiencia()
     {
         return $this->hasOne(EstadoAudiencia::class, 'id', 'estadoAudiencia_id');
+    }
+
+    public function participantes()
+    {
+        return $this->hasMany(Participantes::class);
     }
 }

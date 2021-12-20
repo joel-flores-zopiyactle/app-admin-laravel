@@ -68,7 +68,19 @@ Route::delete('/ajustes/juicio/{id}', [App\Http\Controllers\JuiciosController::c
 Route::get('/salas/reservadas', [App\Http\Controllers\ReservaSalaController::class, 'index'])->name('reservas-salas');
 Route::get('/salas/reservar-nueva-sala', [App\Http\Controllers\ReservaSalaController::class, 'create'])->name('book-new-room');
 Route::post('/salas/reservar-nueva-sala', [App\Http\Controllers\ReservaSalaController::class, 'store'])->name('post-room');
+Route::get('/salas/buscar/expediente', [App\Http\Controllers\ReservaSalaController::class, 'show'])->name('search-room');
+Route::delete('/salas/reservadas/{id}', [App\Http\Controllers\ReservaSalaController::class, 'destroy'])->name('delete-room');
 
 // Participantes
-Route::get('/agregar/participantes/{id}', [App\Http\Controllers\ParticipanteController::class, 'create'])->name('add-participante');
+Route::get('/agregar/participantes/{id}/{expediente_id}', [App\Http\Controllers\ParticipanteController::class, 'create'])->name('add-participante');
 Route::post('/agregar/participantes/', [App\Http\Controllers\ParticipanteController::class, 'store'])->name('post-participante');
+Route::delete('/agregar/participantes/{id}', [App\Http\Controllers\ParticipanteController::class, 'destroy'])->name('delete-participante');
+
+
+// Buscar Expediente
+Route::get('/buscar/expediente', [App\Http\Controllers\BuscarExpedienteController::class, 'expediente'])->name('buscar-expediente');
+Route::get('/buscar/expediente/tipo-audiencias/all', [App\Http\Controllers\BuscarExpedienteController::class, 'getTipoAudiencia'])->name('get-tipo-audiencias');
+Route::get('/buscar/expediente', [App\Http\Controllers\BuscarExpedienteController::class, 'buscarExpediente'])->name('buscar-expediente');
+
+// PDF Expediente
+Route::get('/expediente/pdf/{id}', [App\Http\Controllers\ExpedientePDFController::class, 'show'])->name('show-pdf-expediente');

@@ -121,17 +121,17 @@ class CentroJusticiaController extends Controller
      */
     public function destroy($id)
     {
-       try {
-            $centroDelete = CentroJusticia::find($id);
+        try {
+                $centroDelete = CentroJusticia::find($id);
 
-            if($centroDelete->delete()) {
-                return back()->with('success', "$centroDelete->nombre eliminado correctamente!");
-            } 
+                if($centroDelete->delete()) {
+                    return back()->with('success', "$centroDelete->nombre eliminado correctamente!");
+                } 
 
-            return back()->with('warning', "$centroDelete->nombre no se pudo eliminar, Intente de nuevo!");
+                return back()->with('warning', "$centroDelete->nombre no se pudo eliminar, Intente de nuevo!");
 
-       } catch (\Throwable $th) {
-            return back()->with('error', 'Hubo un error al eliminar el dato.');
-       }
+        } catch (\Throwable $th) {
+                return back()->with('error', 'Hubo un error al eliminar el dato.');
+        }
     }
 }

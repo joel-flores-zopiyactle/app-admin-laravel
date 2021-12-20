@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Audiencia;
+use App\Models\TipoJuicio;
 
 class Expediente extends Model
 {
@@ -14,4 +15,13 @@ class Expediente extends Model
     {
         return $this->hasOne(Audiencia::class);
     }
+
+    public function tipoJuicio()
+    {
+        return $this->hasOne(TipoJuicio::class, 'id', 'juicio_id');
+    }
+
+
+
+
 }

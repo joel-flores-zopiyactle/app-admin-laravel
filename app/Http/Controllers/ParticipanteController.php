@@ -23,11 +23,11 @@ class ParticipanteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($id)
+    public function create($id, $expediente_id)
     {
         $roles = RoleModel::where('estado', 1)->select('id', 'rol')->orderBy('rol')->get();
         $participantes = ParticipantesModel::where('audiencia_id', $id)->where('estado', 1)->orderBy('id')->get();
-        return view('reservas.participantes', compact(['id', 'roles', 'participantes']));
+        return view('reservas.participantes', compact(['id', 'expediente_id', 'roles', 'participantes']));
     }
 
     /**
@@ -107,6 +107,17 @@ class ParticipanteController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+            $deleteParticipante = ParticipantesModel::find($id);
+
+            if($deleteParticipante->delete()) {
+                return back()->with('success', "$deleteParticipante->nombre eliminado correctamente!");
+            }
+
+            return back()->with('warning', "$deleteParticipante->nombre no se pudo eliminar, Intente de nuevo!");
+
+        } catch (\Throwable $th) {
+            return back()->with('error', 'Fallo al eliminar los datos!, verifique su conexion a Internet o recarga la página');
+        }
     }
 }
