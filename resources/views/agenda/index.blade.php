@@ -23,10 +23,10 @@
                 initialView: 'dayGridMonth',
                 locale: 'es',
                 headerToolbar: {
-                    start: 'title', 
-                    center: '',
-                    end: 'today prev,next'
-                }
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'dayGridMonth,timeGridWeek,listWeek'
+                },
             });
             calendar.render();
         });
