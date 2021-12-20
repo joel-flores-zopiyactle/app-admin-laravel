@@ -3,7 +3,7 @@
 @section('content')
 <div class="container-fluid">
     <div class="con d-flex justify-content-between align-items-center">
-        <h4>Lista de auduencia</h4>
+        <h4>Resultados</h4>
         <div>
             <a class="btn btn-primary btn-sm" href="{{ route('book-new-room') }}">Nueva audiencia</a>
         </div>
@@ -12,19 +12,10 @@
     <hr>
 
     <x-alert-message/>
-    
 
+    
     <div class="shadow p-2 mb-2 bg-body rounded card">
         @if (count($expedientes) > 0)
-
-            <div clas="w-100">
-                <form  action="{{ route('search-room') }}" class="w-25 d-flex" method="post">
-                    @csrf
-                    @method('GET')
-                    <input type="search" class="form-control me-1" name="num" id="buscar" placeholder="Buscar por numero de expdiente">
-                    <button type="submit" class="btn btn-primary">Buscar</button>
-                </form>
-            </div>
 
             <table class="table table-hover mt-2">
                 <thead class="table-success">
@@ -92,13 +83,19 @@
                 </tbody>
             </table>  
             
-            {{ $expedientes->links() }} 
         
         @else
             <div class="p-3">
-                <h3>No hay salas reservadas todabía</h3>
+                <h3>Noresultados de la busqueda</h3>
             </div>
         @endif
+    </div>
+
+    <div class="mt-5">
+        <a class="d-flex align-content-center" href="{{ route('reservas-salas') }}">
+            <span class="iconify h3 mr-2" data-icon="bx:bxs-left-arrow-circle"></span> 
+            <span>regresar</span>
+        </a>
     </div>
 </div>
 @endsection

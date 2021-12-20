@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\role;
+use App\Models\Audiencia;
 
 class Participantes extends Model
 {
@@ -20,5 +21,10 @@ class Participantes extends Model
     public function rol()
     {
         return $this->hasOne(role::class, 'id', 'rol_id');
+    }
+
+    public function audiencia()
+    {
+        return $this->hasOne(Audiencia::class, 'id', 'audiencia_id');
     }
 }

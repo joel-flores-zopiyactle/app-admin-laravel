@@ -3,13 +3,25 @@
 @section('content')
   <div class="container-fluid">
    <div>
-    <h2>Agregar lista de participantes</h2>
+    <h2 class="fs-5 text-uppercase">Agregar lista de participantes</h2>
     <hr>
    </div>
 
    <x-alert-message />
 
-    <div>
+
+   {{-- <div class="mb-5">
+     <form id="formParticipantes" method="post">
+       <div class="w-full">
+        <button class="btn btn-sm btn-light" id="addParticipante">
+          Agregar
+        </button>
+       </div>
+     </form>
+   </div> --}}
+
+
+    <div class="mb-2">
       <form class="w-100" action="{{ route('post-participante') }}" method="post">
         @csrf
         <div class="row">
@@ -50,13 +62,10 @@
 
       </form>
     </div>
-   
-    <hr>
 
     <div class="shadow p-2 mb-2 bg-body rounded card">
-      <h6 class="mb-1">Total de participantes: <strong>{{count($participantes)}}</strong></h6>
-
       @if (count($participantes) > 0)
+        <h6 class="mb-1">Total de participantes: <strong>{{count($participantes)}}</strong></h6>
         <table class="table table-hover">
           <thead class="table-success">
           <tr>
@@ -75,11 +84,11 @@
                   <td>{{ $participante->descripcion}}</td>
                   <td>
                     <div class="text-center d-flex justify-content-center">
-                      <a class="btn btn-sm btn-light rounded-circle d-flex justify-content-center align-items-center p-1" href="#" title="Editar"> 
+                     {{--  <a class="btn btn-sm btn-light rounded-circle d-flex justify-content-center align-items-center p-1" href="#" title="Editar"> 
                         <span class="iconify h5 m-0" data-icon="akar-icons:edit"></span>
-                      </a>
+                      </a> --}}
 
-                      <form class="ml-2" action="#" method="post">
+                      <form class="ml-2" action="{{ route('delete-participante', $participante->id) }}" method="post">
                           @csrf
                           @method('DELETE')
                           <button class="btn btn-sm btn-light rounded-circle d-flex justify-content-center align-items-center p-1" type="submit" 
@@ -95,8 +104,8 @@
           </tbody>
         </table>
       @else
-        <div>
-          <h2>No hay usuarios registrados todabia</h2>
+        <div class="p-5">
+          <h2 class="text-center">No hay usuarios registrados todabía </h2>
         </div>   
       @endif 
     </div>
@@ -104,11 +113,23 @@
     <hr>
     
     <div>
-        <form action="{{ route('reservas-salas') }}">
-          <button class="btn btn-primary">Finalizar</button>
+        <form action="{{ route('show-pdf-expediente', $expediente_id) }}">
+          <button type="submit"  onclick="return confirm('¿Generar expediente?')" class="btn btn-primary">Generar expediente</button>
         </form>
     </div>
-  </div>
+  </div>  
+@endsection
 
-  
+@section('js')
+
+  {{-- <script>
+    const form = document.getElementById('formParticipantes');
+    const addParticipante = document.getElementById('addParticipante');
+
+    addParticipante.eventListener('click', () => {
+
+    }) --}}
+    
+  </script>
+    
 @endsection

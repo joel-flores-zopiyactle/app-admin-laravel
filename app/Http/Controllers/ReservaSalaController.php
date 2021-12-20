@@ -22,7 +22,7 @@ class ReservaSalaController extends Controller
     {
         //TODO: Necesito obetner Expediente, SALA, AUDIENCIA, TIPO AUDIENCIA, Y ESTADO AUDIENCIA
 
-        $expedientes = ExpedienteModel::orderBy('id', 'desc')->paginate(5);
+        $expedientes = ExpedienteModel::orderBy('id', 'desc')->paginate(15);
 
         return view('reservas.index', compact('expedientes'));
     }
@@ -104,7 +104,7 @@ class ReservaSalaController extends Controller
                         $audiencia_id = $newAudiencia->id;
                         
                         //return view(('reservas.participantes'));
-                        return redirect("/agregar/participantes/$audiencia_id");
+                        return redirect("/agregar/participantes/$audiencia_id/$newExpediente->id");
                         
                         //return back()->with('success', 'Audiencia programada exitosamente!');
                     } 
@@ -125,7 +125,7 @@ class ReservaSalaController extends Controller
             $deleteExpediente = ExpedienteModel::findOrFail($newExpediente->id);
             $deleteExpediente->delete();
 
-            return back()->with('error', 'Hubo un error al guaradar los datos. Verifique su conexion a Internte o recarga la página!' . $th);
+            return back()->with('error', 'Hubo un error al guaradar los datos. Verifique su conexion a Internte o recarga la página!');
         }
 
     }
@@ -136,9 +136,22 @@ class ReservaSalaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request)
     {
-        //
+        try {
+            
+            $expedientes = ExpedienteModel::where('id', $request->num)->get(); // el id es la referencia del numero de expdiente
+
+            if(count($expedientes) > 0) {
+                return view('reservas.resultado-busqueda', compact('expedientes'));
+            }
+
+            return back()->with('warning', 'No resultados del expediente numero: '. $request->num);
+
+        } catch (\Throwable $th) {
+            return back()->with('error', 'Hubo un error al consultar los datos!. Intentalo mas tarde..');
+        }
+
     }
 
     /**
@@ -172,6 +185,18 @@ class ReservaSalaController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+            $expedienteDelete = ExpedienteModel::find($id);
+
+            if($expedienteDelete->delete()) {
+                return back()->with('success', "Expediente numero $expedienteDelete->id eliminado correctamente!");
+            } 
+
+            return back()->with('warning', "Expediente numero $expedienteDelete->id no se pudo eliminar, Intente de nuevo!");
+
+        } catch (\Throwable $th) {
+            return back()->with('error', 'Hubo un error al eliminar el dato.');
+       }
     }
+
 }
