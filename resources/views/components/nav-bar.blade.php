@@ -2,8 +2,6 @@
     <div class="sidebar-start">
         <div class="sidebar-head">
             <a href="{{ route('home') }}" class="logo-wrapper" title="Home">
-                <span class="sr-only">Home</span>
-                <span class="icon logo" aria-hidden="true"></span>
                 <div class="logo-text">
                    <h1 class="text-white h4">
                     <span class="logo-title"> {{ config('app.name', 'Laravel') }}</span>
@@ -12,8 +10,9 @@
                 </div>
             </a>
             <button class="sidebar-toggle transparent-btn" title="Menu" type="button">
-                <span class="sr-only">Toggle menu</span>
-                <span class="iconify h4 text-white" data-icon="heroicons-solid:menu"></span>
+                <span class="navbar-toggler-icon sr-only"></span>
+                
+               {{--  <span class="iconify h4 text-white" data-icon="heroicons-solid:menu"></span> --}}
             </button>
         </div>
         <div class="sidebar-body">
