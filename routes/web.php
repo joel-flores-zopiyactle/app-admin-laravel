@@ -93,4 +93,5 @@ Route::get('/agenda/eventos', [App\Http\Controllers\AgendaController::class, 'ge
 
 // Celebrar evento
 Route::get('/ingresar/evento', [App\Http\Controllers\AuditoriasController::class, 'login'])->name('ingresar-evento');
+Route::post('/ingresar/evento/singIn', [App\Http\Controllers\AuditoriasController::class, 'singInAudiencia'])->name('evento-singIn');
 
