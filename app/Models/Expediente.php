@@ -21,6 +21,11 @@ class Expediente extends Model
         return $this->hasOne(TipoJuicio::class, 'id', 'juicio_id');
     }
 
+    public function token()
+    {
+        return $this->hasOne(TokenAudiencia::class);
+    }
+
 
 
 

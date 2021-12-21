@@ -36,6 +36,7 @@ class RolController extends Controller
      */
     public function store(Request $request)
     {
+
         $validatedData = $request->validate([
             'rol' => ['required', 'unique:roles', 'max:255'],
             'descripcion' => ['required'],
@@ -131,4 +132,5 @@ class RolController extends Controller
             return back()->with('error', 'Fallo al eliminar los datos!, verifique su conexion a Internet o recarga la página');
        }
     }
+
 }

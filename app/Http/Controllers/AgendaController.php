@@ -28,7 +28,8 @@ class AgendaController extends Controller
             $data = array(
                 'title' => $tipoAudiencia->nombre,
                 'start' => $event->fechaCelebracion."T".$event->horaInicio,
-                'color' => $estadoAudiencia->color,
+                'backgroundColor' => $estadoAudiencia->color,
+                'textColor' => '#3e1a53',
                 'allDay' => false
             );
 

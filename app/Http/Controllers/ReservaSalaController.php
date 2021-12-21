@@ -8,6 +8,7 @@ use App\Models\Expediente as ExpedienteModel;
 use App\Models\Sala as SalaModel;
 use App\Models\TipoAudiencia as TipoAudienciaModel;
 use App\Models\TipoJuicio as TipoJuicioModel;
+use App\Models\TokenAudiencia as TokenAudienciaModel;
 use Illuminate\Http\Request;
 
 
@@ -57,6 +58,7 @@ class ReservaSalaController extends Controller
      */
     public function store(Request $request)
     {
+       
         $validatedData = $request->validate([
             // Expediente
             'folio' => ['required', 'unique:expedientes'],
@@ -104,6 +106,13 @@ class ReservaSalaController extends Controller
                         $audiencia_id = $newAudiencia->id;
                         
                         //return view(('reservas.participantes'));
+                        // Generamos i¿un Token para la audiencia
+                        $token = $this->tokenExpediente($newAudiencia->id);
+                        $tokenAudiencia = new TokenAudienciaModel;
+                        $tokenAudiencia->token = $token;
+                        $tokenAudiencia->expediente_id =  $newAudiencia->id;
+                        $tokenAudiencia->save();
+
                         return redirect("/agregar/participantes/$audiencia_id/$newExpediente->id");
                         
                         //return back()->with('success', 'Audiencia programada exitosamente!');
@@ -125,7 +134,7 @@ class ReservaSalaController extends Controller
             $deleteExpediente = ExpedienteModel::findOrFail($newExpediente->id);
             $deleteExpediente->delete();
 
-            return back()->with('error', 'Hubo un error al guaradar los datos. Verifique su conexion a Internte o recarga la página!');
+            return back()->with('error', 'Hubo un error al guaradar los datos. Verifique su conexion a Internte o recarga la página!'.$th);
         }
 
     }
@@ -197,6 +206,21 @@ class ReservaSalaController extends Controller
         } catch (\Throwable $th) {
             return back()->with('error', 'Hubo un error al eliminar el dato.');
        }
+    }
+
+    
+    // Genera un token para el expediente y es usado para acceder a la celebracion del audiecia
+    public function tokenExpediente($id)
+    {
+        $cadena = "Sinjo_ABCDFGHIJKLMNOPQRSTVWXYZabcdefghijklmnopqrstvwxyz0123456789_".$id;
+        $token = "";
+
+        for($i = 0; $i < 60; $i++) {
+            $token .= $cadena[rand(0,60)];       
+        }
+
+        return $token;
+
     }
 
 }

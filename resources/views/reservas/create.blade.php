@@ -1,5 +1,9 @@
 @extends('layouts.dashboard')
 
+@section('title')
+    Reservar sala
+@endsection
+
 @section('content')
 <div>
     <h2>Reservar nueva sala</h2>

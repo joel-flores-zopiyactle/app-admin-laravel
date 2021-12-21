@@ -1,5 +1,9 @@
 @extends('layouts.dashboard')
 
+@section('title')
+    Lista de reservas
+@endsection
+
 @section('content')
 <div class="container-fluid">
     <div class="con d-flex justify-content-between align-items-center">
@@ -21,7 +25,7 @@
                 <form  action="{{ route('search-room') }}" class="w-50 d-flex" method="post">
                     @csrf
                     @method('GET')
-                    <input type="search" class="form-control me-1" name="num" id="buscar" placeholder="Buscar por numero de expdiente">
+                    <input type="search" class="form-control me-1" name="num" id="buscar" placeholder="Buscar por numero de expediente">
                     <button type="submit" class="btn btn-primary">Buscar</button>
                 </form>
             </div>

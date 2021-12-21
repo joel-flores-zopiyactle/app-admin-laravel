@@ -20,7 +20,7 @@
        header {
             width: 100%;
             height: 30px;
-            background: rgb(113, 120, 183);
+            background: rgb(90, 99, 181);
             padding: 10px;   
        }
 
@@ -37,11 +37,11 @@
        }
 
        .content {
-           width: 100%;
+           margin: auto;
            padding: 10px;
            margin-top: 20px;
            margin-bottom: 10px;
-           background: rgb(76, 85, 186);
+           background: rgb(90, 99, 181);
            color: #fff;
            text-align: center;
            text-transform: capitalize;
@@ -53,7 +53,7 @@
        }
 
        table > thead {
-        background: rgb(76, 85, 186);
+        background: rgb(90, 99, 181);
         color: #fff;
         text-align: center;
        }
@@ -71,7 +71,7 @@
        }
 
         table, th {
-            border: 1px solid rgb(104, 104, 104);
+            /* border: 1px solid rgb(104, 104, 104); */
         }
    </style>
 </head>
@@ -129,7 +129,6 @@
                 </tbody>
             </table>
 
-            <hr>
             {{-- Lista de seleccion --}}
             <table>
                 <thead>
@@ -206,7 +205,7 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>sdkjfgkdsjfjkskfd</td>
+                        <td>{{ $expediente->token->token }}</td>
                     
                     </tr>
                 </tbody>

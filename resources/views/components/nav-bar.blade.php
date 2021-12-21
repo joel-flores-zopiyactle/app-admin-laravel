@@ -1,69 +1,106 @@
-<div class="flex-shrink-0 p-3 bg-primary vh-100 sticky-top" style="width: 250px;">
-
-    <a href="/" class="d-flex align-items-center pb-3 mb-3 link-dark text-decoration-none border-bottom">
-      <svg class="bi me-2" width="30" height="24"><use xlink:href="#bootstrap"/></svg>
-      <span class="fs-5 fw-semibold">Sinjo</span>
-    </a>
-    <ul class="list-unstyled ps-0">
-        <li>
-            <a class="btn align-items-center rounded collapsed fw-bolder text-white" href="{{ route('home') }}">
-                <span class="iconify h4 mr-1" data-icon="bx:bx-home-alt"></span>Inicio
+<aside class="sidebar">
+    <div class="sidebar-start">
+        <div class="sidebar-head">
+            <a href="{{ route('home') }}" class="logo-wrapper" title="Home">
+                <span class="sr-only">Home</span>
+                <span class="icon logo" aria-hidden="true"></span>
+                <div class="logo-text">
+                   <h1 class="text-white h4">
+                    <span class="logo-title"> {{ config('app.name', 'Laravel') }}</span>
+                   </h1>
+                    {{-- <span class="logo-subtitle">Dashboard</span> --}}
+                </div>
             </a>
-        </li>
-    
-        <li>
-            <a class="btn align-items-center rounded collapsed fw-bolder text-white" href="#"> 
-                <span class="iconify h4 mr-1" data-icon="fluent:people-audience-24-regular"></span>Ingresar Sala
-            </a>
-        </li>
-      
-        <li class="border-top my-3"></li>
-
-        <ul class="list-unstyled fw-normal pb-1 small">
-            <li >
-                <a class="btn align-items-center rounded collapsed fs-6 fw-bolder text-white" href="{{ route('reservas-salas') }}">
-                    <span class="iconify h4 mr-1" data-icon="majesticons:file-report-line"></span>Reservar Sala
-                </a>
-            </li>
-
-            <li >
-                <a class="btn align-items-center rounded collapsed fs-6 fw-bolder text-white" href="{{ route('buscar-expediente') }}">
-                    <span class="iconify h4 mr-1" data-icon="bx:bx-search"></span>Buscar Expediente
-                </a>
-            </li>
-
-            <li >
-                <a class="btn align-items-center rounded collapsed fs-6 fw-bolder text-white" href="{{ route('agenda') }}">
-                    <span class="iconify  h4 mr-1" data-icon="uil:calender"></span>Agenda
-                </a>
-            </li>
-        </ul>
-
-        <li class="mb-1">
-            <button class="btn align-items-center rounded collapsed fw-bolder text-white" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false">
-                <span class="iconify h4 mr-1" data-icon="eva:settings-outline"></span>Configuraciones
+            <button class="sidebar-toggle transparent-btn" title="Menu" type="button">
+                <span class="sr-only">Toggle menu</span>
+                <span class="iconify h4 text-white" data-icon="heroicons-solid:menu"></span>
             </button>
-            <div class="collapse" id="dashboard-collapse">
-            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                <li><a href="{{ route('centro-justicia') }}" class="link-dark rounded text-white">
-                    <span class="iconify h5 mr-1" data-icon="ps:justice"></span>Centro de Justicia</a>
+        </div>
+        <div class="sidebar-body">
+            <ul class="sidebar-body-menu">
+                <li>
+                    <a class="active d-flex align-items-center" href="{{ route('home') }}">
+                        <span class="iconify h4 mr-2" data-icon="bx:bx-home-alt"></span> Inicio
+                    </a>
                 </li>
-                <li><a href="{{ route('salas') }}" class="link-dark rounded text-white">
-                    <span class="iconify h5 mr-1" data-icon="fluent:conference-room-24-regular"></span>Salas</a>
+
+                <li>
+                    <a href="{{ route('ingresar-evento') }}"><span class="iconify h4" data-icon="ri:team-fill"></span>Ingresar sala</a>
                 </li>
-                <li><a href="{{ route('roles') }}" class="link-dark rounded text-white">
-                    <span class="iconify h5 mr-1" data-icon="eos-icons:role-binding-outlined"></span>Roles</a>
+
+                <li>
+                    <a href="{{ route('reservas-salas') }}"><span class="iconify h4" data-icon="icon-park-outline:doc-success"></span>Reservar sala</a>
                 </li>
-                <li><a href="{{ route('audiencias') }}" class="link-dark rounded text-white">
-                    <span class="iconify h5 mr-1" data-icon="akar-icons:people-multiple"></span>Tipo de Audiencia</a>
+
+                <li>
+                    <a href="{{ route('buscar-expediente') }}"><span class="iconify h4" data-icon="bx:bx-search"></span>Buscar expediente</a>
                 </li>
-                <li><a href="{{ route('juicios') }}" class="link-dark rounded text-white">
-                    <span class="iconify h4 mr-1" data-icon="healthicons:justice"></span>Tipo de Juicio
-                </a></li>
+
+               
+               
+                <li>
+                    <a class="" href="{{ route('agenda') }}"><span class="iconify h4 mr-2" data-icon="uil:calender"></span>Agenda</a>
+                </li>
+
             </ul>
-            </div>
-        </li>  
-    </ul>
-  </div>
+
+            <ul class="sidebar-body-menu">
+
+                <li>
+                    <a class="show-cat-btn">
+                        <span class="iconify h4" data-icon="bx:bx-category-alt"></span>Configuraciones
+                        <span class="category__btn transparent-btn" title="Open list">
+                            <span class="sr-only">Open list</span>
+                            <span class="icon arrow-down" aria-hidden="true"></span>
+                        </span>
+                    </a>
+
+                    <ul class="cat-sub-menu">
+                        <li>
+                            <a href="{{ route('centro-justicia') }}"><span class="iconify h4 mr-1" data-icon="ps:justice"></span>Centro de justicia</a>
+                        </li>
+                        <li>
+                            <a href="{{ route('roles') }}"><span class="iconify h4 mr-1" data-icon="eos-icons:cluster-role-binding"></span>Roles</a>
+                        </li>
+                        <li>
+                            <a href="{{ route('salas') }}"><span class="iconify h4 mr-1" data-icon="fluent:conference-room-16-filled"></span>Sala</a>
+                        </li>
+                        <li>
+                            <a href="{{ route('audiencias') }}"><span class="iconify h4 mr-1" data-icon="fluent:people-audience-20-filled"></span>Tipo de audiencia</a>
+                        </li>
+                        <li>
+                            <a href="{{ route('juicios') }}"><span class="iconify h4 mr-1" data-icon="healthicons:justice"></span>Tipo de juicio</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+
+            <ul>
+                <li class="nav-item dropdown">
+                    <a id="navbarDropdown" class="btn btn-light nav-link dropdown-toggle text-dark" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                        {{ Auth::user()->name }}
+                    </a>
+
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{{ route('logout') }}"
+                           onclick="event.preventDefault();
+                                         document.getElementById('logout-form').submit();">
+                            {{ __('Logout') }}
+                        </a>
+
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                            @csrf
+                        </form>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</aside>
+
+
+
+
+
 
 
