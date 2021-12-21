@@ -1,5 +1,9 @@
 @extends('layouts.dashboard')
 
+@section('title')
+    Buscar Expedientes
+@endsection
+
 @section('content')
 <div class="container-fluid">
     <div class="con d-flex justify-content-between align-items-center">

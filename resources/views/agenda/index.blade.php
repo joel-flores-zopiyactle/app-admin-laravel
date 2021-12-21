@@ -6,7 +6,7 @@
 
 @section('content')
 <div class="container-fluid mb-5">
-    <div class="shadow p-2 card bg-white">
+    <div class="shadow px-4 py-3 card bg-white mb-5 overflow-auto">
         <div id='calendar'></div>
     </div>
 </div>

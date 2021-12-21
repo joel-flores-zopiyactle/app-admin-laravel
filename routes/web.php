@@ -89,3 +89,9 @@ Route::get('/expediente/pdf/{id}', [App\Http\Controllers\ExpedientePDFController
 // Agenda
 Route::get('/agenda', [App\Http\Controllers\AgendaController::class, 'show'])->name('agenda');
 Route::get('/agenda/eventos', [App\Http\Controllers\AgendaController::class, 'getEventosAudiencia'])->name('agenda-eventos');
+
+
+// Celebrar evento
+Route::get('/ingresar/evento', [App\Http\Controllers\AuditoriasController::class, 'login'])->name('ingresar-evento');
+Route::post('/ingresar/evento/singIn', [App\Http\Controllers\AuditoriasController::class, 'singInAudiencia'])->name('evento-singIn');
+
