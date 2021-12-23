@@ -102,7 +102,7 @@ Route::post('/nota', [App\Http\Controllers\NotaController::class, 'store'])->nam
 Route::get('/notas/{id}', [App\Http\Controllers\NotaController::class, 'show'])->name('show-notas');
 Route::get('/nota/{id}', [App\Http\Controllers\NotaController::class, 'edit'])->name('edit-notas');
 Route::put('/nota/{id}', [App\Http\Controllers\NotaController::class, 'update'])->name('update-notas');
-Route::get('/nota/delete/{id}', [App\Http\Controllers\NotaController::class, 'destroy'])->name('delete-notas');
+Route::delete('/nota/delete/{id}', [App\Http\Controllers\NotaController::class, 'destroy'])->name('delete-notas');
 
 // Archivos
 Route::post('/archivo', [App\Http\Controllers\ArchivoController::class, 'store'])->name('post-archivo');
