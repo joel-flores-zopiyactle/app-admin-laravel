@@ -94,4 +94,19 @@ Route::get('/agenda/eventos', [App\Http\Controllers\AgendaController::class, 'ge
 // Celebrar evento
 Route::get('/ingresar/evento', [App\Http\Controllers\AuditoriasController::class, 'login'])->name('ingresar-evento');
 Route::post('/ingresar/evento/singIn', [App\Http\Controllers\AuditoriasController::class, 'singInAudiencia'])->name('evento-singIn');
+Route::get('/evento/{id}', [App\Http\Controllers\AuditoriasController::class, 'showEvento'])->name('celebracion-evento');
 
+
+// Notas
+Route::post('/nota', [App\Http\Controllers\NotaController::class, 'store'])->name('post-nota');
+Route::get('/notas/{id}', [App\Http\Controllers\NotaController::class, 'show'])->name('show-notas');
+Route::get('/nota/{id}', [App\Http\Controllers\NotaController::class, 'edit'])->name('edit-notas');
+Route::put('/nota/{id}', [App\Http\Controllers\NotaController::class, 'update'])->name('update-notas');
+Route::get('/nota/delete/{id}', [App\Http\Controllers\NotaController::class, 'destroy'])->name('delete-notas');
+
+// Archivos
+Route::post('/archivo', [App\Http\Controllers\ArchivoController::class, 'store'])->name('post-archivo');
+Route::get('/archivos/{id}', [App\Http\Controllers\ArchivoController::class, 'show'])->name('show-archivos');
+Route::get('/archivo/{id}', [App\Http\Controllers\ArchivoController::class, 'edit'])->name('edit-archivo');
+Route::put('/archivo/{id}', [App\Http\Controllers\ArchivoController::class, 'update'])->name('update-archivo');
+Route::delete('/archivo/delete/{id}', [App\Http\Controllers\ArchivoController::class, 'destroy'])->name('delete-archivo');
