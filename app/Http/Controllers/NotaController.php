@@ -50,11 +50,11 @@ class NotaController extends Controller
             $nota->expediente_id = $request->expediente_id;
 
             if($nota->save()) {
-                return $nota;
+                return array('status' =>  201, 'mensaje' => "Nota creado correctamente" );
             }
 
         } catch (\Throwable $th) {
-            return array('error' =>  500, 'mensaje' => "Fallo al crear la notas" );
+            return array('status' =>  500, 'mensaje' => "Fallo al crear la notas" );
         }
        
 
@@ -74,7 +74,7 @@ class NotaController extends Controller
             return $notas;
 
         } catch (\Throwable $th) {
-            return array('error' =>  500, 'mensaje' => "Fallo al obtener las notas" );
+            return array('status' =>  500, 'mensaje' => "Fallo al obtener las notas" );
         }
     }
 
@@ -92,11 +92,11 @@ class NotaController extends Controller
 
         if($nota) { return $nota; } 
 
-        return array('error' =>  404, 'mensaje' => "Nota no encontrada" );
+        return array('status' =>  404, 'mensaje' => "Nota no encontrada" );
         
 
        } catch (\Throwable $th) {
-            return array('error' =>  500, 'mensaje' => "Fallo al obtener la nota" );
+            return array('status' =>  500, 'mensaje' => "Fallo al obtener la nota" );
        }
     }
 
@@ -123,7 +123,7 @@ class NotaController extends Controller
             return $nota->save();
 
         } catch (\Throwable $th) {
-            return array('error' =>  500, 'mensaje' => "Fallo al actualizar la notas" );
+            return array('status' =>  500, 'mensaje' => "Fallo al actualizar la notas" );
         }
     }
 
@@ -139,13 +139,14 @@ class NotaController extends Controller
             $nota = NotaModel::find($id);
 
             if($nota->delete()) {
-                return back()->with('success', "$nota->nota eliminado correctamente!");
+                return array( 'status' =>  200, 'mensaje' => "$nota->nota eliminado correctamente!");
             } 
 
-            return back()->with('warning', "$nota->nombre no se pudo eliminar, Intente de nuevo!");
+            return array('status' =>  200, 'mensaje' =>"$nota->nota no se pudo eliminar, Intente de nuevo!");
 
         } catch (\Throwable $th) {
-            return array('error' =>  500, 'mensaje' => "Fallo al eliminar la nota" );
+
+            return array('status' =>  500, 'mensaje' => "Fallo al eliminar la nota" );
         }
     }
 }

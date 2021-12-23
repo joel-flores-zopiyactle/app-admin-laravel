@@ -21,7 +21,7 @@
 </head>
 
 <body>
-    <div class="page-flex" id="app">
+    <div class="page-flex">
         <!-- ! Sidebar -->
         <x-nav-bar/>
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Archivo as ArchivoModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -36,13 +37,103 @@ class ArchivoController extends Controller
     public function store(Request $request)
     {
         //return $request->all();
+        $typeFile = strtolower($request->tipo_archivo);
 
         if(is_file($request->file)) {
-            $path = Storage::disk('public')->put('pdf', $request->file('file'));
-            return $path;
+
+            $fileExtension = strtoupper($request->file('file')->getClientOriginalExtension()); 
+
+            $fileExtension;
+
+            $path = ''; // Obtiene la ruta donde se almacena el archivo
+
+            // List Array Formats
+            $videoFormat = ['MP4', 'AVI', 'MPG', 'WMV', 'H.264', 'MOV', 'MKV', 'DIVX', 'XVID', 'MWV', 'FLV'];
+            $audioFormat = ['MP3', 'OGG', 'AAC', 'WMA'];
+            $imageFormat = ['JPG', 'PNG', 'GIF', 'BMP'];
+            $docsFormat  = ['DOC', 'TXT', 'DOCX'];
+
+            $errorMensaje = array('status' => 500, 'mensaje' => "El archivo que esta subiendo no es admitido");  
+
+            // Me permite especificar que carpeta guardar el archivo para llevar un mejor control
+            switch ($typeFile) {
+                case 'pdf':
+                    
+                    if(!in_array($fileExtension ,['PDF'],true)) {  
+                        return $errorMensaje;
+                    }
+                    
+                    $path = Storage::disk('public')->put('PDF', $request->file('file'));
+                    
+                    break;
+
+                case 'video':
+                   
+                    if(!in_array($fileExtension ,$videoFormat,true)) {
+                        return $errorMensaje;
+                    }
+
+                    $path = Storage::disk('public')->put('VIDEO', $request->file('file'));
+                    
+                    break;
+
+                case 'audio':
+
+                    if(!in_array($fileExtension ,$audioFormat,true)) {
+                        return $errorMensaje;
+                    }
+
+                    $path = Storage::disk('public')->put('AUDIO', $request->file('file'));
+
+                    break;
+
+                case 'imagen':
+
+                    if(!in_array($fileExtension ,$imageFormat,true)) {
+                        return $errorMensaje;
+                    }   
+                    
+                    $path = Storage::disk('public')->put('IMAGEN', $request->file('file'));
+                    
+                    break;  
+
+                case 'doc':
+                    if(!in_array($fileExtension ,$docsFormat,true)) {
+                        return $errorMensaje;
+                    } 
+
+                    $path = Storage::disk('public')->put('DOC', $request->file('file'));
+
+                    break;                        
+                
+                default:
+                    return $errorMensaje;
+                    break;
+            }
+
+            $nameFile = $request->file('file')->getClientOriginalName(); //Obtenemos el nombre del archivo
+            $urlFile  =  asset($path);
+
+            try {
+
+                $archivo = new ArchivoModel;
+                $archivo->tipo_archivo  = $typeFile; 
+                $archivo->url           = $urlFile;
+                $archivo->nombre        = $nameFile;
+                $archivo->expediente_id = $request->expediente_id;
+
+                if($archivo->save()) {
+                    return array('status' => 201, 'mensaje' => "Archivo subido correctamente");
+                }
+
+            } catch (\Throwable $th) {
+                return array('status' => 500, 'mensaje' => "Ocurrio un error al guaradar el archivo");  
+
+            }
+
         }
 
-        return 'No es archivo';
+        return  array('status' => 500, 'mensaje' => "No ha seleccionado ningún archivo");  
         
     }
 
@@ -54,7 +145,9 @@ class ArchivoController extends Controller
      */
     public function show($id)
     {
-        //
+        $archivos = ArchivoModel::where('expediente_id', $id)->select('id', 'nombre')->orderBy('id', 'desc')->get();
+
+        return $archivos;
     }
 
     /**
@@ -88,6 +181,28 @@ class ArchivoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+            $archivo = ArchivoModel::find($id);
+
+            $arrayRuta = explode("/", $archivo->url); // Dividimos en un array el directorio del archivo
+
+            $fileDelete = end($arrayRuta); // Obetner el ultimo valor del array en este caso el nombre del archivo
+            $folder = strtoupper($archivo->tipo_archivo); // Obtener e directorio del archivo y convertimos en MAYUSCULA
+
+            $rutaFile = $folder . '/' . $fileDelete;  // Unimos ambos variable para crear el url del archivo 
+           
+            Storage::disk('public')->delete( $rutaFile);
+
+            if($archivo->delete()) {
+                return array( 'status' =>  200, 'mensaje' => "Archivo $archivo->nombre eliminado correctamente!");
+            } 
+
+            return array( 'status' =>  404, 'mensaje' => "Archivo $archivo->nombre eliminado correctamente!");
+
+        } catch (\Throwable $th) {
+            return array( 'status' =>  500, 'mensaje' => "Fallo al eliminar los datos del archivo!");
+        }
     }
+
+    
 }
