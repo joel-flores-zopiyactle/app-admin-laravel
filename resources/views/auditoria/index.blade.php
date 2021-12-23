@@ -7,14 +7,14 @@
 
       <nav>
          <div class="nav nav-tabs" id="nav-tab" role="tablist">
-           <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Audiencia</button>
-           <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Toma de lista</button>
+           <button class="nav-link active" id="nav-audiencia-tab" data-bs-toggle="tab" data-bs-target="#nav-audiencia" type="button" role="tab" aria-controls="nav-audiencia" aria-selected="true">Audiencia</button>
+           <button class="nav-link" id="nav-asistencia-tab" data-bs-toggle="tab" data-bs-target="#nav-asistencia" type="button" role="tab" aria-controls="nav-asistencia" aria-selected="false">Toma de lista</button>
          </div>
        </nav>
 
        <div class="tab-content mt-2" id="nav-tabContent">
           {{-- audiencia --}}
-         <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+         <div class="tab-pane fade show active" id="nav-audiencia" role="tabpanel" aria-labelledby="nav-audiencia-tab">
             <div class="mb-2">
                <section>
                  <h3> <b>Audiencia</b>: {{$expediente->audiencia->tipoAudiencia->nombre }}</h3>
@@ -73,7 +73,7 @@
          </div>
 
          <!-- asistencia -->
-         <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+         <div class="tab-pane fade" id="nav-asistencia" role="tabpanel" aria-labelledby="nav-asistencia-tab">
            <x-sala.table-asistencia :participantes="$expediente->audiencia->participantes" :audienciaid="$expediente->audiencia->id" />
          </div>
         
@@ -88,5 +88,6 @@
 @endsection
 
 @section('js')
-    <script src="{{ asset('js/add-note-file.js') }}"></script>
+    <script src="{{ asset('js/sala/form-notas.js') }}"></script>
+    <script src="{{ asset('js/sala/form-files.js') }}"></script>
 @endsection

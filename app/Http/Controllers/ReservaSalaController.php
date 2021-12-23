@@ -61,22 +61,22 @@ class ReservaSalaController extends Controller
        
         $validatedData = $request->validate([
             // Expediente
-            'folio' => ['required', 'unique:expedientes'],
-            'juez' => ['required'],
-            'juzgado' => ['required'],
-            'actor' => ['required'],
-            'demandado' => ['required'],
-            'secretario' => ['required'],
-            'juicio_id' => ['required', 'numeric'],
+            'folio'         => ['required', 'unique:expedientes'],
+            'juez'          => ['required'],
+            'juzgado'       => ['required'],
+            'actor'         => ['required'],
+            'demandado'     => ['required'],
+            'secretario'    => ['required'],
+            'juicio_id'     => ['required', 'numeric'],
             // Audiencia
             'centroJusticia_id' => ['required', 'numeric'],
             'sala_id' => ['required', 'numeric'],
             'tipo_id' => ['required', 'numeric'],
             //'expediente_id' => ['required'],
             //'estadoAudiencia_id' => ['required'],
-            'fechaCelebracion' => ['required'],
-            'horaInicio' => ['required'],
-            'horaFinalizar' => ['required'],
+            'fechaCelebracion'  => ['required'],
+            'horaInicio'        => ['required'],
+            'horaFinalizar'     => ['required'],
         ]);
 
         try {

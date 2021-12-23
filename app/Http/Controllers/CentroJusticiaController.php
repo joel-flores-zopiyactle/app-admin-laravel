@@ -37,14 +37,14 @@ class CentroJusticiaController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'nombre' => ['required', 'unique:centro_justicias', 'max:255'],
+            'nombre'      => ['required', 'unique:centro_justicias', 'max:255'],
             'descripcion' => ['required'],
         ]);
 
         try {
 
             $newCentro = CentroJusticia::create([
-                'nombre' => $request->nombre,
+                'nombre'      => $request->nombre,
                 'descripcion' => $request->descripcion
             ]);
     
@@ -98,9 +98,9 @@ class CentroJusticiaController extends Controller
 
         try {
             $updateCentro = CentroJusticia::find($id);
-            $updateCentro->nombre = $request->nombre;
-            $updateCentro->descripcion = $request->descripcion;
-            $updateCentro->estado = $request->estado ?? 0;
+            $updateCentro->nombre       = $request->nombre;
+            $updateCentro->descripcion  = $request->descripcion;
+            $updateCentro->estado       = $request->estado ?? 0;
 
             if($updateCentro->save()) {
                 return back()->with('success', 'Datos del Centro de justicia actualizados exitosamente!');

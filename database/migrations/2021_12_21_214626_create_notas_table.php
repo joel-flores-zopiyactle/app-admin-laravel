@@ -16,10 +16,7 @@ class CreateNotasTable extends Migration
         Schema::create('notas', function (Blueprint $table) {
             $table->id();
             $table->text('nota');
-            $table->string('visibilidad');
-            
-            $table->unsignedBigInteger('participante_id');
-            $table->foreign('participante_id')->references('id')->on('participantes')->onUpdate('cascade')->onDelete('cascade');
+            $table->boolean('visibilidad');
 
             $table->unsignedBigInteger('expediente_id');
             $table->foreign('expediente_id')->references('id')->on('expedientes')->onUpdate('cascade')->onDelete('cascade');

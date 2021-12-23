@@ -1,23 +1,15 @@
 <div>
     <div class="row mt-2">
         <div class="col-5">
-           <form action="#" id="formFiles">
+           <form id="formFiles" enctype="multipart/form-data">
+               <input type="number" name="expediente_id" value="{{ $audienciaid }}" id="expediente_id" hidden>
               <div class="mb-3">
                  <label for="formFile" class="form-label">Subir archivos</label>
-                 <input class="form-control" type="file" name="file" id="formFile">
+                 <input class="form-control" type="file" name="file" id="file">
                </div>
 
-               <div class="mt-3">
-                 <select class="form-select form-select-sm" name="participante_id">
-                    <option selected>Seleccione el participante</option>
-                    @foreach ($participantes as $participante)
-                      <option value="{{ $participante->id }}">{{ $participante->nombre }}</option>
-                    @endforeach  
-                  </select>
-              </div>
-
               <div class="mt-3">
-                 <select class="form-select form-select-sm" name="tipo_archivo">
+                 <select class="form-select form-select-sm" name="tipo_archivo" id="tipo_archivo">
                     <option selected>Seleccione tipo de archivo</option>
                     <option value="pdf">PDF</option>
                     <option value="img">Imagen</option>
@@ -32,4 +24,4 @@
            </form>
         </div>
      </div>
-</div>
+</div> 
