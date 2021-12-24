@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Audiencia as AudienciaModel;
 use App\Models\CentroJusticia as CentroJusticiaModel;
+use App\Models\EstadoAudiencia as EstadoAudienciaModel;
 use App\Models\Expediente as ExpedienteModel;
 use App\Models\Sala as SalaModel;
 use App\Models\TipoAudiencia as TipoAudienciaModel;
@@ -171,7 +172,13 @@ class ReservaSalaController extends Controller
      */
     public function edit($id)
     {
-        //
+        $expediente = ExpedienteModel::find($id); 
+        $salas =  SalaModel::all();
+        $salaActual = SalaModel::find($expediente->audiencia->sala_id);
+        $estadoAudiencia = EstadoAudienciaModel::all();
+        $estadoAudienciaActual = EstadoAudienciaModel::find($expediente->audiencia->estadoAudiencia_id);
+
+        return view('reservas.opciones.editar-reservacion', compact(['expediente', 'salaActual', 'salas', 'estadoAudienciaActual', 'estadoAudiencia']) );
     }
 
     /**
@@ -183,7 +190,32 @@ class ReservaSalaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validatedData = $request->validate([
+            
+            'sala_id' => ['required', 'numeric'],
+            'fechaCelebracion'  => ['required', 'date'],
+            'horaInicio'        => ['required'],
+            'horaFinalizar'     => ['required'],
+        ]);
+
+        try {
+            $audiencia = AudienciaModel::find($id);
+
+            $audiencia->fechaCelebracion    = $request->fechaCelebracion;
+            $audiencia->horaInicio          = $request->horaInicio;
+            $audiencia->horaFinalizar       = $request->horaFinalizar;
+            $audiencia->estadoAudiencia_id  = 2;
+            
+            if($audiencia->save()) {
+                return back()->with('success', 'Audiencia reagendada');
+            }
+
+            return back()->with('warning', 'Hubo un error al reagendar la Audiencia, verifique sus datos.');
+
+        } catch (\Throwable $th) {
+            return back()->with('error', 'Hubo un error al reagendar la Audiencia, Refresca la páguina o intente mas tarde.');
+        }
+
     }
 
     /**

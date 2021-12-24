@@ -69,6 +69,8 @@ Route::get('/salas/reservadas', [App\Http\Controllers\ReservaSalaController::cla
 Route::get('/salas/reservar-nueva-sala', [App\Http\Controllers\ReservaSalaController::class, 'create'])->name('book-new-room');
 Route::post('/salas/reservar-nueva-sala', [App\Http\Controllers\ReservaSalaController::class, 'store'])->name('post-room');
 Route::get('/salas/buscar/expediente', [App\Http\Controllers\ReservaSalaController::class, 'show'])->name('search-room');
+Route::get('/salas/expediente/reagendar/{id}', [App\Http\Controllers\ReservaSalaController::class, 'edit'])->name('edit-room');
+Route::put('/salas/expediente/reagendar/{id}', [App\Http\Controllers\ReservaSalaController::class, 'update'])->name('update-room');
 Route::delete('/salas/reservadas/{id}', [App\Http\Controllers\ReservaSalaController::class, 'destroy'])->name('delete-room');
 
 // Participantes
