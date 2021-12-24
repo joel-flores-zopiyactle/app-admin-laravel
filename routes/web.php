@@ -74,7 +74,10 @@ Route::delete('/salas/reservadas/{id}', [App\Http\Controllers\ReservaSalaControl
 // Participantes
 Route::get('/agregar/participantes/{id}/{expediente_id}', [App\Http\Controllers\ParticipanteController::class, 'create'])->name('add-participante');
 Route::post('/agregar/participantes/', [App\Http\Controllers\ParticipanteController::class, 'store'])->name('post-participante');
+Route::get('/participantes/{id}', [App\Http\Controllers\ParticipanteController::class, 'show'])->name('show-participantes');
 Route::delete('/agregar/participantes/{id}', [App\Http\Controllers\ParticipanteController::class, 'destroy'])->name('delete-participante');
+// Tomar asistencia
+Route::put('/asistencia/participante/{id}', [App\Http\Controllers\ParticipanteController::class, 'asistencia'])->name('asistencia-participante');
 
 
 // Buscar Expediente
