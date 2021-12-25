@@ -7,7 +7,7 @@
 @section('content')
 <div class="container-fluid">
     <div class="con d-flex justify-content-between align-items-center">
-        <h4>Expediente</h4>
+        <h4>Buscar Expediente</h4>
     </div>
 
     <hr>

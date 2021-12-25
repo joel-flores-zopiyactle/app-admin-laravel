@@ -71,7 +71,9 @@ Route::post('/salas/reservar-nueva-sala', [App\Http\Controllers\ReservaSalaContr
 Route::get('/salas/buscar/expediente', [App\Http\Controllers\ReservaSalaController::class, 'show'])->name('search-room');
 Route::get('/salas/expediente/reagendar/{id}', [App\Http\Controllers\ReservaSalaController::class, 'edit'])->name('edit-room');
 Route::put('/salas/expediente/reagendar/{id}', [App\Http\Controllers\ReservaSalaController::class, 'update'])->name('update-room');
+Route::put('/salas/expediente/cancelar/{id}', [App\Http\Controllers\ReservaSalaController::class, 'cancelarAudiencia'])->name('cancelar-room');
 Route::delete('/salas/reservadas/{id}', [App\Http\Controllers\ReservaSalaController::class, 'destroy'])->name('delete-room');
+
 
 // Participantes
 Route::get('/agregar/participantes/{id}/{expediente_id}', [App\Http\Controllers\ParticipanteController::class, 'create'])->name('add-participante');
@@ -100,6 +102,7 @@ Route::get('/agenda/eventos', [App\Http\Controllers\AgendaController::class, 'ge
 Route::get('/ingresar/evento', [App\Http\Controllers\AuditoriasController::class, 'login'])->name('ingresar-evento');
 Route::post('/ingresar/evento/singIn', [App\Http\Controllers\AuditoriasController::class, 'singInAudiencia'])->name('evento-singIn');
 Route::get('/evento/{id}', [App\Http\Controllers\AuditoriasController::class, 'showEvento'])->name('celebracion-evento');
+Route::get('/evento/salir/{id}', [App\Http\Controllers\AuditoriasController::class, 'exitAudiencia'])->name('salir-evento');
 
 
 // Notas
@@ -115,3 +118,8 @@ Route::get('/archivos/{id}', [App\Http\Controllers\ArchivoController::class, 'sh
 Route::get('/archivo/{id}', [App\Http\Controllers\ArchivoController::class, 'edit'])->name('edit-archivo');
 Route::put('/archivo/{id}', [App\Http\Controllers\ArchivoController::class, 'update'])->name('update-archivo');
 Route::delete('/archivo/delete/{id}', [App\Http\Controllers\ArchivoController::class, 'destroy'])->name('delete-archivo');
+
+
+// Invitado
+Route::get('/invitado/login', [App\Http\Controllers\InvitadoController::class, 'show'])->name('invitado-login');
+Route::get('/invitado/login/accesso', [App\Http\Controllers\InvitadoController::class, 'singIn'])->name('invitado-singIn');

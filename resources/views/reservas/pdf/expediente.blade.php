@@ -211,6 +211,18 @@
                 </tbody>
             </table>
 
+            <table>
+                <thead>
+                <tr>
+                    <td>Token de invitado:</td>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{ $expediente->tokenInvitado->token ?? 'No hay token'}}</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
 
        

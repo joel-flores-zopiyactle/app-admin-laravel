@@ -28,17 +28,25 @@
                 </li>
 
                 <li>
-                    <a href="{{ route('reservas-salas') }}"><span class="iconify h4" data-icon="icon-park-outline:doc-success"></span>Reservar sala</a>
+                    <a href="{{ route('book-new-room') }}"><span class="iconify h4" data-icon="icon-park-outline:doc-success"></span>Reservar sala</a>
                 </li>
 
                 <li>
                     <a href="{{ route('buscar-expediente') }}"><span class="iconify h4" data-icon="bx:bx-search"></span>Buscar expediente</a>
                 </li>
 
+                <li>
+                    <a href="{{ route('reservas-salas') }}"><span class="iconify h4" data-icon="bx:bx-archive"></span>Administración</a>
+                </li>
+
                
                
                 <li>
-                    <a class="" href="{{ route('agenda') }}"><span class="iconify h4 mr-2" data-icon="uil:calender"></span>Agenda</a>
+                    <a href="{{ route('agenda') }}"><span class="iconify h4 me-2" data-icon="uil:calender"></span>Agenda</a>
+                </li>
+
+                <li>
+                    <a href="{{ route('invitado-login') }}"><span class="iconify h4 me-2" data-icon="bx:bx-lock-open-alt"></span>Invitado</a>
                 </li>
 
             </ul>
@@ -46,8 +54,8 @@
             <ul class="sidebar-body-menu">
 
                 <li>
-                    <a class="show-cat-btn">
-                        <span class="iconify h4" data-icon="bx:bx-category-alt"></span>Configuraciones
+                    <a href="#" class="show-cat-btn">
+                        <span class="iconify h4 me-1" data-icon="bx:bx-category-alt"></span>Configuraciones
                         <span class="category__btn transparent-btn" title="Open list">
                             <span class="sr-only">Open list</span>
                             <span class="icon arrow-down" aria-hidden="true"></span>
@@ -74,7 +82,7 @@
                 </li>
             </ul>
 
-            <ul>
+            <ul class="mb-3">
                 <li class="nav-item dropdown">
                     <a id="navbarDropdown" class="btn btn-light nav-link dropdown-toggle text-dark" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                         {{ Auth::user()->name }}

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Expediente as ExpedienteModel;
 use App\Models\TokenAudiencia as TokenAudienciaModel;
+use App\Models\Audiencia as AudienciaModel;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class AuditoriasController extends Controller
@@ -23,7 +25,19 @@ class AuditoriasController extends Controller
         $acceso = TokenAudienciaModel::where('token', $request->token)->where('expediente_id', $request->numero_de_expediente)->get();
 
         if(count($acceso) > 0) {
-            return redirect("/evento/$request->numero_de_expediente");
+
+           try {
+                $audiencia = AudienciaModel::where('expediente_id', $request->numero_de_expediente)->first(); // Obtener el id del audiencia
+                
+                $actualizarAudiencia = AudienciaModel::find($audiencia->id);
+                $actualizarAudiencia->estadoAudiencia_id = 3; // estado celebrandose
+                $actualizarAudiencia->save();
+
+                return redirect("/evento/$request->numero_de_expediente");
+
+           } catch (\Throwable $th) {
+               return back()->with('error', "Hubo un error al acceder, intente de nuevo!");
+           }
            //evento/{id}
         } else {
             return back()->with('error', "El token o Número de expediente son incorrectos!");
@@ -35,5 +49,21 @@ class AuditoriasController extends Controller
         $expediente = ExpedienteModel::find($id);
 
         return view('auditoria.index', compact('expediente'));
+    }
+
+    // Id de la audiencia
+    public function exitAudiencia($id)
+    {
+        try {
+
+            $actualizarAudiencia = AudienciaModel::find($id);
+            $actualizarAudiencia->estadoAudiencia_id = 6; // estado celebrandose
+            $actualizarAudiencia->save();
+
+            return view('auditoria.login');
+
+        } catch (\Throwable $th) {
+            return back()->with('error', "Hubo un error al salir de la audiencia! $th");
+        }
     }
 }

@@ -13,18 +13,6 @@
 
    <x-alert-message />
 
-
-   {{-- <div class="mb-5">
-     <form id="formParticipantes" method="post">
-       <div class="w-full">
-        <button class="btn btn-sm btn-light" id="addParticipante">
-          Agregar
-        </button>
-       </div>
-     </form>
-   </div> --}}
-
-
     <div class="mb-2">
       <form class="w-100" action="{{ route('post-participante') }}" method="post">
         @csrf
@@ -88,10 +76,7 @@
                   <td>{{ $participante->descripcion}}</td>
                   <td>
                     <div class="text-center d-flex justify-content-center">
-                     {{--  <a class="btn btn-sm btn-light rounded-circle d-flex justify-content-center align-items-center p-1" href="#" title="Editar"> 
-                        <span class="iconify h5 m-0" data-icon="akar-icons:edit"></span>
-                      </a> --}}
-
+                    
                       <form class="ml-2" action="{{ route('delete-participante', $participante->id) }}" method="post">
                           @csrf
                           @method('DELETE')
@@ -122,18 +107,4 @@
         </form>
     </div>
   </div>  
-@endsection
-
-@section('js')
-
-  {{-- <script>
-    const form = document.getElementById('formParticipantes');
-    const addParticipante = document.getElementById('addParticipante');
-
-    addParticipante.eventListener('click', () => {
-
-    }) --}}
-    
-  </script>
-    
 @endsection

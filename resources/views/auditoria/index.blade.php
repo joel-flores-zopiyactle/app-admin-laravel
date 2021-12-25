@@ -4,7 +4,8 @@
 <div class="container">
 
    <div class="bg-white shadow mb-3 p-3">
-
+      <x-alert-message />
+      
       <nav>
          <div class="nav nav-tabs" id="nav-tab" role="tablist">
            <button class="nav-link active" id="nav-audiencia-tab" data-bs-toggle="tab" data-bs-target="#nav-audiencia" type="button" role="tab" aria-controls="nav-audiencia" aria-selected="true">Audiencia</button>
@@ -13,37 +14,46 @@
          </div>
        </nav>
 
-       <div class="tab-content mt-2" id="nav-tabContent">
+       <div class="tab-content mt-1" id="nav-tabContent">
           {{-- audiencia --}}
          <div class="tab-pane fade show active" id="nav-audiencia" role="tabpanel" aria-labelledby="nav-audiencia-tab">
-            <div>
-               <section class="mt-5 mb-3">
-                 <h3> <b>Audiencia</b>: {{$expediente->audiencia->tipoAudiencia->nombre }}</h3>
+            <div class="mb-3 mt-3 p-3 border rounded">
+               <section class=mb-1">
+                 <h4 class="h5 text-uppercase">{{$expediente->audiencia->centroJusticia->nombre }} - {{$expediente->audiencia->tipoAudiencia->nombre }} </h4>
+               </section>
+
+               <section class="d-flex justify-content-between">
+                  <p>Número de Audiencia: <b> {{ $expediente->audiencia->id }} </b></p>
+                  <section class="d-flex">
+                     <p class="me-3">Hora de inicio: {{ $expediente->audiencia->horaInicio }} </p>
+                     <p>Hora a finalizar: {{ $expediente->audiencia->horaFinalizar }} </p>
+                  </section>
                </section>
             </div>
       
             <div class="row mb-5">
-               <div class="col-5">
+               <div class="col-6">
                   <div class="w-100 overflow-hidden">
                      <img src="{{ asset('img/sinjo_logo.png') }}" class="img-fluid rounded border" alt="logo">
                   </div>
          
                   <div>
-                     <div class="d-flex justify-content-center mt-2">
-                        <button class="btn btn-primary me-2 d-flex justify-content-center align-items-center"><span class="iconify h4 m-0" data-icon="akar-icons:play"></span></button>
-                        <button class="btn btn-warning d-flex justify-content-center align-items-center me-2"><span class="iconify h4 m-0" data-icon="clarity:pause-solid"></span></button>
-                        <button class="btn btn-danger d-flex justify-content-center align-items-center"><span class="iconify h4 m-0" data-icon="bi:stop-circle-fill"></span></button>
+                     <div class="d-flex justify-content-center mt-2 border p-2 bg-light">
+                        <button class="btn btn-success me-2 d-flex justify-content-center align-items-center"><span class="iconify h4 m-0" data-icon="akar-icons:play"></span></button>
+                        <button class="btn btn-light d-flex justify-content-center align-items-center me-2"><span class="iconify h4 m-0" data-icon="clarity:pause-solid"></span></button>
+                        <button class="btn btn-danger d-flex justify-content-center align-items-center"><span class="iconify h4 m-0" data-icon="healthicons:stop-outline"></span></button>
                      </div>
                   </div>
                   <hr>
                </div>
          
-               <div class="col-7">
+               <div class="col-6">
                  {{-- Info de la audiencia --}}
                </div>
-
-               <div class="w-100 text-center mt-5">
-                  <a href="{{ route('ingresar-evento') }}" class="btn btn-primary rounded-pill px-3" onclick="return confirm('¿Estas seguro de salir de la sala?')">Finalizar audiencia</a>
+               
+               {{-- salir --}}
+               <div class="w-100 text-center mt-5 border p-3">
+                  <a href="{{ route('salir-evento',$expediente->audiencia->id ) }}" class="btn btn-primary rounded-pill px-3" onclick="return confirm('¿Estas seguro de salir de la sala?')">Finalizar audiencia</a>
                </div>
             </div>
    
