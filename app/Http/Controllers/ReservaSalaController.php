@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\Audiencia as AudienciaModel;
 use App\Models\CentroJusticia as CentroJusticiaModel;
+use App\Models\EstadoAudiencia as EstadoAudienciaModel;
 use App\Models\Expediente as ExpedienteModel;
 use App\Models\Sala as SalaModel;
 use App\Models\TipoAudiencia as TipoAudienciaModel;
 use App\Models\TipoJuicio as TipoJuicioModel;
 use App\Models\TokenAudiencia as TokenAudienciaModel;
+use App\Models\TokenAudienciaInvitado as TokenAudienciaInvitadoModel;
 use Illuminate\Http\Request;
 
 
@@ -106,10 +108,17 @@ class ReservaSalaController extends Controller
                         $audiencia_id = $newAudiencia->id;
                         
                         //return view(('reservas.participantes'));
-                        // Generamos i¿un Token para la audiencia
-                        $token = $this->tokenExpediente($newAudiencia->id);
+                        // Generamos un Token para la audiencia
+                        $token = $this->tokenExpediente(60, $newAudiencia->id);
                         $tokenAudiencia = new TokenAudienciaModel;
                         $tokenAudiencia->token = $token;
+                        $tokenAudiencia->expediente_id =  $newAudiencia->id;
+                        $tokenAudiencia->save();
+
+                        // Token del invitado
+                        $tokenInvitado = $this->tokenExpediente(50, $newAudiencia->id);
+                        $tokenAudiencia = new TokenAudienciaInvitadoModel;
+                        $tokenAudiencia->token = $tokenInvitado;
                         $tokenAudiencia->expediente_id =  $newAudiencia->id;
                         $tokenAudiencia->save();
 
@@ -171,7 +180,13 @@ class ReservaSalaController extends Controller
      */
     public function edit($id)
     {
-        //
+        $expediente = ExpedienteModel::find($id); 
+        $salas =  SalaModel::all();
+        $salaActual = SalaModel::find($expediente->audiencia->sala_id);
+        $estadoAudiencia = EstadoAudienciaModel::all();
+        $estadoAudienciaActual = EstadoAudienciaModel::find($expediente->audiencia->estadoAudiencia_id);
+
+        return view('reservas.opciones.editar-reservacion', compact(['expediente', 'salaActual', 'salas', 'estadoAudienciaActual', 'estadoAudiencia']) );
     }
 
     /**
@@ -183,7 +198,32 @@ class ReservaSalaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validatedData = $request->validate([
+            
+            'sala_id' => ['required', 'numeric'],
+            'fechaCelebracion'  => ['required', 'date'],
+            'horaInicio'        => ['required'],
+            'horaFinalizar'     => ['required'],
+        ]);
+
+        try {
+            $audiencia = AudienciaModel::find($id);
+
+            $audiencia->fechaCelebracion    = $request->fechaCelebracion;
+            $audiencia->horaInicio          = $request->horaInicio;
+            $audiencia->horaFinalizar       = $request->horaFinalizar;
+            $audiencia->estadoAudiencia_id  = 2;
+            
+            if($audiencia->save()) {
+                return back()->with('success', 'Audiencia reagendada');
+            }
+
+            return back()->with('warning', 'Hubo un error al reagendar la Audiencia, verifique sus datos.');
+
+        } catch (\Throwable $th) {
+            return back()->with('error', 'Hubo un error al reagendar la Audiencia, Refresca la páguina o intente mas tarde.');
+        }
+
     }
 
     /**
@@ -210,17 +250,40 @@ class ReservaSalaController extends Controller
 
     
     // Genera un token para el expediente y es usado para acceder a la celebracion del audiecia
-    public function tokenExpediente($id)
+    public function tokenExpediente($len, $id)
     {
         $cadena = "Sinjo_ABCDFGHIJKLMNOPQRSTVWXYZabcdefghijklmnopqrstvwxyz0123456789_".$id;
         $token = "";
 
-        for($i = 0; $i < 60; $i++) {
-            $token .= $cadena[rand(0,60)];       
+        for($i = 0; $i < $len; $i++) {
+            $token .= $cadena[rand(0, $len)];       
         }
 
         return $token;
 
+    }
+
+
+    public function cancelarAudiencia($id)
+    {
+        try {
+            $audiencia = AudienciaModel::find($id);
+
+            if (!$audiencia) {
+                return back()->with('warning', 'No se pudo cancelar la audiencia. Intente de nuevo.');
+            }
+
+            $audiencia->estadoAudiencia_id = 5;
+                
+            if($audiencia->save()) {
+                return back()->with('success', 'Audiencia cancelada exitosamente.');
+            }
+
+            return back()->with('warning', 'No se pudo cancelar la audiencia. Intente de nuevo.');
+            
+        } catch (\Throwable $th) {
+             return back()->with('error', 'Fallo al cancelar la audiencia. Intente tarde.');
+        }
     }
 
 }

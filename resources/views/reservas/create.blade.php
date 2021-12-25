@@ -162,7 +162,7 @@
             <div class="col-4">
                 <div class="mb-3">
                     <label for="fechaCelebracion" class="form-label">Fecha de Celebración</label>
-                    <input type="date" class="form-control @error('juicio_id') is-invalid @enderror" name="fechaCelebracion" id="fechaCelebracion" value="{{ old('fechaCelebracion') }}">
+                    <input type="date" class="form-control @error('fechaCelebracion') is-invalid @enderror" name="fechaCelebracion" id="fechaCelebracion" value="{{ old('fechaCelebracion') }}">
                     @error('fechaCelebracion')
                         <div class="alert alert-danger mt-1">{{ $message }}</div>
                     @enderror

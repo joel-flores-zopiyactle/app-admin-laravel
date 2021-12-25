@@ -101,7 +101,7 @@ class ParticipanteController extends Controller
                 'asistencia' => array(
                     'id' =>  $asistencia->id ?? 0,
                     'asistencia' => $asistencia->asistencia ?? 'registrado',
-                    'color' => $asistencia->color ?? 'bg-light'
+                    'color' => $asistencia->color ?? 'bg-dark'
                 )
             );
 

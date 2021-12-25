@@ -7,7 +7,7 @@
 @section('content')
 <div class="container-fluid">
     <div class="con d-flex justify-content-between align-items-center">
-        <h4>Lista de auduencia</h4>
+        <h4>Administración de auduencia</h4>
         <div>
             <a class="btn btn-primary btn-sm" href="{{ route('book-new-room') }}">Reservar Nueva Audiencia</a>
         </div>
@@ -21,16 +21,16 @@
     <div class="shadow p-2 mb-2 bg-body rounded card">
         @if (count($expedientes) > 0)
 
-            <div clas="w-100">
-                <form  action="{{ route('search-room') }}" class="w-50 d-flex" method="post">
+            <div clas="w-50">
+                <form  action="{{ route('search-room') }}" class="w-25 d-flex" method="post">
                     @csrf
                     @method('GET')
-                    <input type="search" class="form-control me-1" name="num" id="buscar" placeholder="Buscar por numero de expediente">
+                    <input type="search" class="form-control me-1" name="num" id="buscar" placeholder="Buscar por número de expediente">
                     <button type="submit" class="btn btn-primary">Buscar</button>
                 </form>
             </div>
 
-            <table class="table table-hover mt-2">
+            <table class="table table-responsive table-hover mt-2">
                 <thead class="table-success">
                 <tr>
                     <th scope="col">Numero de expediente</th>
@@ -52,46 +52,16 @@
                                 <td>{{ $expediente->audiencia->horaFinalizar }}</td>
                                 <td>{{ $expediente->audiencia->tipoAudiencia->nombre }}</td>
                                 <td>{{ $expediente->audiencia->sala->sala }}</td>
-                                <td>{{ $expediente->audiencia->estadoAudiencia->estado }}</td>
                                 <td>
-                                    <div class="d-flex justify-content-center align-items-center">
-                                        <div class="dropdown">
+                                    <x-control-estado-audiencia :estadoAudiencia="$expediente->audiencia->estadoAudiencia" />
+                                </td>
                                 
-                                            <button class="btn btn-light rounded-circle d-flex justify-content-center align-items-center p-1"  type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                                <span class="iconify h4 m-0" data-icon="fluent:more-circle-32-regular" data-rotate="90deg"></span>
-                                            </button>
-    
-                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                               {{--  <li>
-                                                    <a class="dropdown-item" href="#"><span class="iconify mr-1" data-icon="clarity:note-edit-line" data-rotate="90deg"></span>Editar</a>
-                                                </li> --}}
-                                                <li>
-                                                    <form action="{{route('delete-room', $expediente->id)}}" method="post">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button class="dropdown-item" type="submit" 
-                                                        onclick="return confirm('¿Estas seguro de eliminar el expdiente numero : {{ $expediente->id }}?')" title="Eliminar">
-                                                        <span class="iconify mr-1" data-icon="fluent:delete-20-regular"></span>Eliminar
-                                                        </button>
-                                                    </form>
-                                                </li>
-    
-                                                <li>
-                                                    <a class="dropdown-item" href="#"><span class="iconify mr-1" data-icon="simple-icons:jsonwebtokens"></span>Obtener Token</a>
-                                                </li>
-                                                <li>
-                                                    <a class="dropdown-item" href="{{ route('show-pdf-expediente', $expediente->id) }}"><span class="iconify mr-1" data-icon="cil:print"></span>Imprimir Expediente</a>
-                                                </li>
-    
-                                               {{--  <li>
-                                                    <a class="dropdown-item" href="{{ route('add-participante')}}"><span class="iconify mr-1" data-icon="fluent:people-community-16-regular"></span>Participantes</a>
-                                                </li> --}}
-                                            </ul>
-                                        </div>
-                                    </div>
-                                   
+                                <td>
+                                    <x-btn-options-table :expedienteId="$expediente->id" />
                                 </td>
                             </tr>
+
+                           
                         @endforeach                            
                 </tbody>
             </table>  
@@ -105,4 +75,5 @@
         @endif
     </div>
 </div>
+
 @endsection
