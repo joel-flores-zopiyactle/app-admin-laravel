@@ -21,7 +21,7 @@
 </head>
 
 <body>
-    <div class="page-flex">
+    <div class="page-flex fixed">
         <!-- ! Sidebar -->
         <x-nav-bar/>
 
@@ -76,12 +76,12 @@
             </nav>
             <!-- ! Main -->
             <main>
-                <div class="container-fluid p-3 vh-100 overflow-auto">
+                <div class="container-fluid p-3 vh-100">
                    @yield('content')
                 </div>
             </main>
             <!-- ! Footer -->
-            <footer class="w-100 bg-white mt-3 p-3">
+            <footer class="w-100 bg-white mt-5 p-3">
                 <div class="container footer--flex">
                     <div class="text-center">
                         <p>

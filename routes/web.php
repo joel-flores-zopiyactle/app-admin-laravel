@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-
+// TODO: Desactivar la opcion Register en laravel ["register" => false])
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
@@ -62,6 +62,16 @@ Route::post('/ajustes/juicio/nuevo', [App\Http\Controllers\JuiciosController::cl
 Route::get('/ajustes/juicio/editar/{id}', [App\Http\Controllers\JuiciosController::class, 'edit'])->name('edit-juicio');
 Route::put('/ajustes/juicio/editar/{id}', [App\Http\Controllers\JuiciosController::class, 'update'])->name('update-juicio');
 Route::delete('/ajustes/juicio/{id}', [App\Http\Controllers\JuiciosController::class, 'destroy'])->name('delete-juicio');
+
+
+// Control de usuarios
+Route::get('/ajustes/usuarios', [App\Http\Controllers\UsuariosController::class, 'index'])->name('usuarios');
+Route::get('/ajustes/usuarios/nuevo-usuario', [App\Http\Controllers\UsuariosController::class, 'create'])->name('create-usuario');
+Route::post('/ajustes/usuarios/nuevo-usuario', [App\Http\Controllers\UsuariosController::class, 'store'])->name('post-usuario');
+Route::get('/ajustes/usuarios/nuevo-usuario/{id}', [App\Http\Controllers\UsuariosController::class, 'edit'])->name('edit-usuario');
+Route::put('/ajustes/usuarios/actualizar/{id}', [App\Http\Controllers\UsuariosController::class, 'update'])->name('update-usuario');
+Route::put('/ajustes/usuarios/actualizar/password/{id}', [App\Http\Controllers\UsuariosController::class, 'updatePassword'])->name('update-password');
+Route::delete('/ajustes/usuarios/nuevo-usuario/{id}', [App\Http\Controllers\UsuariosController::class, 'destroy'])->name('delete-usuario');
 
 
 // Reserva se sala

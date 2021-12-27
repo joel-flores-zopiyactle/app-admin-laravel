@@ -78,6 +78,10 @@
                         <li>
                             <a href="{{ route('juicios') }}"><span class="iconify h4 mr-1" data-icon="healthicons:justice"></span>Tipo de juicio</a>
                         </li>
+
+                        <li>
+                            <a href="{{ route('usuarios') }}"><span class="iconify h4 mr-1" data-icon="healthicons:justice"></span>Usuarios</a>
+                        </li>
                     </ul>
                 </li>
             </ul>
