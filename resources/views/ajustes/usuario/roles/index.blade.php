@@ -3,10 +3,10 @@
 @section('content')
 <div class="container-fluid">
     <div class="con d-flex justify-content-between align-items-center">
-        <h4> Control de usuarios </h4>
+        <h4> Control de roles de administración </h4>
         <div>
-            <a class="btn btn-outline-primary btn-sm me-3" href="{{ route('roles.usuarios') }}">Lista de roles de administración</a>
-            <a class="btn btn-primary btn-sm" href="{{ route('create-usuario') }}">Agregar nuevo usuario</a>
+            <a class="btn btn-outline-success btn-sm me-3" href="{{ route('usuarios') }}">Lista control de usuarios</a>
+            <a class="btn btn-primary btn-sm" href="{{ route('create.roles.usuarios') }}">Agregar nuevo rol</a>
         </div>
     </div>
 
@@ -17,35 +17,40 @@
 
 
     <div class="shadow p-3 mb-5 bg-body rounded card">
-        @if (count($usuarios) > 0)
+        @if (count($roles) > 0)
             <table class="table table-hover">
                 <thead class="table-primary">
                 <tr>
-                    <th scope="col">Nombre</th>
-                    <th scope="col">Correo</th>
-                    <th scope="col">Telefono</th>
-                    <th scope="col">Tipo de usuarios</th>
+                    <th scope="col">Tipo de Rol</th>
+                    <th scope="col">Descripción</th>
+                    <th scope="col">Disponible</th>
                     <th class="text-center" scope="col">Acciones</th>
                 </tr>
                 </thead>
                 <tbody>
-                    @foreach ($usuarios as $usuario)
+                    @foreach ($roles as $rol)
                         <tr>
-                            <td>{{ $usuario->name }}</td>
-                            <td>{{ $usuario->email }}</td>
-                            <td>{{ $usuario->telefono }}</td>
-                            <td>{{ $usuario->tipoUsuario->tipo }}</td>
+                            <td>{{ $rol->tipo }}</td>
+                            <td>{{ $rol->descripcion }}</td>
+                            <td>
+                                @if ($rol->estado)
+                                    <p>Disponible</p>
+                                @else
+                                    <p>No Disponible</p>
+                                @endif
+
+                            </td>
                             <td>
                                 <div class="text-center d-flex justify-content-center">
-                                    <a class="btn btn-sm btn-light rounded-circle d-flex justify-content-center align-items-center p-1" href="{{ route('edit-usuario', $usuario->id) }}" title="Editar"> 
+                                    <a class="btn btn-sm btn-light rounded-circle d-flex justify-content-center align-items-center p-1" href="{{ route('edit.roles.usuarios', $rol->id) }}" title="Editar"> 
                                         <span class="iconify h5 m-0" data-icon="akar-icons:edit"></span>
                                     </a>
 
-                                    <form class="ml-2" action="{{route('delete-usuario', $usuario->id)}}" method="post">
+                                    <form class="ml-2" action="{{route('delete.roles.usuarios', $rol->id)}}" method="post">
                                         @csrf
                                         @method('DELETE')
                                         <button class="btn btn-sm btn-light rounded-circle d-flex justify-content-center align-items-center p-1" type="submit" 
-                                        onclick="return confirm('¿Estas seguro de eliminar: {{$usuario->name}}?')">
+                                        onclick="return confirm('¿Estas seguro de eliminar: {{$rol->tipo}}?')">
                                             <span class="iconify h5 m-0" data-icon="fluent:delete-20-filled"></span>
                                         </button>
                                     </form>

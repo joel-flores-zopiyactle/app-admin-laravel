@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Audience;
 
+use App\Http\Controllers\Controller;
 use App\Models\Expediente as ExpedienteModel;
 use App\Models\TokenAudiencia as TokenAudienciaModel;
 use App\Models\Audiencia as AudienciaModel;

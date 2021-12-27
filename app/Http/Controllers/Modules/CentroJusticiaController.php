@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Modules;
 
-use App\Models\Sala;
+use App\Http\Controllers\Controller;
+use App\Models\CentroJusticia;
 use Illuminate\Http\Request;
 
-class SalaController extends Controller
+class CentroJusticiaController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +15,8 @@ class SalaController extends Controller
      */
     public function index()
     {
-        $salas = Sala::orderBy('id', 'desc')->paginate(15);
-        return view('ajustes.sala.index', compact('salas'));
+        $centros = CentroJusticia::orderBy('id', 'desc')->paginate(15);
+        return view('ajustes.centro_justicia.index', compact('centros'));
     }
 
     /**
@@ -25,7 +26,7 @@ class SalaController extends Controller
      */
     public function create()
     {
-        return view('ajustes.sala.create');
+        return view('ajustes.centro_justicia.create');
     }
 
     /**
@@ -37,30 +38,27 @@ class SalaController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'sala' => ['required', 'unique:salas', 'max:255'],
-            'numero' => ['required'],
-            'capacidad' => ['required'],
-            'ubicacion' => ['required'],
+            'nombre'      => ['required', 'unique:centro_justicias', 'max:255'],
+            'descripcion' => ['required'],
         ]);
 
         try {
 
-            $newSala = Sala::create([
-                'sala' => $request->sala,
-                'numero' => $request->numero,
-                'capacidad' => $request->capacidad,
-                'ubicacion' => $request->ubicacion
+            $newCentro = CentroJusticia::create([
+                'nombre'      => $request->nombre,
+                'descripcion' => $request->descripcion
             ]);
     
-            if($newSala) {
-                return back()->with('success', 'Nuevo Sala registrado exitosamente!');
+            if($newCentro) {
+                return back()->with('success', 'Nuevo Centro de justicia registrado exitosamente!');
             }
 
             return back()->with('warning', 'Hubo un error al guardar los datos por favor verifique sus datos.');
             
         } catch (\Throwable $th) {
-            return back()->with('danger', 'Fallo al registrar los datos!, verifique su conexion a Internet o recarga la página!');
+            return back()->with('error', 'Fallo al registrar los datos!, verifique su conexion a Internet o recarga la página');
         }
+
     }
 
     /**
@@ -71,7 +69,7 @@ class SalaController extends Controller
      */
     public function show($id)
     {
-        //
+       
     }
 
     /**
@@ -82,9 +80,10 @@ class SalaController extends Controller
      */
     public function edit($id)
     {
-        $sala = Sala::findOrFail($id);
+        $centro = CentroJusticia::findOrFail($id);
 
-        return view('ajustes.sala.create', compact('sala'));
+        return view('ajustes.centro_justicia.create', compact('centro'));
+
     }
 
     /**
@@ -95,18 +94,17 @@ class SalaController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {
-        try {
-            
-            $updateSala = Sala::find($id);
-            $updateSala->sala = $request->sala;
-            $updateSala->numero = $request->numero;
-            $updateSala->capacidad = $request->capacidad;
-            $updateSala->ubicacion = $request->ubicacion;
-            $updateSala->estado = $request->estado ?? 0;
+    {   
+        //return $request->estado;
 
-            if($updateSala->save()) {
-                return back()->with('success', 'Datos de la Sala actualizados exitosamente!');
+        try {
+            $updateCentro = CentroJusticia::find($id);
+            $updateCentro->nombre       = $request->nombre;
+            $updateCentro->descripcion  = $request->descripcion;
+            $updateCentro->estado       = $request->estado ?? 0;
+
+            if($updateCentro->save()) {
+                return back()->with('success', 'Datos del Centro de justicia actualizados exitosamente!');
             }
 
             return back()->with('warning', 'Hubo un error al actualizar los datos por favor verifique de nuevo sus datos.');
@@ -125,17 +123,16 @@ class SalaController extends Controller
     public function destroy($id)
     {
         try {
+                $centroDelete = CentroJusticia::find($id);
 
-            $salaDelete = Sala::find($id);
+                if($centroDelete->delete()) {
+                    return back()->with('success', "$centroDelete->nombre eliminado correctamente!");
+                } 
 
-            if($salaDelete->delete()) {
-                return back()->with('success', "$salaDelete->sala eliminado correctamente!");
-            }
-
-            return back()->with('warning', "$salaDelete->sala no se pudo eliminar, Intente de nuevo!");
+                return back()->with('warning', "$centroDelete->nombre no se pudo eliminar, Intente de nuevo!");
 
         } catch (\Throwable $th) {
-            return back()->with('error', 'Fallo al eliminar los datos!, verifique su conexion a Internet o recarga la página');
+                return back()->with('error', 'Hubo un error al eliminar el dato.');
         }
     }
 }

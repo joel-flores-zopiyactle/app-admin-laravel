@@ -99,7 +99,7 @@
                         {{ __('Regresar') }}
                     </a>
 
-                    <button type="submit" class="btn btn-success">
+                    <button type="submit" class="btn btn-primary">
                         {{ __('Actualizar') }}
                     </button>
                 </div>
