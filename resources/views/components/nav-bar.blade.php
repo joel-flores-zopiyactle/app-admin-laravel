@@ -1,5 +1,6 @@
-<aside class="sidebar">
+<aside class="sidebar pb-5 fixed">
     <div class="sidebar-start">
+        
         <div class="sidebar-head">
             <a href="{{ route('home') }}" class="logo-wrapper" title="Home">
                 <div class="logo-text">
@@ -15,7 +16,8 @@
                {{--  <span class="iconify h4 text-white" data-icon="heroicons-solid:menu"></span> --}}
             </button>
         </div>
-        <div class="sidebar-body">
+
+        <div class="sidebar-body pb-5">
             <ul class="sidebar-body-menu">
                 <li>
                     <a class="active d-flex align-items-center" href="{{ route('home') }}">
@@ -23,20 +25,38 @@
                     </a>
                 </li>
 
+                <ul class="sidebar-body-menu">
+
+                    <li>
+                        <a href="#" class="show-cat-btn">
+                            <span class="iconify h4 me-1" data-icon="bx:bx-category-alt"></span>Auditoria
+                            <span class="category__btn transparent-btn" title="Open list">
+                                <span class="sr-only">Open list</span>
+                                <span class="icon arrow-down" aria-hidden="true"></span>
+                            </span>
+                        </a>
+    
+                        <ul class="cat-sub-menu">
+                            <li>
+                                <a href="{{ route('ingresar.evento') }}"><span class="iconify h4" data-icon="ri:team-fill"></span>Ingresar sala</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('auditoria.lista') }}"><span class="iconify h4" data-icon="ri:team-fill"></span>Lista de auditorias</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+
                 <li>
-                    <a href="{{ route('ingresar-evento') }}"><span class="iconify h4" data-icon="ri:team-fill"></span>Ingresar sala</a>
+                    <a href="{{ route('book.new.room') }}"><span class="iconify h4" data-icon="icon-park-outline:doc-success"></span>Reservar sala</a>
                 </li>
 
                 <li>
-                    <a href="{{ route('book-new-room') }}"><span class="iconify h4" data-icon="icon-park-outline:doc-success"></span>Reservar sala</a>
+                    <a href="{{ route('buscar.expediente') }}"><span class="iconify h4" data-icon="bx:bx-search"></span>Buscar expediente</a>
                 </li>
 
                 <li>
-                    <a href="{{ route('buscar-expediente') }}"><span class="iconify h4" data-icon="bx:bx-search"></span>Buscar expediente</a>
-                </li>
-
-                <li>
-                    <a href="{{ route('reservas-salas') }}"><span class="iconify h4" data-icon="bx:bx-archive"></span>Administración</a>
+                    <a href="{{ route('reservas.salas') }}"><span class="iconify h4" data-icon="bx:bx-archive"></span>Administración</a>
                 </li>
 
                
@@ -46,7 +66,7 @@
                 </li>
 
                 <li>
-                    <a href="{{ route('invitado-login') }}"><span class="iconify h4 me-2" data-icon="bx:bx-lock-open-alt"></span>Invitado</a>
+                    <a href="{{ route('invitado.login') }}"><span class="iconify h4 me-2" data-icon="bx:bx-lock-open-alt"></span>Invitado</a>
                 </li>
 
             </ul>
@@ -64,19 +84,23 @@
 
                     <ul class="cat-sub-menu">
                         <li>
-                            <a href="{{ route('centro-justicia') }}"><span class="iconify h4 mr-1" data-icon="ps:justice"></span>Centro de justicia</a>
+                            <a href="{{ route('centro.justicia') }}"><span class="iconify h4 me-1" data-icon="ps:justice"></span>Centro de justicia</a>
                         </li>
                         <li>
-                            <a href="{{ route('roles') }}"><span class="iconify h4 mr-1" data-icon="eos-icons:cluster-role-binding"></span>Roles</a>
+                            <a href="{{ route('roles') }}"><span class="iconify h4 me-1" data-icon="eos-icons:cluster-role-binding"></span>Roles</a>
                         </li>
                         <li>
-                            <a href="{{ route('salas') }}"><span class="iconify h4 mr-1" data-icon="fluent:conference-room-16-filled"></span>Sala</a>
+                            <a href="{{ route('salas') }}"><span class="iconify h4 me-1" data-icon="fluent:conference-room-16-filled"></span>Sala</a>
                         </li>
                         <li>
-                            <a href="{{ route('audiencias') }}"><span class="iconify h4 mr-1" data-icon="fluent:people-audience-20-filled"></span>Tipo de audiencia</a>
+                            <a href="{{ route('audiencias') }}"><span class="iconify h4 me-1" data-icon="fluent:people-audience-20-filled"></span>Tipo de audiencia</a>
                         </li>
                         <li>
-                            <a href="{{ route('juicios') }}"><span class="iconify h4 mr-1" data-icon="healthicons:justice"></span>Tipo de juicio</a>
+                            <a href="{{ route('juicios') }}"><span class="iconify h4 me-1" data-icon="healthicons:justice"></span>Tipo de juicio</a>
+                        </li>
+
+                        <li>
+                            <a href="{{ route('usuarios') }}"><span class="iconify h4 me-1" data-icon="healthicons:justice"></span>Usuarios</a>
                         </li>
                     </ul>
                 </li>

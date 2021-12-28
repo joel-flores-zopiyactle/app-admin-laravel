@@ -1,5 +1,9 @@
 @extends('layouts.dashboard')
 
+@section('title')
+    Auditoria en celebración
+@endsection
+
 @section('content')
 <div class="container">
 
@@ -53,7 +57,7 @@
                
                {{-- salir --}}
                <div class="w-100 text-center mt-5 border p-3">
-                  <a href="{{ route('salir-evento',$expediente->audiencia->id ) }}" class="btn btn-primary rounded-pill px-3" onclick="return confirm('¿Estas seguro de salir de la sala?')">Finalizar audiencia</a>
+                  <a href="{{ route('salir.evento',$expediente->audiencia->id ) }}" class="btn btn-primary rounded-pill px-3" onclick="return confirm('¿Estas seguro de salir de la sala?')">Finalizar audiencia</a>
                </div>
             </div>
    
@@ -103,9 +107,9 @@
 @endsection
 
 @section('js')
-      <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-      <script src="{{ asset('js/sala/form-notas.js') }}"></script>
-      <script src="{{ asset('js/sala/form-files.js') }}"></script>
-      <script src="{{ asset('js/sala/asistencia.js') }}"></script>
+     {{--  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script> --}}
+     {{--  <script src="{{ asset('js/sala/form-notas.js') }}"></script> --}}
+     {{--  <script src="{{ asset('js/sala/form-files.js') }}"></script> --}}
+     {{--  <script src="{{ asset('js/sala/asistencia.js') }}"></script> --}}
 @endsection
 

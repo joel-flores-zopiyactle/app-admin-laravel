@@ -11,7 +11,7 @@
    
     <hr>
     
-    <form action="{{ isset($rol) ? route('update-rol', $rol->id) : route('post-rol') }}" method="POST" class="w-50">
+    <form action="{{ isset($rol) ? route('update.rol', $rol->id) : route('post.rol') }}" method="POST" class="w-50">
         @csrf
         <x-alert-message />
         {{-- SI ACTUALIZAMOS LOS DATOS ENVIAMOS EL METODO PUT --}}

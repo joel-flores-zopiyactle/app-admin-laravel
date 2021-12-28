@@ -21,9 +21,9 @@
 </head>
 
 <body>
-    <div class="page-flex">
+    <div class="page-flex" id="app">
         <!-- ! Sidebar -->
-        <x-nav-bar/>
+        <x-nav-bar style="position: fixed;" />
 
         <div class="main-wrapper">
             <!-- ! Main nav -->
@@ -76,23 +76,25 @@
             </nav>
             <!-- ! Main -->
             <main>
-                <div class="container-fluid p-3 vh-100 overflow-auto">
+                <div class="container-fluid p-3">
                    @yield('content')
                 </div>
             </main>
-            <!-- ! Footer -->
-            <footer class="w-100 bg-white mt-3 p-3">
-                <div class="container footer--flex">
-                    <div class="text-center">
-                        <p>
-                            2021 © Akamatech - Sinjo
-                        </p>
-                    </div>
-                </div>
-            </footer>
+            
         </div>
 
     </div>
+
+    <!-- ! Footer -->
+    <footer class="w-100 bg-white py-5">
+        <div class="container w-100">
+            <div class="text-center ">
+                <p>
+                    2021 © Akamatech - Sinjo
+                </p>
+            </div>
+        </div>
+    </footer>
 
     <script src="{{ asset('js/app.js') }}" defer></script> 
     <script src="https://code.iconify.design/2/2.1.0/iconify.min.js"></script>

@@ -9,7 +9,7 @@
 <div class="container">
    <div class="row">
     <div class="col"></div>
-    <form action="{{ route('evento-singIn') }}" method="POST" class="col-5 card p-5 shadow mt-3" autocomplete="off">
+    <form action="{{ route('evento.singIn') }}" method="POST" class="col-5 card p-5 shadow mt-3" autocomplete="off">
         @csrf
         <h3 class="text-center">Ingresar audiencia</h3>
         <hr>

@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Auditoria;
 
+use App\Http\Controllers\Controller;
 use App\Models\Expediente as ExpedienteModel;
 use App\Models\TokenAudiencia as TokenAudienciaModel;
 use App\Models\Audiencia as AudienciaModel;
@@ -33,7 +34,9 @@ class AuditoriasController extends Controller
                 $actualizarAudiencia->estadoAudiencia_id = 3; // estado celebrandose
                 $actualizarAudiencia->save();
 
-                return redirect("/evento/$request->numero_de_expediente");
+                $numero_de_expediente = encrypt($request->numero_de_expediente); // encriptamos el id y lo pasamos al url
+
+                return redirect("/evento/$$numero_de_expediente");
 
            } catch (\Throwable $th) {
                return back()->with('error', "Hubo un error al acceder, intente de nuevo!");
@@ -46,6 +49,8 @@ class AuditoriasController extends Controller
 
     public function showEvento($id)
     {
+        $id = decrypt($id);
+        
         $expediente = ExpedienteModel::find($id);
 
         return view('auditoria.index', compact('expediente'));

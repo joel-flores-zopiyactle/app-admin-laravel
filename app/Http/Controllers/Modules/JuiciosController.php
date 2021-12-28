@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Modules;
 
-use App\Models\TipoAudiencia;
+use App\Http\Controllers\Controller;
+use App\Models\TipoJuicio;
 use Illuminate\Http\Request;
 
-class TipoAudienciaController extends Controller
+class JuiciosController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +15,8 @@ class TipoAudienciaController extends Controller
      */
     public function index()
     {
-        $audiencias = TipoAudiencia::orderBy('id', 'desc')->paginate(15);
-        return view('ajustes.tipo_audiencia.index', compact('audiencias'));
+        $juicios = TipoJuicio::orderBy('id', 'desc')->paginate(15);
+        return view('ajustes.tipo_juicio.index', compact('juicios'));
     }
 
     /**
@@ -25,7 +26,7 @@ class TipoAudienciaController extends Controller
      */
     public function create()
     {
-        return view('ajustes.tipo_audiencia.create');
+        return view('ajustes.tipo_juicio.create');
     }
 
     /**
@@ -37,19 +38,20 @@ class TipoAudienciaController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'nombre' => ['required', 'unique:centro_justicias', 'max:255'],
+            'nombre' => ['required', 'unique:tipo_juicios', 'max:255'],
             'descripcion' => ['required'],
         ]);
+        
 
         try {
 
-            $newAudiencia = TipoAudiencia::create([
+            $newJuicio = TipoJuicio::create([
                 'nombre' => $request->nombre,
                 'descripcion' => $request->descripcion
             ]);
     
-            if($newAudiencia) {
-                return back()->with('success', 'Nuevo Audiencia registrado exitosamente!');
+            if($newJuicio) {
+                return back()->with('success', 'Nuevo Juicio registrado exitosamente!');
             }
 
             return back()->with('warning', 'Hubo un error al guardar los datos por favor verifique sus datos.');
@@ -78,9 +80,10 @@ class TipoAudienciaController extends Controller
      */
     public function edit($id)
     {
-        $audiencia = TipoAudiencia::findOrFail($id);
+        $id =  decrypt($id);
+        $juicio = TipoJuicio::findOrFail($id);
 
-        return view('ajustes.tipo_audiencia.create', compact('audiencia'));
+        return view('ajustes.tipo_juicio.create', compact('juicio'));
     }
 
     /**
@@ -92,22 +95,22 @@ class TipoAudienciaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        try {
+       try {
 
-            $updateAudiencia = TipoAudiencia::find($id);
-            $updateAudiencia->nombre = $request->nombre;
-            $updateAudiencia->descripcion = $request->descripcion;
-            $updateAudiencia->estado = $request->estado ?? 0;
+        $updateCentro = TipoJuicio::find($id);
+        $updateCentro->nombre = $request->nombre;
+        $updateCentro->descripcion = $request->descripcion;
+        $updateCentro->estado = $request->estado ?? 0;
 
-            if($updateAudiencia->save()) {
-                return back()->with('success', 'Datos de la Audiencia actualizados exitosamente!');
-            }
-
-            return back()->with('warning', 'Hubo un error al actualizar los datos por favor verifique de nuevo sus datos.');
-
-        } catch (\Throwable $th) {
-            return back()->with('error', 'Fallo al actualizar los datos!, verifique su conexion a Internet o recarga la página');
+        if($updateCentro->save()) {
+            return back()->with('success', 'Datos del Tipo de Juicio actualizados exitosamente!');
         }
+
+        return back()->with('warning', 'Hubo un error al actualizar los datos por favor verifique de nuevo sus datos.');
+
+       } catch (\Throwable $th) {
+        return back()->with('error', 'Fallo al actualizar los datos!, verifique su conexion a Internet o recarga la página');
+       }
     }
 
     /**
@@ -118,17 +121,17 @@ class TipoAudienciaController extends Controller
      */
     public function destroy($id)
     {
-       try {
-            $audienciaDelete = TipoAudiencia::find($id);
+        try {
+            $juicioDelete = TipoJuicio::find($id);
 
-            if($audienciaDelete->delete()) {
-                return back()->with('success', "$audienciaDelete->nombre eliminado correctamente!");
+            if($juicioDelete->delete()) {
+                return back()->with('success', "$juicioDelete->nombre eliminado correctamente!");
             }
 
-            return back()->with('warning', "$audienciaDelete->nombre no se pudo eliminar, Intente de nuevo!");
+            return back()->with('warning', "$juicioDelete->nombre no se pudo eliminar, Intente de nuevo!");
 
-       } catch (\Throwable $th) {
-             return back()->with('error', 'Fallo al eliminar los datos!, verifique su conexion a Internet o recarga la página');
-       }
+        } catch (\Throwable $th) {
+            return back()->with('error', 'Fallo al eliminar los datos!, verifique su conexion a Internet o recarga la página');
+        }
     }
 }

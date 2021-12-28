@@ -1,5 +1,15 @@
 <div>
-    <div class="row mt-2">
+
+   <h3 class="h5 mt-3">Subir archivo</h3>
+   <hr>
+
+   <input type="text" name="expediente_id" id="expediente_id" required hidden value="{{ $audienciaid }}" />
+   <div>
+      {{-- Componente de vue js --}}
+      <form-file>
+   </div>
+
+    {{-- <div class="row mt-2">
         <div class="col-5">
            <form id="formFiles" enctype="multipart/form-data" method="POST">
                <input type="number" name="expediente_id" value="{{ $audienciaid }}" id="expediente_id" hidden>
@@ -21,7 +31,7 @@
 
               <div class="mt-3 d-flex">
                  <button type="submit" class="btn btn-primary">Subir</button>
-                 <div id="spinner-file"></div> {{-- Muestra el spinner de carga --}}
+                 <div id="spinner-file"></div>
               </div>
            </form>
         </div>
@@ -43,5 +53,5 @@
             </table>
           </div>
         </div>
-     </div>
+     </div> --}}
 </div> 

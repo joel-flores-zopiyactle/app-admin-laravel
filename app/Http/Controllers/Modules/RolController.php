@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Modules;
 
-use App\Models\TipoJuicio;
+use App\Http\Controllers\Controller;
+use App\Models\role as Role;
 use Illuminate\Http\Request;
 
-class JuiciosController extends Controller
+class RolController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +15,8 @@ class JuiciosController extends Controller
      */
     public function index()
     {
-        $juicios = TipoJuicio::orderBy('id', 'desc')->paginate(15);
-        return view('ajustes.tipo_juicio.index', compact('juicios'));
+        $roles = Role::orderBy('id', 'desc')->paginate(15);
+        return view('ajustes.rol.index', compact('roles'));
     }
 
     /**
@@ -25,7 +26,7 @@ class JuiciosController extends Controller
      */
     public function create()
     {
-        return view('ajustes.tipo_juicio.create');
+        return view('ajustes.rol.create');
     }
 
     /**
@@ -36,21 +37,21 @@ class JuiciosController extends Controller
      */
     public function store(Request $request)
     {
+
         $validatedData = $request->validate([
-            'nombre' => ['required', 'unique:tipo_juicios', 'max:255'],
+            'rol' => ['required', 'unique:roles', 'max:255'],
             'descripcion' => ['required'],
         ]);
-        
 
         try {
 
-            $newJuicio = TipoJuicio::create([
-                'nombre' => $request->nombre,
+            $newCentro = Role::create([
+                'rol' => $request->rol,
                 'descripcion' => $request->descripcion
             ]);
     
-            if($newJuicio) {
-                return back()->with('success', 'Nuevo Juicio registrado exitosamente!');
+            if($newCentro) {
+                return back()->with('success', 'Nuevo Rol registrado exitosamente!');
             }
 
             return back()->with('warning', 'Hubo un error al guardar los datos por favor verifique sus datos.');
@@ -66,9 +67,11 @@ class JuiciosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show()
     {
-        //
+        $roles = Role::orderBy('id', 'desc')->get();
+
+        return response()->json($roles);
     }
 
     /**
@@ -79,10 +82,10 @@ class JuiciosController extends Controller
      */
     public function edit($id)
     {
-        
-        $juicio = TipoJuicio::findOrFail($id);
+        $id = decrypt($id);
+        $rol = Role::findOrFail($id);
 
-        return view('ajustes.tipo_juicio.create', compact('juicio'));
+        return view('ajustes.rol.create', compact('rol'));
     }
 
     /**
@@ -94,22 +97,23 @@ class JuiciosController extends Controller
      */
     public function update(Request $request, $id)
     {
-       try {
+        try {
+            
+            $updateRol = Role::find($id);
+            $updateRol->rol = $request->rol;
+            $updateRol->descripcion = $request->descripcion;
+            $updateRol->estado = $request->estado ?? 0;
 
-        $updateCentro = TipoJuicio::find($id);
-        $updateCentro->nombre = $request->nombre;
-        $updateCentro->descripcion = $request->descripcion;
-        $updateCentro->estado = $request->estado ?? 0;
+            if($updateRol->save()) {
+                return back()->with('success', 'Datos del Rol actualizados exitosamente!');
+            }
 
-        if($updateCentro->save()) {
-            return back()->with('success', 'Datos del Tipo de Juicio actualizados exitosamente!');
+            return back()->with('warning', 'Hubo un error al actualizar los datos por favor verifique de nuevo sus datos.');
+
+
+        } catch (\Throwable $th) {
+            return back()->with('error', 'Fallo al actualizar los datos!, verifique su conexion a Internet o recarga la página');
         }
-
-        return back()->with('warning', 'Hubo un error al actualizar los datos por favor verifique de nuevo sus datos.');
-
-       } catch (\Throwable $th) {
-        return back()->with('error', 'Fallo al actualizar los datos!, verifique su conexion a Internet o recarga la página');
-       }
     }
 
     /**
@@ -120,17 +124,17 @@ class JuiciosController extends Controller
      */
     public function destroy($id)
     {
-        try {
-            $juicioDelete = TipoJuicio::find($id);
+       try {
+            $rolDelete = Role::find($id);
 
-            if($juicioDelete->delete()) {
-                return back()->with('success', "$juicioDelete->nombre eliminado correctamente!");
+            if($rolDelete->delete()) {
+                return back()->with('success', "$rolDelete->rol eliminado correctamente!");
             }
+            return back()->with('warning', "$rolDelete->rol no se pudo eliminar, Intente de nuevo!");
 
-            return back()->with('warning', "$juicioDelete->nombre no se pudo eliminar, Intente de nuevo!");
-
-        } catch (\Throwable $th) {
+       } catch (\Throwable $th) {
             return back()->with('error', 'Fallo al eliminar los datos!, verifique su conexion a Internet o recarga la página');
-        }
+       }
     }
+
 }

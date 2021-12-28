@@ -1,7 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
 
+namespace App\Http\Controllers\Audiencia;
+
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Audiencia as AudienciaModel;
 use App\Models\TipoAudiencia as TipoAudienciaModel;

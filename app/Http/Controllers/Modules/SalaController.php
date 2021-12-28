@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Modules;
 
-use App\Models\role as Role;
+use App\Http\Controllers\Controller;
+use App\Models\Sala;
 use Illuminate\Http\Request;
 
-class RolController extends Controller
+class SalaController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +15,8 @@ class RolController extends Controller
      */
     public function index()
     {
-        $roles = Role::orderBy('id', 'desc')->paginate(15);
-        return view('ajustes.rol.index', compact('roles'));
+        $salas = Sala::orderBy('id', 'desc')->paginate(15);
+        return view('ajustes.sala.index', compact('salas'));
     }
 
     /**
@@ -25,7 +26,7 @@ class RolController extends Controller
      */
     public function create()
     {
-        return view('ajustes.rol.create');
+        return view('ajustes.sala.create');
     }
 
     /**
@@ -36,21 +37,24 @@ class RolController extends Controller
      */
     public function store(Request $request)
     {
-
         $validatedData = $request->validate([
-            'rol' => ['required', 'unique:roles', 'max:255'],
-            'descripcion' => ['required'],
+            'sala' => ['required', 'unique:salas', 'max:255'],
+            'numero' => ['required'],
+            'capacidad' => ['required'],
+            'ubicacion' => ['required'],
         ]);
 
         try {
 
-            $newCentro = Role::create([
-                'rol' => $request->rol,
-                'descripcion' => $request->descripcion
+            $newSala = Sala::create([
+                'sala' => $request->sala,
+                'numero' => $request->numero,
+                'capacidad' => $request->capacidad,
+                'ubicacion' => $request->ubicacion
             ]);
     
-            if($newCentro) {
-                return back()->with('success', 'Nuevo Rol registrado exitosamente!');
+            if($newSala) {
+                return back()->with('success', 'Nuevo Sala registrado exitosamente!');
             }
 
             return back()->with('warning', 'Hubo un error al guardar los datos por favor verifique sus datos.');
@@ -79,9 +83,10 @@ class RolController extends Controller
      */
     public function edit($id)
     {
-        $rol = Role::findOrFail($id);
+        $id =  decrypt($id);
+        $sala = Sala::findOrFail($id);
 
-        return view('ajustes.rol.create', compact('rol'));
+        return view('ajustes.sala.create', compact('sala'));
     }
 
     /**
@@ -95,17 +100,18 @@ class RolController extends Controller
     {
         try {
             
-            $updateRol = Role::find($id);
-            $updateRol->rol = $request->rol;
-            $updateRol->descripcion = $request->descripcion;
-            $updateRol->estado = $request->estado ?? 0;
+            $updateSala = Sala::find($id);
+            $updateSala->sala = $request->sala;
+            $updateSala->numero = $request->numero;
+            $updateSala->capacidad = $request->capacidad;
+            $updateSala->ubicacion = $request->ubicacion;
+            $updateSala->estado = $request->estado ?? 0;
 
-            if($updateRol->save()) {
-                return back()->with('success', 'Datos del Rol actualizados exitosamente!');
+            if($updateSala->save()) {
+                return back()->with('success', 'Datos de la Sala actualizados exitosamente!');
             }
 
             return back()->with('warning', 'Hubo un error al actualizar los datos por favor verifique de nuevo sus datos.');
-
 
         } catch (\Throwable $th) {
             return back()->with('error', 'Fallo al actualizar los datos!, verifique su conexion a Internet o recarga la página');
@@ -120,17 +126,18 @@ class RolController extends Controller
      */
     public function destroy($id)
     {
-       try {
-            $rolDelete = Role::find($id);
+        try {
 
-            if($rolDelete->delete()) {
-                return back()->with('success', "$rolDelete->rol eliminado correctamente!");
+            $salaDelete = Sala::find($id);
+
+            if($salaDelete->delete()) {
+                return back()->with('success', "$salaDelete->sala eliminado correctamente!");
             }
-            return back()->with('warning', "$rolDelete->rol no se pudo eliminar, Intente de nuevo!");
 
-       } catch (\Throwable $th) {
+            return back()->with('warning', "$salaDelete->sala no se pudo eliminar, Intente de nuevo!");
+
+        } catch (\Throwable $th) {
             return back()->with('error', 'Fallo al eliminar los datos!, verifique su conexion a Internet o recarga la página');
-       }
+        }
     }
-
 }

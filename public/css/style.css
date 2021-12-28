@@ -305,7 +305,7 @@ button.disabled:focus {
   -ms-flex-pack: justify;
   justify-content: space-between;
   background-color: #0061f7 !important;
-  width: 253px;
+  width: 270px;
   padding: 20px 15px 37px 20px;
   -webkit-transition: 0.5s all;
   -o-transition: 0.5s all;
@@ -465,7 +465,7 @@ button.disabled:focus {
 
 .footer {
   border-top: 1px solid #E0E1EA;
-  padding-top: 14px;
+  padding-top: 10px;
   padding-bottom: 14px;
   color: #b9b9b9;
   font-size: 12px;
