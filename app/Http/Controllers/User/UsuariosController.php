@@ -7,6 +7,7 @@ use App\Models\TipoUsuario;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class UsuariosController extends Controller
 {
@@ -52,18 +53,24 @@ class UsuariosController extends Controller
                 'password' => ['required', 'string', 'min:8', 'confirmed'],
             ]);
 
-            $user = new User;
+            $urlFile  =  'default'; // Si no hay archivo se queda como defaul
+            
+            if($request->file('avatar')) {
+                $path = Storage::disk('public')->put('AVATARS', $request->file('avatar'));
+                $urlFile  =  asset($path);
+            }
 
-            $user->name = $request->name;
-            $user->email = $request->email;
-            $user->telefono = $request->telefono;
-            $user->tipo_usuario_id = $request->tipo_usuario_id;
-            $user->avatar = $request->avatar;
-            $user->password = Hash::make($request->password);
+            $user = new User;
+            $user->name             = $request->name;
+            $user->email            = $request->email;
+            $user->telefono         = $request->telefono;
+            $user->tipo_usuario_id  = $request->tipo_usuario_id;
+            $user->avatar           = $urlFile;
+            $user->password         = Hash::make($request->password);
     
             $user->save();
             
-            return back()->with('success', 'Nuevo usuario resgistrado!');
+            return back()->with('success', 'Nuevo usuario registrado!');
 
         } catch (\Throwable $th) {
             return back()->with('error', 'No se puedo dar de alta el usuario. Intente de nuevo!');

@@ -9,7 +9,7 @@
     <div class="con d-flex justify-content-between align-items-center">
         <h4>Resultados</h4>
         <div>
-            <a class="btn btn-primary btn-sm" href="{{ route('book-new-room') }}">Nueva audiencia</a>
+            <a class="btn btn-primary btn-sm" href="{{ route('book.new.room') }}">Nueva audiencia</a>
         </div>
     </div>
 
@@ -56,15 +56,15 @@
         
         @else
             <div class="p-3">
-                <h3>Noresultados de la busqueda</h3>
+                <h3>No hay esultados de la busqueda</h3>
             </div>
         @endif
     </div>
 
     <div class="mt-5">
-        <a class="d-flex align-content-center" href="{{ route('reservas-salas') }}">
+        <a class="d-flex align-content-center" href="{{ route('reservas.salas') }}">
             <span class="iconify h3 mr-2" data-icon="bx:bxs-left-arrow-circle"></span> 
-            <span>regresar</span>
+            <span>Regresar</span>
         </a>
     </div>
 </div>

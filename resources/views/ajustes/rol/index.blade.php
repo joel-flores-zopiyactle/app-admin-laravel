@@ -5,7 +5,7 @@
     <div class="con d-flex justify-content-between align-items-center">
         <h4>Lista de roles</h4>
         <div>
-            <a class="btn btn-primary btn-sm" href="{{ route('create-rol') }}">Agregar nuevo rol</a>
+            <a class="btn btn-primary btn-sm" href="{{ route('create.rol') }}">Agregar nuevo rol</a>
         </div>
     </div>
 
@@ -39,11 +39,11 @@
 
                             </td>
                             <td class="text-center d-flex justify-content-center">
-                                <a class="btn btn-sm btn-light rounded-circle d-flex justify-content-center align-items-center p-1" href="{{ route('edit-rol', $rol->id) }}" title="Editar"> 
+                                <a class="btn btn-sm btn-light rounded-circle d-flex justify-content-center align-items-center p-1" href="{{ route('edit.rol', $rol->id) }}" title="Editar"> 
                                     <span class="iconify h5 m-0" data-icon="akar-icons:edit"></span>
                                 </a>
 
-                                <form class="ml-2" action="{{route('delete-rol', $rol->id)}}" method="post">
+                                <form class="ml-2" action="{{route('delete.rol', $rol->id)}}" method="post">
                                     @csrf
                                     @method('DELETE')
                                     <button class="btn btn-sm btn-light rounded-circle d-flex justify-content-center align-items-center p-1" type="submit" 
@@ -62,7 +62,7 @@
             </div>
         @else
             <div class="p-3">
-                <h3>No hay Roles todabia</h3>
+                <h3>No hay Roles todabía</h3>
             </div>
         @endif
     </div>

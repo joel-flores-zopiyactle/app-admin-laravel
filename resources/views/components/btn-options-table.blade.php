@@ -7,12 +7,12 @@
 
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
             <li>
-                <a class="dropdown-item" href="{{ route('edit-room', $expedienteId ) }}">
+                <a class="dropdown-item" href="{{ route('edit.room', $expedienteId ) }}">
                     <span class="iconify me-1" data-icon="uit:calender"></span>Agendar
                 </a>
             </li>
             <li>
-                <form action="{{route('delete-room', $expedienteId)}}" method="post">
+                <form action="{{route('delete.room', $expedienteId)}}" method="post">
                     @csrf
                     @method('DELETE')
                     <button class="dropdown-item" type="submit" 
@@ -26,11 +26,11 @@
                 <a class="dropdown-item" href="#"><span class="iconify me-1" data-icon="simple-icons:jsonwebtokens"></span>Obtener Token</a>
             </li> --}}
             <li>
-                <a class="dropdown-item" href="{{ route('show-pdf-expediente', $expedienteId) }}"><span class="iconify me-1" data-icon="cil:print"></span>Imprimir Expediente</a>
+                <a class="dropdown-item" href="{{ route('show.pdf.expediente', $expedienteId) }}"><span class="iconify me-1" data-icon="cil:print"></span>Imprimir Expediente</a>
             </li>
 
             <li>
-                <form action="{{route('cancelar-room', $expedienteId)}}" method="post">
+                <form action="{{route('cancelar.room', $expedienteId)}}" method="post">
                     @csrf
                     @method('PUT')
                     <button class="dropdown-item" type="submit" 

@@ -16,7 +16,7 @@
    </div>
 
     <div>
-        <form  action="{{ route('post-participante') }}" method="POST">
+        <form  action="{{ route('post.participante') }}" method="POST">
           @csrf
          <div class="mb-2">
            <input type="hidden" value="{{ $id }}" name="audiencia_id">

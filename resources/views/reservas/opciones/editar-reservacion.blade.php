@@ -16,7 +16,7 @@
 
     <div>
 
-        <form action="{{ route('update-room', $expediente->audiencia->id) }}" method="POST">
+        <form action="{{ route('update.room', $expediente->audiencia->id) }}" method="POST">
             @csrf
 
             @method('PUT')
@@ -107,7 +107,7 @@
 
             <hr>
           <div>
-            <a href="{{ route('reservas-salas') }}" class="btn btn-outline-danger me-2">Cancelar</a>
+            <a href="{{ route('reservas.salas') }}" class="btn btn-outline-danger me-2">Cancelar</a>
             <button type="submit" class="btn btn-success">Reagendar</button>
           </div>
         </form>

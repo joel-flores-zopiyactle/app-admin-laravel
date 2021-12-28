@@ -16,7 +16,7 @@
 
     <div>
         {{-- formulario de busqueda --}}
-        <form action="{{ route('buscar-expediente') }}" method="POST">
+        <form action="{{ route('buscar.expediente') }}" method="POST">
             @csrf
             @method('GET')
             <div class="row">
@@ -84,7 +84,7 @@
                                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                                 
                                                     <li>
-                                                        <form action="{{route('delete-room', $expediente->id)}}" method="post">
+                                                        <form action="{{route('delete.room', $expediente->id)}}" method="post">
                                                             @csrf
                                                             @method('DELETE')
                                                             <button class="dropdown-item" type="submit" 
@@ -94,11 +94,11 @@
                                                         </form>
                                                     </li>
 
-                                                    <li>
+                                                   {{--  <li>
                                                         <a class="dropdown-item" href="#"><span class="iconify mr-1" data-icon="simple-icons:jsonwebtokens"></span>Obtener Token</a>
-                                                    </li>
+                                                    </li> --}}
                                                     <li>
-                                                        <a class="dropdown-item" href="{{ route('show-pdf-expediente', $expediente->id) }}"><span class="iconify mr-1" data-icon="cil:print"></span>Imprimir Expediente</a>
+                                                        <a class="dropdown-item" href="{{ route('show.pdf.expediente', $expediente->id) }}"><span class="iconify mr-1" data-icon="cil:print"></span>Imprimir Expediente</a>
                                                     </li>
 
                                                 </ul>

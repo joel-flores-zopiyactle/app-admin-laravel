@@ -6,7 +6,7 @@
         <h4> Control de usuarios </h4>
         <div>
             <a class="btn btn-outline-primary btn-sm me-3" href="{{ route('roles.usuarios') }}">Lista de roles de administración</a>
-            <a class="btn btn-primary btn-sm" href="{{ route('create-usuario') }}">Agregar nuevo usuario</a>
+            <a class="btn btn-primary btn-sm" href="{{ route('create.usuario') }}">Agregar nuevo usuario</a>
         </div>
     </div>
 
@@ -37,11 +37,11 @@
                             <td>{{ $usuario->tipoUsuario->tipo }}</td>
                             <td>
                                 <div class="text-center d-flex justify-content-center">
-                                    <a class="btn btn-sm btn-light rounded-circle d-flex justify-content-center align-items-center p-1" href="{{ route('edit-usuario', $usuario->id) }}" title="Editar"> 
+                                    <a class="btn btn-sm btn-light rounded-circle d-flex justify-content-center align-items-center p-1" href="{{ route('edit.usuario', $usuario->id) }}" title="Editar"> 
                                         <span class="iconify h5 m-0" data-icon="akar-icons:edit"></span>
                                     </a>
 
-                                    <form class="ml-2" action="{{route('delete-usuario', $usuario->id)}}" method="post">
+                                    <form class="ml-2" action="{{route('delete.usuario', $usuario->id)}}" method="post">
                                         @csrf
                                         @method('DELETE')
                                         <button class="btn btn-sm btn-light rounded-circle d-flex justify-content-center align-items-center p-1" type="submit" 

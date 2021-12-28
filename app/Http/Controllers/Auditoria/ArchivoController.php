@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Audience;
+namespace App\Http\Controllers\Auditoria;
 
 use App\Http\Controllers\Controller;
 use App\Models\Archivo as ArchivoModel;

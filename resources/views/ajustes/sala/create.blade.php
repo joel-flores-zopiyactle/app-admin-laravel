@@ -12,7 +12,7 @@
     <hr>
     
 
-    <form action="{{ isset($sala) ? route('update-sala', $sala->id) : route('post-sala') }}" method="POST" class="w-50">
+    <form action="{{ isset($sala) ? route('update.sala', $sala->id) : route('post.sala') }}" method="POST" class="w-50">
         @csrf
         <x-alert-message />
 

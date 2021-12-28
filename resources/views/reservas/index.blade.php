@@ -9,7 +9,7 @@
     <div class="con d-flex justify-content-between align-items-center">
         <h4>Administración de auduencia</h4>
         <div>
-            <a class="btn btn-primary btn-sm" href="{{ route('book-new-room') }}">Reservar Nueva Audiencia</a>
+            <a class="btn btn-primary btn-sm" href="{{ route('book.new.room') }}">Reservar Nueva Audiencia</a>
         </div>
     </div>
 
@@ -22,7 +22,7 @@
         @if (count($expedientes) > 0)
 
             <div clas="w-50">
-                <form  action="{{ route('search-room') }}" class="w-25 d-flex" method="post">
+                <form  action="{{ route('search.room') }}" class="w-25 d-flex" method="post">
                     @csrf
                     @method('GET')
                     <input type="search" class="form-control me-1" name="num" id="buscar" placeholder="Buscar por número de expediente">

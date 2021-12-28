@@ -12,7 +12,7 @@
     <hr>
    
    
-    <form action="{{ isset($juicio) ? route('update-juicio', $juicio->id) : route('post-juicio') }}" method="POST" class="w-50">
+    <form action="{{ isset($juicio) ? route('update.juicio', $juicio->id) : route('post.juicio') }}" method="POST" class="w-50">
         @csrf
 
         <x-alert-message />

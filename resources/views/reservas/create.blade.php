@@ -13,7 +13,7 @@
         <x-alert-message />
     </div>
 
-    <form action="{{ route('post-room') }}" method="POST">
+    <form action="{{ route('post.room') }}" method="POST">
 
         @csrf
 

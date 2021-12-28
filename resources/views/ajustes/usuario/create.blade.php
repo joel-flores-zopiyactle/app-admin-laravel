@@ -12,7 +12,7 @@
     <x-alert-message />  
     
     <div>
-        <form method="POST" action="{{ route('post-usuario') }}" accept="for">
+        <form method="POST" action="{{ route('post.usuario') }}" enctype="multipart/form-data">
             @csrf
            
             <div class="row mb-3">

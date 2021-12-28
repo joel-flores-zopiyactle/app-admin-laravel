@@ -11,7 +11,7 @@
         <h2>Sala reservada exitosamente</h2>
 
 
-        <a href="{{ route('show-pdf-expediente', $id) }}" class="btn btn-outline-primary mt-3">Descargar expediente PDF</a>
+        <a href="{{ route('show.pdf.expediente', $id) }}" class="btn btn-outline-primary mt-3">Descargar expediente PDF</a>
     </div>
 
    

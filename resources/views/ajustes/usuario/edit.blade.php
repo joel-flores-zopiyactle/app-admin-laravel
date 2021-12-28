@@ -12,7 +12,7 @@
     <x-alert-message />  
     
     <div>
-        <form method="POST" action="{{ route('update-usuario', $usuario->id) }}">
+        <form method="POST" action="{{ route('update.usuario', $usuario->id) }}">
             @csrf
 
             @method('PUT')
@@ -107,7 +107,7 @@
         </form>
 
         {{-- Actualizar contraseña del usuario --}}
-        <form method="POST" action="{{ route('update-password', $usuario->id) }}">
+        <form method="POST" action="{{ route('update.password', $usuario->id) }}">
             @csrf
             @method('PUT')
             <hr>
