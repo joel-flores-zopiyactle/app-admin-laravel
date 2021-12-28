@@ -1,4 +1,4 @@
-<aside class="sidebar sticky">
+<aside class="sidebar pb-5 fixed">
     <div class="sidebar-start">
         
         <div class="sidebar-head">
@@ -17,7 +17,7 @@
             </button>
         </div>
 
-        <div class="sidebar-body mb-5">
+        <div class="sidebar-body pb-5">
             <ul class="sidebar-body-menu">
                 <li>
                     <a class="active d-flex align-items-center" href="{{ route('home') }}">

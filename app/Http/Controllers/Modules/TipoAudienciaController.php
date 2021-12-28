@@ -79,6 +79,7 @@ class TipoAudienciaController extends Controller
      */
     public function edit($id)
     {
+        $id =  decrypt($id);
         $audiencia = TipoAudiencia::findOrFail($id);
 
         return view('ajustes.tipo_audiencia.create', compact('audiencia'));

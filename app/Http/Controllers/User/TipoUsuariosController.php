@@ -79,6 +79,8 @@ class TipoUsuariosController extends Controller
      */
     public function edit($id)
     {
+        $id =  decrypt($id);
+        
         $rol = TipoUsuarioModel::find($id);
         return view('ajustes.usuario.roles.create', compact('rol'));
     }

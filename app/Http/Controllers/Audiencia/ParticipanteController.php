@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Audiencia;
 
-use App\Http\Resources\ParticipantesResourcean;
+use App\Http\Controllers\Controller;
 use App\Http\Resources\RolResource;
 use App\Models\Asistencia as AsistenciaModel;
 use App\Models\Participantes as ParticipantesModel;
 use App\Models\role as RoleModel;
-use GrahamCampbell\ResultType\Result;
 use Illuminate\Http\Request;
 
 class ParticipanteController extends Controller
@@ -47,7 +46,7 @@ class ParticipanteController extends Controller
             'nombre' => ['required', 'array'],
             'descripcion' =>['required', 'array'],
             'rol_id' => ['required', 'array'],
-            'audiencia_id' => ['required', 'numeric'],
+            'audiencia_id' => ['required', 'string'],
         ]);
 
         try {
@@ -63,7 +62,7 @@ class ParticipanteController extends Controller
                     'nombre' => $request->nombre[$i],
                     'descripcion' => $request->descripcion[$i],
                     'rol_id' => $request->rol_id[$i],
-                    'audiencia_id' => $request->audiencia_id,
+                    'audiencia_id' => decrypt($request->audiencia_id), // desencriptamos el id
                 ]);
         
                 if($newParticipante) {
@@ -80,6 +79,7 @@ class ParticipanteController extends Controller
             }
 
             //  '/expediente/pdf
+            // el id pasa encriptado 
             return redirect("/expediente/pdf/vista/$request->audiencia_id");
 
             return back()->with('success', 'Nuevo Participante registrado exitosamente!');

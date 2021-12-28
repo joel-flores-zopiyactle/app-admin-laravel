@@ -1,7 +1,7 @@
 <template>
     <div class="d-flex mb-2">
         <div>
-            <input class="form-control w-100" type="text" name="nombre[]">
+            <input class="form-control w-100" type="text" name="nombre[]" placeholder="Nombre completo...">
         </div>
 
         <div>

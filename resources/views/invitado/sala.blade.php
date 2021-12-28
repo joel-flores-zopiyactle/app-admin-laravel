@@ -1,7 +1,7 @@
 @extends('layouts.dashboard')
 
 @section('title')
-    Sala de la audiencia
+    Sala de audiencia
 @endsection
 
 @section('content')

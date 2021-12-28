@@ -19,9 +19,12 @@ window.Vue = require('vue').default;
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('form-add-users', require('./components/FormUsers.vue').default);
 Vue.component('input-form', require('./components/InputForm.vue').default);
+Vue.component('form-note', require('./components/FormNotas.vue').default);
+Vue.component('form-file', require('./components/FormFile.vue').default);
+Vue.component('tabla-asistencia', require('./components/Asistencia.vue').default);
+Vue.component('form-search', require('./components/FormSearch.vue').default);
 
 
 /**

@@ -82,6 +82,7 @@ class RolController extends Controller
      */
     public function edit($id)
     {
+        $id = decrypt($id);
         $rol = Role::findOrFail($id);
 
         return view('ajustes.rol.create', compact('rol'));

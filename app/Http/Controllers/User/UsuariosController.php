@@ -99,6 +99,8 @@ class UsuariosController extends Controller
      */
     public function edit($id)
     {
+        $id =  decrypt($id);
+        
         $tipoUsuarios = TipoUsuario::Where('estado', 1)->get();
         $usuario = User::find($id);
         $tipoUsuarioActual = TipoUsuario::Where('id', $usuario->tipo_usuario_id)->first();

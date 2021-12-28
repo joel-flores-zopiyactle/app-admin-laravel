@@ -39,7 +39,7 @@
 
                             </td>
                             <td class="text-center d-flex justify-content-center">
-                                <a class="btn btn-sm btn-light rounded-circle d-flex justify-content-center align-items-center p-1" href="{{ route('edit.rol', $rol->id) }}" title="Editar"> 
+                                <a class="btn btn-sm btn-light rounded-circle d-flex justify-content-center align-items-center p-1" href="{{ route('edit.rol', encrypt($rol->id)) }}" title="Editar"> 
                                     <span class="iconify h5 m-0" data-icon="akar-icons:edit"></span>
                                 </a>
 

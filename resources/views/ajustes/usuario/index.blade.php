@@ -25,6 +25,7 @@
                     <th scope="col">Correo</th>
                     <th scope="col">Telefono</th>
                     <th scope="col">Tipo de usuarios</th>
+                   {{--  <th scope="col">Avatar</th> --}}
                     <th class="text-center" scope="col">Acciones</th>
                 </tr>
                 </thead>
@@ -35,9 +36,12 @@
                             <td>{{ $usuario->email }}</td>
                             <td>{{ $usuario->telefono }}</td>
                             <td>{{ $usuario->tipoUsuario->tipo }}</td>
+                           {{--  <td>
+                                <img src="{{asset( $usuario->avatar) }}" alt="">
+                            </td> --}}
                             <td>
                                 <div class="text-center d-flex justify-content-center">
-                                    <a class="btn btn-sm btn-light rounded-circle d-flex justify-content-center align-items-center p-1" href="{{ route('edit.usuario', $usuario->id) }}" title="Editar"> 
+                                    <a class="btn btn-sm btn-light rounded-circle d-flex justify-content-center align-items-center p-1" href="{{ route('edit.usuario', encrypt($usuario->id)) }}" title="Editar"> 
                                         <span class="iconify h5 m-0" data-icon="akar-icons:edit"></span>
                                     </a>
 
@@ -62,7 +66,7 @@
             </div> 
         @else
             <div class="p-3">
-                <h3>No hay centros de justacia todabia</h3>
+                <h3>No hay usuarios registrados</h3>
             </div>
         @endif
     </div>

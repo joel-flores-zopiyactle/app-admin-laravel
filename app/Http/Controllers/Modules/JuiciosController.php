@@ -80,7 +80,7 @@ class JuiciosController extends Controller
      */
     public function edit($id)
     {
-        
+        $id =  decrypt($id);
         $juicio = TipoJuicio::findOrFail($id);
 
         return view('ajustes.tipo_juicio.create', compact('juicio'));

@@ -80,7 +80,8 @@ class CentroJusticiaController extends Controller
      */
     public function edit($id)
     {
-        $centro = CentroJusticia::findOrFail($id);
+        $id =  decrypt($id);
+        $centro = CentroJusticia::findOrFail( $id );
 
         return view('ajustes.centro_justicia.create', compact('centro'));
 

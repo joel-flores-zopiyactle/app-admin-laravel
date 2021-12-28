@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-  <div class="container-fluid" id="app">
+  <div class="container-fluid">
     <div>
       <h2 class="fs-5 text-uppercase">Agregar lista de participantes</h2>
       <hr>

@@ -1,5 +1,9 @@
 @extends('layouts.dashboard')
 
+@section('title')
+    Auditoria en celebración
+@endsection
+
 @section('content')
 <div class="container">
 
@@ -103,9 +107,9 @@
 @endsection
 
 @section('js')
-      <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-      <script src="{{ asset('js/sala/form-notas.js') }}"></script>
-      <script src="{{ asset('js/sala/form-files.js') }}"></script>
-      <script src="{{ asset('js/sala/asistencia.js') }}"></script>
+     {{--  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script> --}}
+     {{--  <script src="{{ asset('js/sala/form-notas.js') }}"></script> --}}
+     {{--  <script src="{{ asset('js/sala/form-files.js') }}"></script> --}}
+     {{--  <script src="{{ asset('js/sala/asistencia.js') }}"></script> --}}
 @endsection
 

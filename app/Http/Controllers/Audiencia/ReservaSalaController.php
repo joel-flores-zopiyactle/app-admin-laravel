@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Audiencia;
 
+use App\Http\Controllers\Controller;
 use App\Models\Audiencia as AudienciaModel;
 use App\Models\CentroJusticia as CentroJusticiaModel;
 use App\Models\EstadoAudiencia as EstadoAudienciaModel;
@@ -122,7 +123,10 @@ class ReservaSalaController extends Controller
                         $tokenAudiencia->expediente_id =  $newAudiencia->id;
                         $tokenAudiencia->save();
 
-                        return redirect("/agregar/participantes/$audiencia_id/$newExpediente->id");
+                        $id_audiencia = encrypt($audiencia_id);
+                        $id_nuevo_expediente = encrypt($newExpediente->id);
+
+                        return redirect("/agregar/participantes/$id_audiencia/$id_nuevo_expediente");
                         
                         //return back()->with('success', 'Audiencia programada exitosamente!');
                     } 
@@ -180,6 +184,8 @@ class ReservaSalaController extends Controller
      */
     public function edit($id)
     {
+        $id =  decrypt($id);
+        
         $expediente = ExpedienteModel::find($id); 
         $salas =  SalaModel::all();
         $salaActual = SalaModel::find($expediente->audiencia->sala_id);

@@ -83,6 +83,7 @@ class SalaController extends Controller
      */
     public function edit($id)
     {
+        $id =  decrypt($id);
         $sala = Sala::findOrFail($id);
 
         return view('ajustes.sala.create', compact('sala'));

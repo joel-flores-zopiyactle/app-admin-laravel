@@ -7,7 +7,7 @@
 
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
             <li>
-                <a class="dropdown-item" href="{{ route('edit.room', $expedienteId ) }}">
+                <a class="dropdown-item" href="{{ route('edit.room', encrypt($expedienteId) ) }}">
                     <span class="iconify me-1" data-icon="uit:calender"></span>Agendar
                 </a>
             </li>
@@ -26,7 +26,7 @@
                 <a class="dropdown-item" href="#"><span class="iconify me-1" data-icon="simple-icons:jsonwebtokens"></span>Obtener Token</a>
             </li> --}}
             <li>
-                <a class="dropdown-item" href="{{ route('show.pdf.expediente', $expedienteId) }}"><span class="iconify me-1" data-icon="cil:print"></span>Imprimir Expediente</a>
+                <a class="dropdown-item" href="{{ route('show.pdf.expediente', encrypt($expedienteId)) }}"><span class="iconify me-1" data-icon="cil:print"></span>Imprimir Expediente</a>
             </li>
 
             <li>

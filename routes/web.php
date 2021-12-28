@@ -12,10 +12,11 @@ use App\Http\Controllers\Modules\JuiciosController;
 use App\Http\Controllers\User\UsuariosController;
 use App\Http\Controllers\User\TipoUsuariosController;
 
-use App\Http\Controllers\ReservaSalaController;
-use App\Http\Controllers\ParticipanteController;
-use App\Http\Controllers\BuscarExpedienteController;
-use App\Http\Controllers\ExpedientePDFController;
+use App\Http\Controllers\Audiencia\ReservaSalaController;
+use App\Http\Controllers\Audiencia\ParticipanteController;
+use App\Http\Controllers\Audiencia\BuscarExpedienteController;
+use App\Http\Controllers\Audiencia\ExpedientePDFController;
+
 use App\Http\Controllers\AgendaController;
 
 use App\Http\Controllers\Auditoria\AuditoriasController;
