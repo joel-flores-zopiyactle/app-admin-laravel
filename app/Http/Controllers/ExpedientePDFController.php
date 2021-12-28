@@ -9,6 +9,11 @@ use Barryvdh\DomPDF\Facade as PDF;
 
 class ExpedientePDFController extends Controller
 {
+    public function index($id)
+    {
+       return view('reservas.pdf.index', compact('id'));
+    }
+    
     public function show($id)
     {
         $expediente = ExpedienteModel::find($id);

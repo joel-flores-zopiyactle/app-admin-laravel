@@ -1,5 +1,6 @@
-<aside class="sidebar">
+<aside class="sidebar sticky">
     <div class="sidebar-start">
+        
         <div class="sidebar-head">
             <a href="{{ route('home') }}" class="logo-wrapper" title="Home">
                 <div class="logo-text">
@@ -15,7 +16,8 @@
                {{--  <span class="iconify h4 text-white" data-icon="heroicons-solid:menu"></span> --}}
             </button>
         </div>
-        <div class="sidebar-body">
+
+        <div class="sidebar-body mb-5">
             <ul class="sidebar-body-menu">
                 <li>
                     <a class="active d-flex align-items-center" href="{{ route('home') }}">
@@ -64,23 +66,23 @@
 
                     <ul class="cat-sub-menu">
                         <li>
-                            <a href="{{ route('centro-justicia') }}"><span class="iconify h4 mr-1" data-icon="ps:justice"></span>Centro de justicia</a>
+                            <a href="{{ route('centro-justicia') }}"><span class="iconify h4 me-1" data-icon="ps:justice"></span>Centro de justicia</a>
                         </li>
                         <li>
-                            <a href="{{ route('roles') }}"><span class="iconify h4 mr-1" data-icon="eos-icons:cluster-role-binding"></span>Roles</a>
+                            <a href="{{ route('roles') }}"><span class="iconify h4 me-1" data-icon="eos-icons:cluster-role-binding"></span>Roles</a>
                         </li>
                         <li>
-                            <a href="{{ route('salas') }}"><span class="iconify h4 mr-1" data-icon="fluent:conference-room-16-filled"></span>Sala</a>
+                            <a href="{{ route('salas') }}"><span class="iconify h4 me-1" data-icon="fluent:conference-room-16-filled"></span>Sala</a>
                         </li>
                         <li>
-                            <a href="{{ route('audiencias') }}"><span class="iconify h4 mr-1" data-icon="fluent:people-audience-20-filled"></span>Tipo de audiencia</a>
+                            <a href="{{ route('audiencias') }}"><span class="iconify h4 me-1" data-icon="fluent:people-audience-20-filled"></span>Tipo de audiencia</a>
                         </li>
                         <li>
-                            <a href="{{ route('juicios') }}"><span class="iconify h4 mr-1" data-icon="healthicons:justice"></span>Tipo de juicio</a>
+                            <a href="{{ route('juicios') }}"><span class="iconify h4 me-1" data-icon="healthicons:justice"></span>Tipo de juicio</a>
                         </li>
 
                         <li>
-                            <a href="{{ route('usuarios') }}"><span class="iconify h4 mr-1" data-icon="healthicons:justice"></span>Usuarios</a>
+                            <a href="{{ route('usuarios') }}"><span class="iconify h4 me-1" data-icon="healthicons:justice"></span>Usuarios</a>
                         </li>
                     </ul>
                 </li>

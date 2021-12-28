@@ -19,7 +19,7 @@ class ParticipanteController extends Controller
      */
     public function index()
     {
-       
+      
     }
 
     /**
@@ -42,39 +42,78 @@ class ParticipanteController extends Controller
      */
     public function store(Request $request)
     {
+        // return count($request->nombre);
         $validatedData = $request->validate([
-            'nombre' => ['required', 'max:100'],
-            'descripcion' => ['required','max:255'],
-            'rol_id' => ['required', 'numeric'],
+            'nombre' => ['required', 'array'],
+            'descripcion' =>['required', 'array'],
+            'rol_id' => ['required', 'array'],
             'audiencia_id' => ['required', 'numeric'],
         ]);
 
         try {
 
-            $newParticipante = ParticipantesModel::create([
-                'nombre' => $request->nombre,
-                'descripcion' => $request->descripcion,
-                'rol_id' => $request->rol_id,
-                'audiencia_id' => $request->audiencia_id,
-            ]);
-    
-            if($newParticipante) {
-
-                $asistencia  = new AsistenciaModel;
-                $asistencia->asistencia = 'resgistrado';
-                $asistencia->color = 'bg-light';
-                $asistencia->participante_id = $newParticipante->id;
-
-                $asistencia->save();
-
-                return back()->with('success', 'Nuevo Participante registrado exitosamente!');
+            if( count($request->nombre) < 1) {
+                return back()->with('warning', 'Hubo un error al guardar los datos, debe de enviar al menos un partcipante.');
             }
 
-            return back()->with('warning', 'Hubo un error al guardar los datos por favor verifique sus datos.');
+
+            for ($i=0; $i < count($request->nombre) ; $i++) { 
+                
+                $newParticipante = ParticipantesModel::create([
+                    'nombre' => $request->nombre[$i],
+                    'descripcion' => $request->descripcion[$i],
+                    'rol_id' => $request->rol_id[$i],
+                    'audiencia_id' => $request->audiencia_id,
+                ]);
+        
+                if($newParticipante) {
+
+                    $asistencia  = new AsistenciaModel;
+                    $asistencia->asistencia = 'resgistrado';
+                    $asistencia->color = 'bg-dark';
+                    $asistencia->participante_id = $newParticipante->id;
+
+                    $asistencia->save();
+                }
+
             
+            }
+
+            //  '/expediente/pdf
+            return redirect("/expediente/pdf/vista/$request->audiencia_id");
+
+            return back()->with('success', 'Nuevo Participante registrado exitosamente!');
+
         } catch (\Throwable $th) {
-            return back()->with('error', 'Fallo al registrar los datos!, verifique su conexion a Internet o recarga la página');
+            return back()->with('warning', 'Hubo un error al guardar los datos por favor verifique sus datos.');
         }
+
+        // try {
+
+        //     $newParticipante = ParticipantesModel::create([
+        //         'nombre' => $request->nombre,
+        //         'descripcion' => $request->descripcion,
+        //         'rol_id' => $request->rol_id,
+        //         'audiencia_id' => $request->audiencia_id,
+        //     ]);
+    
+        //     if($newParticipante) {
+
+        //         $asistencia  = new AsistenciaModel;
+        //         $asistencia->asistencia = 'resgistrado';
+        //         $asistencia->color = 'bg-light';
+        //         $asistencia->participante_id = $newParticipante->id;
+
+        //         $asistencia->save();
+
+        //         return back()->with('success', 'Nuevo Participante registrado exitosamente!');
+        //     }
+
+        //     return back()->with('warning', 'Hubo un error al guardar los datos por favor verifique sus datos.');
+            
+        // } catch (\Throwable $th) {
+        //     return back()->with('error', 'Fallo al registrar los datos!, verifique su conexion a Internet o recarga la página');
+        // }
     }
 
     /**

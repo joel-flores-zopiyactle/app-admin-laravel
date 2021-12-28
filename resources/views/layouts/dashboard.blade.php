@@ -21,9 +21,9 @@
 </head>
 
 <body>
-    <div class="page-flex fixed">
+    <div class="page-flex">
         <!-- ! Sidebar -->
-        <x-nav-bar/>
+        <x-nav-bar style="position: fixed;" />
 
         <div class="main-wrapper">
             <!-- ! Main nav -->

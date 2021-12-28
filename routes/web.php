@@ -42,20 +42,22 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 // Centro de justicia
-Route::get('/ajustes/centro-justicia',              [CentroJusticiaController::class, 'index'])->name('centro-justicia');
-Route::get('/ajustes/centro-justicia/nuevo',        [CentroJusticiaController::class, 'create'])->name('create-centro');
-Route::post('/ajustes/centro-justicia/nuevo',       [CentroJusticiaController::class, 'store'])->name('post-centro');
-Route::get('/ajustes/centro-justicia/editar/{id}',  [CentroJusticiaController::class, 'edit'])->name('edit-centro');
-Route::put('/ajustes/centro-justicia/editar/{id}',  [CentroJusticiaController::class, 'update'])->name('update-centro');
-Route::delete('/ajustes/centro-justicia/{id}',      [CentroJusticiaController::class, 'destroy'])->name('delete-centro');
+Route::get('/ajustes/centro-justicia', [CentroJusticiaController::class, 'index'])->name('centro-justicia');
+Route::get('/ajustes/centro-justicia/nuevo', [CentroJusticiaController::class, 'create'])->name('create-centro');
+Route::post('/ajustes/centro-justicia/nuevo', [CentroJusticiaController::class, 'store'])->name('post-centro');
+Route::get('/ajustes/centro-justicia/editar/{id}', [CentroJusticiaController::class, 'edit'])->name('edit-centro');
+Route::put('/ajustes/centro-justicia/editar/{id}', [CentroJusticiaController::class, 'update'])->name('update-centro');
+Route::delete('/ajustes/centro-justicia/{id}', [CentroJusticiaController::class, 'destroy'])->name('delete-centro');
 
 // Roles
-Route::get('/ajustes/roles',            [RolController::class, 'index'])->name('roles');
-Route::get('/ajustes/rol/nuevo',        [RolController::class, 'create'])->name('create-rol');
-Route::post('/ajustes/rol/nuevo',       [RolController::class, 'store'])->name('post-rol');
-Route::get('/ajustes/rol/editar/{id}',  [RolController::class, 'edit'])->name('edit-rol');
-Route::put('/ajustes/rol/editar/{id}',  [RolController::class, 'update'])->name('update-rol');
-Route::delete('/ajustes/rol/{id}',      [RolController::class, 'destroy'])->name('delete-rol');
+Route::get('/ajustes/roles', [RolController::class, 'index'])->name('roles');
+Route::get('/ajustes/rol/nuevo',[RolController::class, 'create'])->name('create-rol');
+Route::post('/ajustes/rol/nuevo', [RolController::class, 'store'])->name('post-rol');
+Route::get('/ajustes/rol/editar/{id}', [RolController::class, 'edit'])->name('edit-rol');
+Route::put('/ajustes/rol/editar/{id}', [RolController::class, 'update'])->name('update-rol');
+Route::delete('/ajustes/rol/{id}', [RolController::class, 'destroy'])->name('delete-rol');
+// Get roles vue js
+Route::get('/ajustes/roles/show', [RolController::class, 'show'])->name('get.roles');
 
 
 // Sala
@@ -130,6 +132,7 @@ Route::get('/buscar/expediente/tipo-audiencias/all', [BuscarExpedienteController
 Route::get('/buscar/expediente', [BuscarExpedienteController::class, 'buscarExpediente'])->name('buscar-expediente');
 
 // PDF Expediente
+Route::get('/expediente/pdf/vista/{id}', [ExpedientePDFController::class, 'index'])->name('show-pdf-imprimir');
 Route::get('/expediente/pdf/{id}', [ExpedientePDFController::class, 'show'])->name('show-pdf-expediente');
 
 
