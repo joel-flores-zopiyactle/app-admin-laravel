@@ -42,22 +42,24 @@ class UsuariosController extends Controller
     public function store(Request $request)
     {
 
-        try {
+        $validatedData = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'telefono' => ['required', 'numeric', 'min:10',  'unique:users'],
+            'avatar' => ['required','image'],
+            'tipo_usuario_id' => ['required', 'numeric'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+        ]);
 
-            $validatedData = $request->validate([
-                'name' => ['required', 'string', 'max:255'],
-                'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-                'telefono' => ['required', 'numeric', 'min:10',  'unique:users'],
-                'avatar' => ['required'],
-                'tipo_usuario_id' => ['required', 'numeric'],
-                'password' => ['required', 'string', 'min:8', 'confirmed'],
-            ]);
+        try {
 
             $urlFile  =  'default'; // Si no hay archivo se queda como defaul
             
-            if($request->file('avatar')) {
-                $path = Storage::disk('public')->put('AVATARS', $request->file('avatar'));
-                $urlFile  =  asset($path);
+            if($request->hasFile('avatar')) {
+                //$path = Storage::disk('public')->put('AVATARS', $request->file('avatar'));
+                
+                $path = $request->file('avatar')->store('public/avatars');
+                $urlFile  =  $path;
             }
 
             $user = new User;
@@ -99,7 +101,7 @@ class UsuariosController extends Controller
      */
     public function edit($id)
     {
-        $id =  decrypt($id);
+        $id =  decrypt($id);       
         
         $tipoUsuarios = TipoUsuario::Where('estado', 1)->get();
         $usuario = User::find($id);
@@ -122,15 +124,22 @@ class UsuariosController extends Controller
                 'name' => ['required', 'string', 'max:255'],
                 //'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
                 'telefono' => ['required', 'numeric', 'min:10'],
-                'avatar' => ['required'],
+                'avatar' => ['image'],
                 'tipo_usuario_id' => ['required', 'numeric'],
             ]);
 
             $user = User::find($id);
+    
+            if($user) {
+                Storage::delete( $user->avatar ); // Delete file actually
+                $path = $request->file('avatar')->store('public/avatars'); // update new avatar
+                $urlFile  =  $path;
+            }
+
             $user->name = $request->name;
             $user->telefono = $request->telefono;
             $user->tipo_usuario_id = $request->tipo_usuario_id;
-            $user->avatar = $request->avatar;
+            $user->avatar = $urlFile;
             $user->save();
 
             return back()->with('success', 'Usuario actualizado!');
@@ -172,13 +181,14 @@ class UsuariosController extends Controller
             $user = User::find($id);
 
             if($user->delete()) {
+                Storage::delete( $user->avatar );
                 return back()->with('success', "$user->name eliminado correctamente!");
             }
 
             return back()->with('warning', "$user->name no se pudo eliminar, Intente de nuevo!");
 
         } catch (\Throwable $th) {
-            return back()->with('error', 'Fallo al eliminar los datos!, verifique su conexion a Internet o recarga la página');
+            return back()->with('error', 'Fallo al eliminar los datos!, verifique su conexion a Internet o recarga la página'. $th);
         }
     }
 }

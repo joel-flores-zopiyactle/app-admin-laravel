@@ -43,6 +43,69 @@
             @enderror
         </div>
 
+        <hr>
+        <h4 class="mb-1 h5">Persmisos</h4>
+        <div class="row mb-3">
+            
+            <label class="col-12 mb-2" for="rol_1">
+                <input type="checkbox" class="form-check-input" name="rol" id="rol_1">
+                Control de configuraciones (Todo)
+            </label>
+
+            <label class="col-12 mb-2" for="rol_2">
+                <input type="checkbox" class="form-check-input" name="rol" id="rol_2">
+                Ingresar sala
+            </label>
+
+            <label class="col-12 mb-2" for="rol_3">
+                <input type="checkbox" class="form-check-input" name="rol" id="rol_3">
+               Visualizar lista de auditorias
+            </label>
+
+            <label class="col-12 mb-2" for="rol_4">
+                <input type="checkbox" class="form-check-input" name="rol" id="rol_4">
+                Reservar sala 
+            </label>
+
+            <label class="col-12 mb-2" for="rol_5">
+                <input type="checkbox" class="form-check-input" name="rol" id="rol_5">
+                Buscar expediente 
+            </label>
+
+            <label class="col-12 mb-2" for="rol_6">
+                <input type="checkbox" class="form-check-input" name="rol" id="rol_6">
+                Administracion 
+            </label>
+
+            <label class="col-12 mb-2" for="rol_7">
+                <input type="checkbox" class="form-check-input" name="rol" id="rol_7">
+                Visualizar agenda
+            </label>
+
+            <label class="col-12 mb-2" for="rol_8">
+                <input type="checkbox" class="form-check-input" name="rol" id="rol_8">
+                Invitado
+            </label>
+        </div>
+
+        <section>
+            <p>Para los permisos de Auditorias, Administracion y busqueda de expedientes,s eleccione las permisos que tendra este rol. </p>
+        </section>
+        <div class="row my-3">
+
+            <label class="col-4 mb-2" for="rol_9">
+                <input type="checkbox" class="form-check-input" name="rol" id="rol_9">
+                Editar
+            </label>
+
+            <label class="col-4 mb-2" for="rol_10">
+                <input type="checkbox" class="form-check-input" name="rol" id="rol_10">
+                Eliminar
+            </label>
+        </div>
+
+        
+
 
         @isset($rol)
             <div class="mb-3 form-check">

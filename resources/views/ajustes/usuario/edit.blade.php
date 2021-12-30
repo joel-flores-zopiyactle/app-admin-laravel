@@ -12,7 +12,7 @@
     <x-alert-message />  
     
     <div>
-        <form method="POST" action="{{ route('update.usuario', $usuario->id) }}">
+        <form method="POST" action="{{ route('update.usuario', $usuario->id) }}" enctype="multipart/form-data">
             @csrf
 
             @method('PUT')
@@ -61,9 +61,13 @@
             </div>
 
             <div class="row mb-3">
+
                 <label for="avatar" class="col-md-4 col-form-label text-md-right">{{ __('Avatar') }}</label>
 
                 <div class="col-md-6">
+                    <div class="mb-2">
+                        <img width="80px" height="80px" class="rounded-circle" src="{{ Storage::url($usuario->avatar) }}" alt="" style="background-image: cover;">
+                    </div>
                     <input id="avatar" type="file" class="form-control @error('avatar') is-invalid @enderror" name="avatar" value="{{ old('avatar') }}" required autocomplete="avatar">
 
                     @error('avatar')

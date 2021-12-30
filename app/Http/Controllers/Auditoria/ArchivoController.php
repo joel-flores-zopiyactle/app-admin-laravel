@@ -44,8 +44,6 @@ class ArchivoController extends Controller
 
             $fileExtension = strtoupper($request->file('file')->getClientOriginalExtension()); 
 
-            $fileExtension;
-
             $path = ''; // Obtiene la ruta donde se almacena el archivo
 
             // List Array Formats
@@ -64,7 +62,7 @@ class ArchivoController extends Controller
                         return $errorMensaje;
                     }
                     
-                    $path = Storage::disk('public')->put('PDF', $request->file('file'));
+                    $path = $request->file('file')->store('public/PDF'); 
                     
                     break;
 
@@ -74,8 +72,7 @@ class ArchivoController extends Controller
                         return $errorMensaje;
                     }
 
-                    $path = Storage::disk('public')->put('VIDEO', $request->file('file'));
-                    
+                    $path = $request->file('file')->store('public/VIDEO'); 
                     break;
 
                 case 'audio':
@@ -84,8 +81,7 @@ class ArchivoController extends Controller
                         return $errorMensaje;
                     }
 
-                    $path = Storage::disk('public')->put('AUDIO', $request->file('file'));
-
+                    $path = $request->file('file')->store('public/AUDIO'); 
                     break;
 
                 case 'imagen':
@@ -94,7 +90,7 @@ class ArchivoController extends Controller
                         return $errorMensaje;
                     }   
                     
-                    $path = Storage::disk('public')->put('IMAGEN', $request->file('file'));
+                    $path = $request->file('file')->store('public/IMAGEN'); 
                     
                     break;  
 
@@ -103,7 +99,7 @@ class ArchivoController extends Controller
                         return $errorMensaje;
                     } 
 
-                    $path = Storage::disk('public')->put('DOC', $request->file('file'));
+                    $path = $request->file('file')->store('public/DOC'); 
 
                     break;                        
                 
@@ -113,7 +109,7 @@ class ArchivoController extends Controller
             }
 
             $nameFile = $request->file('file')->getClientOriginalName(); //Obtenemos el nombre del archivo
-            $urlFile  =  asset($path);
+            $urlFile  =  $path;
 
             try {
 
@@ -185,14 +181,16 @@ class ArchivoController extends Controller
         try {
             $archivo = ArchivoModel::find($id);
 
-            $arrayRuta = explode("/", $archivo->url); // Dividimos en un array el directorio del archivo
+            // $arrayRuta = explode("/", $archivo->url); // Dividimos en un array el directorio del archivo
 
-            $fileDelete = end($arrayRuta); // Obetner el ultimo valor del array en este caso el nombre del archivo
-            $folder = strtoupper($archivo->tipo_archivo); // Obtener e directorio del archivo y convertimos en MAYUSCULA
+            // $fileDelete = end($arrayRuta); // Obetner el ultimo valor del array en este caso el nombre del archivo
+            // $folder = strtoupper($archivo->tipo_archivo); // Obtener e directorio del archivo y convertimos en MAYUSCULA
 
-            $rutaFile = $folder . '/' . $fileDelete;  // Unimos ambos variable para crear el url del archivo 
+            // $rutaFile = $folder . '/' . $fileDelete;  // Unimos ambos variable para crear el url del archivo 
            
-            Storage::disk('public')->delete( $rutaFile);
+            // Storage::disk('public')->delete( $rutaFile);
+            
+            Storage::delete(  $archivo->url );
 
             if($archivo->delete()) {
                 return array( 'status' =>  200, 'mensaje' => "Archivo $archivo->nombre eliminado correctamente!");
@@ -203,6 +201,24 @@ class ArchivoController extends Controller
         } catch (\Throwable $th) {
             return array( 'status' =>  500, 'mensaje' => "Fallo al eliminar los datos del archivo!");
         }
+    }
+
+
+    public function dowload($id)
+    {
+        $id =  decrypt($id);
+        $archivo = ArchivoModel::find($id);
+
+        //$file = public_path(). "/images/test.jpg";
+
+        $headers = ['Content-Type: image/jpeg'];
+    
+        return Storage::download($archivo->url, $archivo->nombre);
+    }
+
+    public function showFile($id)
+    {
+        # code...
     }
 
     

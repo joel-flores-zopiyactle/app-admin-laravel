@@ -33,7 +33,7 @@
                   <td> {{ $auditoria->sala->sala }} </td>
                   <td> {{ $auditoria->fechaCelebracion }} </td>
                   <td>
-                      <a href=" {{ route('auditoria.lista.ver',  $auditoria->expediente->id) }} ">Ver</a>
+                      <a href=" {{ route('auditoria.lista.ver', encrypt($auditoria->expediente->id)) }} ">Ver</a>
                   </td>
               </tr>
             @endforeach        
