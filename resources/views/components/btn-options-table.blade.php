@@ -35,7 +35,7 @@
             {{-- Imprimir expediente --}}
             @if ( Auth::user()->tipoUsuario->permiso->descargar)
             <li>
-                <a class="dropdown-item" href="{{ route('show.pdf.expediente', encrypt($expedienteId)) }}"><span class="iconify me-1" data-icon="cil:print"></span>Imprimir Expediente</a>
+                <a class="dropdown-item" href="{{ route('show.pdf.expediente', encrypt($expedienteId)) }}"><span class="iconify me-1" data-icon="cil:print"></span>Imprimir expediente</a>
             </li>
             @endif
 
@@ -47,7 +47,7 @@
                     @method('PUT')
                     <button class="dropdown-item" type="submit" 
                     onclick="return confirm('¿Estas seguro de cancelar la audiencia?')" title="Eliminar">
-                        <span class="iconify me-1" data-icon="fluent:calendar-cancel-16-regular"></span>Cancelar Audiencia
+                        <span class="iconify me-1" data-icon="fluent:calendar-cancel-16-regular"></span>Cancelar audiencia
                     </button>
                 </form>
             </li>

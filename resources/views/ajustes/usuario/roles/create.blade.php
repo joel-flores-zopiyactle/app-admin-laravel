@@ -3,7 +3,7 @@
 @section('content')
 <div class="container-fluid">
     
-    <h3 class="fs-5 text-uppercase">Agregar Rol de Usuario</h3> 
+    <h3 class="fs-5 text-uppercase">Agregar nuevo rol de Usuario</h3> 
    
     <hr>
     
@@ -66,7 +66,7 @@
 
                 <label for="permiso_9" class="form-check-label">
                     <input type="checkbox" name="permiso_9" id="permiso_9" class="form-check-input me-2">
-                    Administracion
+                    Administración
                 </label>
 
                 <label for="permiso_10" class="form-check-label">
@@ -100,12 +100,12 @@
                 <hr>
 
                 <p class="text-black-50 text-small">
-                    Para los mudulos de lista de auditorias, Administración y buscar expediente seleccione el tipo de acciones a realizar. 
+                    Para los módulos de lista de auditorías, Administración y buscar expediente seleccione el tipo de acciones a realizar. 
                 </p>
 
                 <label for="permiso_1" class="form-check-label mt-3">
                     <input type="checkbox" name="permiso_1" id="permiso_1" class="form-check-input me-2">
-                    Reagendar Audiencias
+                    Reagendar audiencias
                 </label>
 
                 <label for="permiso_2" class="form-check-label">
@@ -115,12 +115,12 @@
 
                 <label for="permiso_3" class="form-check-label">
                     <input type="checkbox" name="permiso_3" id="permiso_3" class="form-check-input me-2">
-                    Imprimir y Descargar Archivios 
+                    Imprimir y Descargar archivos 
                 </label>
 
                 <label for="permiso_4" class="form-check-label">
                     <input type="checkbox" name="permiso_4" id="permiso_4" class="form-check-input me-2">
-                   Cancelar Audiencias
+                   Cancelar audiencias
                 </label>
             </div>
         </div>

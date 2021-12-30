@@ -5,7 +5,7 @@
     <div class="con d-flex justify-content-between align-items-center">
         <h4> Control de usuarios </h4>
         <div>
-            <a class="btn btn-outline-primary btn-sm me-3" href="{{ route('roles.usuarios') }}">Lista de roles de administración</a>
+            <a class="btn btn-outline-primary btn-sm me-3" href="{{ route('roles.usuarios') }}">Listado de roles de administración</a>
             <a class="btn btn-primary btn-sm" href="{{ route('create.usuario') }}">Agregar nuevo usuario</a>
         </div>
     </div>
@@ -23,10 +23,10 @@
                 <tr>
                     <th scope="col">Nombre</th>
                     <th scope="col">Correo</th>
-                    <th scope="col">Telefono</th>
+                    <th scope="col">Teléfono</th>
                     <th scope="col">Tipo de usuarios</th>
                     <th scope="col">Avatar</th>
-                    <th class="text-center" scope="col">Acciones</th>
+                    <th class="text-center" scope="col"></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -68,8 +68,8 @@
                 {{-- {{ $juicios->links() }} --}}  
             </div> 
         @else
-            <div class="p-3">
-                <h3>No hay usuarios registrados</h3>
+            <div class="d-flex justify-content-center align-items-center">
+                <h3 class="fs-5">No hay usuarios registrados todavía</h3>
             </div>
         @endif
     </div>

@@ -39,7 +39,11 @@
                         <thead>
                             <tr>
                             <th scope="col">Archivos</th>
-                            <th scope="col"></th>
+                            <th scope="col">
+                                 <button class="btn btn-sm btn-outline-light" @click="getFiles">
+                                    Recargar Archivos
+                                </button>
+                            </th>
                         
                             </tr>
                         </thead>

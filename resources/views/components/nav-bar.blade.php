@@ -48,7 +48,7 @@
 
                                 @if (Auth::user()->tipoUsuario->permiso->ver_lista_auditoria)
                                     <li>
-                                        <a href="{{ route('auditoria.lista') }}"><span class="iconify h4" data-icon="ri:team-fill"></span>Lista de auditorias</a>
+                                        <a href="{{ route('auditoria.lista') }}"><span class="iconify h4" data-icon="ri:team-fill"></span>Listar auditorias</a>
                                     </li>
                                 @endif
                             </ul>
@@ -105,23 +105,23 @@
 
                         <ul class="cat-sub-menu">
                             <li>
-                                <a href="{{ route('centro.justicia') }}"><span class="iconify h4 me-1" data-icon="ps:justice"></span>Centro de justicia</a>
+                                <a href="{{ route('centro.justicia') }}"><span class="iconify h4 me-1" data-icon="ps:justice"></span>Centro de justicias</a>
                             </li>
                             <li>
                                 <a href="{{ route('roles') }}"><span class="iconify h4 me-1" data-icon="eos-icons:cluster-role-binding"></span>Roles</a>
                             </li>
                             <li>
-                                <a href="{{ route('salas') }}"><span class="iconify h4 me-1" data-icon="fluent:conference-room-16-filled"></span>Sala</a>
+                                <a href="{{ route('salas') }}"><span class="iconify h4 me-1" data-icon="fluent:conference-room-16-filled"></span>Salas</a>
                             </li>
                             <li>
-                                <a href="{{ route('audiencias') }}"><span class="iconify h4 me-1" data-icon="fluent:people-audience-20-filled"></span>Tipo de audiencia</a>
+                                <a href="{{ route('audiencias') }}"><span class="iconify h4 me-1" data-icon="fluent:people-audience-20-filled"></span>Tipo de audiencias</a>
                             </li>
                             <li>
-                                <a href="{{ route('juicios') }}"><span class="iconify h4 me-1" data-icon="healthicons:justice"></span>Tipo de juicio</a>
+                                <a href="{{ route('juicios') }}"><span class="iconify h4 me-1" data-icon="healthicons:justice"></span>Tipo de juicios</a>
                             </li>
 
                             <li>
-                                <a href="{{ route('usuarios') }}"><span class="iconify h4 me-1" data-icon="healthicons:justice"></span>Usuarios</a>
+                                <a href="{{ route('usuarios') }}"><span class="iconify h4 me-1" data-icon="healthicons:justice"></span>Control de usuarios</a>
                             </li>
                         </ul>
                     </li>

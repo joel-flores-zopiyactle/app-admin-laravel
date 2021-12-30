@@ -3,7 +3,7 @@
 @section('content')
 <div class="container-fluid">
     <div class="con d-flex justify-content-between align-items-center">
-        <h4>Lista de roles</h4>
+        <h4>Listado de roles</h4>
         <div>
             <a class="btn btn-primary btn-sm" href="{{ route('create.rol') }}">Agregar nuevo rol</a>
         </div>
@@ -22,7 +22,7 @@
                     <th scope="col">Rol</th>
                     <th scope="col">Descripción</th>
                     <th scope="col">Estado</th>
-                    <th class="text-center" scope="col">Acciones</th>
+                    <th class="text-center" scope="col"></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -61,8 +61,8 @@
                 {{ $roles->links() }}  
             </div>
         @else
-            <div class="p-3">
-                <h3>No hay Roles todabía</h3>
+            <div class="d-flex justify-content-center align-items-center">
+                <h3 class="fs-5">No hay roles registradas todavía</h3>
             </div>
         @endif
     </div>

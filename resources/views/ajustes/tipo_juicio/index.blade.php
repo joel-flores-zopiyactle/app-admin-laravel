@@ -22,7 +22,7 @@
                     <th scope="col">Nombre</th>
                     <th scope="col">Descripción</th>
                     <th scope="col">Estado</th>
-                    <th class="text-center" scope="col">Acciones</th>
+                    <th class="text-center" scope="col"></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -61,8 +61,8 @@
                 {{ $juicios->links() }}  
             </div> 
         @else
-            <div class="p-3">
-                <h3>No hay tipos de justicia todabia</h3>
+            <div class="d-flex justify-content-center align-items-center">
+                <h3 class="fs-5">No hay tipos de juicios registradas todavía</h3>
             </div>
         @endif
     </div>

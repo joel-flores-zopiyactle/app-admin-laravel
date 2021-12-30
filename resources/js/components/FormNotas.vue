@@ -28,7 +28,11 @@
                     <thead class="">
                         <tr>
                             <th scope="col">Nota</th>
-                            <th scope="col"></th>
+                            <th scope="col">
+                                <button class="btn btn-sm btn-outline-light" @click="getDataNotes">
+                                    Recargar Notas
+                                </button>
+                            </th>
                         </tr>
                     </thead>
                     <tbody>

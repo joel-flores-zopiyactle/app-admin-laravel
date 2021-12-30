@@ -89,7 +89,7 @@
                     @else
                         <input type="checkbox" name="permiso_9" id="permiso_9" class="form-check-input me-2">
                     @endif
-                    Administracion
+                    Administración
                 </label>
 
                 <label for="permiso_10" class="form-check-label">
@@ -140,7 +140,7 @@
                 <hr>
 
                 <p class="text-black-50 text-small">
-                    Para los mudulos de lista de auditorias, Administración y buscar expediente seleccione el tipo de acciones a realizar. 
+                    Para los módulos de lista de auditorías, Administración y buscar expediente seleccione el tipo de acciones a realizar.
                 </p>
 
                 <label for="permiso_1" class="form-check-label mt-3">
@@ -149,7 +149,7 @@
                     @else
                         <input type="checkbox" name="permiso_1" id="permiso_1" class="form-check-input me-2">
                     @endif
-                    Reagendar Audiencias
+                    Reagendar audiencias
                 </label>
 
                 <label for="permiso_2" class="form-check-label">
@@ -167,7 +167,7 @@
                     @else
                         <input type="checkbox" name="permiso_3" id="permiso_3" class="form-check-input me-2">
                     @endif                    
-                    Imprimir y Descargar Archivios 
+                    Imprimir y Descargar archivos 
                 </label>
 
                 <label for="permiso_4" class="form-check-label">
@@ -177,7 +177,7 @@
                         <input type="checkbox" name="permiso_4" id="permiso_4" class="form-check-input me-2">
                     @endif
                    
-                   Cancelar Audiencias
+                   Cancelar audiencias
                 </label>
             </div>
         </div>
