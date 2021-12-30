@@ -56,7 +56,7 @@
         
         @else
             <div class="p-3">
-                <h3>No hay esultados de la busqueda</h3>
+                <h3>No hay resultados de la busqueda</h3>
             </div>
         @endif
     </div>

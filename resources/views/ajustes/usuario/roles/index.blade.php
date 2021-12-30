@@ -41,6 +41,7 @@
 
                             </td>
                             <td>
+                                @if ($rol->id !== 1)
                                 <div class="text-center d-flex justify-content-center">
                                     <a class="btn btn-sm btn-light rounded-circle d-flex justify-content-center align-items-center p-1" href="{{ route('edit.roles.usuarios', encrypt($rol->id)) }}" title="Editar"> 
                                         <span class="iconify h5 m-0" data-icon="akar-icons:edit"></span>
@@ -55,13 +56,13 @@
                                         </button>
                                     </form>
                                 </div>
+                                @endif
                                
                             </td>
                         </tr>       
                     @endforeach              
                 </tbody>
             </table>     
-
             <div>
                 {{-- {{ $juicios->links() }} --}}  
             </div> 

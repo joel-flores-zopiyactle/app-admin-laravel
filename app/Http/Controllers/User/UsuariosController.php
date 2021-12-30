@@ -42,6 +42,8 @@ class UsuariosController extends Controller
     public function store(Request $request)
     {
 
+        //return $request->all();
+
         $validatedData = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
@@ -179,6 +181,10 @@ class UsuariosController extends Controller
     {
         try {
             $user = User::find($id);
+
+            if($user->id === 1) {
+                return back()->with('warning', "No se puede eliminar este usuario ya que es un Administrador principal de la Aplicación!");
+            }
 
             if($user->delete()) {
                 Storage::delete( $user->avatar );

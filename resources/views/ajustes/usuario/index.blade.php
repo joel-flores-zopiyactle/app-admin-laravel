@@ -40,19 +40,22 @@
                                 <img width="40px" class="rounded-circle" src="{{ Storage::url($usuario->avatar) }}" alt="">
                             </td>
                             <td>
-                                <div class="text-center d-flex justify-content-center">
-                                    <a class="btn btn-sm btn-light rounded-circle d-flex justify-content-center align-items-center p-1" href="{{ route('edit.usuario', encrypt($usuario->id)) }}" title="Editar"> 
+                                <div class="text-center d-flex justify-content-end">
+                                    <a class="btn btn-sm btn-light rounded-circle d-flex justify-content-center align-items-center p-1 me-2" href="{{ route('edit.usuario', encrypt($usuario->id)) }}" title="Editar"> 
                                         <span class="iconify h5 m-0" data-icon="akar-icons:edit"></span>
                                     </a>
 
-                                    <form class="ml-2" action="{{route('delete.usuario', $usuario->id)}}" method="post">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button class="btn btn-sm btn-light rounded-circle d-flex justify-content-center align-items-center p-1" type="submit" 
-                                        onclick="return confirm('¿Estas seguro de eliminar: {{$usuario->name}}?')">
-                                            <span class="iconify h5 m-0" data-icon="fluent:delete-20-filled"></span>
-                                        </button>
-                                    </form>
+                                    {{-- Si el usuarios es un administrador principal desactivamos la opcion de eleiminar --}}
+                                    @if ($usuario->id !== 1)
+                                        <form class="ml-2" action="{{route('delete.usuario', $usuario->id)}}" method="post">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button class="btn btn-sm btn-light rounded-circle d-flex justify-content-center align-items-center p-1" type="submit" 
+                                            onclick="return confirm('¿Estas seguro de eliminar: {{$usuario->name}}?')">
+                                                <span class="iconify h5 m-0" data-icon="fluent:delete-20-filled"></span>
+                                            </button>
+                                        </form>
+                                    @endif
                                 </div>
                                
                             </td>

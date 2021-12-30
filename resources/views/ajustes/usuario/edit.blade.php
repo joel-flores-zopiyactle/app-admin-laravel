@@ -78,25 +78,28 @@
                 </div>
             </div>
 
-            <div class="row mb-3">
-                <label for="avatar" class="col-md-4 col-form-label text-md-right">{{ __('Tipo de usuario') }}</label>
+            {{-- Si el usuario es un Administrador principal desactivamos la opcion de cambiar tipo de usuario --}}
+            @if($usuario->id !== 1)
+                <div class="row mb-3">
+                    <label for="avatar" class="col-md-4 col-form-label text-md-right">{{ __('Tipo de usuario') }}</label>
 
-                <div class="col-md-6">
-                    <select class="form-control  @error('tipo_usuario_id') is-invalid @enderror" name="tipo_usuario_id" id="tipo_usuario_id">
-                        <option value="{{ $tipoUsuarioActual->id }}">{{ $tipoUsuarioActual->tipo }}</option>
-                        @foreach ($tipoUsuarios as $tipo)
-                            <option value="{{ $tipo->id }}"> {{ $tipo->tipo }} </option>
-                        @endforeach
-                    </select>
+                    <div class="col-md-6">
+                        <select class="form-control  @error('tipo_usuario_id') is-invalid @enderror" name="tipo_usuario_id" id="tipo_usuario_id">
+                            <option value="{{ $tipoUsuarioActual->id }}">{{ $tipoUsuarioActual->tipo }}</option>
+                            @foreach ($tipoUsuarios as $tipo)
+                                <option value="{{ $tipo->id }}"> {{ $tipo->tipo }} </option>
+                            @endforeach
+                        </select>
 
-                    @error('tipo_usuario_id')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
+                        @error('tipo_usuario_id')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
                 </div>
-            </div>
-
+            @endif
+           
             <div class="row mb-0 mt-3">
                 <div class="col-md-6 offset-md-4">
                     <a href="{{ route('usuarios') }}" class="btn btn-outline-danger">

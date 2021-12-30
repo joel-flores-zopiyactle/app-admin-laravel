@@ -137,7 +137,12 @@
                     <td>
                         <div class="d-flex">
                             <a class="btn btn-sm btn-outline-secondary me-1" href="{{ $archivo->url }}">Ver</a>
-                            <a class="btn btn-sm btn-outline-secondary" href="{{ route('dowload.archivo', encrypt($archivo->id)) }}">Descargar</a>
+
+                            {{-- permiso de descargar archivos --}}
+                            @if ( Auth::user()->tipoUsuario->permiso->descargar)
+                                <a class="btn btn-sm btn-outline-secondary" href="{{ route('dowload.archivo', encrypt($archivo->id)) }}">Descargar</a>
+                            @endif
+                           
                         </div>
                     </td>
                 </tr>

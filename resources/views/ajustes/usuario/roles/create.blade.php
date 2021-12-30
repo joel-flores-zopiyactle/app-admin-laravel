@@ -3,22 +3,14 @@
 @section('content')
 <div class="container-fluid">
     
-    @if (isset($rol))
-        <h3 class="fs-5 text-uppercase">Actualizar rol de usuario</h3>
-    @else
-       <h3 class="fs-5 text-uppercase">Agregar Rol de Usuario</h3> 
-    @endif
+    <h3 class="fs-5 text-uppercase">Agregar Rol de Usuario</h3> 
    
     <hr>
     
-    <form action="{{ isset($rol) ? route('update.roles.usuarios', $rol->id) : route('post.roles.usuarios') }}" method="POST" class="w-50">
+    <form action="{{ route('post.roles.usuarios') }}" method="POST" class="w-50">
         @csrf
         <x-alert-message />
-        {{-- SI ACTUALIZAMOS LOS DATOS ENVIAMOS EL METODO PUT --}}
-        @isset($rol)
-            @method('PUT')
-        @endisset
-
+        
         <div class="mb-3">
             {{--  
                 [isset($centro) ? $centro->nombre : old('nombre')] 
@@ -27,7 +19,7 @@
 
             <label for="nombre" class="form-label">Rol:</label>
             <input type="text" class="form-control @error('rol') is-invalid @enderror" id="rol" name="rol" 
-            aria-describedby="rol"  value="{{ isset($rol) ? $rol->tipo : old('rol') }}" placeholder="Ingrese nuevo Rol..."> 
+            aria-describedby="rol"  value="{{ old('rol') }}" placeholder="Ingrese nuevo Rol..."> 
             @error('rol')
                     <div class="alert alert-danger">{{ $message }}</div>
             @enderror
@@ -36,92 +28,107 @@
         <div class="mb-3">
             <label for="descripcion" class="form-label">Descripción:</label>
             <textarea name="descripcion" id="decs" class="form-control  @error('descripcion') is-invalid @enderror" 
-            cols="30" rows="3" placeholder="Agregue un breve descripción acerca del Rol...">{{ isset($rol) ? $rol->descripcion : old('descripcion') }}</textarea>
+            cols="30" rows="3" placeholder="Agregue un breve descripción acerca del Rol...">{{ old('descripcion') }}</textarea>
 
             @error('descripcion')
                 <div class="alert alert-danger">{{ $message }}</div>
             @enderror
         </div>
 
-        <hr>
-        <h4 class="mb-1 h5">Persmisos</h4>
-        <div class="row mb-3">
-            
-            <label class="col-12 mb-2" for="rol_1">
-                <input type="checkbox" class="form-check-input" name="rol" id="rol_1">
-                Control de configuraciones (Todo)
-            </label>
+       {{--  {{  $rol->permiso }} --}}
 
-            <label class="col-12 mb-2" for="rol_2">
-                <input type="checkbox" class="form-check-input" name="rol" id="rol_2">
-                Ingresar sala
-            </label>
+        <div class="my-4">
+            <h2 class="fs-6">Modúlos de Acceso</h2>
+            <hr>
 
-            <label class="col-12 mb-2" for="rol_3">
-                <input type="checkbox" class="form-check-input" name="rol" id="rol_3">
-               Visualizar lista de auditorias
-            </label>
+            {{-- Permisos de módulos --}}
+            <div class="row">
+               
+                <label for="permiso_5" class="form-check-label">
+                    <input type="checkbox" name="permiso_5" id="permiso_5" class="form-check-input me-2">            
+                    Acceder sala
+                </label>
 
-            <label class="col-12 mb-2" for="rol_4">
-                <input type="checkbox" class="form-check-input" name="rol" id="rol_4">
-                Reservar sala 
-            </label>
+                <label for="permiso_6" class="form-check-label">
+                    <input type="checkbox" name="permiso_6" id="permiso_6" class="form-check-input me-2">
+                    Lista de auditorias
+                </label>
 
-            <label class="col-12 mb-2" for="rol_5">
-                <input type="checkbox" class="form-check-input" name="rol" id="rol_5">
-                Buscar expediente 
-            </label>
+                <label for="permiso_7" class="form-check-label">
+                    <input type="checkbox" name="permiso_7" id="permiso_7" class="form-check-input me-2">
+                    Reservar audiencia
+                </label>
 
-            <label class="col-12 mb-2" for="rol_6">
-                <input type="checkbox" class="form-check-input" name="rol" id="rol_6">
-                Administracion 
-            </label>
+                <label for="permiso_8" class="form-check-label">
+                    <input type="checkbox" name="permiso_8" id="permiso_8" class="form-check-input me-2">
+                    Buscar expediente
+                </label>
 
-            <label class="col-12 mb-2" for="rol_7">
-                <input type="checkbox" class="form-check-input" name="rol" id="rol_7">
-                Visualizar agenda
-            </label>
+                <label for="permiso_9" class="form-check-label">
+                    <input type="checkbox" name="permiso_9" id="permiso_9" class="form-check-input me-2">
+                    Administracion
+                </label>
 
-            <label class="col-12 mb-2" for="rol_8">
-                <input type="checkbox" class="form-check-input" name="rol" id="rol_8">
-                Invitado
-            </label>
-        </div>
+                <label for="permiso_10" class="form-check-label">
+                    <input type="checkbox" name="permiso_10" id="permiso_10" class="form-check-input me-2">
+                    Agenda
+                </label>
 
-        <section>
-            <p>Para los permisos de Auditorias, Administracion y busqueda de expedientes,s eleccione las permisos que tendra este rol. </p>
-        </section>
-        <div class="row my-3">
+                <label for="permiso_11" class="form-check-label">
+                    <input type="checkbox" name="permiso_11" id="permiso_11" class="form-check-input me-2">
+                    Invitado
+                </label>
 
-            <label class="col-4 mb-2" for="rol_9">
-                <input type="checkbox" class="form-check-input" name="rol" id="rol_9">
-                Editar
-            </label>
+                <label for="permiso_12" class="form-check-label">
+                    <input type="checkbox" name="permiso_12" id="permiso_12" class="form-check-input me-2">
+                    Configuraciones (Acceso completo)
+                </label>
 
-            <label class="col-4 mb-2" for="rol_10">
-                <input type="checkbox" class="form-check-input" name="rol" id="rol_10">
-                Eliminar
-            </label>
-        </div>
+                {{-- 
+                    Falta el modulo de analisis estadistico    
+                --}}
 
-        
+                {{-- <label for="permiso_13" class="form-check-label">
+                    <input type="checkbox" name="permiso_13" id="permiso_13" class="form-check-input me-2">
+                    Estadistica
+                </label> --}}
 
-
-        @isset($rol)
-            <div class="mb-3 form-check">
-                @if ($rol->estado)
-                    <input type="checkbox" class="form-check-input" name="estado" id="estado" checked value="1">
-                @else
-                    <input type="checkbox" class="form-check-input" name="estado" id="estado"  value="1">
-                @endif
-                <label class="form-check-label" for="estado">Disponible</label>
             </div>
-        @endisset
 
-        <button type="submit" class="btn btn-primary"> {{ isset($rol) ? 'Actualizar' : 'Registrar' }} </button>
+            {{-- permisos de lectura --}}
+            <div class="row mt-3">
+                <hr>
+
+                <p class="text-black-50 text-small">
+                    Para los mudulos de lista de auditorias, Administración y buscar expediente seleccione el tipo de acciones a realizar. 
+                </p>
+
+                <label for="permiso_1" class="form-check-label mt-3">
+                    <input type="checkbox" name="permiso_1" id="permiso_1" class="form-check-input me-2">
+                    Reagendar Audiencias
+                </label>
+
+                <label for="permiso_2" class="form-check-label">
+                    <input type="checkbox" name="permiso_2" id="permiso_2" class="form-check-input me-2">
+                    Eliminar
+                </label>
+
+                <label for="permiso_3" class="form-check-label">
+                    <input type="checkbox" name="permiso_3" id="permiso_3" class="form-check-input me-2">
+                    Imprimir y Descargar Archivios 
+                </label>
+
+                <label for="permiso_4" class="form-check-label">
+                    <input type="checkbox" name="permiso_4" id="permiso_4" class="form-check-input me-2">
+                   Cancelar Audiencias
+                </label>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Registrar</button>
     </form>
 
-    <div class="mt-5">
+    <div class="my-5">
         <a class="d-flex align-content-center" href="{{ route('roles.usuarios') }}">
             <span class="iconify h3 mr-2" data-icon="bx:bxs-left-arrow-circle"></span> 
             <span>regresar</span>
