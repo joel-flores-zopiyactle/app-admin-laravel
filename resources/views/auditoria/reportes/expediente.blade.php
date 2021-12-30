@@ -135,7 +135,10 @@
                     <td> {{  $archivo->nombre }} </td>
                     <td> {{ $archivo->tipo_archivo }} </td>
                     <td>
-                        <a href="{{ $archivo->url }}">Ver</a>
+                        <div class="d-flex">
+                            <a class="btn btn-sm btn-outline-secondary me-1" href="{{ $archivo->url }}">Ver</a>
+                            <a class="btn btn-sm btn-outline-secondary" href="{{ route('dowload.archivo', encrypt($archivo->id)) }}">Descargar</a>
+                        </div>
                     </td>
                 </tr>
                 @endforeach

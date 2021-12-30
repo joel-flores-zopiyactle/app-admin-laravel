@@ -155,6 +155,7 @@ Route::get('/archivos/{id}', [ArchivoController::class, 'show'])->name('show.arc
 Route::get('/archivo/{id}', [ArchivoController::class, 'edit'])->name('edit.archivo');
 Route::put('/archivo/{id}', [ArchivoController::class, 'update'])->name('update.archivo');
 Route::delete('/archivo/delete/{id}', [ArchivoController::class, 'destroy'])->name('delete.archivo');
+Route::get('/archivo/decargar/{id}', [ArchivoController::class, 'dowload'])->name('dowload.archivo');
 
 
 // Invitado

@@ -25,7 +25,7 @@
                     <th scope="col">Correo</th>
                     <th scope="col">Telefono</th>
                     <th scope="col">Tipo de usuarios</th>
-                   {{--  <th scope="col">Avatar</th> --}}
+                    <th scope="col">Avatar</th>
                     <th class="text-center" scope="col">Acciones</th>
                 </tr>
                 </thead>
@@ -36,9 +36,9 @@
                             <td>{{ $usuario->email }}</td>
                             <td>{{ $usuario->telefono }}</td>
                             <td>{{ $usuario->tipoUsuario->tipo }}</td>
-                           {{--  <td>
-                                <img src="{{asset( $usuario->avatar) }}" alt="">
-                            </td> --}}
+                            <td>
+                                <img width="40px" class="rounded-circle" src="{{ Storage::url($usuario->avatar) }}" alt="">
+                            </td>
                             <td>
                                 <div class="text-center d-flex justify-content-center">
                                     <a class="btn btn-sm btn-light rounded-circle d-flex justify-content-center align-items-center p-1" href="{{ route('edit.usuario', encrypt($usuario->id)) }}" title="Editar"> 

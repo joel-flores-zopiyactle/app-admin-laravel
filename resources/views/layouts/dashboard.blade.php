@@ -86,7 +86,7 @@
     </div>
 
     <!-- ! Footer -->
-    <footer class="w-100 bg-white py-5">
+    <footer class="w-100 bg-white py-4">
         <div class="container w-100">
             <div class="text-center ">
                 <p>

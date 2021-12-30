@@ -16,7 +16,7 @@ class ReporteController extends Controller
      */
     public function index()
     {
-        $auditorias = AudienciaModel::where('estadoAudiencia_id',1)->get();
+        $auditorias = AudienciaModel::where('estadoAudiencia_id',6)->get();
         return view('auditoria.reportes.lista-auditorias', compact('auditorias'));
     }
 
@@ -49,6 +49,7 @@ class ReporteController extends Controller
      */
     public function show($id)
     {
+        $id =  decrypt($id);
         $expediente = ExpedienteModel::where('id', $id)->first();
         return view('auditoria.reportes.expediente', compact('expediente'));
     }

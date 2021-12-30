@@ -68,7 +68,7 @@ class AuditoriasController extends Controller
             return view('auditoria.login');
 
         } catch (\Throwable $th) {
-            return back()->with('error', "Hubo un error al salir de la audiencia! $th");
+            return back()->with('error', "Hubo un error al salir de la audiencia!");
         }
     }
 }
