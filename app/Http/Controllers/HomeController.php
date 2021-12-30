@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Audiencia;
 use App\Models\EstadoAudiencia as EstadoAudienciaModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
@@ -26,8 +28,13 @@ class HomeController extends Controller
     public function index()
     {
         $this->insertDataEstadoAudiencia();
+        $fechaHoy =  date('Y,m,d');  // '2021-12-31'; 
 
-        return view('home');
+        $audienciasAgendadasHoy = Audiencia::where('fechaCelebracion', $fechaHoy)->get();
+        $audienciasCelebrandoseHoy = Audiencia::where('estadoAudiencia_id', 3)->get(); // eL 3 es el estado de la audiencia
+        $audienciasFinalizadasHoy = Audiencia::where('fechaCelebracion', $fechaHoy)->where('estadoAudiencia_id', 6)->get();
+
+        return view('home', compact(['audienciasAgendadasHoy', 'audienciasCelebrandoseHoy', 'audienciasFinalizadasHoy']));
     }
 
     /* 

@@ -75,7 +75,6 @@
                             <div class="col-md-6">
                                 <select class="form-control" name="tipo_usuario_id" id="tipo_usuario_id">
                                     <option value="1">Admin</option>
-                                    <option value="2">Visitante</option>
                                 </select>
             
                                 @error('avatar')

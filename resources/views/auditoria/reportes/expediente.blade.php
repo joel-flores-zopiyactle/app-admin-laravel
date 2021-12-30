@@ -16,7 +16,7 @@
         <table class="table w-50 table-responsive">
             <thead class="table-dark">
                 <tr>
-                    <td>Numero de Expediente:</td>
+                    <td>Número de Expediente:</td>
                     <td>Folio:</td>
                 </tr>
             </thead>
@@ -36,7 +36,7 @@
                     <td>Centro de Justicia:</td>
                     <td>Sala:</td>
                     <td>Tipo de Audiencia:</td>
-                    <td>Tipo de Juicio:</td>
+                    <td>Tipo de juicio:</td>
                 </tr>
             </thead>
 
@@ -56,7 +56,7 @@
                 <tr>
                     <td>Fecha de celebración:</td>
                     <td>Hora Inicio:</td>
-                    <td>Hora de Finalización:</td>
+                    <td>Hora de finalización:</td>
                 </tr>
             </thead>
 
@@ -110,7 +110,7 @@
                         @if ($nota->visibilidad)
                             <p>Privado</p>
                         @else
-                            <p>Público</p>
+                            <p>Publico</p>
                         @endif
                     </td>
                 </tr>
@@ -137,7 +137,12 @@
                     <td>
                         <div class="d-flex">
                             <a class="btn btn-sm btn-outline-secondary me-1" href="{{ $archivo->url }}">Ver</a>
-                            <a class="btn btn-sm btn-outline-secondary" href="{{ route('dowload.archivo', encrypt($archivo->id)) }}">Descargar</a>
+
+                            {{-- permiso de descargar archivos --}}
+                            @if ( Auth::user()->tipoUsuario->permiso->descargar)
+                                <a class="btn btn-sm btn-outline-secondary" href="{{ route('dowload.archivo', encrypt($archivo->id)) }}">Descargar</a>
+                            @endif
+                           
                         </div>
                     </td>
                 </tr>

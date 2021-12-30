@@ -9,7 +9,7 @@
     <div class="con d-flex justify-content-between align-items-center">
         <h4>Resultados</h4>
         <div>
-            <a class="btn btn-primary btn-sm" href="{{ route('book.new.room') }}">Nueva audiencia</a>
+            <a class="btn btn-primary btn-sm" href="{{ route('book.new.room') }}">Reservar Nueva Audiencia</a>
         </div>
     </div>
 
@@ -24,7 +24,7 @@
             <table class="table table-hover mt-2">
                 <thead class="table-success">
                 <tr>
-                    <th scope="col">Numero de expediente</th>
+                    <th scope="col">Número de expediente</th>
                     <th scope="col">Folio</th>
                     <th scope="col">Hora de Inicio</th>
                     <th scope="col">Fin de la audiencia</th>
@@ -56,7 +56,7 @@
         
         @else
             <div class="p-3">
-                <h3>No hay esultados de la busqueda</h3>
+                <h3>No hay resultados de la busqueda</h3>
             </div>
         @endif
     </div>

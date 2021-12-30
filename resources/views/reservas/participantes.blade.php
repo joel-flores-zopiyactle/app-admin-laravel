@@ -7,7 +7,7 @@
 @section('content')
   <div class="container-fluid">
     <div>
-      <h2 class="fs-5 text-uppercase">Agregar lista de participantes</h2>
+      <h2 class="fs-5 text-uppercase">Registrar participantes a la audiencia</h2>
       <hr>
     </div>
 

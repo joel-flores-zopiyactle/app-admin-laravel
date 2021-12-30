@@ -5,7 +5,7 @@
     <div class="con d-flex justify-content-between align-items-center">
         <h4> Control de roles de administración </h4>
         <div>
-            <a class="btn btn-outline-success btn-sm me-3" href="{{ route('usuarios') }}">Lista control de usuarios</a>
+            <a class="btn btn-outline-success btn-sm me-3" href="{{ route('usuarios') }}">Listado de usuarios</a>
             <a class="btn btn-primary btn-sm" href="{{ route('create.roles.usuarios') }}">Agregar nuevo rol</a>
         </div>
     </div>
@@ -24,7 +24,7 @@
                     <th scope="col">Tipo de Rol</th>
                     <th scope="col">Descripción</th>
                     <th scope="col">Disponible</th>
-                    <th class="text-center" scope="col">Acciones</th>
+                    <th class="text-center" scope="col"></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -41,6 +41,7 @@
 
                             </td>
                             <td>
+                                @if ($rol->id !== 1)
                                 <div class="text-center d-flex justify-content-center">
                                     <a class="btn btn-sm btn-light rounded-circle d-flex justify-content-center align-items-center p-1" href="{{ route('edit.roles.usuarios', encrypt($rol->id)) }}" title="Editar"> 
                                         <span class="iconify h5 m-0" data-icon="akar-icons:edit"></span>
@@ -55,19 +56,19 @@
                                         </button>
                                     </form>
                                 </div>
+                                @endif
                                
                             </td>
                         </tr>       
                     @endforeach              
                 </tbody>
             </table>     
-
             <div>
                 {{-- {{ $juicios->links() }} --}}  
             </div> 
         @else
-            <div class="p-3">
-                <h3>No hay Roles de usuarios todabia</h3>
+            <div class="d-flex justify-content-center align-items-center">
+                <h3 class="fs-5">No hay roles de usuario registrados todavía para el control del sistema</h3>
             </div>
         @endif
     </div>

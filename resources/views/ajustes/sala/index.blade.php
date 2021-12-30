@@ -3,7 +3,7 @@
 @section('content')
 <div class="container-fluid">
     <div class="con d-flex justify-content-between align-items-center">
-        <h4>Lista de salas</h4>
+        <h4>Listado de salas</h4>
         <div>
             <a class="btn btn-primary btn-sm" href="{{ route('create.sala') }}">Agregar nuevo sala</a>
         </div>
@@ -22,11 +22,11 @@
                 <thead class="table-success">
                 <tr>
                     <th scope="col">Sala</th>
-                    <th scope="col">Numero</th>
+                    <th scope="col">Número</th>
                     <th scope="col">Ubicación</th>
                     <th scope="col">Capacidad</th>
                     <th scope="col">Estado</th>
-                    <th class="text-center" scope="col">Acciones</th>
+                    <th class="text-center" scope="col"></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -67,8 +67,8 @@
                 {{ $salas->links() }}  
             </div>
         @else
-            <div class="p-3">
-                <h3>No hay salas todabia</h3>
+            <div class="d-flex justify-content-center align-items-center">
+                <h3 class="fs-5">No hay salas registradas todavía</h3>
             </div>
         @endif
     </div>

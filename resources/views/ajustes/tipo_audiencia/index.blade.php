@@ -3,9 +3,9 @@
 @section('content')
 <div class="container-fluid">
     <div class="con d-flex justify-content-between align-items-center">
-        <h4>Lista de Audiencias</h4>
+        <h4>Listado de Audiencias</h4>
         <div>
-            <a class="btn btn-primary btn-sm" href="{{ route('create.audiencia') }}">Agregar nuevo audiencia</a>
+            <a class="btn btn-primary btn-sm" href="{{ route('create.audiencia') }}">Agregar nueva audiencia</a>
         </div>
     </div>
 
@@ -23,7 +23,7 @@
                     <th scope="col">Nombre</th>
                     <th scope="col">Descripción</th>
                     <th scope="col">Estado</th>
-                    <th class="text-center" scope="col">Acciones</th>
+                    <th class="text-center" scope="col"></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -62,8 +62,8 @@
                 {{ $audiencias->links() }}  
             </div>   
         @else
-            <div class="p-3">
-                <h3>No hay tipos de audiencias todabia</h3>
+            <div class="d-flex justify-content-center align-items-center">
+                <h3 class="fs-5">No hay audiencias registradas todavía</h3>
             </div>
         @endif
     </div>

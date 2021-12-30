@@ -33,7 +33,7 @@
             <table class="table table-responsive table-hover mt-2">
                 <thead class="table-success">
                 <tr>
-                    <th scope="col">Numero de expediente</th>
+                    <th scope="col">Número de expediente</th>
                     <th scope="col">Folio</th>
                     <th scope="col">Hora de Inicio</th>
                     <th scope="col">Fin de la audiencia</th>

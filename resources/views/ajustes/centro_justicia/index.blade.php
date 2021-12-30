@@ -3,7 +3,7 @@
 @section('content')
 <div class="container-fluid">
     <div class="con d-flex justify-content-between align-items-center">
-        <h4>Lista de centros de justicia</h4>
+        <h4>Lista de centros de justicias</h4>
         <div>
             <a class="btn btn-primary btn-sm" href="{{ route('create.centro') }}">Agregar nuevo centro</a>
         </div>
@@ -22,7 +22,7 @@
                     <th scope="col">Nombre</th>
                     <th scope="col">Descripción</th>
                     <th scope="col">Estado</th>
-                    <th class="text-center" scope="col">Acciones</th>
+                    <th class="text-center" scope="col"></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -59,8 +59,8 @@
             
             {{ $centros->links() }}  
         @else
-            <div class="p-3">
-                <h3>No hay centros de justacia todabia</h3>
+            <div class="d-flex justify-content-center align-items-center">
+                <h3 class="fs-5">No hay centros de justicia registradas todavía</h3>
             </div>
         @endif
     </div>

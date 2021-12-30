@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Models\Permisos as PermisosModel;
 use App\Models\TipoUsuario as TipoUsuarioModel;
 use Illuminate\Http\Request;
 
@@ -38,7 +39,7 @@ class TipoUsuariosController extends Controller
      */
     public function store(Request $request)
     {
-        
+              
         try {
 
             $validatedData = $request->validate([
@@ -51,11 +52,42 @@ class TipoUsuariosController extends Controller
             $tipo->descripcion   = $request->descripcion;
 
             if($tipo->save()) {
+                
+                $permisos = new PermisosModel;
+                $permisos->tipo_user_id         = $tipo->id;
+                $permisos->agendar              = $request->permiso_1   === 'on' ? true : false; // Si no hay valor entonces es falso checbocx
+                $permisos->eliminar             = $request->permiso_2   === 'on' ? true : false;
+                $permisos->descargar            = $request->permiso_3   === 'on' ? true : false;
+                $permisos->cancelar             = $request->permiso_4   === 'on' ? true : false;
+                $permisos->ver_auditoria        = $request->permiso_5   === 'on' ? true : false;
+                $permisos->ver_lista_auditoria  = $request->permiso_6   === 'on' ? true : false;
+                $permisos->ver_reservar         = $request->permiso_7   === 'on' ? true : false;
+                $permisos->ver_buscar           = $request->permiso_8   === 'on' ? true : false;
+                $permisos->ver_admin            = $request->permiso_9   === 'on' ? true : false;
+                $permisos->ver_agenda           = $request->permiso_10  === 'on' ? true : false;
+                $permisos->ver_invitado         = $request->permiso_11  === 'on' ? true : false;
+                $permisos->ver_config           = $request->permiso_12  === 'on' ? true : false;
+                $permisos->ver_estadistica      = $request->permiso_13  === 'on' ? true : false;
+
+                $permisos->save();
+
+
                 return back()->with('success', "Rol de usuario registrado correctamente!");
             }
 
         } catch (\Throwable $th) {
-            return back()->with('success', "Ocurrio un error al registrar el rol de usuario, Intente más tarde!");
+
+            /* 
+                Si ocuure un error en el registro de permisos
+                eliminamos el rol registrado para tener limpio la base de dattos 
+            */
+
+            if($tipo) {
+                $tipo = TipoUsuarioModel::find($tipo->id);
+                $tipo->delete();
+            }
+
+            return back()->with('success', "Ocurrio un error al registrar el rol de usuario, Intente más tarde!". $th);
         }
 
     }
@@ -82,7 +114,7 @@ class TipoUsuariosController extends Controller
         $id =  decrypt($id);
         
         $rol = TipoUsuarioModel::find($id);
-        return view('ajustes.usuario.roles.create', compact('rol'));
+        return view('ajustes.usuario.roles.edit', compact('rol'));
     }
 
     /**
@@ -93,20 +125,42 @@ class TipoUsuariosController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {
-        try {
+    {    
 
-            $validatedData = $request->validate([
-                'rol' => ['required', 'max:255'],
-                'descripcion' => ['required', 'max:255'],
-            ]);
-            
+        $validatedData = $request->validate([
+            'rol' => ['required', 'max:255'],
+            'descripcion' => ['required', 'max:255'],
+            'permiso_id' => ['required'],
+        ]);
+
+        try {
+                     
             $tipo = TipoUsuarioModel::find($id);
             $tipo->tipo          = $request->rol;
             $tipo->descripcion   = $request->descripcion;
             $tipo->estado        = $request->estado ?? 0;
 
             if($tipo->save()) {
+
+                $permiso_id = decrypt($request->permiso_id); // Recibimos el id del permiso y lo desincriptamos
+
+                $permisos = PermisosModel::find($permiso_id);
+                $permisos->agendar              = $request->permiso_1   === 'on' ? true : false; // Si no hay valor entonces es falso checbocx
+                $permisos->eliminar             = $request->permiso_2   === 'on' ? true : false;
+                $permisos->descargar            = $request->permiso_3   === 'on' ? true : false;
+                $permisos->cancelar             = $request->permiso_4   === 'on' ? true : false;
+                $permisos->ver_auditoria        = $request->permiso_5   === 'on' ? true : false;
+                $permisos->ver_lista_auditoria  = $request->permiso_6   === 'on' ? true : false;
+                $permisos->ver_reservar         = $request->permiso_7   === 'on' ? true : false;
+                $permisos->ver_buscar           = $request->permiso_8   === 'on' ? true : false;
+                $permisos->ver_admin            = $request->permiso_9   === 'on' ? true : false;
+                $permisos->ver_agenda           = $request->permiso_10  === 'on' ? true : false;
+                $permisos->ver_invitado         = $request->permiso_11  === 'on' ? true : false;
+                $permisos->ver_config           = $request->permiso_12  === 'on' ? true : false;
+                $permisos->ver_estadistica      = $request->permiso_13  === 'on' ? true : false;
+
+                $permisos->save();
+
                 return back()->with('success', "Rol de usuario actualizados correctamente!");
             }
 
@@ -125,6 +179,10 @@ class TipoUsuariosController extends Controller
     {
         try {
             $tipo = TipoUsuarioModel::find($id);
+
+            if($tipo->id === 1) {
+                return back()->with('warning', "No se puede eliminar el Rol ya que es un Rol principial de la Aplicación!");
+            }
 
             if($tipo->delete()) {
                 return back()->with('success', "$tipo->tipo eliminado correctamente!");

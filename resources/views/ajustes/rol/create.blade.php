@@ -6,7 +6,7 @@
     @if (isset($rol))
         <h3 class="fs-5 text-uppercase">Actualizar datos del Rol</h3>
     @else
-       <h3 class="fs-5 text-uppercase">Agregar nuevo Rol</h3> 
+       <h3 class="fs-5 text-uppercase">Registrar nuevo Rol</h3> 
     @endif
    
     <hr>
