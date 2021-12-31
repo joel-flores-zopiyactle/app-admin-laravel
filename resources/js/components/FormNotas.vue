@@ -30,7 +30,7 @@
                             <th scope="col">Nota</th>
                             <th scope="col">
                                 <button class="btn btn-sm btn-outline-light" @click="getDataNotes">
-                                    Recargar Notas
+                                    <span class="iconify" data-icon="ci:refresh-02"></span>
                                 </button>
                             </th>
                         </tr>

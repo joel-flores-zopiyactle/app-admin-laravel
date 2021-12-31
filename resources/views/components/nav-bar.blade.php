@@ -31,7 +31,7 @@
 
                         <li>
                             <a href="#" class="show-cat-btn">
-                                <span class="iconify h4 me-1" data-icon="bx:bx-category-alt"></span>Auditoria
+                                <span class="iconify h4 me-1" data-icon="fluent:people-audience-24-regular"></span>Auditoria
                                 <span class="category__btn transparent-btn" title="Open list">
                                     <span class="sr-only">Open list</span>
                                     <span class="icon arrow-down" aria-hidden="true"></span>
@@ -121,7 +121,7 @@
                             </li>
 
                             <li>
-                                <a href="{{ route('usuarios') }}"><span class="iconify h4 me-1" data-icon="healthicons:justice"></span>Control de usuarios</a>
+                                <a href="{{ route('usuarios') }}"><span class="iconify h4 me-1" data-icon="gridicons:multiple-users"></span>Control de usuarios</a>
                             </li>
                         </ul>
                     </li>
