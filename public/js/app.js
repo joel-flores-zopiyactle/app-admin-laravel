@@ -29080,7 +29080,8 @@ var render = function () {
                     _c(
                       "button",
                       {
-                        staticClass: "btn btn-sm btn-outline-light",
+                        staticClass: "btn btn-sm btn-light",
+                        attrs: { title: "Recargar datos" },
                         on: { click: _vm.getFiles },
                       },
                       [
@@ -29302,7 +29303,8 @@ var render = function () {
                 _c(
                   "button",
                   {
-                    staticClass: "btn btn-sm btn-outline-light",
+                    staticClass: "btn btn-sm btn-light",
+                    attrs: { title: "Recargar datos" },
                     on: { click: _vm.getDataNotes },
                   },
                   [

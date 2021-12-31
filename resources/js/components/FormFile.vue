@@ -40,7 +40,7 @@
                             <tr>
                             <th scope="col">Archivos</th>
                             <th scope="col">
-                                 <button class="btn btn-sm btn-outline-light" @click="getFiles">
+                                 <button class="btn btn-sm btn-light" @click="getFiles" title="Recargar datos">
                                    <span class="iconify" data-icon="ci:refresh-02"></span>
                                 </button>
                             </th>
