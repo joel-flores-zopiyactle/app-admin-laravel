@@ -47,7 +47,7 @@
             <hr>
 
             @if (!count($audienciasCelebrandoseHoy) > 0)
-               <ul class="mt-5 list-group-items">
+               <ul class="mt-3 list-group-items">
                   @foreach ($audienciasCelebrandoseHoy as $audiencia)
                      <li> {{ $audiencia->tipoAudiencia->nombre }} - Hora de inicio: <b>{{  $audiencia->horaInicio }}</b> </li>
                   @endforeach
@@ -69,7 +69,7 @@
             <hr>
 
             @if (count($audienciasFinalizadasHoy) > 0)
-               <ul class="mt-5 list-group-items">
+               <ul class="mt-3 list-group-items">
                   @foreach ($audienciasFinalizadasHoy as $audiencia)
                      <li> {{ $audiencia->tipoAudiencia->nombre }} - Hora de inicio: <b>{{  $audiencia->horaInicio }}</b> </li>
                   @endforeach

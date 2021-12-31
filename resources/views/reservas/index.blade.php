@@ -30,6 +30,8 @@
                 </form>
             </div>
 
+            <hr>
+
             <table class="table table-responsive table-hover mt-2">
                 <thead class="table-success">
                 <tr>

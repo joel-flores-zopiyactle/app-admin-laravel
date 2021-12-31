@@ -66,7 +66,8 @@
 
                 <div class="col-md-6">
                     <div class="mb-2">
-                        <img width="80px" height="80px" class="rounded-circle" src="{{ Storage::url($usuario->avatar) }}" alt="" style="background-image: cover;">
+                        {{-- <img width="80px" height="80px" class="rounded-circle" src="{{ Storage::url($usuario->avatar) }}" alt="" style="background-image: cover;"> --}}
+                        <div class="avatar" style="background-image: url({{ Storage::url($usuario->avatar) }})"></div>
                     </div>
                     <input id="avatar" type="file" class="form-control @error('avatar') is-invalid @enderror" name="avatar" value="{{ old('avatar') }}" required autocomplete="avatar">
 
