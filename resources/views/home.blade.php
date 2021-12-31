@@ -21,7 +21,9 @@
    <div class="row mt-3">
       <div class="col-6 mb-4">
          <div class="bg-white shadow p-3 rounded">
-            <h5>Audiencias programadas del día de hoy</h5>
+            <h5>
+               <span class="iconify h4" data-icon="uil:calender"></span>
+               Audiencias programadas del día de hoy</h5>
             <hr>
             @if (!count($audienciasCelebrandoseHoy) > 0)
             <ul class="mt-3 list-group-items">
@@ -39,7 +41,9 @@
       <div class="col-6 mb-4">
 
          <div class="bg-white shadow p-3 rounded">
-            <h5>Audiencias celebrándose</h5>
+            <h5>
+               <span class="iconify h4" data-icon="uil:calender"></span>
+               Audiencias celebrándose</h5>
             <hr>
 
             @if (!count($audienciasCelebrandoseHoy) > 0)
@@ -59,7 +63,9 @@
       <div class="col-6 mb-4">
 
          <div class="bg-white shadow p-3 rounded">
-            <h5>Audiencias finalizadas del día de hoy</h5>
+            <h5>
+               <span class="iconify h4" data-icon="uil:calender"></span>
+               Audiencias finalizadas del día de hoy</h5>
             <hr>
 
             @if (count($audienciasFinalizadasHoy) > 0)
