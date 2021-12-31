@@ -33,6 +33,10 @@ Route::get('/', function () {
 // TODO: Desactivar la opcion Register en laravel ["register" => false])
 Auth::routes();
 
+Route::get('/app', function () {
+    return view('layouts.app2');
+});
+
 Route::middleware(['auth'])->group( function() {
     
     Route::get('/home', [HomeController::class, 'index'])->name('home');

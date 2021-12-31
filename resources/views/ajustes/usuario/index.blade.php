@@ -37,7 +37,8 @@
                             <td>{{ $usuario->telefono }}</td>
                             <td>{{ $usuario->tipoUsuario->tipo }}</td>
                             <td>
-                                <img width="40px" class="rounded-circle" src="{{ Storage::url($usuario->avatar) }}" alt="">
+                               {{--  <img width="40px" class="rounded-circle" style="background-image: url('')" alt=""> --}}
+                                <div class="avatar" style="background-image: url({{ Storage::url($usuario->avatar) }})"></div>
                             </td>
                             <td>
                                 <div class="text-center d-flex justify-content-end">
