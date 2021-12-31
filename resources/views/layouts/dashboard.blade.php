@@ -91,10 +91,6 @@
     <script src="{{ asset('js/dashboard.js') }}"></script>
     <script src="{{ asset('js/sidebars.js') }}"></script>
     <script src="https://code.iconify.design/2/2.1.0/iconify.min.js"></script>
-    <!-- Icons library -->
-    <script src="{{ asset('js/feather.min.js') }}"></script>
-    <!-- Custom scripts -->
-    <script src="{{ asset('js/script.js') }}"></script>
     @yield('js')
     </body>
 </html>
