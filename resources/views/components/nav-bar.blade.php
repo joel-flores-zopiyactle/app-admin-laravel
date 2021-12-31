@@ -1,7 +1,7 @@
 <div class="vh-100 bg-white pt-4 px-2 overflow-scroll">
     <ul class="list-unstyled ps-0">
 
-        <li class="mb-1" >
+        <li class="mb-1 mt-3" >
             <div class="mb-3 d-flex justify-content-center">
                 <div class="avatar" style="background-image: url({{ Storage::url(Auth::user()->avatar) }})"></div>
             </div>
@@ -138,7 +138,7 @@
         </li>
         @endif
     
-    <li class="border-top my-3"></li>
+        <li class="border-top my-3 mb-5"></li>
     </ul>
 </div>
 
