@@ -24,7 +24,7 @@ use App\Http\Controllers\Auditoria\NotaController;
 use App\Http\Controllers\Auditoria\ArchivoController;
 use App\Http\Controllers\Auditoria\InvitadoController;
 use App\Http\Controllers\Auditoria\ReporteController;
-
+use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
     return view('welcome');
@@ -32,10 +32,6 @@ Route::get('/', function () {
 
 // TODO: Desactivar la opcion Register en laravel ["register" => false])
 Auth::routes();
-
-Route::get('/app', function () {
-    return view('layouts.app2');
-});
 
 Route::middleware(['auth'])->group( function() {
     
