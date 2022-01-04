@@ -25,6 +25,7 @@ Vue.component('form-note', require('./components/FormNotas.vue').default);
 Vue.component('form-file', require('./components/FormFile.vue').default);
 Vue.component('tabla-asistencia', require('./components/Asistencia.vue').default);
 Vue.component('form-search', require('./components/FormSearch.vue').default);
+Vue.component('video-recording', require('./components/VideoRecording.vue').default);
 
 
 /**
