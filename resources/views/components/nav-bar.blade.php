@@ -105,6 +105,20 @@
         </li>
         @endif
 
+        {{-- Analisis --}}
+        @if (Auth::user()->tipoUsuario->permiso->ver_estadistica)
+        <li class="mb-1" >
+            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                <li>
+                    <a href="{{ route('analisis.index') }}" class="link-dark rounded">
+                        <span class="iconify h4 me-1" data-icon="uil:calender"></span>
+                        Analisis estadístico
+                    </a>
+                </li>
+            </ul>
+        </li>
+        @endif
+
         {{-- Sala de Invitado --}}
         @if (Auth::user()->tipoUsuario->permiso->ver_invitado)
         <li class="mb-1" >

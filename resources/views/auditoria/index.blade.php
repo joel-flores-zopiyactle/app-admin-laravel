@@ -36,7 +36,7 @@
             </div>
       
             <div class="row mb-5">
-               <div class="col-6">
+               <div class="col-12">
                   {{-- <div class="w-100 overflow-hidden">
                      <img src="{{ asset('img/sinjo_logo.png') }}" class="img-fluid rounded border" alt="logo">
                   </div> --}}
@@ -49,16 +49,12 @@
                      </div>
                   </div> --}}
                   <video-recording>
+                 
                   <hr>
-               </div>
-         
-               <div class="col-6">
-                 {{-- Info de la audiencia --}}
-               </div>
-               
+               </div>               
                {{-- salir --}}
                <div class="w-100 text-center mt-5 border p-3">
-                  <a href="{{ route('salir.evento',$expediente->audiencia->id ) }}" class="btn btn-primary rounded-pill px-3" onclick="return confirm('¿Estas seguro de salir de la sala?')">Finalizar audiencia</a>
+                  <a href="{{ route('salir.evento',$expediente->audiencia->id ) }}" class="btn btn-primary rounded-pill px-3" onclick="return confirm('¿Estas seguro de finalizar la audiencia?')">Finalizar audiencia</a>
                </div>
             </div>
    

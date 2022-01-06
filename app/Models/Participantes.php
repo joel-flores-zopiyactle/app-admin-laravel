@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\role;
 use App\Models\Audiencia;
+use App\Models\Asistencia;
 
 class Participantes extends Model
 {
@@ -27,4 +28,11 @@ class Participantes extends Model
     {
         return $this->hasOne(Audiencia::class, 'id', 'audiencia_id');
     }
+
+    public function asitencia()
+    {
+        return $this->hasOne(Asistencia::class, 'participante_id', 'id');
+    }
+
+
 }

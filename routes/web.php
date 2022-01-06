@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Modules\CentroJusticiaController;
@@ -21,10 +22,12 @@ use App\Http\Controllers\AgendaController;
 
 use App\Http\Controllers\Auditoria\AuditoriasController;
 use App\Http\Controllers\Auditoria\NotaController;
+use App\Http\Controllers\Auditoria\VideoAudienciaController;
 use App\Http\Controllers\Auditoria\ArchivoController;
 use App\Http\Controllers\Auditoria\InvitadoController;
 use App\Http\Controllers\Auditoria\ReporteController;
-use Illuminate\Support\Facades\Auth;
+
+use App\Http\Controllers\Analisis\AnalisisController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -158,6 +161,10 @@ Route::middleware(['auth'])->group( function() {
     Route::put('/archivo/{id}', [ArchivoController::class, 'update'])->name('update.archivo');
     Route::delete('/archivo/delete/{id}', [ArchivoController::class, 'destroy'])->name('delete.archivo');
     Route::get('/archivo/decargar/{id}', [ArchivoController::class, 'dowload'])->name('dowload.archivo');
+
+    // Subida de Video de la audiencia grabada
+    Route::post('/evento/video', [VideoAudienciaController::class, 'store'])->name('video.store');
+    Route::get('/evento/video/{id}', [VideoAudienciaController::class, 'dowloadVideoAudiencia'])->name('video.download.audiencia');
     
     
     // Invitado
@@ -167,5 +174,8 @@ Route::middleware(['auth'])->group( function() {
     // Reportes de auditorias
     Route::get('/auditorias/lista', [ReporteController::class, 'index'])->name('auditoria.lista');
     Route::get('/auditorias/lista/ver/{id}', [ReporteController::class, 'show'])->name('auditoria.lista.ver');
+
+    // Analisis estadistico
+    Route::get('/analisis/estadistico', [AnalisisController::class, 'index'])->name('analisis.index');
 });
 

@@ -16,15 +16,17 @@
    </div>
 
     <div>
-        <form  action="{{ route('post.participante') }}" method="POST">
+        <form  action="{{ route('post.participante') }}" method="POST" autocomplete="off">
           @csrf
-         <div class="mb-2">
-           <input type="hidden" value="{{ $id }}" name="audiencia_id">
-          <form-add-users />
-         </div>
+          <div class="mb-2">
+            <input type="hidden" value="{{ $id }}" name="audiencia_id">
+            <form-add-users />
+          </div>
 
           <div>
-            <button type="submit"  class="btn btn-primary">Generar expediente</button>
+            <button type="submit"  class="btn btn-primary" 
+            onclick="return confirm('¿Estas seguro de finalizar el expediente? \nRevise bien sus datos ingresados, una vez finalizada ya no podras editar los datos de los integrantes..')"
+            >Generar expediente</button>
           </div>
         </form>
     </div>
