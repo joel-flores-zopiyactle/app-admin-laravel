@@ -16,7 +16,7 @@ class ReporteController extends Controller
      */
     public function index()
     {
-        $auditorias = AudienciaModel::where('estadoAudiencia_id',6)->get();
+        $auditorias = AudienciaModel::where('estadoAudiencia_id',6)->orderBy('id', 'desc')->paginate(40);
         return view('auditoria.reportes.lista-auditorias', compact('auditorias'));
     }
 

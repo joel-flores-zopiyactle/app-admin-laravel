@@ -27,8 +27,8 @@
                 <table class="table table-responsive table-striped">
                     <thead class="">
                         <tr>
-                            <th scope="col">Nota</th>
-                            <th scope="col">
+                            <th style="width: 90%" scope="col">Nota</th>
+                            <th style="width: 10%" scope="col">
                                 <button class="btn btn-sm btn-light" @click="getDataNotes" title="Recargar datos">
                                     <span class="iconify" data-icon="ci:refresh-02"></span>
                                 </button>
@@ -37,8 +37,8 @@
                     </thead>
                     <tbody>
                         <tr v-for="nota in notas" :key="nota.id">
-                            <td> {{ nota.nota }} </td>
-                            <td>
+                            <td style="width: 90%"> {{ nota.nota }} </td>
+                            <td style="width: 10%">
                                  <button type="button" class="btn btn-light btn-sm" @click="deleteNote(nota.id)">
                                     <span class="iconify h4 m-0" data-icon="fluent:delete-20-regular"></span>
                                 </button>
