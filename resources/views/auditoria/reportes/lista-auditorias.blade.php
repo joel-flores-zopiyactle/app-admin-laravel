@@ -50,6 +50,10 @@
                 @endforeach        
             </tbody>
         </table>
+
+        <div class="mt-1">
+            {{ $auditorias->links() }}
+        </div>
     @else
 
     <div class="d-flex justify-content-center align-items-center">

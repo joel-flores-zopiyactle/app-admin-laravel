@@ -48,7 +48,7 @@
                         <button class="btn btn-danger d-flex justify-content-center align-items-center"><span class="iconify h4 m-0" data-icon="healthicons:stop-outline"></span></button>
                      </div>
                   </div> --}}
-                  <video-recording>
+                  <video-recording/>
                  
                   <hr>
                </div>               

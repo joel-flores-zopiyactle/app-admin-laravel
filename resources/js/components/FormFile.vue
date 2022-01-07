@@ -38,13 +38,12 @@
                     <table class="table table-hover">
                         <thead>
                             <tr>
-                            <th scope="col">Archivos</th>
-                            <th scope="col">
-                                 <button class="btn btn-sm btn-light" @click="getFiles" title="Recargar datos">
-                                   <span class="iconify" data-icon="ci:refresh-02"></span>
-                                </button>
-                            </th>
-                        
+                                <th style="width: 90%" scope="col">Archivos</th>
+                                <th style="width: 10%" scope="col">
+                                    <button class="btn btn-sm btn-light" @click="getFiles" title="Recargar datos">
+                                    <span class="iconify" data-icon="ci:refresh-02"></span>
+                                    </button>
+                                </th>
                             </tr>
                         </thead>
 
