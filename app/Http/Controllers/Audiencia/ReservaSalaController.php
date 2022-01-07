@@ -110,17 +110,17 @@ class ReservaSalaController extends Controller
                         
                         //return view(('reservas.participantes'));
                         // Generamos un Token para la audiencia
-                        $token = $this->tokenExpediente(60, $newAudiencia->id);
+                        $token = $this->tokenExpediente(60, $newExpediente->id);
                         $tokenAudiencia = new TokenAudienciaModel;
                         $tokenAudiencia->token = $token;
-                        $tokenAudiencia->expediente_id =  $newAudiencia->id;
+                        $tokenAudiencia->expediente_id =  $newExpediente->id;
                         $tokenAudiencia->save();
 
                         // Token del invitado
-                        $tokenInvitado = $this->tokenExpediente(50, $newAudiencia->id);
+                        $tokenInvitado = $this->tokenExpediente(50, $newExpediente->id);
                         $tokenAudiencia = new TokenAudienciaInvitadoModel;
                         $tokenAudiencia->token = $tokenInvitado;
-                        $tokenAudiencia->expediente_id =  $newAudiencia->id;
+                        $tokenAudiencia->expediente_id =  $newExpediente->id;
                         $tokenAudiencia->save();
 
                         $id_audiencia = encrypt($audiencia_id);

@@ -3,7 +3,7 @@
         <span class="badge px-3" style="background: {{$estadoAudiencia->color}}"> {{ $estadoAudiencia->estado }} </span>
 
     @elseif ($estadoAudiencia->estado === 'Reagendada')
-        <span class="badge px-3"> {{ $estadoAudiencia->estado }} </span>
+        <span class="badge px-3" style="background: {{$estadoAudiencia->color}}"> {{ $estadoAudiencia->estado }} </span>
 
     @elseif ($estadoAudiencia->estado === 'Celebrándose')
         <span class="badge px-3" style="background: {{$estadoAudiencia->color}}"> {{ $estadoAudiencia->estado }} </span>

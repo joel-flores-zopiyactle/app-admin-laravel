@@ -41,4 +41,9 @@ class Expediente extends Model
         return $this->hasMany(Archivo::class);
     }
 
+    public function videoAudiencia()
+    {
+        return $this->hasMany(VideoAudiencia::class);
+    }
+
 }

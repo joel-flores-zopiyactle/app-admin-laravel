@@ -44,19 +44,21 @@
                                 @endif
 
                             </td>
-                            <td class="text-center d-flex justify-content-center">
-                                <a class="btn btn-sm btn-light rounded-circle d-flex justify-content-center align-items-center p-1" href="{{ route('edit.sala', encrypt($sala->id)) }}" title="Editar"> 
-                                    <span class="iconify h5 m-0" data-icon="akar-icons:edit"></span>
-                                </a>
-
-                                <form class="ml-2" action="{{route('delete.sala', $sala->id)}}" method="post">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button class="btn btn-sm btn-light rounded-circle d-flex justify-content-center align-items-center p-1" type="submit" 
-                                    onclick="return confirm('¿Estas seguro de eliminar: {{$sala->sala}}?')">
-                                        <span class="iconify h5 m-0" data-icon="fluent:delete-20-filled"></span>
-                                    </button>
-                                </form>
+                            <td>
+                                <div class="text-center d-flex justify-content-center">
+                                    <a class="btn btn-sm btn-light rounded-circle d-flex justify-content-center align-items-center p-1" href="{{ route('edit.sala', encrypt($sala->id)) }}" title="Editar"> 
+                                        <span class="iconify h5 m-0" data-icon="akar-icons:edit"></span>
+                                    </a>
+    
+                                    <form class="ml-2" action="{{route('delete.sala', $sala->id)}}" method="post">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button class="btn btn-sm btn-light rounded-circle d-flex justify-content-center align-items-center p-1" type="submit" 
+                                        onclick="return confirm('¿Estas seguro de eliminar: {{$sala->sala}}?')">
+                                            <span class="iconify h5 m-0" data-icon="fluent:delete-20-filled"></span>
+                                        </button>
+                                    </form>
+                                </div>
                             </td>
                         </tr>       
                     @endforeach              

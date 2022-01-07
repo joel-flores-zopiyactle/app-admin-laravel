@@ -28,6 +28,7 @@ class ParticipanteController extends Controller
      */
     public function create($id, $expediente_id)
     {
+     
         $roles = RoleModel::where('estado', 1)->select('id', 'rol')->orderBy('rol')->get();
         $participantes = ParticipantesModel::where('audiencia_id', $id)->where('estado', 1)->orderBy('id')->get();
         return view('reservas.participantes', compact(['id', 'expediente_id', 'roles', 'participantes']));
@@ -47,6 +48,7 @@ class ParticipanteController extends Controller
             'descripcion' =>['required', 'array'],
             'rol_id' => ['required', 'array'],
             'audiencia_id' => ['required', 'string'],
+            'expediente_id' => ['required', 'string']
         ]);
 
         try {
@@ -80,7 +82,7 @@ class ParticipanteController extends Controller
 
             //  '/expediente/pdf
             // el id pasa encriptado 
-            return redirect("/expediente/pdf/vista/$request->audiencia_id");
+            return redirect("/expediente/pdf/vista/$request->expediente_id");
 
             return back()->with('success', 'Nuevo Participante registrado exitosamente!');
 

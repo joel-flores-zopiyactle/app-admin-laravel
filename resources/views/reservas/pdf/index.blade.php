@@ -17,7 +17,3 @@
    
 </div>
 @endsection
-
-@section('js')
-    <script src="{{ asset('js/filtroBusqueda.js') }}"></script>
-@endsection
