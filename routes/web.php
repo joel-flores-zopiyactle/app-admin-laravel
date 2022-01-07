@@ -173,9 +173,11 @@ Route::middleware(['auth'])->group( function() {
     
     // Reportes de auditorias
     Route::get('/auditorias/lista', [ReporteController::class, 'index'])->name('auditoria.lista');
+    Route::get('/auditorias/lista/buscar', [ReporteController::class, 'showExpediente'])->name('auditoria.lista.buscar');
     Route::get('/auditorias/lista/ver/{id}', [ReporteController::class, 'show'])->name('auditoria.lista.ver');
 
     // Analisis estadistico
     Route::get('/analisis/estadistico', [AnalisisController::class, 'index'])->name('analisis.index');
+    Route::get('/analisis/estadistico/audiencias-celebredas', [AnalisisController::class, 'audienciasCelebreadasAlYear'])->name('analisis.audiencias.celebradas');
 });
 

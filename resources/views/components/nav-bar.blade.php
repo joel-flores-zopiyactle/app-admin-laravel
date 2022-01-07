@@ -111,7 +111,7 @@
             <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                 <li>
                     <a href="{{ route('analisis.index') }}" class="link-dark rounded">
-                        <span class="iconify h4 me-1" data-icon="uil:calender"></span>
+                        <span class="iconify h4 me-1" data-icon="carbon:chart-line-data"></span>
                         Analisis estadístico
                     </a>
                 </li>

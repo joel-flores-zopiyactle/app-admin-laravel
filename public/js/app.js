@@ -5989,12 +5989,25 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 var OBSWebSocket = __webpack_require__(/*! obs-websocket-js */ "./node_modules/obs-websocket-js/lib/index.js");
 
 var obs = new OBSWebSocket();
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
+      showBtnPlay: true,
       statusRecord: '',
       // estados de grabación
       bgStatusConnectOBS: 'btn-outline-danger',
@@ -6016,7 +6029,11 @@ var obs = new OBSWebSocket();
         mensaje: '',
         alert: 'alert-danger'
       },
-      showSpinner: false
+      showSpinner: false,
+      tiempoRef: Date.now(),
+      cronometrar: false,
+      acumulado: 0,
+      tiempo: '00:00:00.000'
     };
   },
   created: function created() {
@@ -6085,6 +6102,9 @@ var obs = new OBSWebSocket();
         _this2.statusRecord = 'play';
 
         _this2.changeBGImage(data);
+
+        _this2.cronometrar = true;
+        _this2.showBtnPlay = false;
       })["catch"](function (error) {
         return console.log(error);
       });
@@ -6096,6 +6116,7 @@ var obs = new OBSWebSocket();
       });
       this.showPause = false;
       this.statusRecord = 'pause';
+      this.cronometrar = false;
     },
     renaurarRecord: function renaurarRecord() {
       if (!confirm('¿Estas seguro de seguir grabando?')) return;
@@ -6104,6 +6125,7 @@ var obs = new OBSWebSocket();
       });
       this.showPause = true;
       this.statusRecord = 'play';
+      this.cronometrar = true;
     },
     stopRecord: function stopRecord() {
       var _this3 = this;
@@ -6112,6 +6134,8 @@ var obs = new OBSWebSocket();
       obs.send('StopRecording').then(function (res) {
         _this3.statusRecord = 'stop';
         _this3.showFormFile = true;
+        _this3.cronometrar = false;
+        _this3.showBtnPlay = true;
         console.log('Finalizado');
       })["catch"](function (error) {
         if (error.error === 'recording not active') {
@@ -6240,9 +6264,30 @@ var obs = new OBSWebSocket();
       _this5.duration = data.recTimecode;
       _this5.ubication = data.recordingFilename;
     });
-    obs.on('GetRecordingStatus', function (data) {
-      console.log(data);
-    });
+    setInterval(function () {
+      //let tiempo = document.getElementById("tiempo")
+      if (_this5.cronometrar) {
+        _this5.acumulado += Date.now() - _this5.tiempoRef;
+      }
+
+      _this5.tiempoRef = Date.now();
+      _this5.tiempo = formatearMS(_this5.acumulado);
+    }, 1000 / 60);
+
+    function formatearMS(tiempo_ms) {
+      var MS = tiempo_ms % 1000; //Agregué la variable St para solucionar el problema de contar los minutos y horas.
+
+      var St = Math.floor((tiempo_ms - MS) / 1000);
+      var S = St % 60;
+      var M = Math.floor(St / 60 % 60);
+      var H = Math.floor(St / 60 / 60);
+
+      Number.prototype.ceros = function (n) {
+        return (this + "").padStart(n, 0);
+      };
+
+      return H.ceros(2) + ":" + M.ceros(2) + ":" + S.ceros(2) + "." + MS.ceros(3);
+    }
   },
   destroyed: function destroyed() {
     obs.disconnect();
@@ -35078,6 +35123,16 @@ var render = function () {
           : _c("div"),
       ]),
       _vm._v(" "),
+      _c("div", { staticClass: "marco alert alert-dark" }, [
+        _c("div", { staticClass: "tiempo", attrs: { id: "tiempo" } }, [
+          _c("span", {
+            staticClass: "iconify h4 me-2",
+            attrs: { "data-icon": "bx:bxs-video-recording" },
+          }),
+          _vm._v(" " + _vm._s(_vm.tiempo)),
+        ]),
+      ]),
+      _vm._v(" "),
       _c("div", { staticClass: "w-100 overflow-hidden" }, [
         _c("img", {
           staticClass: "img-fluid rounded border",
@@ -35093,71 +35148,77 @@ var render = function () {
               "d-flex justify-content-center mt-2 border p-2 bg-light",
           },
           [
-            _c(
-              "button",
-              {
-                staticClass:
-                  "btn btn-success me-2 d-flex justify-content-center align-items-center",
-                on: { click: _vm.startRecord },
-              },
-              [
-                _c("span", {
-                  staticClass: "iconify h4 m-0",
-                  attrs: { "data-icon": "akar-icons:play" },
-                }),
-              ]
-            ),
-            _vm._v(" "),
-            _vm.showPause
-              ? _c(
-                  "button",
-                  {
-                    staticClass:
-                      "btn btn-light d-flex justify-content-center align-items-center me-2",
-                    on: { click: _vm.pauseRecord },
-                  },
-                  [
-                    _c("span", {
-                      staticClass: "iconify h4 m-0",
-                      attrs: { "data-icon": "clarity:pause-solid" },
-                    }),
-                    _vm._v("pause\n                "),
-                  ]
-                )
+            _vm.showBtnPlay
+              ? _c("div", [
+                  _c(
+                    "button",
+                    {
+                      staticClass:
+                        "btn btn-success me-2 d-flex justify-content-center align-items-center",
+                      on: { click: _vm.startRecord },
+                    },
+                    [
+                      _c("span", {
+                        staticClass: "iconify h4 m-0",
+                        attrs: { "data-icon": "akar-icons:play" },
+                      }),
+                    ]
+                  ),
+                ])
               : _vm._e(),
             _vm._v(" "),
-            !_vm.showPause
-              ? _c(
-                  "button",
-                  {
-                    staticClass:
-                      "btn btn-light d-flex justify-content-center align-items-center me-2",
-                    on: { click: _vm.renaurarRecord },
-                  },
-                  [
-                    _c("span", {
-                      staticClass: "iconify h4 m-0",
-                      attrs: { "data-icon": "clarity:pause-solid" },
-                    }),
-                    _vm._v("renaurar\n                "),
-                  ]
-                )
+            !_vm.showBtnPlay
+              ? _c("div", { staticClass: "d-flex justify-content-center" }, [
+                  _vm.showPause
+                    ? _c(
+                        "button",
+                        {
+                          staticClass:
+                            "btn btn-light d-flex justify-content-center align-items-center me-2",
+                          on: { click: _vm.pauseRecord },
+                        },
+                        [
+                          _c("span", {
+                            staticClass: "iconify h4 m-0",
+                            attrs: { "data-icon": "clarity:pause-solid" },
+                          }),
+                        ]
+                      )
+                    : _vm._e(),
+                  _vm._v(" "),
+                  !_vm.showPause
+                    ? _c(
+                        "button",
+                        {
+                          staticClass:
+                            "btn btn-light d-flex justify-content-center align-items-center me-2",
+                          on: { click: _vm.renaurarRecord },
+                        },
+                        [
+                          _c("span", {
+                            staticClass: "iconify h4 m-0",
+                            attrs: { "data-icon": "clarity:play-solid" },
+                          }),
+                        ]
+                      )
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass:
+                        "btn btn-outline-danger d-flex justify-content-center align-items-center",
+                      on: { click: _vm.stopRecord },
+                    },
+                    [
+                      _c("span", {
+                        staticClass: "iconify h4 m-0",
+                        attrs: { "data-icon": "healthicons:stop-outline" },
+                      }),
+                    ]
+                  ),
+                ])
               : _vm._e(),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                staticClass:
-                  "btn btn-danger d-flex justify-content-center align-items-center",
-                on: { click: _vm.stopRecord },
-              },
-              [
-                _c("span", {
-                  staticClass: "iconify h4 m-0",
-                  attrs: { "data-icon": "healthicons:stop-outline" },
-                }),
-              ]
-            ),
           ]
         ),
       ]),

@@ -13,6 +13,16 @@
 
     <div class=" bg-white p-3 shadow rounded">
     @if (count($auditorias) > 0)
+
+        <form action="{{ route('auditoria.lista.buscar') }}" class="mb-2 w-50" method="GET">
+            <div class="d-flex">
+                <input type="search" class="form-control me-1" name="buscar" id="buscar" placeholder="Ingresar número de audiencia">
+                <button type="submit" class="btn btn-primary">Buscar</button>
+            </div>
+        </form>
+
+        <hr>
+        
         <table class="table table-responsive table-bordered table-hover">
             <thead class="table-primary">
                 <tr>

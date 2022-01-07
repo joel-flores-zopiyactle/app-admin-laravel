@@ -20,6 +20,8 @@
           @csrf
           <div class="mb-2">
             <input type="hidden" value="{{ $id }}" name="audiencia_id">
+            <input type="hidden" value="{{ $expediente_id }}" name="expediente_id">
+            
             <form-add-users />
           </div>
 

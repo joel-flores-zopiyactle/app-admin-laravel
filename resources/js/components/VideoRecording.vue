@@ -25,6 +25,10 @@
                 
                 </div>
             </div>
+
+            <div class="marco alert alert-dark">
+               <div class="tiempo" id="tiempo"><span class="iconify h4 me-2" data-icon="bx:bxs-video-recording"></span> {{  tiempo }}</div>
+          </div>
         
             <div class="w-100 overflow-hidden">
                 <img :src="url" class="img-fluid rounded border" alt="logo">
@@ -34,21 +38,29 @@
             <div>
                 <div class="d-flex justify-content-center mt-2 border p-2 bg-light">
                     <!-- play -->
-                    <button @click="startRecord" class="btn btn-success me-2 d-flex justify-content-center align-items-center">
-                        <span class="iconify h4 m-0" data-icon="akar-icons:play"></span>
-                    </button>
+                    <div v-if="showBtnPlay">
+                         <button @click="startRecord" class="btn btn-success me-2 d-flex justify-content-center align-items-center">
+                              <span class="iconify h4 m-0" data-icon="akar-icons:play"></span>
+                         </button>
+                    </div>
                     <!-- pause -->
-                    <button v-if="showPause" @click="pauseRecord" class="btn btn-light d-flex justify-content-center align-items-center me-2">
-                        <span class="iconify h4 m-0" data-icon="clarity:pause-solid"></span>pause
-                    </button>
-                    <!-- Renauded -->
-                    <button v-if="!showPause" @click="renaurarRecord" class="btn btn-light d-flex justify-content-center align-items-center me-2">
-                        <span class="iconify h4 m-0" data-icon="clarity:pause-solid"></span>renaurar
-                    </button>
-                    <!-- Stop -->
-                    <button @click="stopRecord"  class="btn btn-danger d-flex justify-content-center align-items-center">
-                        <span class="iconify h4 m-0" data-icon="healthicons:stop-outline"></span>
-                    </button>
+                    <div class="d-flex justify-content-center"  v-if="!showBtnPlay">
+                         <button v-if="showPause" @click="pauseRecord" class="btn btn-light d-flex justify-content-center align-items-center me-2">
+                              <span class="iconify h4 m-0" data-icon="clarity:pause-solid"></span>
+                         </button>
+                         <!-- Renauded -->
+                         <button v-if="!showPause" @click="renaurarRecord" class="btn btn-light d-flex justify-content-center align-items-center me-2">
+                              <span class="iconify h4 m-0" data-icon="clarity:play-solid"></span>
+                         </button>
+
+                         <!-- Stop -->
+                         <button @click="stopRecord"  class="btn btn-outline-danger d-flex justify-content-center align-items-center">
+                              <span class="iconify h4 m-0" data-icon="healthicons:stop-outline"></span>
+                         </button>
+                    </div>
+
+                   
+                    
                 </div>
             </div>
         </div>
@@ -93,6 +105,7 @@ export default {
 
      data() {
           return {
+               showBtnPlay: true,
                statusRecord: '', // estados de grabación
                bgStatusConnectOBS: 'btn-outline-danger',
                statusTextConnectOBS : 'Conectar OBS',
@@ -109,6 +122,10 @@ export default {
                     alert: 'alert-danger'
                },
                showSpinner: false,
+               tiempoRef : Date.now(),
+               cronometrar : false,
+               acumulado : 0,
+               tiempo: '00:00:00.000'
           }
      },
 
@@ -187,6 +204,8 @@ export default {
                     //console.log(data)
                     this.statusRecord = 'play'
                     this.changeBGImage(data);
+                    this.cronometrar = true
+                    this.showBtnPlay = false
 
                }).catch(error => console.log(error))
                
@@ -197,6 +216,7 @@ export default {
                obs.send('PauseRecording').catch(error => console.log(error))
                this.showPause = false
                this.statusRecord = 'pause'
+               this.cronometrar = false
           },
 
           renaurarRecord() {
@@ -204,6 +224,7 @@ export default {
                obs.send('ResumeRecording').catch(error => console.log(error))
                this.showPause = true
                this.statusRecord = 'play'
+               this.cronometrar = true
           },
 
           stopRecord() {
@@ -214,7 +235,9 @@ export default {
                .then( res => {
                     
                     this.statusRecord = 'stop'
-                    this.showFormFile = true;  
+                    this.showFormFile = true;
+                    this.cronometrar  = false  
+                    this.showBtnPlay  = true
                     console.log('Finalizado');
 
                })
@@ -327,9 +350,32 @@ export default {
                this.ubication  = data.recordingFilename
           });
 
-          obs.on('GetRecordingStatus', data => {
-               console.log(data);
-          });
+          setInterval(() => {
+          //let tiempo = document.getElementById("tiempo")
+          if (this.cronometrar) {
+              this.acumulado += Date.now() - this.tiempoRef
+          }
+          this.tiempoRef = Date.now()
+          this.tiempo = formatearMS(this.acumulado)
+          }, 1000 / 60);
+
+          function formatearMS(tiempo_ms) {
+               let MS = tiempo_ms % 1000
+               
+               //Agregué la variable St para solucionar el problema de contar los minutos y horas.
+               
+               let St = Math.floor(((tiempo_ms - MS) / 1000))
+               
+               let S = St%60
+               let M = Math.floor((St / 60) % 60)
+               let H = Math.floor((St/60 / 60))
+               Number.prototype.ceros = function (n) {
+               return (this + "").padStart(n, 0)
+               }
+
+               return H.ceros(2) + ":" + M.ceros(2) + ":" + S.ceros(2)
+               + "." + MS.ceros(3)
+          }
 
      },
 
