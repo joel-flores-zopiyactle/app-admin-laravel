@@ -15,8 +15,8 @@ class VideoAudienciaController extends Controller
 
         if($request->hasFile('video')) {
 
-            $videoFormat = ['MP4', 'MKV', 'FLV', 'MOV'];
-            $fileExtension = strtoupper($request->file('video')->getClientOriginalExtension());
+            $videoFormat = ['MP4', 'MKV', 'FLV', 'MOV', 'WEBM'];
+            return  $fileExtension = strtoupper($request->file('video')->getClientOriginalExtension());
                        
             if(!in_array($fileExtension ,$videoFormat,true)) {
                 return ['mensaje' => 'El formato que esta tratando de subir no es aceptado en la plataforma', 'status' => 500];
@@ -29,6 +29,37 @@ class VideoAudienciaController extends Controller
                 
                 $video = new VideoAudiencia;
                 $video->nombre        = $fileName;
+                $video->url           = $path;
+                $video->duracion      = $request->duracion;
+                $video->expediente_id = $request->expediente_id;
+
+                if($video->save()) {
+                    return ['mensaje' => 'Video subido correctamente!', 'status' => 201];
+                }
+
+            } catch (\Throwable $th) {
+                return ['error' => 'El video no se pudo subir a la plataforma!, Intentalo de nuevo', 'status' => 500];
+            }
+            
+        }
+
+        return ['mensaje' => 'No ha seleccionado nungún video', 'status' => 404];
+
+    }
+
+    public function storeVideo(Request $request) {
+
+        //  return $request->all();
+
+        if($request->hasFile('video')) {
+
+            $fileName = $request->file('video')->getClientOriginalName();
+            $path = $request->file('video')->store('public/VIDEO-AUDIENCIA'); 
+
+            try {
+                
+                $video = new VideoAudiencia;
+                $video->nombre        = $request->nameVideo;
                 $video->url           = $path;
                 $video->duracion      = $request->duracion;
                 $video->expediente_id = $request->expediente_id;
