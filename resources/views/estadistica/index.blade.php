@@ -75,7 +75,11 @@
         </div>
     </div>
 
-    <div class="row mt-5 bg-white shadow rounded" style="height: 450px;">
+    <div class="row mt-5 bg-white shadow rounded" style="height: 550px;">
+        <div class="p-3">
+            <h5>Analisis de las audiencias celebradas del año presente. </h5>
+            <hr>
+        </div>
         <chart-bar-adiencias-celebradas />
     </div>
 </div>

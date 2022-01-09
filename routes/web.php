@@ -164,6 +164,7 @@ Route::middleware(['auth'])->group( function() {
 
     // Subida de Video de la audiencia grabada
     Route::post('/evento/video', [VideoAudienciaController::class, 'store'])->name('video.store');
+    Route::post('/evento/video/stream', [VideoAudienciaController::class, 'storeVideo'])->name('video.store.stram.video');
     Route::get('/evento/video/{id}', [VideoAudienciaController::class, 'dowloadVideoAudiencia'])->name('video.download.audiencia');
     
     

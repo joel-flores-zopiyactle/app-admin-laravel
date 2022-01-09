@@ -27,6 +27,7 @@ Vue.component('tabla-asistencia', require('./components/Asistencia.vue').default
 Vue.component('form-search', require('./components/FormSearch.vue').default);
 Vue.component('video-recording', require('./components/VideoRecording.vue').default);
 Vue.component('video-recording-two', require('./components/VideoRecordingTwo.vue').default);
+Vue.component('video-recording-three', require('./components/VideoRecordingThree.vue').default);
 Vue.component('chart-bar-adiencias-celebradas', require('./components/ChartAudienceCelebratedYear.vue').default);
 
 
