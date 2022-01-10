@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-7">
             <br>
-            <div>
+            <div class="d-flex">
                 <select name="" class="form-control   mb-5" id="" v-model="idDeDsipositivo" @change="connect">
                     <option selected>Tipo de camara</option>
                     <option v-for="camara in dispositivosVideo" :key="camara.id" :value="camara.deviceId">
@@ -109,7 +109,7 @@
             async connect() {
                 this.video = document.querySelector('#video');
                 let stream = await navigator.mediaDevices.getUserMedia({ 
-                    audio:false, 
+                    audio:true, 
                     video: {
                         deviceId: this.idDeDsipositivo
                     }
@@ -132,7 +132,7 @@
                     }
 
                     if(tipo === 'audioinput') {
-                          this.dispositivosAudio.push(dispositivo)
+                        this.dispositivosAudio.push(dispositivo)
                     }
                 });
             },

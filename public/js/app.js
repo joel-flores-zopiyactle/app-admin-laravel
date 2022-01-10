@@ -6483,7 +6483,7 @@ var RecordRTC = __webpack_require__(/*! recordrtc */ "./node_modules/recordrtc/R
                 _this.video = document.querySelector('#video');
                 _context.next = 3;
                 return navigator.mediaDevices.getUserMedia({
-                  audio: false,
+                  audio: true,
                   video: {
                     deviceId: _this.idDeDsipositivo
                   }
@@ -80529,7 +80529,7 @@ var render = function () {
     _c("div", { staticClass: "col-7" }, [
       _c("br"),
       _vm._v(" "),
-      _c("div", [
+      _c("div", { staticClass: "d-flex" }, [
         _c(
           "select",
           {
