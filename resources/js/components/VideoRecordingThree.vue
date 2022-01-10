@@ -146,7 +146,7 @@
                 if(!confirm('¿Estas seguro de empezar a grabar?')) return
 
                 this.video = document.querySelector('#video');
-               let stream = await navigator.mediaDevices.getUserMedia({ audio: false, video: {
+               let stream = await navigator.mediaDevices.getUserMedia({ audio: true, video: {
                     deviceId: this.idDeDsipositivo
                 }})
                 this.getDivices();
