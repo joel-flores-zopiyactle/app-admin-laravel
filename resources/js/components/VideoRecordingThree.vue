@@ -2,6 +2,15 @@
     <div class="row">
         <div class="col-7">
             <br>
+            <div>
+                <select name="" class="form-control   mb-5" id="" v-model="idDeDsipositivo" @change="connect">
+                    <option selected>Tipo de camara</option>
+                    <option v-for="camara in dispositivosVideo" :key="camara.id" :value="camara.deviceId">
+                        {{ camara.label }}
+                    </option>
+                </select>
+            </div>
+
             <div class="tiempo" id="tiempo"><span class="iconify h4 me-2" data-icon="bx:bxs-video-recording"></span> {{  tiempo }}</div>
             <div class="border rounded bg-light shadow-sm p-1">
                     <video autoplay playsinline :poster="url" class="img-fluid" id="video" style="width: 100%;"></video>
@@ -70,18 +79,48 @@
                 cronometrar : false,
                 acumulado : 0,
                 tiempo: '00:00:00.000',
+                dispositivosVideo: [],
+                idDeDsipositivo: 0
             }
         },
 
         created() {
             this.cargarImagen()
-            this.getIdExpedinete()
+            this.getIdExpedinete()        
+            this.llenarSelectConDispositivosDisponibles()
         },
+
+       
 
         methods: {
             cargarImagen() {
                this.url = baseURL + '/img/sinjo_logo.png';
             },
+
+            async connect() {
+                this.video = document.querySelector('#video');
+                let stream = await navigator.mediaDevices.getUserMedia({ audio: false, video: {
+                    deviceId: this.idDeDsipositivo
+                }})
+               
+                console.log(this.video);
+
+                this.video.srcObject = stream
+
+            },
+
+            async llenarSelectConDispositivosDisponibles() {
+                let dispositivos = await navigator.mediaDevices.enumerateDevices()
+                
+                dispositivos.forEach(dispositivo => {
+                   /*  console.log(dispositivo); */
+                    const tipo = dispositivo.kind;
+                    if( tipo === 'videoinput') {
+                        this.dispositivosVideo.push(dispositivo)
+                    }
+                });
+            },
+
             getIdExpedinete() {
                // ID
                const expedienteID =  document.getElementById('expediente_id');
@@ -89,14 +128,17 @@
             },
             async recording() {
                 if(!confirm('¿Estas seguro de empezar a grabar?')) return
-                
+
                 this.video = document.querySelector('#video');
-                let stream = await navigator.mediaDevices.getUserMedia({ audio: false, video: true})
+                let stream = await navigator.mediaDevices.getUserMedia({ audio: false, video: {
+                    deviceId: this.idDeDsipositivo
+                }})
+                this.getDivices();
 
                 console.log(this.video);
 
                 this.video.srcObject = stream
-
+                
                 this.recorder = RecordRTC(stream, {
                     type: 'video',
                     mimeType: 'video/webm',
@@ -105,6 +147,11 @@
                 this.recorder.startRecording();
                 this.cronometrar = true
                 this.showBtnPlay = false;
+            },
+
+            async getDivices() {
+                const devices = await navigator.mediaDevices.enumerateDevices()
+                console.log(devices);
             },
 
             async pauseRecord() {
@@ -176,11 +223,12 @@
                this.alert.mensaje = res.data.mensaje
                this.cargarImagen()
           },
-
         
         },
 
         mounted() {
+
+            this.connect()
 
             setInterval(() => {
             //let tiempo = document.getElementById("tiempo")
