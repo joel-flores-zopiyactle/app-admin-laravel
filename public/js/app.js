@@ -6483,10 +6483,7 @@ var RecordRTC = __webpack_require__(/*! recordrtc */ "./node_modules/recordrtc/R
                 _this.video = document.querySelector('#video');
                 _context.next = 3;
                 return navigator.mediaDevices.getUserMedia({
-                  audio: {
-                    deviceId: _this.idDeDsipositivoAudio,
-                    muted: true
-                  },
+                  audio: false,
                   video: {
                     deviceId: _this.idDeDsipositivo
                   }
@@ -6565,9 +6562,7 @@ var RecordRTC = __webpack_require__(/*! recordrtc */ "./node_modules/recordrtc/R
                 _this3.video = document.querySelector('#video');
                 _context3.next = 5;
                 return navigator.mediaDevices.getUserMedia({
-                  audio: {
-                    deviceId: idDeDsipositivoAudio
-                  },
+                  audio: false,
                   video: {
                     deviceId: _this3.idDeDsipositivo
                   }

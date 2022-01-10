@@ -109,10 +109,7 @@
             async connect() {
                 this.video = document.querySelector('#video');
                 let stream = await navigator.mediaDevices.getUserMedia({ 
-                    audio: { 
-                        deviceId: this.idDeDsipositivoAudio,
-                        muted : true,
-                        }, 
+                    audio:false, 
                     video: {
                         deviceId: this.idDeDsipositivo
                     }
@@ -149,7 +146,7 @@
                 if(!confirm('¿Estas seguro de empezar a grabar?')) return
 
                 this.video = document.querySelector('#video');
-               let stream = await navigator.mediaDevices.getUserMedia({ audio: { deviceId: idDeDsipositivoAudio}, video: {
+               let stream = await navigator.mediaDevices.getUserMedia({ audio: false, video: {
                     deviceId: this.idDeDsipositivo
                 }})
                 this.getDivices();
