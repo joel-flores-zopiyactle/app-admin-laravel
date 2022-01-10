@@ -24,13 +24,13 @@ const spinner = `
 
 function getNotasExpediente(expediente_id) {
     tableNotes.innerHTML = '';
-    fetch(`${baseURL}/notas/${expediente_id}`, )
-    .then(response => response.json())
+
+    axios.get(`${baseURL}/notas/${expediente_id}`)
+    .then( response => response.data )
     .then( notas => {
-        
         spinnerNote.innerHTML = ''; // Remove spinner
         tableNotes.innerHTML = '';
-        
+
         notas.forEach(nota => {
             tableNotes.innerHTML += `
             <tr>
@@ -43,8 +43,10 @@ function getNotasExpediente(expediente_id) {
             </tr>
             `
         });
+    }) 
+    .catch(function (error) {
+        console.log(error);
     })
-    .catch(err => console.log(err));
 }
 
 // Get all notes
@@ -63,23 +65,22 @@ formNote.addEventListener('submit', (e) => {
         'expediente_id': parseInt(expedienteID.value)
     }
 
-    fetch(`${baseURL}/nota`, {
-            method: 'post', // *GET, POST, PUT, DELETE, etc.
-            headers: {
-                'X-CSRF-TOKEN': token[0].value, // <--- aquí el token
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data),
-        }
-    )
-    .then(response => {
-        if(response.status === 201) {
-            console.log('Nota creada');
+    const config = { 
+        headers: { 'Content-Type': 'application/json' },
+        'X-CSRF-TOKEN': token[0].value,// <--- aquí el token
+    };
+
+    // Envia,os los datos al servidor
+    axios.post(`${baseURL}/nota`, data, config)
+    .then(function (response) {
+        if(response.data.status === 201) {
             getNotasExpediente(data.expediente_id)
             note.value =  "";
         }
     })
-    .catch(err => console.log(err));   
+    .catch(function (error) {
+        console.log(error);
+    });    
 })
 
 
@@ -87,23 +88,22 @@ formNote.addEventListener('submit', (e) => {
 function deleteNote(id) { 
 
     if (confirm('¿Está seguro de eliminar la nota?')) {
-        fetch(`${baseURL}/nota/delete/${id}`, {
-            method: 'get', // TODO: No acepta metodo DELETE genara un error 
-            mode: 'cors',
-            headers: {
-                'X-CSRF-TOKEN': token[0].value,// <--- aquí el token
-                'Content-Type': 'application/json',
-            }
-        })
-        .then(response => {
-            if(response.status === 200) {
+        const config = {  
+            headers: { 'content-type': 'application/x-www-form-urlencoded' },
+            'X-CSRF-TOKEN': token[0].value,// <--- aquí el token
+        };
+
+        axios.delete(`${baseURL}/nota/delete/${id}`, config)
+        .then(function (response) {
+            console.log(response);
+            if(response.data.status === 200) {
                 getNotasExpediente(expedienteID.value);
             }
         })
-        .catch(err => console.log(err));
-    }
-
-    
+        .catch(function (error) {
+            console.log(error);
+        });
+    }   
  }
 
 /* input checked */

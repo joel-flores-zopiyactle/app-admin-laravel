@@ -26,7 +26,24 @@ class Expediente extends Model
         return $this->hasOne(TokenAudiencia::class);
     }
 
+    public function tokenInvitado()
+    {
+        return $this->hasOne(TokenAudienciaInvitado::class);
+    }
 
+    public function notas()
+    {
+        return $this->hasMany(Nota::class);
+    }
 
+    public function archivos()
+    {
+        return $this->hasMany(Archivo::class);
+    }
+
+    public function videoAudiencia()
+    {
+        return $this->hasMany(VideoAudiencia::class);
+    }
 
 }

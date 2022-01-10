@@ -17,11 +17,16 @@ class CreateUsersTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
+            $table->string('telefono')->unique();
+            $table->string('avatar')->default('default-sinjo-2021.jpg');
+            $table->unsignedBigInteger('tipo_usuario_id');
+            $table->foreign('tipo_usuario_id')->references('id')->on('tipo_usuarios')->onDelete('cascade');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->boolean('estado')->default(true);
             $table->rememberToken();
             $table->timestamps();
-        });
+        });      
     }
 
     /**

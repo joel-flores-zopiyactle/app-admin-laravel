@@ -1,33 +1,33 @@
 @extends('layouts.dashboard')
 
 @section('title')
-    Reservar sala
+    Reservar nueva sala
 @endsection
 
 @section('content')
 <div>
-    <h2>Reservar nueva sala</h2>
+    <h3>Reservar nueva sala</h3>
     <hr>
 
     <div class="mt-2">
         <x-alert-message />
     </div>
 
-    <form action="{{ route('post-room') }}" method="POST">
+    <form action="{{ route('post.room') }}" method="POST" autocomplete="off">
 
         @csrf
 
         <div class="row">
             <div class="col-3">
                 <div class="mb-3">
-                    <label class="form-label">Numero de Expediente</label>
+                    <label class="form-label">Número de expediente:</label>
                     <input type="number" class="form-control" value="{{$numeroDeExpediente}}" disabled>
                 </div>
             </div>
             
             <div class="col-3">
                 <div class="mb-3">
-                    <label for="folio" class="form-label">Folio</label>
+                    <label for="folio" class="form-label">Folio:</label>
                     <input type="number" class="form-control @error('folio') is-invalid @enderror" name="folio" id="folio" value="{{ old('folio') }}" placeholder="Ingresar Folio">
                     @error('folio')
                     <div class="alert alert-danger mt-1">{{ $message }}</div>
@@ -40,8 +40,8 @@
             
             <div class="col-4">
                 <div class="mb-3">
-                    <label for="juez" class="form-label">Juez</label>
-                    <input type="text" class="form-control @error('juez') is-invalid @enderror" name="juez" id="juez" value="{{ old('juez') }}" placeholder="Nombre del Juez">
+                    <label for="juez" class="form-label">Juez:</label>
+                    <input type="text" class="form-control @error('juez') is-invalid @enderror" name="juez" id="juez" value="{{ old('juez') }}" placeholder="Nombre del juez">
                     @error('juez')
                     <div class="alert alert-danger mt-1">{{ $message }}</div>
                     @enderror
@@ -50,8 +50,8 @@
 
             <div class="col-4">
                 <div class="mb-3">
-                    <label for="juzgado" class="form-label">Juzgado</label>
-                    <input type="text" class="form-control @error('juzgado') is-invalid @enderror" name="juzgado" id="juzgado" value="{{ old('juzgado') }}" placeholder="Nombre del Juzgado">
+                    <label for="juzgado" class="form-label">Juzgado:</label>
+                    <input type="text" class="form-control @error('juzgado') is-invalid @enderror" name="juzgado" id="juzgado" value="{{ old('juzgado') }}" placeholder="Nombre del juzgado">
                     @error('juzgado')
                     <div class="alert alert-danger mt-1">{{ $message }}</div>
                     @enderror
@@ -60,8 +60,8 @@
 
             <div class="col-4">
                 <div class="mb-3">
-                    <label for="actor" class="form-label">Actor</label>
-                    <input type="text" class="form-control  @error('actor') is-invalid @enderror" name="actor" id="actor" value="{{ old('actor') }}" placeholder="Nombre del Actor">
+                    <label for="actor" class="form-label">Actor:</label>
+                    <input type="text" class="form-control  @error('actor') is-invalid @enderror" name="actor" id="actor" value="{{ old('actor') }}" placeholder="Nombre del actor">
                     @error('actor')
                     <div class="alert alert-danger mt-1">{{ $message }}</div>
                     @enderror
@@ -75,7 +75,7 @@
             <div class="col-4">
                 <div class="mb-3">
                     <label for="demandado" class="form-label">Demandado:</label>
-                    <input type="text" class="form-control @error('demandado') is-invalid @enderror" name="demandado" id="demandado" value="{{ old('demandado') }}" placeholder="Nombre del Demandado">
+                    <input type="text" class="form-control @error('demandado') is-invalid @enderror" name="demandado" id="demandado" value="{{ old('demandado') }}" placeholder="Nombre del demandado">
                     @error('demandado')
                     <div class="alert alert-danger mt-1">{{ $message }}</div>
                     @enderror
@@ -85,7 +85,7 @@
             <div class="col-4">
                 <div class="mb-3">
                     <label for="secretario" class="form-label">Secretario:</label>
-                    <input type="text" class="form-control @error('secretario') is-invalid @enderror" name="secretario" id="secretario" value="{{ old('secretario') }}" placeholder="Nombre del Secretario">
+                    <input type="text" class="form-control @error('secretario') is-invalid @enderror" name="secretario" id="secretario" value="{{ old('secretario') }}" placeholder="Nombre del secretario">
                     @error('secretario')
                     <div class="alert alert-danger mt-1">{{ $message }}</div>
                     @enderror
@@ -97,9 +97,9 @@
         <div class="row">
             <div class="col-3">
                 <div class="mb-3">
-                    <label for="centroJusticia" class="form-label">Centro de justicia</label>
+                    <label for="centroJusticia" class="form-label">Centro de justicia:</label>
                     <select class="form-select  @error('centroJusticia_id') is-invalid @enderror"  name="centroJusticia_id" value="{{ old('centroJusticia_id') }}">
-                        <option selected>Seleccione una un Centro</option>
+                        <option selected>Seleccione un centro de justicia</option>
                         @foreach ($listaCentroJusticia as $centro)
                             <option value="{{ $centro->id }}">{{ $centro->nombre}}</option>
                         @endforeach
@@ -114,7 +114,7 @@
                 <div class="mb-3">
                     <label for="sala" class="form-label">Sala:</label>
                     <select class="form-select  @error('sala_id') is-invalid @enderror" name="sala_id" id="sala" value="{{ old('sala_id') }}">
-                        <option selected>Seleccione una Sala</option>
+                        <option selected>Seleccione una sala</option>
                         @foreach ($salas as $sala)
                             <option value="{{ $sala->id }}">{{ $sala->sala}}</option>
                         @endforeach
@@ -127,7 +127,7 @@
 
             <div class="col-3">
                 <div class="mb-3">
-                    <label for="tipo_id" class="form-label">Tipo de audiencia</label>
+                    <label for="tipo_id" class="form-label">Tipo de audiencia:</label>
                     <select class="form-select  @error('tipo_id') is-invalid @enderror" name="tipo_id" id="tipo_id" value="{{ old('tipo_id') }}">
                         <option selected>Seleccione una audiencia</option>
                         @foreach ($listaTipoAudiencia as $audiencia)
@@ -142,9 +142,9 @@
 
             <div class="col-3">
                 <div class="mb-3">
-                    <label for="juicio" class="form-label">Tipo de Juicio</label>
+                    <label for="juicio" class="form-label">Tipo de juicio:</label>
                     <select class="form-select  @error('juicio_id') is-invalid @enderror" name="juicio_id" id="juicio" value="{{ old('juicio_id') }}" >
-                        <option selected>Seleccione un Juicios</option>
+                        <option selected>Seleccione un Juicio</option>
                         @foreach ($listaTipoJuicio as $juicio)
                             <option value="{{ $juicio->id }}">{{ $juicio->nombre}}</option>
                         @endforeach
@@ -161,8 +161,8 @@
 
             <div class="col-4">
                 <div class="mb-3">
-                    <label for="fechaCelebracion" class="form-label">Fecha de Celebración</label>
-                    <input type="date" class="form-control @error('juicio_id') is-invalid @enderror" name="fechaCelebracion" id="fechaCelebracion" value="{{ old('fechaCelebracion') }}">
+                    <label for="fechaCelebracion" class="form-label">Fecha de celebración</label>
+                    <input type="date" class="form-control @error('fechaCelebracion') is-invalid @enderror" name="fechaCelebracion" id="fechaCelebracion" value="{{ old('fechaCelebracion') }}">
                     @error('fechaCelebracion')
                         <div class="alert alert-danger mt-1">{{ $message }}</div>
                     @enderror

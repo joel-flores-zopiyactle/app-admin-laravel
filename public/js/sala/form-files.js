@@ -5,149 +5,100 @@ const fileData =  document.getElementById('file');
 const typeFile =  document.getElementById('tipo_archivo');
 const formData = new FormData();
 // Tables
-const tableAsistencia =  document.getElementById('lista-asistencia');
+const tableFiles =  document.getElementById('tableListFiles');
 // Las variables  expediente_id, spinnerNote y token son tomados del archivo form-notas.js  
 
+const spinnerFile = document.getElementById('spinner-file')
+
+const spinnerLoading = `
+<div class="spinner-border ms-2" role="status">
+    <span class="visually-hidden">Loading...</span>
+</div>`
 
 
-fileData.addEventListener('change', () => {
-    console.log(fileData.files[0]);
-    formData.append('file', fileData.files[0]);
-})
+// Get files all by expedienteID
+function getAllArchivosAudiencia(expediente_id) { 
 
-/* File */
-
-
-formFiles.addEventListener('submit', (e) => {
-
-    e.preventDefault();   
-
-    formData.append('tipo_archivo', typeFile.value);
-    formData.append('expediente_id', 8);
-
-    fetch(`${baseURL}/archivo`, {
-            method: 'post', // *GET, POST, PUT, DELETE, etc.
-            headers: {
-                'X-CSRF-TOKEN': token[0].value,// <--- aquí el token
-            },
-            body: formData
-        }
-    )
-    .then(response => {
-        console.info(response);
-        // if(response.status === 201) {
-        //     console.log('Nota creada');
-        //     getNotasExpediente(data.expediente_id)
-        //     fileData.value =  "";
-        // }
-    })
-    .catch(err => console.log(err));  
+    tableFiles.innerHTML = '';
     
-})
-
-
-
-/* Notas */
-/* 
-function getNotasExpediente(expediente_id) {
-    tableNotes.innerHTML = '';
-    fetch(`${baseURL}/notas/${expediente_id}`, )
-    .then(response => response.json())
-    .then( notas => {
-        spinnerNote.innerHTML = '';
-        notas.forEach(nota => {
-            tableNotes.innerHTML += `
+    axios.get(`${baseURL}/archivos/${expediente_id}`)
+    .then( response => response.data )
+    .then( files => {
+        files.forEach(file => {
+            tableFiles.innerHTML += `
             <tr>
-                <td style="width: 90%">${nota.nota}</td>
+                <td style="width: 90%">${file.nombre}</td>
                 <td style="width: 10%">
-                    <button id="${nota.id}" onclick="deleteNote(${nota.id})" class="btn-delete-note" type="button" class="btn btn-light btn-sm">
+                    <button id="${fileData.id}" onclick="deleteFile(${file.id})" class="btn-delete-note" type="button" class="btn btn-light btn-sm">
                         <span class="iconify h4 m-0" data-icon="fluent:delete-20-regular"></span>
                     </button>
                 </td>
             </tr>
             `
         });
+    }) 
+    .catch(function (error) {
+        console.log(error);
     })
-    .catch(err => console.log(err));
 }
- */
-// Get all notes
-/* getNotasExpediente(expedienteID.value);
- */
-// CREATE NEW NOTE *POST
-/* formNote.addEventListener('submit', (e) => {
-    e.preventDefault();
 
-   
-    spinnerNote.innerHTML = spinner;
+getAllArchivosAudiencia(parseInt(expedienteID.value));
 
-    let data = {
-        //'_token': token[0].value,
-        'nota': note.value,
-        'visibilidad': visibility.checked,
-        'expediente_id': parseInt(expedienteID.value)
-    }
+// Change input type file 
+fileData.addEventListener('change', () => {
+    //console.log(fileData.files[0]);
+    formData.append('file', fileData.files[0]);
+})
 
-    fetch(`${baseURL}/nota`, {
-            method: 'post', // *GET, POST, PUT, DELETE, etc.
-            headers: {
-                'X-CSRF-TOKEN': token[0].value,// <--- aquí el token
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data),
-        }
-    )
-    .then(response => {
-        if(response.status === 201) {
-            console.log('Nota creada');
-            getNotasExpediente(data.expediente_id)
-            note.value =  "";
+// Form new File
+formFiles.addEventListener('submit', (e) => {
+
+    e.preventDefault();   
+
+    spinnerFile.innerHTML = spinnerLoading;
+
+    formData.append('tipo_archivo', typeFile.value);
+    formData.append('expediente_id',  parseInt(expedienteID.value));
+
+    const config = { 
+        headers: { 'Content-Type': 'multipart/form-data' },
+        'X-CSRF-TOKEN': token[0].value,// <--- aquí el token
+    };
+
+    // Envia,os los datos al servidor
+    axios.post(`${baseURL}/archivo`, formData, config)
+    .then(function (response) {
+        if(response.data.status == 201) {
+            spinnerFile.innerHTML = '';
+
+            getAllArchivosAudiencia(parseInt(expedienteID.value));
+
+            fileData.value = '';
         }
     })
-    .catch(err => console.log(err));   
+    .catch(function (error) {
+        console.log(error);
+    });    
 })
- */
 
-// DELETE NOTE *DELETE
-// function deleteNote(id) { 
+// Delete File
 
-//     if (confirm('¿Está seguro de eliminar la nota?')) {
-//         fetch(`${baseURL}/nota/delete/${id}`, {
-//             method: 'get',
-//             mode: 'cors',
-//             headers: {
-//                 'X-CSRF-TOKEN': token[0].value,// <--- aquí el token
-//                 'Content-Type': 'application/json',
-//             }
-//         })
-//         .then(response => {
-//             if(response.status === 200) {
-//                 getNotasExpediente(expedienteID.value);
-//             }
-//         })
-//         .catch(err => console.log(err));
-//     }
+function deleteFile(id) {
+    if (confirm('¿Está seguro de eliminar el archivo?')) {
+        const config = {  
+            headers: { 'content-type': 'application/x-www-form-urlencoded' },
+            'X-CSRF-TOKEN': token[0].value,// <--- aquí el token
+        };
 
-    
-//  }
+        axios.delete(`${baseURL}/archivo/delete/${id}`, config)
+        .then(function (response) {
+           if(response.data.status === 200) {
+            getAllArchivosAudiencia(parseInt(expedienteID.value));
+           }
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
 
-/* input checked */
-
-// visibility.addEventListener('change', (e) => {
-//     e.preventDefault()
-//     if(visibility.checked) {
-//         console.log('Privado')
-//         labelVisibility.innerText  = "Público";
-//     } else {
-//         labelVisibility.innerText  = "Privado";
-//     }
-   
-// })
-
-
-
-// **********************************************************************//
-// **********************************************************************//
-
-
-
+    }
+}

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Expediente numero {{  $expediente->id }}</title>
    {{--  <link rel="stylesheet" href="{{ asset('css/app.css') }}"> --}}
    <style>
        * {
@@ -211,6 +211,18 @@
                 </tbody>
             </table>
 
+            <table>
+                <thead>
+                <tr>
+                    <td>Token de invitado:</td>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{ $expediente->tokenInvitado->token ?? 'No hay token'}}</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
 
        

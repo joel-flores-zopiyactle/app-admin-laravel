@@ -4,6 +4,10 @@
     <link rel="stylesheet" href="{{ asset('css/agenda.css') }}">
 @endsection
 
+@section('title')
+    Agenda
+@endsection
+
 @section('content')
 <div class="container-fluid mb-5">
     <div class="shadow px-4 py-3 card bg-white mb-5 overflow-auto">

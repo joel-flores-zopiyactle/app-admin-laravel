@@ -1,6 +1,14 @@
 <h3 class="h5 mt-3">Agregar Notas</h3>
 <hr>
-<div class="row p-2 bg-white shadow mt-3 borders">
+
+<input type="text" name="expediente_id" id="expediente_id" required hidden value="{{ $audienciaid }}" />
+<div>
+   {{-- Componente de vue --}}
+   <form-note>
+</div>
+
+
+{{-- <div class="row p-2 bg-white shadow mt-3 borders">
     <div class="col-5">
        <form class="mb-4" id="formNote">
           <input type="text" name="expediente_id" id="expediente_id" required hidden value="{{ $audienciaid }}" />
@@ -15,15 +23,15 @@
 
           <div class="mt-3 d-flex">
              <button type="submit" class="btn btn-sm btn-primary">Agregar nota</button>
-             <div id="spinner-note"></div> {{-- Muestra el spinner de carga --}}
+             <div id="spinner-note"></div> 
           </div>
 
          
 
        </form>
     </div>
-    {{-- Lista de notas --}}
-    <div class="col-7">
+   
+   <div class="col-7">
        <table class="table table-striped">
           <thead class="table-primary">
             <tr>
@@ -35,5 +43,5 @@
                           
           </tbody>
         </table>
-    </div>
- </div>
+   </div>
+</div> --}}

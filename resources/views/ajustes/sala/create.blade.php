@@ -6,13 +6,13 @@
     @if (isset($sala))
         <h3 class="fs-5 text-uppercase">Actualizar datos de la Sala</h3>
     @else
-       <h3 class="fs-5 text-uppercase">Agregar nuevo Sala</h3> 
+       <h3 class="fs-5 text-uppercase">Registrar nueva Sala</h3> 
     @endif
    
     <hr>
     
 
-    <form action="{{ isset($sala) ? route('update-sala', $sala->id) : route('post-sala') }}" method="POST" class="w-50">
+    <form action="{{ isset($sala) ? route('update.sala', $sala->id) : route('post.sala') }}" method="POST" class="w-50">
         @csrf
         <x-alert-message />
 
@@ -88,7 +88,7 @@
     <div class="mt-5">
         <a class="d-flex align-content-center" href="{{ route('salas') }}">
             <span class="iconify h3 mr-2" data-icon="bx:bxs-left-arrow-circle"></span> 
-            <span>regresar</span>
+            <span>Regresar</span>
         </a>
     </div>
 </div>

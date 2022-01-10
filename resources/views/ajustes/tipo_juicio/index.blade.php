@@ -5,7 +5,7 @@
     <div class="con d-flex justify-content-between align-items-center">
         <h4>Lista de juicios</h4>
         <div>
-            <a class="btn btn-primary btn-sm" href="{{ route('create-juicio') }}">Agregar nuevo juicio</a>
+            <a class="btn btn-primary btn-sm" href="{{ route('create.juicio') }}">Agregar nuevo juicio</a>
         </div>
     </div>
 
@@ -22,7 +22,7 @@
                     <th scope="col">Nombre</th>
                     <th scope="col">Descripción</th>
                     <th scope="col">Estado</th>
-                    <th class="text-center" scope="col">Acciones</th>
+                    <th class="text-center" scope="col"></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -38,19 +38,21 @@
                                 @endif
 
                             </td>
-                            <td class="text-center d-flex justify-content-center">
-                                <a class="btn btn-sm btn-light rounded-circle d-flex justify-content-center align-items-center p-1" href="{{ route('edit-juicio', $juicio->id) }}" title="Editar"> 
-                                    <span class="iconify h5 m-0" data-icon="akar-icons:edit"></span>
-                                </a>
-
-                                <form class="ml-2" action="{{route('delete-juicio', $juicio->id)}}" method="post">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button class="btn btn-sm btn-light rounded-circle d-flex justify-content-center align-items-center p-1" type="submit" 
-                                    onclick="return confirm('¿Estas seguro de eliminar: {{$juicio->nombre}}?')">
-                                        <span class="iconify h5 m-0" data-icon="fluent:delete-20-filled"></span>
-                                    </button>
-                                </form>
+                            <td>
+                                <div class="text-center d-flex justify-content-center">
+                                    <a class="btn btn-sm btn-light rounded-circle d-flex justify-content-center align-items-center p-1" href="{{ route('edit.juicio', encrypt($juicio->id)) }}" title="Editar"> 
+                                        <span class="iconify h5 m-0" data-icon="akar-icons:edit"></span>
+                                    </a>
+    
+                                    <form class="ml-2" action="{{route('delete.juicio', $juicio->id)}}" method="post">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button class="btn btn-sm btn-light rounded-circle d-flex justify-content-center align-items-center p-1" type="submit" 
+                                        onclick="return confirm('¿Estas seguro de eliminar: {{$juicio->nombre}}?')">
+                                            <span class="iconify h5 m-0" data-icon="fluent:delete-20-filled"></span>
+                                        </button>
+                                    </form>
+                                </div>
                             </td>
                         </tr>       
                     @endforeach              
@@ -61,8 +63,8 @@
                 {{ $juicios->links() }}  
             </div> 
         @else
-            <div class="p-3">
-                <h3>No hay centros de justacia todabia</h3>
+            <div class="d-flex justify-content-center align-items-center">
+                <h3 class="fs-5">No hay tipos de juicios registradas todavía</h3>
             </div>
         @endif
     </div>

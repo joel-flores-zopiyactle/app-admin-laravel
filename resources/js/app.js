@@ -19,7 +19,17 @@ window.Vue = require('vue').default;
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+Vue.component('form-add-users', require('./components/FormUsers.vue').default);
+Vue.component('input-form', require('./components/InputForm.vue').default);
+Vue.component('form-note', require('./components/FormNotas.vue').default);
+Vue.component('form-file', require('./components/FormFile.vue').default);
+Vue.component('tabla-asistencia', require('./components/Asistencia.vue').default);
+Vue.component('form-search', require('./components/FormSearch.vue').default);
+Vue.component('video-recording', require('./components/VideoRecording.vue').default);
+Vue.component('video-recording-two', require('./components/VideoRecordingTwo.vue').default);
+Vue.component('video-recording-three', require('./components/VideoRecordingThree.vue').default);
+Vue.component('chart-bar-adiencias-celebradas', require('./components/ChartAudienceCelebratedYear.vue').default);
+
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

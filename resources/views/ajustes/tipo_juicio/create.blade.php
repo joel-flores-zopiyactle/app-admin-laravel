@@ -12,7 +12,7 @@
     <hr>
    
    
-    <form action="{{ isset($juicio) ? route('update-juicio', $juicio->id) : route('post-juicio') }}" method="POST" class="w-50">
+    <form action="{{ isset($juicio) ? route('update.juicio', $juicio->id) : route('post.juicio') }}" method="POST" class="w-50">
         @csrf
 
         <x-alert-message />
@@ -28,7 +28,7 @@
                 VERIFICA SI SE ACTUALIZA O SE CREA 
             --}}
 
-            <label for="nombre" class="form-label">Nombre del Juicio</label>
+            <label for="nombre" class="form-label">Nombre del Juicio:</label>
             <input type="text" class="form-control @error('nombre') is-invalid @enderror" id="nombre" name="nombre" placeholder="Ingrese nombre del Juicio..."
             aria-describedby="nombre"  value="{{ isset($juicio) ? $juicio->nombre : old('nombre') }}"> 
             @error('nombre')
@@ -37,7 +37,7 @@
         </div>
 
         <div class="mb-3">
-            <label for="descripcion" class="form-label">Descripción</label>
+            <label for="descripcion" class="form-label">Descripción:</label>
             <textarea name="descripcion" id="decs" class="form-control  @error('descripcion') is-invalid @enderror" 
             cols="30" rows="3"  placeholder="Agregue un breve descripción del Juicio...">{{ isset($juicio) ? $juicio->descripcion : old('descripcion') }}</textarea>
 

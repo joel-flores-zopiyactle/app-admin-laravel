@@ -9,7 +9,7 @@
 <div class="container">
    <div class="row">
     <div class="col"></div>
-    <form action="{{ route('evento-singIn') }}" method="POST" class="col-5 card p-5 shadow mt-3" autocomplete="off">
+    <form action="{{ route('evento.singIn') }}" method="POST" class="col-5 card p-5 shadow mt-3" autocomplete="off">
         @csrf
         <h3 class="text-center">Ingresar audiencia</h3>
         <hr>
@@ -22,7 +22,7 @@
           @enderror
         </div>
         <div class="mb-3">
-          <label for="num_audiencia" class="form-label">Numero de expediente:</label>
+          <label for="num_audiencia" class="form-label">Número de expediente:</label>
           <input type="number" class="form-control  @error('numero_de_expediente') is-invalid @enderror" name="numero_de_expediente" id="num_audiencia" placeholder="Número de expediente...">
           @error('numero_de_expediente')
             <div class="alert alert-danger mt-1">{{ $message }}</div>

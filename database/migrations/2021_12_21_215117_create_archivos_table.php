@@ -17,7 +17,7 @@ class CreateArchivosTable extends Migration
             $table->id();
             $table->text('tipo_archivo');
             $table->string('url');
-        
+            $table->string('nombre');
             $table->unsignedBigInteger('expediente_id');
             $table->foreign('expediente_id')->references('id')->on('expedientes')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();

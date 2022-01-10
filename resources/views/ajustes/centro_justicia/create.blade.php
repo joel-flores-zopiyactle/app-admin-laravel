@@ -12,7 +12,7 @@
     <hr>
 
     
-    <form action="{{ isset($centro) ? route('update-centro', $centro->id) :route('post-centro') }}" method="POST" class="w-50">
+    <form action="{{ isset($centro) ? route('update.centro', $centro->id) :route('post.centro') }}" method="POST" class="w-50">
 
         <x-alert-message/>
 
@@ -63,7 +63,7 @@
     </form>
 
     <div class="mt-5">
-        <a class="d-flex align-content-center" href="{{ route('centro-justicia') }}">
+        <a class="d-flex align-content-center" href="{{ route('centro.justicia') }}">
             <span class="iconify h3 mr-2" data-icon="bx:bxs-left-arrow-circle"></span> 
             <span>regresar</span>
         </a>
