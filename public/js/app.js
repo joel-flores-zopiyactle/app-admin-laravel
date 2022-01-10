@@ -6419,6 +6419,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 var RecordRTC = __webpack_require__(/*! recordrtc */ "./node_modules/recordrtc/RecordRTC.js");
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -6439,23 +6448,21 @@ var RecordRTC = __webpack_require__(/*! recordrtc */ "./node_modules/recordrtc/R
       tiempoRef: Date.now(),
       cronometrar: false,
       acumulado: 0,
-      tiempo: '00:00:00.000'
+      tiempo: '00:00:00.000',
+      dispositivosVideo: [],
+      idDeDsipositivo: 0
     };
   },
   created: function created() {
     this.cargarImagen();
     this.getIdExpedinete();
+    this.llenarSelectConDispositivosDisponibles();
   },
   methods: {
     cargarImagen: function cargarImagen() {
       this.url = baseURL + '/img/sinjo_logo.png';
     },
-    getIdExpedinete: function getIdExpedinete() {
-      // ID
-      var expedienteID = document.getElementById('expediente_id');
-      this.expedienteID = expedienteID.value;
-    },
-    recording: function recording() {
+    connect: function connect() {
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
@@ -6464,36 +6471,21 @@ var RecordRTC = __webpack_require__(/*! recordrtc */ "./node_modules/recordrtc/R
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                if (confirm('¿Estas seguro de empezar a grabar?')) {
-                  _context.next = 2;
-                  break;
-                }
-
-                return _context.abrupt("return");
-
-              case 2:
                 _this.video = document.querySelector('#video');
-                _context.next = 5;
+                _context.next = 3;
                 return navigator.mediaDevices.getUserMedia({
                   audio: false,
-                  video: true
+                  video: {
+                    deviceId: _this.idDeDsipositivo
+                  }
                 });
 
-              case 5:
+              case 3:
                 stream = _context.sent;
                 console.log(_this.video);
                 _this.video.srcObject = stream;
-                _this.recorder = RecordRTC(stream, {
-                  type: 'video',
-                  mimeType: 'video/webm'
-                });
 
-                _this.recorder.startRecording();
-
-                _this.cronometrar = true;
-                _this.showBtnPlay = false;
-
-              case 12:
+              case 6:
               case "end":
                 return _context.stop();
             }
@@ -6501,32 +6493,30 @@ var RecordRTC = __webpack_require__(/*! recordrtc */ "./node_modules/recordrtc/R
         }, _callee);
       }))();
     },
-    pauseRecord: function pauseRecord() {
+    llenarSelectConDispositivosDisponibles: function llenarSelectConDispositivosDisponibles() {
       var _this2 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
+        var dispositivos;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                if (confirm('¿Estas seguro de pausar la grabación?')) {
-                  _context2.next = 2;
-                  break;
-                }
-
-                return _context2.abrupt("return");
+                _context2.next = 2;
+                return navigator.mediaDevices.enumerateDevices();
 
               case 2:
-                _context2.next = 4;
-                return _this2.recorder.pauseRecording();
+                dispositivos = _context2.sent;
+                dispositivos.forEach(function (dispositivo) {
+                  /*  console.log(dispositivo); */
+                  var tipo = dispositivo.kind;
+
+                  if (tipo === 'videoinput') {
+                    _this2.dispositivosVideo.push(dispositivo);
+                  }
+                });
 
               case 4:
-                _this2.video.pause();
-
-                _this2.cronometrar = false;
-                _this2.togglePause = false;
-
-              case 7:
               case "end":
                 return _context2.stop();
             }
@@ -6534,15 +6524,21 @@ var RecordRTC = __webpack_require__(/*! recordrtc */ "./node_modules/recordrtc/R
         }, _callee2);
       }))();
     },
-    resumenRecord: function resumenRecord() {
+    getIdExpedinete: function getIdExpedinete() {
+      // ID
+      var expedienteID = document.getElementById('expediente_id');
+      this.expedienteID = expedienteID.value;
+    },
+    recording: function recording() {
       var _this3 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
+        var stream;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
-                if (confirm('¿Estas seguro de renaudar la grabación?')) {
+                if (confirm('¿Estas seguro de empezar a grabar?')) {
                   _context3.next = 2;
                   break;
                 }
@@ -6550,16 +6546,33 @@ var RecordRTC = __webpack_require__(/*! recordrtc */ "./node_modules/recordrtc/R
                 return _context3.abrupt("return");
 
               case 2:
-                _context3.next = 4;
-                return _this3.recorder.resumeRecording();
+                _this3.video = document.querySelector('#video');
+                _context3.next = 5;
+                return navigator.mediaDevices.getUserMedia({
+                  audio: false,
+                  video: {
+                    deviceId: _this3.idDeDsipositivo
+                  }
+                });
 
-              case 4:
-                _this3.video.play();
+              case 5:
+                stream = _context3.sent;
+
+                _this3.getDivices();
+
+                console.log(_this3.video);
+                _this3.video.srcObject = stream;
+                _this3.recorder = RecordRTC(stream, {
+                  type: 'video',
+                  mimeType: 'video/webm'
+                });
+
+                _this3.recorder.startRecording();
 
                 _this3.cronometrar = true;
-                _this3.togglePause = true;
+                _this3.showBtnPlay = false;
 
-              case 7:
+              case 13:
               case "end":
                 return _context3.stop();
             }
@@ -6567,42 +6580,21 @@ var RecordRTC = __webpack_require__(/*! recordrtc */ "./node_modules/recordrtc/R
         }, _callee3);
       }))();
     },
-    stopRecord: function stopRecord() {
-      var _this4 = this;
-
+    getDivices: function getDivices() {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4() {
+        var devices;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
           while (1) {
             switch (_context4.prev = _context4.next) {
               case 0:
-                if (confirm('¿Estas seguro de finalizar la grabación?')) {
-                  _context4.next = 2;
-                  break;
-                }
-
-                return _context4.abrupt("return");
+                _context4.next = 2;
+                return navigator.mediaDevices.enumerateDevices();
 
               case 2:
-                _context4.next = 4;
-                return _this4.recorder.stopRecording(function (blobURL) {
-                  var blob = _this4.recorder.getBlob();
-                  /*  console.log(blob); */
-
-
-                  /*  console.log(blob); */
-                  _this4.uploadFileVideo(blob); //let video = this.recorder.save('video.webm');
-                  //console.log(video);
-                  //console.log(time);
-
-                });
+                devices = _context4.sent;
+                console.log(devices);
 
               case 4:
-                _this4.video.pause();
-
-                _this4.cronometrar = false;
-                _this4.showBtnPlay = true;
-
-              case 7:
               case "end":
                 return _context4.stop();
             }
@@ -6610,22 +6602,131 @@ var RecordRTC = __webpack_require__(/*! recordrtc */ "./node_modules/recordrtc/R
         }, _callee4);
       }))();
     },
-    uploadFileVideo: function uploadFileVideo(video) {
-      var _this5 = this;
+    pauseRecord: function pauseRecord() {
+      var _this4 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee5() {
-        var formData, token, config, res;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee5$(_context5) {
           while (1) {
             switch (_context5.prev = _context5.next) {
               case 0:
+                if (confirm('¿Estas seguro de pausar la grabación?')) {
+                  _context5.next = 2;
+                  break;
+                }
+
+                return _context5.abrupt("return");
+
+              case 2:
+                _context5.next = 4;
+                return _this4.recorder.pauseRecording();
+
+              case 4:
+                _this4.video.pause();
+
+                _this4.cronometrar = false;
+                _this4.togglePause = false;
+
+              case 7:
+              case "end":
+                return _context5.stop();
+            }
+          }
+        }, _callee5);
+      }))();
+    },
+    resumenRecord: function resumenRecord() {
+      var _this5 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee6() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee6$(_context6) {
+          while (1) {
+            switch (_context6.prev = _context6.next) {
+              case 0:
+                if (confirm('¿Estas seguro de renaudar la grabación?')) {
+                  _context6.next = 2;
+                  break;
+                }
+
+                return _context6.abrupt("return");
+
+              case 2:
+                _context6.next = 4;
+                return _this5.recorder.resumeRecording();
+
+              case 4:
+                _this5.video.play();
+
+                _this5.cronometrar = true;
+                _this5.togglePause = true;
+
+              case 7:
+              case "end":
+                return _context6.stop();
+            }
+          }
+        }, _callee6);
+      }))();
+    },
+    stopRecord: function stopRecord() {
+      var _this6 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee7() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee7$(_context7) {
+          while (1) {
+            switch (_context7.prev = _context7.next) {
+              case 0:
+                if (confirm('¿Estas seguro de finalizar la grabación?')) {
+                  _context7.next = 2;
+                  break;
+                }
+
+                return _context7.abrupt("return");
+
+              case 2:
+                _context7.next = 4;
+                return _this6.recorder.stopRecording(function (blobURL) {
+                  var blob = _this6.recorder.getBlob();
+                  /*  console.log(blob); */
+
+
+                  /*  console.log(blob); */
+                  _this6.uploadFileVideo(blob); //let video = this.recorder.save('video.webm');
+                  //console.log(video);
+                  //console.log(time);
+
+                });
+
+              case 4:
+                _this6.video.pause();
+
+                _this6.cronometrar = false;
+                _this6.showBtnPlay = true;
+
+              case 7:
+              case "end":
+                return _context7.stop();
+            }
+          }
+        }, _callee7);
+      }))();
+    },
+    uploadFileVideo: function uploadFileVideo(video) {
+      var _this7 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee8() {
+        var formData, token, config, res;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee8$(_context8) {
+          while (1) {
+            switch (_context8.prev = _context8.next) {
+              case 0:
                 console.log(video);
-                _this5.showBarUpload = true;
+                _this7.showBarUpload = true;
                 formData = new FormData();
                 formData.append('video', video);
-                formData.append('expediente_id', _this5.expedienteID);
-                formData.append('duracion', _this5.tiempo);
-                formData.append('nameVideo', "grabaci\xF3n_aduiencia_numero_".concat(_this5.expedienteID));
+                formData.append('expediente_id', _this7.expedienteID);
+                formData.append('duracion', _this7.tiempo);
+                formData.append('nameVideo', "grabaci\xF3n_aduiencia_numero_".concat(_this7.expedienteID));
                 token = document.getElementsByName('_token');
                 config = {
                   headers: {
@@ -6635,7 +6736,7 @@ var RecordRTC = __webpack_require__(/*! recordrtc */ "./node_modules/recordrtc/R
 
                 }; // Envio los datos al servidor
 
-                _context5.next = 11;
+                _context8.next = 11;
                 return axios.post("".concat(baseURL, "/evento/video/stream"), formData, config).then(function (res) {
                   return res;
                 })["catch"](function (error) {
@@ -6643,34 +6744,35 @@ var RecordRTC = __webpack_require__(/*! recordrtc */ "./node_modules/recordrtc/R
                 });
 
               case 11:
-                res = _context5.sent;
+                res = _context8.sent;
                 console.log(res);
-                _this5.showBarUpload = false;
-                _this5.alert.showAlert = true;
-                _this5.alert.mensaje = res.data.mensaje;
+                _this7.showBarUpload = false;
+                _this7.alert.showAlert = true;
+                _this7.alert.mensaje = res.data.mensaje;
 
-                _this5.cargarImagen();
+                _this7.cargarImagen();
 
               case 17:
               case "end":
-                return _context5.stop();
+                return _context8.stop();
             }
           }
-        }, _callee5);
+        }, _callee8);
       }))();
     }
   },
   mounted: function mounted() {
-    var _this6 = this;
+    var _this8 = this;
 
+    this.connect();
     setInterval(function () {
       //let tiempo = document.getElementById("tiempo")
-      if (_this6.cronometrar) {
-        _this6.acumulado += Date.now() - _this6.tiempoRef;
+      if (_this8.cronometrar) {
+        _this8.acumulado += Date.now() - _this8.tiempoRef;
       }
 
-      _this6.tiempoRef = Date.now();
-      _this6.tiempo = formatearMS(_this6.acumulado);
+      _this8.tiempoRef = Date.now();
+      _this8.tiempo = formatearMS(_this8.acumulado);
     }, 1000 / 60);
 
     function formatearMS(tiempo_ms) {
@@ -80413,6 +80515,62 @@ var render = function () {
   return _c("div", { staticClass: "row" }, [
     _c("div", { staticClass: "col-7" }, [
       _c("br"),
+      _vm._v(" "),
+      _c("div", [
+        _c(
+          "select",
+          {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.idDeDsipositivo,
+                expression: "idDeDsipositivo",
+              },
+            ],
+            staticClass: "form-control   mb-5",
+            attrs: { name: "", id: "" },
+            on: {
+              change: [
+                function ($event) {
+                  var $$selectedVal = Array.prototype.filter
+                    .call($event.target.options, function (o) {
+                      return o.selected
+                    })
+                    .map(function (o) {
+                      var val = "_value" in o ? o._value : o.value
+                      return val
+                    })
+                  _vm.idDeDsipositivo = $event.target.multiple
+                    ? $$selectedVal
+                    : $$selectedVal[0]
+                },
+                _vm.connect,
+              ],
+            },
+          },
+          [
+            _c("option", { attrs: { selected: "" } }, [
+              _vm._v("Tipo de camara"),
+            ]),
+            _vm._v(" "),
+            _vm._l(_vm.dispositivosVideo, function (camara) {
+              return _c(
+                "option",
+                { key: camara.id, domProps: { value: camara.deviceId } },
+                [
+                  _vm._v(
+                    "\n                    " +
+                      _vm._s(camara.label) +
+                      "\n                "
+                  ),
+                ]
+              )
+            }),
+          ],
+          2
+        ),
+      ]),
       _vm._v(" "),
       _c("div", { staticClass: "tiempo", attrs: { id: "tiempo" } }, [
         _c("span", {
