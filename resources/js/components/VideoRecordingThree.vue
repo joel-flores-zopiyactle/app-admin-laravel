@@ -9,6 +9,13 @@
                         {{ camara.label }}
                     </option>
                 </select>
+
+                 <select name="" class="form-control mb-5" id=""  v-model="idDeDsipositivoAudio" @change="connect">
+                    <option selected>Tipo de audio</option>
+                    <option v-for="audio in dispositivosAudio" :key="audio.id" :value="audio.deviceId">
+                        {{ audio.label }}
+                    </option>
+                </select>
             </div>
 
             <div class="tiempo" id="tiempo"><span class="iconify h4 me-2" data-icon="bx:bxs-video-recording"></span> {{  tiempo }}</div>
@@ -80,7 +87,9 @@
                 acumulado : 0,
                 tiempo: '00:00:00.000',
                 dispositivosVideo: [],
-                idDeDsipositivo: 0
+                dispositivosAudio: [],
+                idDeDsipositivo: 0,
+                idDeDsipositivoAudio: 0
             }
         },
 
@@ -99,9 +108,15 @@
 
             async connect() {
                 this.video = document.querySelector('#video');
-                let stream = await navigator.mediaDevices.getUserMedia({ audio: false, video: {
-                    deviceId: this.idDeDsipositivo
-                }})
+                let stream = await navigator.mediaDevices.getUserMedia({ 
+                    audio: { 
+                        deviceId: this.idDeDsipositivoAudio,
+                        muted : true,
+                        }, 
+                    video: {
+                        deviceId: this.idDeDsipositivo
+                    }
+                })
                
                 console.log(this.video);
 
@@ -113,10 +128,14 @@
                 let dispositivos = await navigator.mediaDevices.enumerateDevices()
                 
                 dispositivos.forEach(dispositivo => {
-                   /*  console.log(dispositivo); */
+                    console.log(dispositivo);
                     const tipo = dispositivo.kind;
                     if( tipo === 'videoinput') {
                         this.dispositivosVideo.push(dispositivo)
+                    }
+
+                    if(tipo === 'audioinput') {
+                          this.dispositivosAudio.push(dispositivo)
                     }
                 });
             },
@@ -130,7 +149,7 @@
                 if(!confirm('¿Estas seguro de empezar a grabar?')) return
 
                 this.video = document.querySelector('#video');
-                let stream = await navigator.mediaDevices.getUserMedia({ audio: false, video: {
+               let stream = await navigator.mediaDevices.getUserMedia({ audio: { deviceId: idDeDsipositivoAudio}, video: {
                     deviceId: this.idDeDsipositivo
                 }})
                 this.getDivices();

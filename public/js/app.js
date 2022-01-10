@@ -6428,6 +6428,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 var RecordRTC = __webpack_require__(/*! recordrtc */ "./node_modules/recordrtc/RecordRTC.js");
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -6450,7 +6457,9 @@ var RecordRTC = __webpack_require__(/*! recordrtc */ "./node_modules/recordrtc/R
       acumulado: 0,
       tiempo: '00:00:00.000',
       dispositivosVideo: [],
-      idDeDsipositivo: 0
+      dispositivosAudio: [],
+      idDeDsipositivo: 0,
+      idDeDsipositivoAudio: 0
     };
   },
   created: function created() {
@@ -6474,7 +6483,10 @@ var RecordRTC = __webpack_require__(/*! recordrtc */ "./node_modules/recordrtc/R
                 _this.video = document.querySelector('#video');
                 _context.next = 3;
                 return navigator.mediaDevices.getUserMedia({
-                  audio: false,
+                  audio: {
+                    deviceId: _this.idDeDsipositivoAudio,
+                    muted: true
+                  },
                   video: {
                     deviceId: _this.idDeDsipositivo
                   }
@@ -6508,11 +6520,15 @@ var RecordRTC = __webpack_require__(/*! recordrtc */ "./node_modules/recordrtc/R
               case 2:
                 dispositivos = _context2.sent;
                 dispositivos.forEach(function (dispositivo) {
-                  /*  console.log(dispositivo); */
+                  console.log(dispositivo);
                   var tipo = dispositivo.kind;
 
                   if (tipo === 'videoinput') {
                     _this2.dispositivosVideo.push(dispositivo);
+                  }
+
+                  if (tipo === 'audioinput') {
+                    _this2.dispositivosAudio.push(dispositivo);
                   }
                 });
 
@@ -6549,7 +6565,9 @@ var RecordRTC = __webpack_require__(/*! recordrtc */ "./node_modules/recordrtc/R
                 _this3.video = document.querySelector('#video');
                 _context3.next = 5;
                 return navigator.mediaDevices.getUserMedia({
-                  audio: false,
+                  audio: {
+                    deviceId: idDeDsipositivoAudio
+                  },
                   video: {
                     deviceId: _this3.idDeDsipositivo
                   }
@@ -80562,6 +80580,60 @@ var render = function () {
                   _vm._v(
                     "\n                    " +
                       _vm._s(camara.label) +
+                      "\n                "
+                  ),
+                ]
+              )
+            }),
+          ],
+          2
+        ),
+        _vm._v(" "),
+        _c(
+          "select",
+          {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.idDeDsipositivoAudio,
+                expression: "idDeDsipositivoAudio",
+              },
+            ],
+            staticClass: "form-control mb-5",
+            attrs: { name: "", id: "" },
+            on: {
+              change: [
+                function ($event) {
+                  var $$selectedVal = Array.prototype.filter
+                    .call($event.target.options, function (o) {
+                      return o.selected
+                    })
+                    .map(function (o) {
+                      var val = "_value" in o ? o._value : o.value
+                      return val
+                    })
+                  _vm.idDeDsipositivoAudio = $event.target.multiple
+                    ? $$selectedVal
+                    : $$selectedVal[0]
+                },
+                _vm.connect,
+              ],
+            },
+          },
+          [
+            _c("option", { attrs: { selected: "" } }, [
+              _vm._v("Tipo de audio"),
+            ]),
+            _vm._v(" "),
+            _vm._l(_vm.dispositivosAudio, function (audio) {
+              return _c(
+                "option",
+                { key: audio.id, domProps: { value: audio.deviceId } },
+                [
+                  _vm._v(
+                    "\n                    " +
+                      _vm._s(audio.label) +
                       "\n                "
                   ),
                 ]
