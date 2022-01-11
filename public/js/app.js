@@ -6483,7 +6483,7 @@ var RecordRTC = __webpack_require__(/*! recordrtc */ "./node_modules/recordrtc/R
                 _this.video = document.querySelector('#video');
                 _context.next = 3;
                 return navigator.mediaDevices.getUserMedia({
-                  audio: true,
+                  audio: false,
                   video: {
                     deviceId: _this.idDeDsipositivo
                   }
@@ -6491,10 +6491,10 @@ var RecordRTC = __webpack_require__(/*! recordrtc */ "./node_modules/recordrtc/R
 
               case 3:
                 stream = _context.sent;
-                console.log(_this.video);
+                // console.log(this.video);
                 _this.video.srcObject = stream;
 
-              case 6:
+              case 5:
               case "end":
                 return _context.stop();
             }
@@ -6517,7 +6517,7 @@ var RecordRTC = __webpack_require__(/*! recordrtc */ "./node_modules/recordrtc/R
               case 2:
                 dispositivos = _context2.sent;
                 dispositivos.forEach(function (dispositivo) {
-                  console.log(dispositivo);
+                  /*  console.log(dispositivo); */
                   var tipo = dispositivo.kind;
 
                   if (tipo === 'videoinput') {
@@ -6572,14 +6572,12 @@ var RecordRTC = __webpack_require__(/*! recordrtc */ "./node_modules/recordrtc/R
 
               case 5:
                 stream = _context3.sent;
-
-                _this3.getDivices();
-
-                console.log(_this3.video);
+                // console.log(this.video);
                 _this3.video.srcObject = stream;
                 _this3.recorder = RecordRTC(stream, {
                   type: 'video',
-                  mimeType: 'video/webm'
+                  mimeType: 'video/webm',
+                  numberOfAudioChannels: 1
                 });
 
                 _this3.recorder.startRecording();
@@ -6587,7 +6585,7 @@ var RecordRTC = __webpack_require__(/*! recordrtc */ "./node_modules/recordrtc/R
                 _this3.cronometrar = true;
                 _this3.showBtnPlay = false;
 
-              case 13:
+              case 11:
               case "end":
                 return _context3.stop();
             }

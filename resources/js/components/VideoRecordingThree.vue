@@ -109,13 +109,13 @@
             async connect() {
                 this.video = document.querySelector('#video');
                 let stream = await navigator.mediaDevices.getUserMedia({ 
-                    audio:true, 
+                    audio: false, 
                     video: {
                         deviceId: this.idDeDsipositivo
                     }
                 })
                
-                console.log(this.video);
+                // console.log(this.video);
 
                 this.video.srcObject = stream
 
@@ -125,7 +125,7 @@
                 let dispositivos = await navigator.mediaDevices.enumerateDevices()
                 
                 dispositivos.forEach(dispositivo => {
-                    console.log(dispositivo);
+                   /*  console.log(dispositivo); */
                     const tipo = dispositivo.kind;
                     if( tipo === 'videoinput') {
                         this.dispositivosVideo.push(dispositivo)
@@ -146,18 +146,24 @@
                 if(!confirm('¿Estas seguro de empezar a grabar?')) return
 
                 this.video = document.querySelector('#video');
-               let stream = await navigator.mediaDevices.getUserMedia({ audio: { deviceId: this.idDeDsipositivoAudio }, video: {
-                    deviceId: this.idDeDsipositivo
-                }})
-                this.getDivices();
+                
+                let stream = await navigator.mediaDevices.getUserMedia(
+                    { audio: {
+                        deviceId: this.idDeDsipositivoAudio
+                    }, 
+                    video: {
+                        deviceId: this.idDeDsipositivo
+                    }})
 
-                console.log(this.video);
+                // console.log(this.video);
 
                 this.video.srcObject = stream
                 
                 this.recorder = RecordRTC(stream, {
                     type: 'video',
                     mimeType: 'video/webm',
+                    numberOfAudioChannels: 1,
+
                 });
 
                 this.recorder.startRecording();
