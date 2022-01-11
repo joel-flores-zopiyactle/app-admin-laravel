@@ -31,7 +31,7 @@
           </div>
         
             <div class="w-100 overflow-hidden">
-                <img :src="url" class="img-fluid rounded border" alt="logo">
+               <video autoplay playsinline :poster="url" class="img-fluid" id="video" style="width: 100%;"></video>
             </div>
     
             <!-- Btns recording -->
@@ -69,7 +69,7 @@
              <div class="mb-3 mt-md-0 mt-sm-2 mt-2">
                    <!-- boton para conectarse a OBS -->
                     <button class="btn" :class="bgStatusConnectOBS" @click="connectOBS()">{{ statusTextConnectOBS }}</button>
-                    <button class="btn btn-primary" @click="openProjectorOBS()">Mostrar projector OBS</button>
+                   <!--  <button class="btn btn-primary" @click="openProjectorOBS()">Mostrar projector OBS</button> -->
              </div>
 
            
@@ -125,7 +125,8 @@ export default {
                tiempoRef : Date.now(),
                cronometrar : false,
                acumulado : 0,
-               tiempo: '00:00:00.000'
+               tiempo: '00:00:00.000',
+               video: []
           }
      },
 
@@ -145,6 +146,21 @@ export default {
     },
 
      methods: {
+
+          async connect() {
+               this.video = document.querySelector('#video');
+               let stream = await navigator.mediaDevices.getUserMedia({ 
+                    audio: false, 
+                    video: {
+                        deviceId: this.idDeDsipositivo
+                    }
+               })
+               
+                // console.log(this.video);
+
+                this.video.srcObject = stream
+          },
+
 
           getIdExpedinete() {
                // ID
@@ -203,9 +219,12 @@ export default {
                }).then(data => {
                     //console.log(data)
                     this.statusRecord = 'play'
-                    this.changeBGImage(data);
+                    // this.changeBGImage(data);
                     this.cronometrar = true
                     this.showBtnPlay = false
+                    this.video.play()
+                    this.acumulado = 0
+                    this.tiempo =  '00:00:00.000'
 
                }).catch(error => console.log(error))
                
@@ -245,12 +264,15 @@ export default {
                     if(error.error === 'recording not active') {
                          this.statusRecord = ''
                          this.showFormFile = false; 
+                         this.cronometrar  = false  
                     }
                })
                //Permite asignar el nombre del archivo
                obs.send('SetFilenameFormatting', {
                     'filename-formatting': `audiencia_numero_${this.expedienteID}`
                }).then( data => this.changeBGImage()).catch(error => console.log('fin'))
+               this.cronometrar  = false  
+               this.video.pause();
           },
 
           changeBGImage(data = {}) {
@@ -338,6 +360,8 @@ export default {
      },
 
      mounted() {
+
+          this.connect()
 
           obs.on('SwitchScenes', data => {
                console.log(`New Active Scene: ${data.sceneName}`);

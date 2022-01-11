@@ -6088,7 +6088,8 @@ var obs = new OBSWebSocket();
       tiempoRef: Date.now(),
       cronometrar: false,
       acumulado: 0,
-      tiempo: '00:00:00.000'
+      tiempo: '00:00:00.000',
+      video: []
     };
   },
   created: function created() {
@@ -6103,6 +6104,37 @@ var obs = new OBSWebSocket();
     // }, 1000);
   },
   methods: {
+    connect: function connect() {
+      var _this = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+        var stream;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _this.video = document.querySelector('#video');
+                _context.next = 3;
+                return navigator.mediaDevices.getUserMedia({
+                  audio: false,
+                  video: {
+                    deviceId: _this.idDeDsipositivo
+                  }
+                });
+
+              case 3:
+                stream = _context.sent;
+                // console.log(this.video);
+                _this.video.srcObject = stream;
+
+              case 5:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
+    },
     getIdExpedinete: function getIdExpedinete() {
       // ID
       var expedienteID = document.getElementById('expediente_id');
@@ -6112,15 +6144,15 @@ var obs = new OBSWebSocket();
       this.url = baseURL + '/img/sinjo_logo.png';
     },
     connectOBS: function connectOBS() {
-      var _this = this;
+      var _this2 = this;
 
       obs.connect({
         address: 'localhost:4444',
         password: '$up3rSecretP@ssw0rd'
       }).then(function () {
         console.log("Success! We're connected & authenticated.");
-        _this.bgStatusConnectOBS = 'btn-success';
-        _this.statusTextConnectOBS = 'Conectado a OBS..';
+        _this2.bgStatusConnectOBS = 'btn-success';
+        _this2.statusTextConnectOBS = 'Conectado a OBS..';
         return obs.send('GetSceneList');
       }).then(function (data) {
         console.log("".concat(data.scenes.length, " Available Scenes!"));
@@ -6132,7 +6164,7 @@ var obs = new OBSWebSocket();
       });
     },
     startRecord: function startRecord() {
-      var _this2 = this;
+      var _this3 = this;
 
       if (!confirm('¿Esta seguro de empezara a grabar?')) return; // asigno la ruta para guardar el video de la applicacíon
       // obs.send('SetRecordingFolder', {
@@ -6154,12 +6186,15 @@ var obs = new OBSWebSocket();
         'embedPictureFormat': 'png'
       }).then(function (data) {
         //console.log(data)
-        _this2.statusRecord = 'play';
+        _this3.statusRecord = 'play'; // this.changeBGImage(data);
 
-        _this2.changeBGImage(data);
+        _this3.cronometrar = true;
+        _this3.showBtnPlay = false;
 
-        _this2.cronometrar = true;
-        _this2.showBtnPlay = false;
+        _this3.video.play();
+
+        _this3.acumulado = 0;
+        _this3.tiempo = '00:00:00.000';
       })["catch"](function (error) {
         return console.log(error);
       });
@@ -6183,29 +6218,32 @@ var obs = new OBSWebSocket();
       this.cronometrar = true;
     },
     stopRecord: function stopRecord() {
-      var _this3 = this;
+      var _this4 = this;
 
       if (!confirm('¿Estas seguro de finalizar la grabación?\nUna vez finalizada la grabación ya no podra grabar de nuevo.')) return;
       obs.send('StopRecording').then(function (res) {
-        _this3.statusRecord = 'stop';
-        _this3.showFormFile = true;
-        _this3.cronometrar = false;
-        _this3.showBtnPlay = true;
+        _this4.statusRecord = 'stop';
+        _this4.showFormFile = true;
+        _this4.cronometrar = false;
+        _this4.showBtnPlay = true;
         console.log('Finalizado');
       })["catch"](function (error) {
         if (error.error === 'recording not active') {
-          _this3.statusRecord = '';
-          _this3.showFormFile = false;
+          _this4.statusRecord = '';
+          _this4.showFormFile = false;
+          _this4.cronometrar = false;
         }
       }); //Permite asignar el nombre del archivo
 
       obs.send('SetFilenameFormatting', {
         'filename-formatting': "audiencia_numero_".concat(this.expedienteID)
       }).then(function (data) {
-        return _this3.changeBGImage();
+        return _this4.changeBGImage();
       })["catch"](function (error) {
         return console.log('fin');
       });
+      this.cronometrar = false;
+      this.video.pause();
     },
     changeBGImage: function changeBGImage() {
       var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
@@ -6230,32 +6268,32 @@ var obs = new OBSWebSocket();
       this.file = file; // console.log(this.file);
     },
     uploadFileVideo: function uploadFileVideo() {
-      var _this4 = this;
+      var _this5 = this;
 
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
         var formData, token, config, res;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
           while (1) {
-            switch (_context.prev = _context.next) {
+            switch (_context2.prev = _context2.next) {
               case 0:
-                _this4.validateFormVideo.required = false;
-                _this4.showSpinner = true;
+                _this5.validateFormVideo.required = false;
+                _this5.showSpinner = true;
 
-                if (!(_this4.file === null)) {
-                  _context.next = 7;
+                if (!(_this5.file === null)) {
+                  _context2.next = 7;
                   break;
                 }
 
-                _this4.validateFormVideo.required = true;
-                _this4.validateFormVideo.mensaje = 'Debe de seleccionar un archivo';
-                _this4.showSpinner = false;
-                return _context.abrupt("return");
+                _this5.validateFormVideo.required = true;
+                _this5.validateFormVideo.mensaje = 'Debe de seleccionar un archivo';
+                _this5.showSpinner = false;
+                return _context2.abrupt("return");
 
               case 7:
                 formData = new FormData();
-                formData.append('video', _this4.file.files[0]);
-                formData.append('expediente_id', _this4.expedienteID);
-                formData.append('duracion', _this4.duration);
+                formData.append('video', _this5.file.files[0]);
+                formData.append('expediente_id', _this5.expedienteID);
+                formData.append('duracion', _this5.duration);
                 token = document.getElementsByName('_token');
                 config = {
                   headers: {
@@ -6265,7 +6303,7 @@ var obs = new OBSWebSocket();
 
                 }; // Envio los datos al servidor
 
-                _context.next = 15;
+                _context2.next = 15;
                 return axios.post("".concat(baseURL, "/evento/video"), formData, config).then(function (res) {
                   return res;
                 })["catch"](function (error) {
@@ -6273,60 +6311,61 @@ var obs = new OBSWebSocket();
                 });
 
               case 15:
-                res = _context.sent;
+                res = _context2.sent;
 
                 if (res.data.status === 201) {
-                  _this4.validateFormVideo.required = true;
-                  _this4.validateFormVideo.mensaje = res.data.mensaje;
-                  _this4.validateFormVideo.alert = 'alert-success';
-                  _this4.showSpinner = false;
+                  _this5.validateFormVideo.required = true;
+                  _this5.validateFormVideo.mensaje = res.data.mensaje;
+                  _this5.validateFormVideo.alert = 'alert-success';
+                  _this5.showSpinner = false;
                   document.getElementById('uploadFileVideo').value = "";
                 }
 
                 if (res.data.status === 404) {
-                  _this4.validateFormVideo.required = true;
-                  _this4.validateFormVideo.mensaje = res.data.mensaje;
-                  _this4.validateFormVideo.alert = 'alert-warning';
-                  _this4.showSpinner = false;
+                  _this5.validateFormVideo.required = true;
+                  _this5.validateFormVideo.mensaje = res.data.mensaje;
+                  _this5.validateFormVideo.alert = 'alert-warning';
+                  _this5.showSpinner = false;
                   document.getElementById('uploadFileVideo').value = "";
                 }
 
                 if (res.data.status === 500) {
-                  _this4.validateFormVideo.required = true;
-                  _this4.validateFormVideo.mensaje = res.data.mensaje;
-                  _this4.validateFormVideo.alert = 'alert-danger';
-                  _this4.showSpinner = false;
+                  _this5.validateFormVideo.required = true;
+                  _this5.validateFormVideo.mensaje = res.data.mensaje;
+                  _this5.validateFormVideo.alert = 'alert-danger';
+                  _this5.showSpinner = false;
                   document.getElementById('uploadFileVideo').value = "";
                 }
 
               case 19:
               case "end":
-                return _context.stop();
+                return _context2.stop();
             }
           }
-        }, _callee);
+        }, _callee2);
       }))();
     }
   },
   mounted: function mounted() {
-    var _this5 = this;
+    var _this6 = this;
 
+    this.connect();
     obs.on('SwitchScenes', function (data) {
       console.log("New Active Scene: ".concat(data.sceneName));
     });
     obs.on('RecordingStopping', function (data) {
       console.log(data);
-      _this5.duration = data.recTimecode;
-      _this5.ubication = data.recordingFilename;
+      _this6.duration = data.recTimecode;
+      _this6.ubication = data.recordingFilename;
     });
     setInterval(function () {
       //let tiempo = document.getElementById("tiempo")
-      if (_this5.cronometrar) {
-        _this5.acumulado += Date.now() - _this5.tiempoRef;
+      if (_this6.cronometrar) {
+        _this6.acumulado += Date.now() - _this6.tiempoRef;
       }
 
-      _this5.tiempoRef = Date.now();
-      _this5.tiempo = formatearMS(_this5.acumulado);
+      _this6.tiempoRef = Date.now();
+      _this6.tiempo = formatearMS(_this6.acumulado);
     }, 1000 / 60);
 
     function formatearMS(tiempo_ms) {
@@ -80297,9 +80336,15 @@ var render = function () {
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "w-100 overflow-hidden" }, [
-        _c("img", {
-          staticClass: "img-fluid rounded border",
-          attrs: { src: _vm.url, alt: "logo" },
+        _c("video", {
+          staticClass: "img-fluid",
+          staticStyle: { width: "100%" },
+          attrs: {
+            autoplay: "",
+            playsinline: "",
+            poster: _vm.url,
+            id: "video",
+          },
         }),
       ]),
       _vm._v(" "),
@@ -80401,19 +80446,6 @@ var render = function () {
             },
           },
           [_vm._v(_vm._s(_vm.statusTextConnectOBS))]
-        ),
-        _vm._v(" "),
-        _c(
-          "button",
-          {
-            staticClass: "btn btn-primary",
-            on: {
-              click: function ($event) {
-                return _vm.openProjectorOBS()
-              },
-            },
-          },
-          [_vm._v("Mostrar projector OBS")]
         ),
       ]),
       _vm._v(" "),
