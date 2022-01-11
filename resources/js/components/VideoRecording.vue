@@ -108,7 +108,7 @@ export default {
                showBtnPlay: true,
                statusRecord: '', // estados de grabación
                bgStatusConnectOBS: 'btn-outline-danger',
-               statusTextConnectOBS : 'Conectar OBS',
+               statusTextConnectOBS : 'Conectar',
                showPause: true, // permite oculatr y mostrar los botnes de pausa y renaurar
                url: '', 
                expedienteID: 0,
@@ -180,7 +180,7 @@ export default {
                .then(() => {
                     console.log(`Success! We're connected & authenticated.`);
                     this.bgStatusConnectOBS = 'btn-success'
-                    this.statusTextConnectOBS = 'Conectado a OBS..'
+                    this.statusTextConnectOBS = 'Listo para grabar..'
                     return obs.send('GetSceneList');
                })
                .then(data => {

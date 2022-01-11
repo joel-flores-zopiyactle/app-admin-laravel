@@ -6066,7 +6066,7 @@ var obs = new OBSWebSocket();
       statusRecord: '',
       // estados de grabación
       bgStatusConnectOBS: 'btn-outline-danger',
-      statusTextConnectOBS: 'Conectar OBS',
+      statusTextConnectOBS: 'Conectar',
       showPause: true,
       // permite oculatr y mostrar los botnes de pausa y renaurar
       url: '',
@@ -6152,7 +6152,7 @@ var obs = new OBSWebSocket();
       }).then(function () {
         console.log("Success! We're connected & authenticated.");
         _this2.bgStatusConnectOBS = 'btn-success';
-        _this2.statusTextConnectOBS = 'Conectado a OBS..';
+        _this2.statusTextConnectOBS = 'Listo para grabar..';
         return obs.send('GetSceneList');
       }).then(function (data) {
         console.log("".concat(data.scenes.length, " Available Scenes!"));
