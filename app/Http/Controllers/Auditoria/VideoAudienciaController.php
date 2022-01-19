@@ -11,12 +11,12 @@ class VideoAudienciaController extends Controller
 {
     public function store(Request $request) {
 
-        //  return $request->all();
+        // return $request->all();
 
         if($request->hasFile('video')) {
 
             $videoFormat = ['MP4', 'MKV', 'FLV', 'MOV', 'WEBM'];
-            return  $fileExtension = strtoupper($request->file('video')->getClientOriginalExtension());
+            $fileExtension = strtoupper($request->file('video')->getClientOriginalExtension());
                        
             if(!in_array($fileExtension ,$videoFormat,true)) {
                 return ['mensaje' => 'El formato que esta tratando de subir no es aceptado en la plataforma', 'status' => 500];
@@ -48,8 +48,8 @@ class VideoAudienciaController extends Controller
     }
 
     public function storeVideo(Request $request) {
-
-        //  return $request->all();
+        /* return "hola";
+        return $request->all(); */
 
         if($request->hasFile('video')) {
 
@@ -84,8 +84,6 @@ class VideoAudienciaController extends Controller
         $archivo = VideoAudiencia::find($id);
 
         //$file = public_path(). "/images/test.jpg";
-
-        $headers = ['Content-Type: image/jpeg'];
     
         return Storage::download($archivo->url, $archivo->nombre);
     }

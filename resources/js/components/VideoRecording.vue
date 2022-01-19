@@ -284,14 +284,14 @@ export default {
                } 
           },
 
-          openProjectorOBS() {
+          /* openProjectorOBS() {
                obs.send('OpenProjector').catch( error => {
                     //console.log(error);
                     if(error.code === 'NOT_CONNECTED') {
                          alert('¿OBS no esta activado?. Para activar el projector hay que activar OBS...')
                     }
                })
-          },
+          }, */
 
           getFileVideo() {
                let file = document.getElementById('uploadFileVideo');
