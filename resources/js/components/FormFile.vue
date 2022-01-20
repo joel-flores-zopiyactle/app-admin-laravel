@@ -2,6 +2,21 @@
     <div class="container-fluid">
         <div>
             <div class="row mt-2">
+                <!-- alerts -->
+                <div class="alert alert-success alert-dismissible fade show" role="alert"  v-if='resFile.status === 201'>
+                    {{ resFile.mensaje }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+
+                <div class="alert alert-danger alert-dismissible fade show" role="alert"  v-if='resFile.status === 500'>
+                    {{ resFile.mensaje }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                
+                <div v-else>
+                    
+                </div>
+
                 <div class="col-5">
                     <form v-on:submit.prevent="uploadFile" enctype="multipart/form-data" method="POST">
                         
@@ -77,6 +92,10 @@
                 file: null,
                 expediente_id: 0,
                 formData: new FormData(),
+                resFile : {
+                    mensaje: '',
+                    status: 0
+                }
                 
             }
         },
@@ -112,7 +131,7 @@
                 })
             },
 
-            uploadFile() {
+            async uploadFile() {
                 
                 this.showSpinner = true;
 
@@ -130,18 +149,30 @@
                 };
 
                 // Envia,os los datos al servidor
-                axios.post(`${baseURL}/archivo`, formData, config)
-                .then(function (response) {
-                    // console.log(response);
-                })
-                .catch(function (error) {
-                    console.log(error);
-                });
+                const res = await axios.post(`${baseURL}/archivo`, formData, config)
 
-                this.getFiles()
+                
+
+                if(res.data.status === 500) {
+                    this.showSpinner = false;
+                    this.resFile.mensaje = res.data.mensaje
+                    this.resFile.status = res.data.status
+
+                } else if (res.data.status === 201) {
+                    this.showSpinner = false;
+                    this.resFile.mensaje = res.data.mensaje
+                    this.resFile.status = res.data.status
+                    this.getFiles()
+                } else {
+                    this.resFile.mensaje = res.data.mensaje
+                    this.resFile.status = 0
+                }
+                
+
+               
             },
 
-            deleteFile(id) {
+            async deleteFile(id) {
                 if (confirm('¿Está seguro de eliminar el archivo?')) {
                     
                     const token =  document.getElementsByName('_token');
@@ -150,15 +181,17 @@
                         'X-CSRF-TOKEN': token[0].value,// <--- aquí el token
                     };
 
-                    axios.delete(`${baseURL}/archivo/delete/${id}`, config)
-                    .then(function (response) {
-                        
-                    })
-                    .catch(function (error) {
-                        console.log(error)
-                    });
+                    const res = await axios.delete(`${baseURL}/archivo/delete/${id}`, config)
 
-                    this.getFiles()
+                    if(res.data.status === 200) {
+                        this.resFile.mensaje = res.data.mensaje
+                        this.resFile.status = 201
+                        this.getFiles()
+                    } else {
+                        this.resFile.mensaje = 'No se pudo eliminar el archivo intente de nuevo'
+                        this.resFile.status = 500
+                    }
+
 
                 }
             }

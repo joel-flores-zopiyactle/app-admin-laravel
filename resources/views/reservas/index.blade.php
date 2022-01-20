@@ -59,7 +59,7 @@
                                 </td>
                                 
                                 <td>
-                                    <x-btn-options-table :expedienteId="$expediente->id" />
+                                    <x-btn-options-table :expedienteId="$expediente->id" :estado="$expediente->audiencia->estadoAudiencia" />
                                 </td>
                             </tr>
 

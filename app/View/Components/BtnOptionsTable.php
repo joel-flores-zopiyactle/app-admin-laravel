@@ -7,14 +7,18 @@ use Illuminate\View\Component;
 class BtnOptionsTable extends Component
 {
     public $expedienteId;
+    public $estadoAudiencia;
+   
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($expedienteId)
+    public function __construct($expedienteId, $estado)
     {
-        $this->expedienteId = $expedienteId;
+        $this->expedienteId    = $expedienteId;
+        $this->estadoAudiencia = $estado;
+        
     }
 
     /**

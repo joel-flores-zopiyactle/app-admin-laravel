@@ -44,9 +44,10 @@
                                 <td>{{ $expediente->audiencia->tipoAudiencia->nombre }}</td>
                                 <td>{{ $expediente->audiencia->sala->sala }}</td>
                                 <td> 
-                                    <x-control-estado-audiencia :estadoAudiencia="$expediente->audiencia->estadoAudiencia" />                                  </td>
+                                    <x-control-estado-audiencia :estadoAudiencia="$expediente->audiencia->estadoAudiencia" />                                       
+                                </td>
                                 <td>
-                                    <x-btn-options-table :expedienteId="$expediente->id" />                                   
+                                    <x-btn-options-table :expedienteId="$expediente->id" :estado="$expediente->audiencia->estadoAudiencia" />                                 
                                 </td>
                             </tr>
                         @endforeach                            

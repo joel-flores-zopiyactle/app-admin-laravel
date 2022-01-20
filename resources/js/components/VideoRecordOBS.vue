@@ -42,7 +42,7 @@
 
             <!-- Mas configuraciones -->
             <div class="col-5">
-            
+           <!--   {{videoSourcesSelect}} -->
                 <!-- Form file video -->
                 <div class="border p-2 bg-light" v-if="showFormFile">
                     <form v-on:submit.prevent="uploadFileVideo" method="POST" enctype="multipart/form-data">
@@ -112,6 +112,7 @@ export default {
         this.getIdExpedinete()
     },
 
+    
     methods: {
         // Obtener ID del expediente
         getIdExpedinete() {
@@ -171,7 +172,7 @@ export default {
             .catch(err => { // Promise convention dicates you have a catch on every chain.
                 console.log(err);
                 if(err.code === 'CONNECTION_ERROR') {
-                    alert('OBS extreno - No esta activado.')
+                    alert('OBS externo - No esta activado.')
                 }
             });
         },
@@ -214,21 +215,22 @@ export default {
                 console.log("enumerateDevices() not supported.");
                 return;
             }
+
+            this.videoSourcesSelect = []
+            this.audioSourcesSelect = []
+
             navigator.mediaDevices.enumerateDevices().then((devices) => {
-                // Iterar sobre toda la lista de dispositivos (InputDeviceInfo y MediaDeviceInfo)
+                // Iterar sobre toda la lista de dispositivos (InputDeviceInfo y MediaDeviceInfo)               
                 devices.forEach((device) => {
                     // Según el tipo de dispositivo multimedia
-                    switch(device.kind){
+                    if(device.kind ===  "videoinput"){
                         // Agregar dispositivo a la lista de cámaras
-                        case "videoinput":
-                            if(device.label !== 'OBS Virtual Camera') {
-                                this.videoSourcesSelect.push(device)
-                            }
-                            break;
+                        if(device.label !== 'OBS Virtual Camera') {
+                            this.videoSourcesSelect.push(device)
+                        }
                         // Agregar dispositivo a la lista de micrófonos
-                        case "audioinput":
-                            this.audioSourcesSelect.push(device)
-                            break;
+                    } else if(device.kind ===  "audioinput") {
+                        this.audioSourcesSelect.push(device)
                     }
                 });
             }).catch(function (e) {
@@ -415,6 +417,12 @@ export default {
                this.durationVideo   = data.recTimecode;
                this.ubicationVideo  = data.recordingFilename
         });
+
+       /*  navigator.mediaDevices.ondevicechange = () => {
+            this.videoSourcesSelect = []
+            this.listMediaDevices() 
+        } */
+        
     },
 
     destroyed() {

@@ -5467,6 +5467,29 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -5544,7 +5567,11 @@ __webpack_require__.r(__webpack_exports__);
       showSpinner: false,
       file: null,
       expediente_id: 0,
-      formData: new FormData()
+      formData: new FormData(),
+      resFile: {
+        mensaje: '',
+        status: 0
+      }
     };
   },
   created: function created() {
@@ -5574,41 +5601,102 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     uploadFile: function uploadFile() {
-      this.showSpinner = true;
-      var formData = new FormData();
-      formData.append('file', this.file.files[0]);
-      formData.append('tipo_archivo', this.formFile.tipo_archivo);
-      formData.append('expediente_id', this.expediente_id);
-      var token = document.getElementsByName('_token');
-      var config = {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        },
-        'X-CSRF-TOKEN': token[0].value // <--- aquí el token
+      var _this2 = this;
 
-      }; // Envia,os los datos al servidor
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+        var formData, token, config, res;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _this2.showSpinner = true;
+                formData = new FormData();
+                formData.append('file', _this2.file.files[0]);
+                formData.append('tipo_archivo', _this2.formFile.tipo_archivo);
+                formData.append('expediente_id', _this2.expediente_id);
+                token = document.getElementsByName('_token');
+                config = {
+                  headers: {
+                    'Content-Type': 'multipart/form-data'
+                  },
+                  'X-CSRF-TOKEN': token[0].value // <--- aquí el token
 
-      axios.post("".concat(baseURL, "/archivo"), formData, config).then(function (response) {// console.log(response);
-      })["catch"](function (error) {
-        console.log(error);
-      });
-      this.getFiles();
+                }; // Envia,os los datos al servidor
+
+                _context.next = 9;
+                return axios.post("".concat(baseURL, "/archivo"), formData, config);
+
+              case 9:
+                res = _context.sent;
+
+                if (res.data.status === 500) {
+                  _this2.showSpinner = false;
+                  _this2.resFile.mensaje = res.data.mensaje;
+                  _this2.resFile.status = res.data.status;
+                } else if (res.data.status === 201) {
+                  _this2.showSpinner = false;
+                  _this2.resFile.mensaje = res.data.mensaje;
+                  _this2.resFile.status = res.data.status;
+
+                  _this2.getFiles();
+                } else {
+                  _this2.resFile.mensaje = res.data.mensaje;
+                  _this2.resFile.status = 0;
+                }
+
+              case 11:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
     },
     deleteFile: function deleteFile(id) {
-      if (confirm('¿Está seguro de eliminar el archivo?')) {
-        var token = document.getElementsByName('_token');
-        var config = {
-          headers: {
-            'content-type': 'application/x-www-form-urlencoded'
-          },
-          'X-CSRF-TOKEN': token[0].value // <--- aquí el token
+      var _this3 = this;
 
-        };
-        axios["delete"]("".concat(baseURL, "/archivo/delete/").concat(id), config).then(function (response) {})["catch"](function (error) {
-          console.log(error);
-        });
-        this.getFiles();
-      }
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
+        var token, config, res;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                if (!confirm('¿Está seguro de eliminar el archivo?')) {
+                  _context2.next = 7;
+                  break;
+                }
+
+                token = document.getElementsByName('_token');
+                config = {
+                  headers: {
+                    'content-type': 'application/x-www-form-urlencoded'
+                  },
+                  'X-CSRF-TOKEN': token[0].value // <--- aquí el token
+
+                };
+                _context2.next = 5;
+                return axios["delete"]("".concat(baseURL, "/archivo/delete/").concat(id), config);
+
+              case 5:
+                res = _context2.sent;
+
+                if (res.data.status === 200) {
+                  _this3.resFile.mensaje = res.data.mensaje;
+                  _this3.resFile.status = 201;
+
+                  _this3.getFiles();
+                } else {
+                  _this3.resFile.mensaje = 'No se pudo eliminar el archivo intente de nuevo';
+                  _this3.resFile.status = 500;
+                }
+
+              case 7:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }))();
     }
   }
 });
@@ -5626,6 +5714,28 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -5688,7 +5798,11 @@ __webpack_require__.r(__webpack_exports__);
         visibilidad: false
       },
       notas: [],
-      showSpinner: false
+      showSpinner: false,
+      resFile: {
+        mensaje: '',
+        status: 0
+      }
     };
   },
   created: function created() {
@@ -5714,43 +5828,101 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     sendNota: function sendNota() {
-      this.showSpinner = true; // Get token
+      var _this2 = this;
 
-      var token = document.getElementsByName('_token');
-      var config = {
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        'X-CSRF-TOKEN': token[0].value // <--- aquí el token
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+        var token, config, res;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _this2.showSpinner = true; // Get token
 
-      }; // console.log(this.formNote);
-      //  Enviamos los datos al servidor
+                token = document.getElementsByName('_token');
+                config = {
+                  headers: {
+                    'Content-Type': 'application/json'
+                  },
+                  'X-CSRF-TOKEN': token[0].value // <--- aquí el token
 
-      axios.post("".concat(baseURL, "/nota"), this.formNote, config).then(function (response) {//console.log(response );
-      })["catch"](function (error) {
-        console.log(error);
-      });
-      this.getDataNotes();
-      this.formNote.nota = '';
-      this.formNote.visibilidad = false;
+                }; // console.log(this.formNote);
+                //  Enviamos los datos al servidor
+
+                _context.next = 5;
+                return axios.post("".concat(baseURL, "/nota"), _this2.formNote, config);
+
+              case 5:
+                res = _context.sent;
+
+                if (res.data.status === 201) {
+                  _this2.resFile.mensaje = res.data.mensaje;
+                  _this2.resFile.status = res.data.status;
+
+                  _this2.getDataNotes();
+                } else if (res.data.status === 500) {
+                  _this2.resFile.mensaje = res.data.mensaje;
+                  _this2.resFile.status = res.data.status;
+                }
+
+                _this2.showSpinner = false;
+                _this2.formNote.nota = '';
+                _this2.formNote.visibilidad = false;
+
+              case 10:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
     },
     deleteNote: function deleteNote(id) {
-      // Get token
-      var token = document.getElementsByName('_token');
+      var _this3 = this;
 
-      if (confirm('¿Está seguro de eliminar la nota?')) {
-        var config = {
-          headers: {
-            'content-type': 'application/x-www-form-urlencoded'
-          },
-          'X-CSRF-TOKEN': token[0].value // <--- aquí el token
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
+        var token, config, res;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                // Get token
+                token = document.getElementsByName('_token');
 
-        };
-        axios["delete"]("".concat(baseURL, "/nota/delete/").concat(id), config).then(function (response) {})["catch"](function (error) {
-          console.log(error);
-        });
-        this.getDataNotes();
-      }
+                if (!confirm('¿Está seguro de eliminar la nota?')) {
+                  _context2.next = 7;
+                  break;
+                }
+
+                config = {
+                  headers: {
+                    'content-type': 'application/x-www-form-urlencoded'
+                  },
+                  'X-CSRF-TOKEN': token[0].value // <--- aquí el token
+
+                };
+                _context2.next = 5;
+                return axios["delete"]("".concat(baseURL, "/nota/delete/").concat(id), config);
+
+              case 5:
+                res = _context2.sent;
+
+                if (res.data.status === 200) {
+                  _this3.resFile.mensaje = res.data.mensaje;
+                  _this3.resFile.status = 201;
+
+                  _this3.getDataNotes();
+                } else if (res.data.status === 500) {
+                  _this3.resFile.mensaje = res.data.mensaje;
+                  _this3.resFile.status = res.data.status;
+                }
+
+              case 7:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }))();
     }
   }
 });
@@ -6169,7 +6341,7 @@ var obs2 = new OBSWebSocket(); // Hace una conexion a una maquina externa median
         console.log(err);
 
         if (err.code === 'CONNECTION_ERROR') {
-          alert('OBS extreno - No esta activado.');
+          alert('OBS externo - No esta activado.');
         }
       });
     },
@@ -6227,24 +6399,20 @@ var obs2 = new OBSWebSocket(); // Hace una conexion a una maquina externa median
         return;
       }
 
+      this.videoSourcesSelect = [];
+      this.audioSourcesSelect = [];
       navigator.mediaDevices.enumerateDevices().then(function (devices) {
-        // Iterar sobre toda la lista de dispositivos (InputDeviceInfo y MediaDeviceInfo)
+        // Iterar sobre toda la lista de dispositivos (InputDeviceInfo y MediaDeviceInfo)               
         devices.forEach(function (device) {
           // Según el tipo de dispositivo multimedia
-          switch (device.kind) {
+          if (device.kind === "videoinput") {
             // Agregar dispositivo a la lista de cámaras
-            case "videoinput":
-              if (device.label !== 'OBS Virtual Camera') {
-                _this3.videoSourcesSelect.push(device);
-              }
+            if (device.label !== 'OBS Virtual Camera') {
+              _this3.videoSourcesSelect.push(device);
+            } // Agregar dispositivo a la lista de micrófonos
 
-              break;
-            // Agregar dispositivo a la lista de micrófonos
-
-            case "audioinput":
-              _this3.audioSourcesSelect.push(device);
-
-              break;
+          } else if (device.kind === "audioinput") {
+            _this3.audioSourcesSelect.push(device);
           }
         });
       })["catch"](function (e) {
@@ -6578,6 +6746,10 @@ var obs2 = new OBSWebSocket(); // Hace una conexion a una maquina externa median
       _this10.durationVideo = data.recTimecode;
       _this10.ubicationVideo = data.recordingFilename;
     });
+    /*  navigator.mediaDevices.ondevicechange = () => {
+         this.videoSourcesSelect = []
+         this.listMediaDevices() 
+     } */
   },
   destroyed: function destroyed() {
     obs.disconnect();
@@ -73131,6 +73303,56 @@ var render = function () {
   return _c("div", { staticClass: "container-fluid" }, [
     _c("div", [
       _c("div", { staticClass: "row mt-2" }, [
+        _vm.resFile.status === 201
+          ? _c(
+              "div",
+              {
+                staticClass: "alert alert-success alert-dismissible fade show",
+                attrs: { role: "alert" },
+              },
+              [
+                _vm._v(
+                  "\n                " +
+                    _vm._s(_vm.resFile.mensaje) +
+                    "\n                "
+                ),
+                _c("button", {
+                  staticClass: "btn-close",
+                  attrs: {
+                    type: "button",
+                    "data-bs-dismiss": "alert",
+                    "aria-label": "Close",
+                  },
+                }),
+              ]
+            )
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.resFile.status === 500
+          ? _c(
+              "div",
+              {
+                staticClass: "alert alert-danger alert-dismissible fade show",
+                attrs: { role: "alert" },
+              },
+              [
+                _vm._v(
+                  "\n                " +
+                    _vm._s(_vm.resFile.mensaje) +
+                    "\n                "
+                ),
+                _c("button", {
+                  staticClass: "btn-close",
+                  attrs: {
+                    type: "button",
+                    "data-bs-dismiss": "alert",
+                    "aria-label": "Close",
+                  },
+                }),
+              ]
+            )
+          : _c("div"),
+        _vm._v(" "),
         _c("div", { staticClass: "col-5" }, [
           _c(
             "form",
@@ -73346,6 +73568,56 @@ var render = function () {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container-fluid" }, [
     _c("div", { staticClass: "row" }, [
+      _vm.resFile.status === 201
+        ? _c(
+            "div",
+            {
+              staticClass: "alert alert-success alert-dismissible fade show",
+              attrs: { role: "alert" },
+            },
+            [
+              _vm._v(
+                "\n            " +
+                  _vm._s(_vm.resFile.mensaje) +
+                  "\n            "
+              ),
+              _c("button", {
+                staticClass: "btn-close",
+                attrs: {
+                  type: "button",
+                  "data-bs-dismiss": "alert",
+                  "aria-label": "Close",
+                },
+              }),
+            ]
+          )
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.resFile.status === 500
+        ? _c(
+            "div",
+            {
+              staticClass: "alert alert-danger alert-dismissible fade show",
+              attrs: { role: "alert" },
+            },
+            [
+              _vm._v(
+                "\n            " +
+                  _vm._s(_vm.resFile.mensaje) +
+                  "\n            "
+              ),
+              _c("button", {
+                staticClass: "btn-close",
+                attrs: {
+                  type: "button",
+                  "data-bs-dismiss": "alert",
+                  "aria-label": "Close",
+                },
+              }),
+            ]
+          )
+        : _c("div"),
+      _vm._v(" "),
       _c("div", { staticClass: "col-5" }, [
         _c(
           "form",

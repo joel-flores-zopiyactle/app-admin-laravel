@@ -1,6 +1,20 @@
 <template>
     <div class="container-fluid">
         <div class="row">
+             <div class="alert alert-success alert-dismissible fade show" role="alert"  v-if='resFile.status === 201'>
+                {{ resFile.mensaje }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+
+            <div class="alert alert-danger alert-dismissible fade show" role="alert"  v-if='resFile.status === 500'>
+                {{ resFile.mensaje }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            
+            <div v-else>
+                
+            </div>
+
             <div class="col-5">
                 <form class="mb-4" v-on:submit.prevent="sendNota" method="POST">                    
                     <div>
@@ -61,8 +75,11 @@
                     visibilidad: false
                 },
                 notas : [],
-
-                showSpinner: false
+                showSpinner: false,
+                resFile : {
+                    mensaje: '',
+                    status: 0
+                }
             }
         },
 
@@ -90,7 +107,7 @@
                 })
             },
 
-            sendNota() {
+            async sendNota() {
                 this.showSpinner = true;
 
                 // Get token
@@ -104,21 +121,28 @@
                 // console.log(this.formNote);
 
                 //  Enviamos los datos al servidor
-                axios.post(`${baseURL}/nota`, this.formNote, config)
-                .then(function (response) {
-                    //console.log(response );
-                  
-                })
-                .catch(function (error) {
-                    console.log(error);
-                });
+                const res = await axios.post(`${baseURL}/nota`, this.formNote, config)
+              
+                if(res.data.status === 201) {
+                   
+                    this.resFile.mensaje = res.data.mensaje
+                    this.resFile.status = res.data.status
 
-                this.getDataNotes();
+                    this.getDataNotes();
+
+                } else if(res.data.status === 500) {
+                    this.resFile.mensaje = res.data.mensaje
+                    this.resFile.status = res.data.status
+
+                }
+
+                this.showSpinner = false
                 this.formNote.nota = '';
-                this.formNote.visibilidad = false;
+                this.formNote.visibilidad = false
+               
             },
 
-            deleteNote(id) {
+            async deleteNote(id) {
                  // Get token
                 const token =  document.getElementsByName('_token');
 
@@ -129,15 +153,21 @@
                         'X-CSRF-TOKEN': token[0].value,// <--- aquí el token
                     };
 
-                    axios.delete(`${baseURL}/nota/delete/${id}`, config)
-                    .then(function (response) {
-                        
-                    })
-                    .catch(function (error) {
-                        console.log(error);
-                    });
+                    const res = await axios.delete(`${baseURL}/nota/delete/${id}`, config)
+                 
+                    if(res.data.status === 200) {
 
-                    this.getDataNotes();
+                        this.resFile.mensaje = res.data.mensaje
+                        this.resFile.status = 201
+                        this.getDataNotes();
+
+                    } else if(res.data.status === 500) {
+
+                        this.resFile.mensaje = res.data.mensaje
+                        this.resFile.status = res.data.status
+                        
+                    }
+                   
                 }   
             }
 

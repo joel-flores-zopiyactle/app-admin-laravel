@@ -4,28 +4,34 @@
         <button class="btn btn-light rounded-circle d-flex justify-content-center align-items-center p-1"  type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
             <span class="iconify h4 m-0" data-icon="fluent:more-circle-32-regular" data-rotate="90deg"></span>
         </button>
-
+               
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
             {{-- Agendar audiencia --}}
             @if ( Auth::user()->tipoUsuario->permiso->eliminar)
-            <li>
-                <a class="dropdown-item" href="{{ route('edit.room', encrypt($expedienteId) ) }}">
-                    <span class="iconify me-1" data-icon="uit:calender"></span>Agendar
-                </a>
-            </li>
+                {{-- validamos que la expediente este agendada, reagendada o cancelada para poder agendar  --}}
+                @if ($estadoAudiencia->id === 1 || $estadoAudiencia->id === 2 || $estadoAudiencia->id === 5)
+                    <li>
+                        <a class="dropdown-item" href="{{ route('edit.room', encrypt($expedienteId) ) }}">
+                            <span class="iconify me-1" data-icon="uit:calender"></span>Agendar
+                        </a>
+                    </li>
+                @endif
             @endif
             {{-- eliminar dato --}}
             @if ( Auth::user()->tipoUsuario->permiso->eliminar)
-                <li>
-                    <form action="{{route('delete.room', $expedienteId)}}" method="post">
-                        @csrf
-                        @method('DELETE')
-                        <button class="dropdown-item" type="submit" 
-                        onclick="return confirm('¿Estas seguro de eliminar el expdiente numero : {{ $expedienteId }}?')" title="Eliminar">
-                        <span class="iconify me-1" data-icon="fluent:delete-20-regular"></span>Eliminar
-                        </button>
-                    </form>
-                </li>
+                {{-- validamos que la expediente este agendada, reagendada o cancelada para poder agendar  --}}
+                @if ($estadoAudiencia->id === 1 || $estadoAudiencia->id === 2 || $estadoAudiencia->id === 4 || $estadoAudiencia->id === 5 || $estadoAudiencia->id === 6)
+                    <li>
+                        <form action="{{route('delete.room', $expedienteId)}}" method="post">
+                            @csrf
+                            @method('DELETE')
+                            <button class="dropdown-item" type="submit" 
+                            onclick="return confirm('¿Estas seguro de eliminar el expediente numero : {{ $expedienteId }}?')" title="Eliminar">
+                            <span class="iconify me-1" data-icon="fluent:delete-20-regular"></span>Eliminar
+                            </button>
+                        </form>
+                    </li>
+                @endif
             @endif
 
            {{--  <li>
@@ -41,16 +47,19 @@
 
             {{-- Cancelar audiencias --}}
             @if ( Auth::user()->tipoUsuario->permiso->cancelar)
-            <li>
-                <form action="{{route('cancelar.room', $expedienteId)}}" method="post">
-                    @csrf
-                    @method('PUT')
-                    <button class="dropdown-item" type="submit" 
-                    onclick="return confirm('¿Estas seguro de cancelar la audiencia?')" title="Eliminar">
-                        <span class="iconify me-1" data-icon="fluent:calendar-cancel-16-regular"></span>Cancelar audiencia
-                    </button>
-                </form>
-            </li>
+                {{-- validamos que la expediente este agendada, reagendada o cancelada para poder agendar  --}}
+                @if ($estadoAudiencia->id === 1 || $estadoAudiencia->id === 2)
+                    <li>
+                        <form action="{{route('cancelar.room', $expedienteId)}}" method="post">
+                            @csrf
+                            @method('PUT')
+                            <button class="dropdown-item" type="submit" 
+                            onclick="return confirm('¿Estas seguro de cancelar la audiencia?')" title="Eliminar">
+                                <span class="iconify me-1" data-icon="fluent:calendar-cancel-16-regular"></span>Cancelar audiencia
+                            </button>
+                        </form>
+                    </li>
+                @endif
             @endif
         </ul>
     </div>
