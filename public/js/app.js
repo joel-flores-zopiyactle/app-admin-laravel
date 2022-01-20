@@ -6341,7 +6341,7 @@ var obs2 = new OBSWebSocket(); // Hace una conexion a una maquina externa median
         console.log(err);
 
         if (err.code === 'CONNECTION_ERROR') {
-          alert('OBS externo - No esta activado.');
+          alert('El segundo OBS externo - No esta activado.');
         }
       });
     },
@@ -6365,44 +6365,55 @@ var obs2 = new OBSWebSocket(); // Hace una conexion a una maquina externa median
     },
     changeSceneAndCamera: function changeSceneAndCamera(video, scene) {
       // console.log(this.videoSourceId);
-      switch (scene.name) {
-        case 'HD60-S':
-          // TODO: cambiar por el bnombre de la capturadora
-          this.videoSourceId = video.deviceId;
-          this.startVideoWebCam();
-          this.changeSceneHD60_S();
-          break;
+      if (this.scenes.length > 0) {
+        switch (scene.name) {
+          case 'HD60-S':
+            // TODO: cambiar por el bnombre de la capturadora
+            this.videoSourceId = video.deviceId;
+            this.startVideoWebCam();
+            this.changeSceneHD60_S();
+            break;
 
-        case 'HD60-PRO':
-          // TODO: cambiar por el bnombre de la capturadora
-          this.videoSourceId = video.deviceId;
-          this.startVideoWebCam();
-          this.changeSceneHD60_Pro();
-          break;
+          case 'HD60-PRO':
+            // TODO: cambiar por el bnombre de la capturadora
+            this.videoSourceId = video.deviceId;
+            this.startVideoWebCam();
+            this.changeSceneHD60_Pro();
+            break;
 
-        case 'OBS Virtual Camera':
-          this.videoSourceId = video.deviceId;
-          this.startVideoWebCam(); // this.changeSceneHD60_S()
+          case 'OBS Virtual Camera':
+            this.videoSourceId = video.deviceId;
+            this.startVideoWebCam(); // this.changeSceneHD60_S()
 
-          break;
+            break;
 
-        default:
-          // this.changeSceneHD60_S()
-          break;
+          default:
+            // this.changeSceneHD60_S()
+            break;
+        }
+      } else {
+        alert('Activa OBS para cambiar de camara!');
+        return;
       }
     },
     listMediaDevices: function listMediaDevices() {
       var _this3 = this;
+
+      this.videoSourcesSelect = [];
+      this.audioSourcesSelect = [];
 
       if (!navigator.mediaDevices || !navigator.mediaDevices.enumerateDevices) {
         console.log("enumerateDevices() not supported.");
         return;
       }
 
-      this.videoSourcesSelect = [];
-      this.audioSourcesSelect = [];
       navigator.mediaDevices.enumerateDevices().then(function (devices) {
-        // Iterar sobre toda la lista de dispositivos (InputDeviceInfo y MediaDeviceInfo)               
+        // Valida si el videoSourcesSelect ya tiene datos entonces ya no seguimmos
+        if (_this3.videoSourcesSelect.length > 1) {
+          return;
+        } // Iterar sobre toda la lista de dispositivos (InputDeviceInfo y MediaDeviceInfo) 
+
+
         devices.forEach(function (device) {
           // Según el tipo de dispositivo multimedia
           if (device.kind === "videoinput") {
@@ -6437,10 +6448,13 @@ var obs2 = new OBSWebSocket(); // Hace una conexion a una maquina externa median
                 return _context2.abrupt("return");
 
               case 3:
-                _context2.next = 5;
+                // Se manda el comando para empezar a grabar
+                _this4.tiempoRef = Date.now();
+                _this4.acumulado = 0, _this4.tiempo = '00:00:00.000';
+                _context2.next = 7;
                 return obs.send('StartRecording');
 
-              case 5:
+              case 7:
                 // Controls
                 _this4.controls.showPlay = false;
                 _this4.controls.showPause = true;
@@ -6449,27 +6463,27 @@ var obs2 = new OBSWebSocket(); // Hace una conexion a una maquina externa median
                 _this4.video.play();
 
                 _this4.cronometrar = true;
-                _context2.next = 12;
+                _context2.next = 14;
                 return obs2.send('StartRecording');
 
-              case 12:
-                _context2.next = 17;
+              case 14:
+                _context2.next = 19;
                 break;
 
-              case 14:
-                _context2.prev = 14;
+              case 16:
+                _context2.prev = 16;
                 _context2.t0 = _context2["catch"](0);
 
                 if (_context2.t0.status === 'error') {
                   alert('¿OBS no esta activado?. Para grabar hay que conectarse a OBS...');
                 }
 
-              case 17:
+              case 19:
               case "end":
                 return _context2.stop();
             }
           }
-        }, _callee2, null, [[0, 14]]);
+        }, _callee2, null, [[0, 16]]);
       }))();
     },
     pauseRecord: function pauseRecord() {
@@ -6746,10 +6760,11 @@ var obs2 = new OBSWebSocket(); // Hace una conexion a una maquina externa median
       _this10.durationVideo = data.recTimecode;
       _this10.ubicationVideo = data.recordingFilename;
     });
-    /*  navigator.mediaDevices.ondevicechange = () => {
-         this.videoSourcesSelect = []
-         this.listMediaDevices() 
-     } */
+
+    navigator.mediaDevices.ondevicechange = function () {
+      // se dispara mas de una vez al quitar o agregar un dispositivo
+      _this10.listMediaDevices();
+    };
   },
   destroyed: function destroyed() {
     obs.disconnect();
