@@ -7,7 +7,8 @@
                 <!-- Lista de camaras activadas Camaras -->
                 <h5>Dispositivos de video conectados</h5>
                 <div class="mb-2 d-flex flex-nowrap">
-                    <button class="btn btn-sm btn-outline-primary me-1 mb-1" v-for="(video, i) in videoSourcesSelect" :key="video.deviceId" @click="changeSceneAndCamera(video, scenes[i])" >
+                    <button class="btn btn-sm btn-outline-primary me-1 mb-1" v-for="(video, i) in videoSourcesSelect" 
+                    :key="video.deviceId" @click="changeSceneAndCamera(video, scenes[i])" >
                         Camara - {{ video.label }}
                     </button>
                 </div>  
@@ -42,7 +43,6 @@
 
             <!-- Mas configuraciones -->
             <div class="col-5">
-           <!--   {{videoSourcesSelect}} -->
                 <!-- Form file video -->
                 <div class="border p-2 bg-light" v-if="showFormFile">
                     <form v-on:submit.prevent="uploadFileVideo" method="POST" enctype="multipart/form-data">
@@ -103,7 +103,7 @@ export default {
                 showPause: false,
                 showResumen: false,
                 showStop: false
-            }
+            },
         }
     },
     created() {
@@ -172,7 +172,7 @@ export default {
             .catch(err => { // Promise convention dicates you have a catch on every chain.
                 console.log(err);
                 if(err.code === 'CONNECTION_ERROR') {
-                    alert('OBS externo - No esta activado.')
+                    alert('El segundo OBS externo - No esta activado.')
                 }
             });
         },
@@ -186,41 +186,54 @@ export default {
                 console.log(data);
             }).catch( err => console.log(err)) 
         },
+
         changeSceneAndCamera(video, scene) {
             // console.log(this.videoSourceId);
-            switch (scene.name) {
-                case 'HD60-S': // TODO: cambiar por el bnombre de la capturadora
-                    this.videoSourceId = video.deviceId
-                     this.startVideoWebCam()
-                    this.changeSceneHD60_S()
-                    break;
-                case 'HD60-PRO': // TODO: cambiar por el bnombre de la capturadora
-                    this.videoSourceId = video.deviceId
-                    this.startVideoWebCam()
-                    this.changeSceneHD60_Pro()
-                    break;
-                case 'OBS Virtual Camera':
-                    this.videoSourceId = video.deviceId
-                    this.startVideoWebCam()
-                    // this.changeSceneHD60_S()
-                    break;
-            
-                default:
-                    // this.changeSceneHD60_S()
-                    break;
+            if(this.scenes.length > 0) {
+                switch (scene.name) {
+                    case 'HD60-S': // TODO: cambiar por el bnombre de la capturadora
+                        this.videoSourceId = video.deviceId
+                        this.startVideoWebCam()
+                        this.changeSceneHD60_S()
+                        break;
+                    
+                    case 'HD60-PRO': // TODO: cambiar por el bnombre de la capturadora
+                        this.videoSourceId = video.deviceId
+                        this.startVideoWebCam()
+                        this.changeSceneHD60_Pro()
+                        break;
+                    case 'OBS Virtual Camera':
+                        this.videoSourceId = video.deviceId
+                        this.startVideoWebCam()
+                        // this.changeSceneHD60_S()
+                        break;
+
+                    default:
+                        // this.changeSceneHD60_S()
+                        break;
+                }
+            } else {
+                alert('Activa OBS para cambiar de camara!')
+                return
             }
         },
+
         listMediaDevices() {
+            this.videoSourcesSelect = []
+            this.audioSourcesSelect = []
+
             if (!navigator.mediaDevices || !navigator.mediaDevices.enumerateDevices) {
                 console.log("enumerateDevices() not supported.");
                 return;
             }
 
-            this.videoSourcesSelect = []
-            this.audioSourcesSelect = []
-
             navigator.mediaDevices.enumerateDevices().then((devices) => {
-                // Iterar sobre toda la lista de dispositivos (InputDeviceInfo y MediaDeviceInfo)               
+              
+                // Valida si el videoSourcesSelect ya tiene datos entonces ya no seguimmos
+                if(this.videoSourcesSelect.length > 1) {
+                    return;
+                }        
+                // Iterar sobre toda la lista de dispositivos (InputDeviceInfo y MediaDeviceInfo) 
                 devices.forEach((device) => {
                     // Según el tipo de dispositivo multimedia
                     if(device.kind ===  "videoinput"){
@@ -243,19 +256,24 @@ export default {
             try {
                 if(!confirm('¿Esta seguro de empezara a grabar?')) return
                 // Se manda el comando para empezar a grabar
+                this.tiempoRef = Date.now() 
+                this.acumulado = 0,
+                this.tiempo = '00:00:00.000'
                 await obs.send('StartRecording')
                 // Controls
                 this.controls.showPlay  = false;
                 this.controls.showPause = true;
                 this.controls.showStop  = true;
                 this.video.play()   
-                this.cronometrar = true
-                await obs2.send('StartRecording')                 
+                this.cronometrar = true   
+                await obs2.send('StartRecording')  
+                            
             } catch (error) {
                 if(error.status === 'error') {
                         alert('¿OBS no esta activado?. Para grabar hay que conectarse a OBS...')
                 }
-            }       
+            }  
+            
         },
 
         async pauseRecord() {
@@ -418,10 +436,9 @@ export default {
                this.ubicationVideo  = data.recordingFilename
         });
 
-       /*  navigator.mediaDevices.ondevicechange = () => {
-            this.videoSourcesSelect = []
+        navigator.mediaDevices.ondevicechange = () => { // se dispara mas de una vez al quitar o agregar un dispositivo
             this.listMediaDevices() 
-        } */
+        }
         
     },
 
