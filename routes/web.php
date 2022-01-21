@@ -115,6 +115,8 @@ Route::middleware(['auth'])->group( function() {
     Route::put('/salas/expediente/cancelar/{id}', [ReservaSalaController::class, 'cancelarAudiencia'])->name('cancelar.room');
     Route::delete('/salas/reservadas/{id}', [ReservaSalaController::class, 'destroy'])->name('delete.room');
     
+    Route::put('/salas/expediente/pausar/{id}', [ReservaSalaController::class, 'pausarAudiencia'])->name('pausar.room');
+    Route::put('/salas/expediente/finalizar/{id}', [ReservaSalaController::class, 'stopAudiencia'])->name('stop.room');
     
     // Participantes
     Route::get('/agregar/participantes/{id}/{expediente_id}', [ParticipanteController::class, 'create'])->name('add.participante');
@@ -149,6 +151,7 @@ Route::middleware(['auth'])->group( function() {
     
     // Notas
     Route::post('/nota', [NotaController::class, 'store'])->name('post.nota');
+    Route::post('/nota/audiencia', [NotaController::class, 'addNota'])->name('post.nota.add'); // La nota es subida desde el reporte final de la audiencia
     Route::get('/notas/{id}', [NotaController::class, 'show'])->name('show.notas');
     Route::get('/nota/{id}', [NotaController::class, 'edit'])->name('edit.notas');
     Route::put('/nota/{id}', [NotaController::class, 'update'])->name('update.notas');
@@ -156,6 +159,7 @@ Route::middleware(['auth'])->group( function() {
     
     // Archivos
     Route::post('/archivo', [ArchivoController::class, 'store'])->name('post.archivo');
+    Route::post('/archivo/audiencia', [ArchivoController::class, 'addFile'])->name('post.archivo.add');
     Route::get('/archivos/{id}', [ArchivoController::class, 'show'])->name('show.archivos');
     Route::get('/archivo/{id}', [ArchivoController::class, 'edit'])->name('edit.archivo');
     Route::put('/archivo/{id}', [ArchivoController::class, 'update'])->name('update.archivo');

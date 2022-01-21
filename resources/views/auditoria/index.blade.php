@@ -27,7 +27,7 @@
                </section>
 
                <section class="d-flex justify-content-between">
-                  <p>Número de Audiencia: <b> {{ $expediente->audiencia->id }} </b></p>
+                  <p>Número de Audiencia: <b> {{ $expediente->numero_expediente }} </b></p>
                   <section class="d-flex">
                      <p class="me-3">Hora de inicio: {{ $expediente->audiencia->horaInicio }} </p>
                      <p>Hora a finalizar: {{ $expediente->audiencia->horaFinalizar }} </p>
@@ -49,6 +49,7 @@
                      </div>
                   </div> --}}
                  {{--  <video-recording> --}}
+                  <input type="text" name="numero_de_expediente" id="numero_de_expediente" value="{{ $expediente->numero_expediente }}" hidden>
                   <video-recording-obs />
                   {{-- <video-recording-three/> --}}
                  
@@ -56,7 +57,7 @@
                </div>               
                {{-- salir --}}
                <div class="w-100 text-center mt-5 border p-3">
-                  <a href="{{ route('salir.evento',$expediente->audiencia->id ) }}" class="btn btn-primary rounded-pill px-3" onclick="return confirm('¿Estas seguro de finalizar la audiencia?')">Finalizar audiencia</a>
+                  <a href="{{ route('salir.evento',$expediente->audiencia->id ) }}" class="btn btn-primary rounded-pill px-3" onclick="return confirm('¿Estas seguro de finalizar la sala?')">Salir de la sala</a>
                </div>
             </div>
    

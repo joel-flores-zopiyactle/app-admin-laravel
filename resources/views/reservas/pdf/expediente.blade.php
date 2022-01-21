@@ -102,7 +102,7 @@
 
                 <tbody>
                     <tr>
-                        <td style="width: 50%">{{ $expediente->id }}</td>
+                        <td style="width: 50%">{{ $expediente->numero_expediente }}</td>
                         <td style="width: 50%">{{ $expediente->folio }}</td>
                     </tr>
                 </tbody>

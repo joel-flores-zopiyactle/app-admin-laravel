@@ -47,7 +47,7 @@
                     <tbody>
                     @foreach ($resultExpedientes as $expediente)
                         <tr>
-                            <td>{{ $expediente->id }}</td>
+                            <td>{{ $expediente->numero_expediente }}</td>
                             <td>{{ $expediente->folio }}</td>
                             <td>{{ $expediente->audiencia->horaInicio }}</td>
                             <td>{{ $expediente->audiencia->horaFinalizar }}</td>

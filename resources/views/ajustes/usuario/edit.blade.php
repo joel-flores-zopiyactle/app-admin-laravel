@@ -12,7 +12,7 @@
     <x-alert-message />  
     
     <div>
-        <form method="POST" action="{{ route('update.usuario', $usuario->id) }}" enctype="multipart/form-data">
+        <form method="POST" action="{{ route('update.usuario', encrypt($usuario->id)) }}" enctype="multipart/form-data">
             @csrf
 
             @method('PUT')
@@ -69,7 +69,7 @@
                         {{-- <img width="80px" height="80px" class="rounded-circle" src="{{ Storage::url($usuario->avatar) }}" alt="" style="background-image: cover;"> --}}
                         <div class="avatar" style="background-image: url({{ Storage::url($usuario->avatar) }})"></div>
                     </div>
-                    <input id="avatar" type="file" class="form-control @error('avatar') is-invalid @enderror" name="avatar" value="{{ old('avatar') }}" required autocomplete="avatar">
+                    <input id="avatar" type="file" class="form-control @error('avatar') is-invalid @enderror" name="avatar" value="{{ old('avatar') }}" autocomplete="avatar" >
 
                     @error('avatar')
                         <span class="invalid-feedback" role="alert">
@@ -80,26 +80,28 @@
             </div>
 
             {{-- Si el usuario es un Administrador principal desactivamos la opcion de cambiar tipo de usuario --}}
-            @if($usuario->id !== 1)
-                <div class="row mb-3">
-                    <label for="avatar" class="col-md-4 col-form-label text-md-right">{{ __('Tipo de usuario') }}</label>
+           
+            <div class="row mb-3">
+                <label for="avatar" class="col-md-4 col-form-label text-md-right">{{ __('Tipo de usuario') }}</label>
 
-                    <div class="col-md-6">
-                        <select class="form-control  @error('tipo_usuario_id') is-invalid @enderror" name="tipo_usuario_id" id="tipo_usuario_id">
-                            <option value="{{ $tipoUsuarioActual->id }}">{{ $tipoUsuarioActual->tipo }}</option>
+                <div class="col-md-6">
+                    <select class="form-control  @error('tipo_usuario_id') is-invalid @enderror" name="tipo_usuario_id" id="tipo_usuario_id">
+                        <option value="{{ encrypt($tipoUsuarioActual->id) }}">{{ $tipoUsuarioActual->tipo }}</option>
+                        @if($usuario->id !== 1)
                             @foreach ($tipoUsuarios as $tipo)
-                                <option value="{{ $tipo->id }}"> {{ $tipo->tipo }} </option>
+                                <option value="{{ encrypt($tipo->id) }}"> {{ $tipo->tipo }} </option>
                             @endforeach
-                        </select>
+                        @endif
+                    </select>
 
-                        @error('tipo_usuario_id')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
+                    @error('tipo_usuario_id')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
                 </div>
-            @endif
+            </div>
+           
            
             <div class="row mb-0 mt-3">
                 <div class="col-md-6 offset-md-4">

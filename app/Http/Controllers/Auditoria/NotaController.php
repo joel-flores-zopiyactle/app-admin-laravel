@@ -61,6 +61,36 @@ class NotaController extends Controller
 
     }
 
+    /* 
+    *   Los datos vienen desde el reporte final de la audiencia
+    */
+    public function addNota(Request $request)
+    {
+        //return $request->all();
+        $validatedData = $request->validate([
+            'nota'          => ['required', 'max:255'],
+            //'visibilidad'   => ['required'],
+            'expediente_id' => ['required', 'numeric'],
+        ]);
+
+        try {
+            
+            $nota = new NotaModel;
+            $nota->nota          = $request->nota;
+            $nota->visibilidad   = $request->visibilidad ? 1 : 0;
+            $nota->expediente_id = $request->expediente_id;
+
+            if($nota->save()) {
+                return back()->with('success', "Nota creado correctamente");
+            }
+
+        } catch (\Throwable $th) {
+            return back()->with('error', "Fallo al crear la notas");
+        }
+       
+
+    }
+
     /**
      * Display the specified resource.
      *

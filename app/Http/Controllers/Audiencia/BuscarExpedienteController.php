@@ -37,7 +37,7 @@ class BuscarExpedienteController extends Controller
 
         switch ($tipoBusqueda) {
             case '1': // Numero de expediente
-                $result = ExpedienteModel::where('id', $buscar)->orderBy('id', 'desc')->paginate(15);
+                $result = ExpedienteModel::where('numero_expediente', $buscar)->orderBy('id', 'desc')->paginate(15);
                 $resultExpedientes = $result;
                 break;
             case '2': // fecha de expediente fechaCelebracion

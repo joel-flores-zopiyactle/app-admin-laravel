@@ -20,21 +20,23 @@ class AuditoriasController extends Controller
     {
         $validatedData = $request->validate([
             'token' => ['required', 'max:255'],
-            'numero_de_expediente' => ['required', 'numeric'],
+            'numero_de_expediente' => ['required', 'string'],
         ]);
 
-        $acceso = TokenAudienciaModel::where('token', $request->token)->where('expediente_id', $request->numero_de_expediente)->get();
+        $expediente = ExpedienteModel::where('numero_expediente', $request->numero_de_expediente)->first();
 
-        if(count($acceso) > 0) {
+        $token = TokenAudienciaModel::where('token', $request->token)->where('expediente_id', $expediente->id)->get();
+
+        if(count($token) > 0) {
 
            try {
-                $audiencia = AudienciaModel::where('expediente_id', $request->numero_de_expediente)->first(); // Obtener el id del audiencia
+                $audiencia = AudienciaModel::where('expediente_id',$expediente->id)->first(); // Obtener el id del audiencia
                 
                 $actualizarAudiencia = AudienciaModel::find($audiencia->id);
                 $actualizarAudiencia->estadoAudiencia_id = 3; // estado celebrandose
                 $actualizarAudiencia->save();
 
-                $numero_de_expediente = encrypt($request->numero_de_expediente); // encriptamos el id y lo pasamos al url
+                $numero_de_expediente = encrypt($expediente->id); // encriptamos el id y lo pasamos al url
 
                 return redirect("/evento/$numero_de_expediente");
 
@@ -61,9 +63,9 @@ class AuditoriasController extends Controller
     {
         try {
 
-            $actualizarAudiencia = AudienciaModel::find($id);
-            $actualizarAudiencia->estadoAudiencia_id = 6; // estado celebrandose
-            $actualizarAudiencia->save();
+            // $actualizarAudiencia = AudienciaModel::find($id);
+            // $actualizarAudiencia->estadoAudiencia_id = 6; // estado celebrandose
+            // $actualizarAudiencia->save();
 
             return view('auditoria.login');
 

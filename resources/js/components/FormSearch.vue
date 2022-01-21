@@ -11,7 +11,7 @@
 
         <div class="col-5" id="search-expediente">
             <div v-if="type === '1'">
-                <input type="number" class="form-control" name="buscar" placeholder="Número de expediente">
+                <input type="text" class="form-control" name="buscar" placeholder="Número de expediente">
             </div>
 
             <div v-else-if="type === '2'">
