@@ -121,33 +121,44 @@ class UsuariosController extends Controller
      */
     public function update(Request $request, $id)
     {
-       try {
-            $validatedData = $request->validate([
-                'name' => ['required', 'string', 'max:255'],
-                //'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-                'telefono' => ['required', 'numeric', 'min:10'],
-                'avatar' => ['image'],
-                'tipo_usuario_id' => ['required', 'numeric'],
-            ]);
+        //return $request->all();
+        $validatedData = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            //'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'telefono' => ['required', 'numeric', 'min:10'],
+            'avatar' => ['image'],
+            'tipo_usuario_id' => ['required','string'],
+        ]);
 
-            $user = User::find($id);
+        try {
+        
+            $user = User::find(decrypt($id));
+
     
             if($user) {
-                Storage::delete( $user->avatar ); // Delete file actually
-                $path = $request->file('avatar')->store('public/avatars'); // update new avatar
-                $urlFile  =  $path;
+                if($user->avatar !== 'default-sinjo-2021.jpg' && $request->hasFile('avatar')) {
+                    Storage::delete( $user->avatar ); // Delete file actually
+                }
+                
+                if( $request->hasFile('avatar')) {
+                    $path = $request->file('avatar')->store('public/avatars'); // update new avatar
+                }
+              
+                $user->name = $request->name;
+                $user->telefono = $request->telefono;
+                $user->tipo_usuario_id = decrypt($request->tipo_usuario_id);
+                if( $request->hasFile('avatar')) {
+                    $user->avatar = $path;
+                }
+                $user->save();
+
+                return back()->with('success', 'Usuario actualizado!');
             }
 
-            $user->name = $request->name;
-            $user->telefono = $request->telefono;
-            $user->tipo_usuario_id = $request->tipo_usuario_id;
-            $user->avatar = $urlFile;
-            $user->save();
-
-            return back()->with('success', 'Usuario actualizado!');
+            
 
        } catch (\Throwable $th) {
-            return back()->with('error', 'Ocurrio un error al actualizar los datos del usuario. Intente de nuevo!');
+            return back()->with('error', 'Ocurrio un error al actualizar los datos del usuario. Intente de nuevo! ');
        }
 
     }

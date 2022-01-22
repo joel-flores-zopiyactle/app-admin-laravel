@@ -21,14 +21,18 @@
             <div class="col-3">
                 <div class="mb-3">
                     <label class="form-label">Número de expediente:</label>
-                    <input type="number" class="form-control" value="{{$numeroDeExpediente}}" disabled>
+                    <input type="text" name="numero_expediente" class="form-control  @error('numero_expediente') is-invalid @enderror" value="{{ old('numero_expediente') }}"  placeholder="Ingresar número de expediente">
+                    @error('numero_expediente')
+                    <div class="alert alert-danger mt-1">{{ $message }}</div>
+                    {{-- El campo num expediente es obligatorio. --}}
+                    @enderror
                 </div>
             </div>
             
             <div class="col-3">
                 <div class="mb-3">
                     <label for="folio" class="form-label">Folio:</label>
-                    <input type="number" class="form-control @error('folio') is-invalid @enderror" name="folio" id="folio" value="{{ old('folio') }}" placeholder="Ingresar Folio">
+                <input type="number" class="form-control @error('folio') is-invalid @enderror" name="folio" id="folio" value="{{ isset($folio) ? $folio : old('folio') }}" placeholder="Ingresar Folio"  readonly>
                     @error('folio')
                     <div class="alert alert-danger mt-1">{{ $message }}</div>
                     @enderror

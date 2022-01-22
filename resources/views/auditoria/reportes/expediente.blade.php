@@ -6,10 +6,13 @@
 
 @section('content')
 <div class="container w-75">
-  <div>
-      <h5>Datos de la audiencia</h5>
-      <hr>
-  </div>
+
+    <x-alert-message/>
+
+    <div>
+        <h5>Datos de la audiencia</h5>
+        <hr>
+    </div>
 
   <div class="bg-white p-2 shadow rounded">
       {{-- folio --}}
@@ -23,7 +26,7 @@
 
             <tbody>
                 <tr>
-                    <td> {{ $expediente->id }} </td>
+                    <td> {{ $expediente->numero_expediente }} </td>
                     <td> {{ $expediente->folio }} </td>
                 </tr>
             </tbody>
@@ -95,31 +98,35 @@
 
 
          {{-- Notas--}}
-        <div class="w-100 bg-dark">
-            <p class="text-center text-white p-2">Notas agregadas</p>
+        <div class="w-100 bg-dark d-flex justify-content-between align-items-center p-2">
+            <p class="text-center text-white">Notas agregadas</p>
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#addNotas">
+                Agregar Nota
+            </button>
         </div>
 
         @if (count($expediente->notas) > 0)
             <table class="table w-100 table-responsive">
-                <thead class="table-dark">
+                {{-- <thead class="table-light">
                     <tr>
                         <td>Notas</td>
                         <td>Visto</td>
                     </tr>
-                </thead>
+                </thead> --}}
 
                 <tbody>
                 
                     @foreach ( $expediente->notas as $nota)
                     <tr>
                         <td> {{ $nota->nota }} </td>
-                        <td>
+                       {{--  <td>
                             @if ($nota->visibilidad)
                                 <p>Privado</p>
                             @else
                                 <p>Publico</p>
                             @endif
-                        </td>
+                        </td> --}}
                     </tr>
                     @endforeach
                 </tbody>
@@ -130,8 +137,11 @@
         
 
          {{-- Archivos--}}
-         <div class="w-100 bg-dark">
-            <p class="text-center text-white p-2">Archivos subidos</p>
+         <div class="w-100 bg-dark d-flex justify-content-between align-items-center p-2">
+            <p class="text-center text-white">Archivos subidos</p>
+            <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#addFile">
+                Subir archivo
+            </button>
         </div>
 
         @if (count($expediente->archivos) > 0)
@@ -208,6 +218,76 @@
         </table>
      {{--  {{ $expediente }} --}}
   </div>
+
+    
+<!-- Modal notas -->
+<div class="modal fade" id="addNotas" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="addNotas" aria-hidden="true">
+    <div class="modal-dialog">
+        <form class="modal-content" action="{{ route('post.nota.add') }}" method="POST">
+            @csrf
+            <input type="hidden" name="expediente_id" value="{{ $expediente->id }}">
+        
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Agregar nueva nota</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            
+            <div class="modal-body">
+                <div>
+                    <textarea name="nota" class="form-control" rows="2" placeholder="Ingrese su Nota..." minlength="4"></textarea>
+                </div>
+
+                {{-- <div class="mb-3 mt-3 form-check">
+                    <input type="checkbox" class="form-check-input" name="visibilidad" id="visibilidad">
+                    <label class="form-check-label" id="visibilidad_label" for="visibilidad">Privado</label>
+                </div> --}}
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-primary">Agregar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Modal File -->
+<div class="modal fade" id="addFile" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="addFile" aria-hidden="true">
+    <div class="modal-dialog">
+        <form class="modal-content" action="{{ route('post.archivo.add') }}" enctype="multipart/form-data" method="POST">
+            @csrf
+            <input type="hidden" name="expediente_id" value="{{ $expediente->id }}">
+        
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Subir archivo</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label for="formFile" class="form-label">Subir archivos</label>
+                    <input class="form-control" type="file" name="file" id="file" required>
+                </div>
+
+                <div class="mt-3">
+                    <select class="form-select form-select-sm" name="tipo_archivo" required>
+                    <option selected>Seleccione tipo de archivo</option>
+                    <option value="pdf">PDF</option>
+                    <option value="imagen">Imagen</option>
+                    <option value="video">Video</option>
+                    <option value="audio">Audio</option>  
+                    <option value="doc">Documento de Word</option>  
+                    </select>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-primary">Subir</button>
+            </div>
+        </form>
+    </div>
+</div>
 
 </div>
 @endsection

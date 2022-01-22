@@ -25,7 +25,7 @@
                 <div class="col-3">
                     <div class="mb-3">
                         <label class="form-label">Numero de Expediente:</label>
-                        <input type="number" class="form-control" value="{{$expediente->id}}" disabled>
+                        <input type="text" class="form-control" value="{{ $expediente->numero_expediente}}" disabled>
                     </div>
                 </div>
                 
@@ -107,7 +107,7 @@
 
             <hr>
           <div>
-            <a href="{{ route('reservas.salas') }}" class="btn btn-outline-danger me-2">Cancelar</a>
+            <a href="{{ route('reservas.salas') }}" class="btn btn-outline-danger me-2">Regresar</a>
             <button type="submit" class="btn btn-success">Reagendar</button>
           </div>
         </form>

@@ -11,6 +11,7 @@
     @elseif ($estadoAudiencia->estado === 'Pausada')
         <span class="badge px-3" style="background: {{$estadoAudiencia->color}}"> {{ $estadoAudiencia->estado }} </span>
     @elseif ($estadoAudiencia->estado === 'Cancelada')
+    
         <span class="badge px-3" style="background: {{$estadoAudiencia->color}}"> {{ $estadoAudiencia->estado }} </span>
 
     @elseif ($estadoAudiencia->estado === 'Finalizada')

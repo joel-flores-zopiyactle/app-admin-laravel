@@ -26,7 +26,7 @@ class ReservaSalaController extends Controller
     {
         //TODO: Necesito obetner Expediente, SALA, AUDIENCIA, TIPO AUDIENCIA, Y ESTADO AUDIENCIA
 
-        $expedientes = ExpedienteModel::orderBy('id', 'desc')->paginate(15);
+        $expedientes = ExpedienteModel::orderBy('id', 'desc')->paginate(20);
 
         return view('reservas.index', compact('expedientes'));
     }
@@ -47,10 +47,10 @@ class ReservaSalaController extends Controller
         $listaTipoJuicio     =  TipoJuicioModel::where('estado', 1)->select('id', 'nombre')->orderBy('nombre')->get();
         
         $audienciaLast      =  ExpedienteModel::all()->last(); // Obtiene el ultimo registro a la BD del expediente
-        $numeroDeExpediente =  isset($audienciaLast->id)  ? $audienciaLast->id + 1:  $audienciaLast + 1; // Si id expediente existe accedemos al id y sumanos uno al siguiente expdiente si no asigamos 1 por defecto
+        $folio =  isset($audienciaLast->id)  ? $audienciaLast->id + 1:  $audienciaLast + 1; // Si id expediente existe accedemos al id y sumanos uno al siguiente expdiente si no asigamos 1 por defecto
         
 
-        return view('reservas.create', compact(['listaCentroJusticia','salas', 'listaTipoAudiencia', 'listaTipoJuicio', 'numeroDeExpediente']));
+        return view('reservas.create', compact(['listaCentroJusticia','salas', 'listaTipoAudiencia', 'listaTipoJuicio', 'folio']));
     }
 
     /**
@@ -64,13 +64,14 @@ class ReservaSalaController extends Controller
        
         $validatedData = $request->validate([
             // Expediente
-            'folio'         => ['required', 'unique:expedientes'],
-            'juez'          => ['required'],
-            'juzgado'       => ['required'],
-            'actor'         => ['required'],
-            'demandado'     => ['required'],
-            'secretario'    => ['required'],
-            'juicio_id'     => ['required', 'numeric'],
+            'numero_expediente'  => ['required','string', 'unique:expedientes'],
+            'folio'                 => ['required', 'numeric', 'unique:expedientes'],
+            'juez'                  => ['required'],
+            'juzgado'               => ['required'],
+            'actor'                 => ['required'],
+            'demandado'             => ['required'],
+            'secretario'            => ['required'],
+            'juicio_id'             => ['required', 'numeric'],
             // Audiencia
             'centroJusticia_id' => ['required', 'numeric'],
             'sala_id' => ['required', 'numeric'],
@@ -85,6 +86,7 @@ class ReservaSalaController extends Controller
         try {
             
                 $newExpediente = new ExpedienteModel;
+                $newExpediente->numero_expediente   = $request->numero_expediente;
                 $newExpediente->folio   = $request->folio;
                 $newExpediente->juez    = $request->juez;
                 $newExpediente->juzgado = $request->juzgado;
@@ -147,7 +149,7 @@ class ReservaSalaController extends Controller
             $deleteExpediente = ExpedienteModel::findOrFail($newExpediente->id);
             $deleteExpediente->delete();
 
-            return back()->with('error', 'Hubo un error al guaradar los datos. Verifique su conexion a Internte o recarga la página!'.$th);
+            return back()->with('error', 'Hubo un error al guaradar los datos. Verifique su conexion a Internte o recarga la página!');
         }
 
     }
@@ -162,13 +164,13 @@ class ReservaSalaController extends Controller
     {
         try {
             
-            $expedientes = ExpedienteModel::where('id', $request->num)->get(); // el id es la referencia del numero de expdiente
+            $expedientes = ExpedienteModel::where('numero_expediente', $request->num)->get(); // el id es la referencia del numero de expdiente
 
             if(count($expedientes) > 0) {
                 return view('reservas.resultado-busqueda', compact('expedientes'));
             }
 
-            return back()->with('warning', 'No resultados del expediente numero: '. $request->num);
+            return back()->with('warning', 'No hay resultados del expediente número: '. $request->num);
 
         } catch (\Throwable $th) {
             return back()->with('error', 'Hubo un error al consultar los datos!. Intentalo mas tarde..');
@@ -244,10 +246,10 @@ class ReservaSalaController extends Controller
             $expedienteDelete = ExpedienteModel::find($id);
 
             if($expedienteDelete->delete()) {
-                return back()->with('success', "Expediente numero $expedienteDelete->id eliminado correctamente!");
+                return back()->with('success', "Expediente numero $expedienteDelete->numero_expediente eliminado correctamente!");
             } 
 
-            return back()->with('warning', "Expediente numero $expedienteDelete->id no se pudo eliminar, Intente de nuevo!");
+            return back()->with('warning', "Expediente numero $expedienteDelete->numero_expediente no se pudo eliminar, Intente de nuevo!");
 
         } catch (\Throwable $th) {
             return back()->with('error', 'Hubo un error al eliminar el dato.');
@@ -289,6 +291,47 @@ class ReservaSalaController extends Controller
             
         } catch (\Throwable $th) {
              return back()->with('error', 'Fallo al cancelar la audiencia. Intente tarde.');
+        }
+    }
+
+    // Pausa la audiencia para ser renaudad despues
+    public function pausarAudiencia($id)
+    {
+        //$expediente = ExpedienteModel::find($id);
+        try {
+            $audiencia = AudienciaModel::where('expediente_id', $id)->first();
+            $audiencia->estadoAudiencia_id = 4; // Actaulizamos la audiencia a (4 => Pausada)
+
+            if( $audiencia->save()) {
+
+                return array( 'mensaje' => 'Audiencia pausada correctamente','status' => 200);
+
+            }
+            // Si  no se pudo actualizar returnamos este mensaje de error
+            return array( 'mensaje' => 'Fallo al pausar la Audiencia, Intenete de nuevo', 'status' => 404);
+           
+        } catch (\Throwable $th) {
+            return array( 'mensaje' => 'Hubo un error al pausar la Audiencia, Intente de nuevo', 'status' => 500);
+        }
+        
+    }
+
+    public function stopAudiencia($id)
+    {
+        try {
+            $audiencia = AudienciaModel::where('expediente_id', $id)->first();
+            $audiencia->estadoAudiencia_id = 6; // Actaulizamos la audiencia a (6 => Finalizar)
+
+            if( $audiencia->save()) {
+
+                return array( 'mensaje' => 'Audiencia finalizada correctamente','status' => 200);
+
+            }
+            // Si  no se pudo actualizar returnamos este mensaje de error
+            return array( 'mensaje' => 'Fallo al finalizar la Audiencia, Intenete de nuevo', 'status' => 404);
+           
+        } catch (\Throwable $th) {
+            return array( 'mensaje' => 'Hubo un error al finalizar la Audiencia, Intente de nuevo', 'status' => 500);
         }
     }
 

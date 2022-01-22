@@ -23,21 +23,22 @@
 
                 <!-- Control de grabación -->
                 <div class="mt-2 w-75 d-flex justify-content-center border p-2">
-                    <button v-if="controls.showPlay" type="button" class="btn btn-outline-dark me-2" @click="startRecord">
+                    <button v-if="controls.showPlay" type="button" class="btn btn-primary me-2" @click="showConfirmRecordStart">
                         Grabar
                     </button>
 
-                    <button v-if="controls.showPause" type="button" class="btn btn-outline-dark me-2" @click="pauseRecord">
+                    <button v-if="controls.showPause" type="button" class="btn btn-outline-dark me-2" @click="showConfirmRecesoRecord">
                         Pausar
                     </button>
 
-                    <button v-if="controls.showResumen" type="button" class="btn btn-outline-dark me-2" @click="resumenRecord">
+                    <button v-if="controls.showResumen" type="button" class="btn btn-outline-dark me-2" @click="showConfirmResumenRecord">
                         Renaurar
                     </button>
 
-                    <button v-if="controls.showStop" type="button" class="btn btn-outline-danger" @click="stopRecord">
+                    <button v-if="controls.showStop" type="button" class="btn btn-outline-danger" @click="showConfirmStopRecord">
                         Finalizar
                     </button>
+
                 </div>
             </div>
 
@@ -71,6 +72,7 @@
 <script>
 // OBS 
 const OBSWebSocket = require('obs-websocket-js');
+const Swal = require('sweetalert2')
 const obs = new OBSWebSocket();
 const obs2 = new OBSWebSocket(); // Hace una conexion a una maquina externa mediante una direccion IP
 export default {
@@ -83,6 +85,7 @@ export default {
             audioSourcesSelect: [],
             activeSceneCurrent: 'HD60-S', // Muestra el Escena actual activo en OBS
             expedienteID: 0,
+            numeroExpediente: 0,
             durationVideo: '', // Duracion del video grabado desde OBS
             ubicationVideo: '', // Ubicaccion del video gurdado desde OBS
             // Crnometro
@@ -111,14 +114,16 @@ export default {
         this.connectOBSExterno()
         this.getIdExpedinete()
     },
-
     
     methods: {
         // Obtener ID del expediente
         getIdExpedinete() {
             // ID
             const expedienteID =  document.getElementById('expediente_id');
+            const numeroExpediente =  document.getElementById('numero_de_expediente'); // Numero de expediente
             this.expedienteID = expedienteID.value;
+            this.numeroExpediente = numeroExpediente.value;
+            //console.log(this.expedienteID);
         },
         // Obtener video de la WebCam
         async startVideoWebCam() {
@@ -155,14 +160,20 @@ export default {
             .catch(err => { // Promise convention dicates you have a catch on every chain.
                 // console.log(err);
                 if(err.code === 'CONNECTION_ERROR') {
-                    alert('OBS - No esta activado, pára empezar a grabar hay que activar OBS Studio!.')
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'OBS no esta activo?',
+                        text: 'La aplicacion OBS no esta activado parta empezar a grabar. Debe de abrir el programa OBS para grabar la audiencia?',
+                       // footer: '<a href="">Why do I have this issue?</a>'
+                    })
+                    //alert('OBS - No esta activado, pára empezar a grabar hay que activar OBS Studio!.')
                 }
             });
            
         },
         connectOBSExterno() {
             // Si la direccion es cambiada hay que actualizar por la nueva direccion de la maquina externa
-            obs2.connect({ address: '192.168.0.105:4445', password: ''}).then(() => { // TODO: Conexion por direccion IP
+            obs2.connect({ address: '192.168.0.103:4444', password: ''}).then(() => { // TODO: Conexion por direccion IP
                 // console.log(`Success! We're connected & authenticated.`);
                 return obs.send('GetSceneList');
             }).then(data => { 
@@ -172,7 +183,12 @@ export default {
             .catch(err => { // Promise convention dicates you have a catch on every chain.
                 console.log(err);
                 if(err.code === 'CONNECTION_ERROR') {
-                    alert('El segundo OBS externo - No esta activado.')
+                    Swal.fire(
+                        'OBS no esta activo?',
+                        'La aplicacion OBS no esta activo en la maquina externo de respaldo?',
+                        'question'
+                    )
+                    //alert('El segundo OBS externo - No esta activado.')
                 }
             });
         },
@@ -250,34 +266,158 @@ export default {
                 console.log(e.name + ": " + e.message);
             });
         },
+        
+        // Confirms Methods
+        showConfirmRecordStart() {
+            Swal.fire({
+                title: '¿Estas seguro de empezar a grabar la audiencia?',
+                // consoleshowDenyButton: true,
+                showCancelButton: true,
+                confirmButtonText: 'Grabar',
+                //denyButtonText: `Don't save`,
+                }).then((result) => {
+                /* Read more about isConfirmed, isDenied below */
+                if (result.isConfirmed) {
+                    //Swal.fire('Saved!', '', 'success')
+                    this.startRecord()
+                }
+            })
+        },
+
+        showConfirmRecesoRecord() {
+            Swal.fire({
+                title: 'Seleccione el tipo de acción a realizar en la audiencia?',
+                showDenyButton: true,
+                showCancelButton: true,
+                confirmButtonText: 'Pausar grabación',
+                denyButtonText: `Entrar en receso`,
+                }).then((result) => {
+                /* Read more about isConfirmed, isDenied below */
+                if (result.isConfirmed) { // Establece en pausa la grabación
+                    Swal.fire({
+                        title: '¿Estas seguro de pausar la grabación?',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Si, Pausar grabación!',
+                        cancelButtonText: 'Cancelar',
+                        }).then((result) => {
+                        if (result.isConfirmed) {
+                            this.pauseRecord()
+                        }
+                    })
+                   
+                } else if (result.isDenied) { // Establece enm receso la audeicia
+                    Swal.fire({
+                        title: '¿Estas seguro de esatablecer en receso la audiencia?',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Si, Establecer en receso al audiencia!',
+                        cancelButtonText: 'Cancelar',
+                        }).then((result) => {
+                        if (result.isConfirmed) {
+                            this.recesoRecord()
+                        }
+                    })
+                }
+            })
+        },
+
+        showConfirmResumenRecord() {
+            Swal.fire({
+                title: 'Seleccione el tipo de acción a realizar en la audiencia?',
+                showDenyButton: true,
+                showCancelButton: true,
+                confirmButtonText: 'Renaurar grabación',
+                denyButtonText: `Entrar en receso`,
+                }).then((result) => {
+              
+                if (result.isConfirmed) { // renaurar  grabación
+                    Swal.fire({
+                        title: '¿Estas seguro de renaurar la grabación?',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Si, Renaurar grabación!',
+                        cancelButtonText: 'Cancelar',
+                        }).then((result) => {
+                        if (result.isConfirmed) {
+                             this.resumenRecord()
+                        }
+                    })
+                   
+                } else if (result.isDenied) { // Establece enm receso la audeicia
+                    Swal.fire({
+                        title: '¿Estas seguro de esatablecer en receso la audiencia?',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Si, Establecer en receso al audiencia!',
+                        cancelButtonText: 'Cancelar',
+                        }).then((result) => {
+                        if (result.isConfirmed) {
+                            this.recesoRecord()
+                        }
+                    })
+                }
+            })
+        },
+
+        showConfirmStopRecord() {
+            Swal.fire({
+                title: '¿Estas seguro de finalizar la audiencia?',
+                text: "Una vez que finalice, se cerrara la audiencia!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si, finalizar grabación!',
+                cancelButtonText: 'Cancelar',
+                }).then((result) => {
+                if (result.isConfirmed) {
+                    this.stopRecord()
+                }
+            })
+        },
 
         async startRecord() {
     
             try {
-                if(!confirm('¿Esta seguro de empezara a grabar?')) return
+                //if(!confirm('¿Esta seguro de empezara a grabar?')) return
                 // Se manda el comando para empezar a grabar
                 this.tiempoRef = Date.now() 
                 this.acumulado = 0,
                 this.tiempo = '00:00:00.000'
                 await obs.send('StartRecording')
+                console.log('log');
                 // Controls
                 this.controls.showPlay  = false;
                 this.controls.showPause = true;
                 this.controls.showStop  = true;
                 this.video.play()   
                 this.cronometrar = true   
+                
                 await obs2.send('StartRecording')  
-                            
+
             } catch (error) {
                 if(error.status === 'error') {
-                        alert('¿OBS no esta activado?. Para grabar hay que conectarse a OBS...')
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Oops...',
+                        text: '¿Un OBS no esta activado?. Para grabar hay que conectarse a OBS...',
+                    })
                 }
             }  
             
         },
 
         async pauseRecord() {
-            if(!confirm('¿Estas seguro de pausar la grabación?')) return
+            //if(!confirm('¿Estas seguro de pausar la grabación?')) return
             try {
                 await obs.send('PauseRecording')
                 // Controls
@@ -293,7 +433,7 @@ export default {
         },
         
         async resumenRecord() {
-            if(!confirm('¿Estas seguro de seguir grabando?')) return
+            //if(!confirm('¿Estas seguro de seguir grabando?')) return
             try {
                 obs.send('ResumeRecording')
                 // Controls
@@ -308,23 +448,109 @@ export default {
         },
 
         async stopRecord() {
-            if(!confirm('¿Estas seguro de finalizar la grabación?\nUna vez finalizada la grabación ya no podra grabar de nuevo.')) return
             try {
-                await obs.send('StopRecording')
-                this.video.pause();   
-                this.cronometrar = false
-                   
-                //Permite asignar el nombre del archivo
-                await obs.send('SetFilenameFormatting', { 'filename-formatting': `audiencia_numero_${this.expedienteID}` })
-                this.showFormFile = true;
-                 // Controls
-                this.controls.showPlay   = true;
-                this.controls.showPause   = false;
-                this.controls.showResumen = false;
-                this.controls.showStop    = false;
-                // OBS 2
-                await obs2.send('StopRecording')
-                await obs2.send('SetFilenameFormatting', { 'filename-formatting': `audiencia_numero_${this.expedienteID}` })
+                const token =  document.getElementsByName('_token')
+                const config = {  
+                    headers: { 'content-type': 'application/x-www-form-urlencoded' },
+                    'X-CSRF-TOKEN': token[0].value,// <--- aquí el token
+                };
+
+                const res = await axios.put(`${baseURL}/salas/expediente/finalizar/${this.expedienteID}`, config)
+
+                if(res.data.status === 200) {
+                    await obs.send('StopRecording')
+                    this.video.pause();   
+                    this.cronometrar = false
+                     //Permite asignar el nombre del archivo
+                    await obs.send('SetFilenameFormatting', { 'filename-formatting': `video-expediente-numero_${this.numeroExpediente}` })
+                    this.showFormFile = true;
+                    //Controls
+                    this.controls.showPlay   = true;
+                    this.controls.showPause   = false;
+                    this.controls.showResumen = false;
+                    this.controls.showStop    = false;
+                    // Alerta de exito
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'Grabación finalizada',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                    // OBS 2
+                    await obs2.send('StopRecording')
+                    await obs2.send('SetFilenameFormatting', { 'filename-formatting': `video-expediente-numero_${this.numeroExpediente}` })
+
+                } else if(res.data.status === 404) {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Error',
+                        text: 'Ocurrio un error al establecer en receso la audiencia',
+                    })
+                
+                } else if(res.data.status === 500) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Ocurrio un error al establecer en receso la audiencia, Intente de nuevo o pare la grabación desde OBS y recargue la página',
+                    })
+                }
+
+            } catch (error) {
+                console.log(error);
+            }
+           
+        },
+
+        async recesoRecord() { // Establece la audiencia en receso para ser renaudada posteriormente
+            try {
+                const token =  document.getElementsByName('_token')
+                const config = {  
+                    headers: { 'content-type': 'application/x-www-form-urlencoded' },
+                    'X-CSRF-TOKEN': token[0].value,// <--- aquí el token
+                };
+
+                const res = await axios.put(`${baseURL}/salas/expediente/pausar/${this.expedienteID}`, config)
+
+                if(res.data.status === 200) {
+                    await obs.send('StopRecording')
+                    this.video.pause();   
+                    this.cronometrar = false
+                     //Permite asignar el nombre del archivo
+                    await obs.send('SetFilenameFormatting', { 'filename-formatting': `video-expediente-numero_${this.numeroExpediente}` })
+                    this.showFormFile = true;
+                    //Controls
+                    this.controls.showPlay   = true;
+                    this.controls.showPause   = false;
+                    this.controls.showResumen = false;
+                    this.controls.showStop    = false;
+                    // Alerta de exito
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'Audiencia en receso',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                    // OBS 2
+                    await obs2.send('StopRecording')
+                    await obs2.send('SetFilenameFormatting', { 'filename-formatting': `video-expediente-numero_${this.numeroExpediente}` })
+
+                } else if(res.data.status === 404) {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Error',
+                        text: 'Ocurrio un error al establecer en receso la audiencia',
+                    })
+                
+                } else if(res.data.status === 500) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Ocurrio un error al establecer en receso la audiencia, Intente de nuevo o pare la grabación desde OBS y recargue la página',
+                    })
+                }
+
 
             } catch (error) {
                 console.log(error);
@@ -421,6 +647,7 @@ export default {
             }
         },
     },
+
     mounted() {
         this.startVideoWebCam()
         this.listMediaDevices()

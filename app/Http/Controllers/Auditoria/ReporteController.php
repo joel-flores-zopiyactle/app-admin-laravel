@@ -23,8 +23,15 @@ class ReporteController extends Controller
 
     public function showExpediente(Request $request)
     {
-        $audiencia = AudienciaModel::where('id', $request->buscar)->where('estadoAudiencia_id',6)->first();
-        return view('auditoria.reportes.resultado-busqueda', compact('audiencia'));
+        // return $request->all();
+        $expediente = ExpedienteModel::where('numero_expediente', $request->buscar)->first();
+        if($expediente) {
+            $audiencia = AudienciaModel::where('id', $expediente->id)->where('estadoAudiencia_id',6)->first();
+            return view('auditoria.reportes.resultado-busqueda', compact('audiencia'));
+        }
+
+        return back()->with('warning', 'No hay resultados del expediente: '.$request->buscar);
+       
     }
 
 

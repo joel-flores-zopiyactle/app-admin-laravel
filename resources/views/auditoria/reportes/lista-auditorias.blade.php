@@ -11,6 +11,8 @@
         <hr>
     </div>
 
+    <x-alert-message/>
+    
     <div class=" bg-white p-3 shadow rounded">
     @if (count($auditorias) > 0)
 
@@ -38,7 +40,7 @@
             <tbody>
                 @foreach ($auditorias as $auditoria)
                     <tr>
-                        <td> {{ $auditoria->expediente->id }} </td>
+                        <td> {{ $auditoria->expediente->numero_expediente }} </td>
                         <td> {{ $auditoria->expediente->folio }} </td>
                         <td> {{ $auditoria->tipoAudiencia->nombre }} </td>
                         <td> {{ $auditoria->sala->sala }} </td>

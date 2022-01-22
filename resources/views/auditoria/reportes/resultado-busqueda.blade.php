@@ -28,7 +28,7 @@
 
                 <tbody>
                     <tr>
-                        <td> {{ $audiencia->expediente->id }} </td>
+                        <td> {{ $audiencia->expediente->numero_expediente }} </td>
                         <td> {{ $audiencia->expediente->folio }} </td>
                         <td> {{ $audiencia->tipoAudiencia->nombre }} </td>
                         <td> {{ $audiencia->sala->sala }} </td>

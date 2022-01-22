@@ -134,6 +134,105 @@ class ArchivoController extends Controller
         
     }
 
+    // Agregar archivos desde el reporte de la audiencia celebrada
+    public function addFile(Request $request)
+    {
+        //return $request->all();
+        $typeFile = strtolower($request->tipo_archivo);
+
+        if(is_file($request->file)) {
+
+            $fileExtension = strtoupper($request->file('file')->getClientOriginalExtension()); 
+
+            $path = ''; // Obtiene la ruta donde se almacena el archivo
+
+            // List Array Formats
+            $videoFormat = ['MP4', 'AVI', 'MPG', 'WMV', 'H.264', 'MOV', 'MKV', 'DIVX', 'XVID', 'MWV', 'FLV'];
+            $audioFormat = ['MP3', 'OGG', 'AAC', 'WMA'];
+            $imageFormat = ['JPG', 'PNG', 'GIF', 'BMP'];
+            $docsFormat  = ['DOC', 'TXT', 'DOCX'];
+
+            $errorMensaje = back()->with('warning', "El archivo que esta subiendo no es admitido!");
+
+            // Me permite especificar que carpeta guardar el archivo para llevar un mejor control
+            switch ($typeFile) {
+                case 'pdf':
+                    
+                    if(!in_array($fileExtension ,['PDF'],true)) {  
+                        return $errorMensaje;
+                    }
+                    
+                    $path = $request->file('file')->store('public/PDF'); 
+                    
+                    break;
+
+                case 'video':
+                   
+                    if(!in_array($fileExtension ,$videoFormat,true)) {
+                        return $errorMensaje;
+                    }
+
+                    $path = $request->file('file')->store('public/VIDEO'); 
+                    break;
+
+                case 'audio':
+
+                    if(!in_array($fileExtension ,$audioFormat,true)) {
+                        return $errorMensaje;
+                    }
+
+                    $path = $request->file('file')->store('public/AUDIO'); 
+                    break;
+
+                case 'imagen':
+
+                    if(!in_array($fileExtension ,$imageFormat,true)) {
+                        return $errorMensaje;
+                    }   
+                    
+                    $path = $request->file('file')->store('public/IMAGEN'); 
+                    
+                    break;  
+
+                case 'doc':
+                    if(!in_array($fileExtension ,$docsFormat,true)) {
+                        return $errorMensaje;
+                    } 
+
+                    $path = $request->file('file')->store('public/DOC'); 
+
+                    break;                        
+                
+                default:
+                    return $errorMensaje;
+                    break;
+            }
+
+            $nameFile = $request->file('file')->getClientOriginalName(); //Obtenemos el nombre del archivo
+            $urlFile  =  $path;
+
+            try {
+
+                $archivo = new ArchivoModel;
+                $archivo->tipo_archivo  = $typeFile; 
+                $archivo->url           = $urlFile;
+                $archivo->nombre        = $nameFile;
+                $archivo->expediente_id = $request->expediente_id;
+
+                if($archivo->save()) {
+                    return back()->with('success', "Archivo subido correctamente!");
+                }
+
+            } catch (\Throwable $th) {
+                return back()->with('success', "Ocurrio un error al guaradar el archivo!");
+
+            }
+
+        }
+        return back()->with('warning', "No ha seleccionado ningún archivo!");
+            
+    }
+
     /**
      * Display the specified resource.
      *

@@ -23,7 +23,7 @@
         </div>
         <div class="mb-3">
           <label for="num_audiencia" class="form-label">Número de expediente:</label>
-          <input type="number" class="form-control  @error('numero_de_expediente') is-invalid @enderror" name="numero_de_expediente" id="num_audiencia" placeholder="Número de expediente...">
+          <input type="text" class="form-control  @error('numero_de_expediente') is-invalid @enderror" name="numero_de_expediente" id="num_audiencia" placeholder="Número de expediente...">
           @error('numero_de_expediente')
             <div class="alert alert-danger mt-1">{{ $message }}</div>
           @enderror

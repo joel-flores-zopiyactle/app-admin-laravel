@@ -15,6 +15,7 @@ class CreateExpedientesTable extends Migration
     {
         Schema::create('expedientes', function (Blueprint $table) {
             $table->id();
+            $table->string('numero_expediente');
             $table->string('folio');
             $table->string('juez');
             $table->string('juzgado');
