@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Audiencia;
+use App\Models\Expediente as ExpedienteModel;
 use App\Models\VideoAudiencia;
 
 
@@ -16,7 +17,17 @@ class AnalisisController extends Controller
         $totalCelebradas = DB::table('audiencias')->where('estadoAudiencia_id', 6)->count();
         $totalReservadas = DB::table('audiencias')->where('estadoAudiencia_id', 1)->count();
         $totalCanceladas = DB::table('audiencias')->where('estadoAudiencia_id', 5)->count();
-        $audienciaMayorDuracion = VideoAudiencia::all()->max('duracion');
+
+        $audienciaMayorDuracionExpedinete = [];
+        $durationMaxVideo = DB::table('video_audiencias')->max('duracion'); // Obtengo la duracion maxica
+        $getInfoVideoMaxDuraction = VideoAudiencia::where('duracion', $durationMaxVideo)->first(); // Buscado en la lista el video de mayor duracion y obtengo toda la informacion
+        $expedienteMaxVideo = ExpedienteModel::find($getInfoVideoMaxDuraction->expediente_id); // Consulto el expediente relacionado con la mayor duracion
+
+        $audienciaMayorDuracion = array(
+            'duracion' => $getInfoVideoMaxDuraction->duracion,
+            'numero_expediente' => $expedienteMaxVideo->numero_expediente
+        );
+       
         // $audienciaMayorDuracion = DB::table('audiencias')->where('estadoAudiencia_id',1)->latest();
 
         return view('estadistica.index', compact(['totalCelebradas', 'totalReservadas', 'totalCanceladas', 'audienciaMayorDuracion']));

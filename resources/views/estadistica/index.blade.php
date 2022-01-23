@@ -68,8 +68,8 @@
                  <hr>
  
                  <div>
-                    <p>Audiencia numero: </p>
-                    Tiempo de grabación:  {{ $audienciaMayorDuracion }}
+                    <p>Expediente numero: {{ $audienciaMayorDuracion['numero_expediente'] }} </p>
+                    Tiempo de grabación:  {{ $audienciaMayorDuracion['duracion'] }}
                  </div>
             </div>             
         </div>
