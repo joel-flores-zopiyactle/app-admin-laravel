@@ -22,7 +22,7 @@
         @if (Auth::user()->tipoUsuario->permiso->ver_auditoria || Auth::user()->tipoUsuario->permiso->ver_lista_auditoria )
             <li class="mb-1">
                 <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true">
-                    Auditoria
+                    Audiencia
                 </button>
                 <div class="collapse show" id="home-collapse">
                 <ul class="btn-toggle-nav list-unstyled fw-normal pb-2 small">
@@ -30,7 +30,7 @@
                         <li>
                             <a href="{{ route('ingresar.evento') }}" class="link-dark rounded">
                                 <span class="iconify h4 me-1" data-icon="ri:team-fill"></span>
-                                Ingresar sala
+                                Ingresar Audiencia
                             </a>
                         </li>
                     @endif
@@ -39,11 +39,10 @@
                         <li>
                             <a href="{{ route('auditoria.lista') }}" class="link-dark rounded">
                                 <span class="iconify h4 me-1" data-icon="ri:team-fill"></span>
-                                Listado de auditorias
+                                Listado de Audiencias
                             </a>
                         </li>
                     @endif
-                    {{--  <li><a href="#" class="link-dark rounded">Estadisticas</a></li> --}}
                 </ul>
                 </div>
             </li>
@@ -57,7 +56,7 @@
                     <li>
                         <a href="{{ route('book.new.room') }}" class="link-dark rounded">
                             <span class="iconify h4 me-1" data-icon="icon-park-outline:doc-success"></span>
-                            Reservar sala
+                            Reservar audiencia
                         </a>
                     </li>
                 </ul>

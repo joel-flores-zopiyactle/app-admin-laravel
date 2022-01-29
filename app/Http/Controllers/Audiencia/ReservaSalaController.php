@@ -61,7 +61,7 @@ class ReservaSalaController extends Controller
      */
     public function store(Request $request)
     {
-       
+        //return $request->all();
         $validatedData = $request->validate([
             // Expediente
             'numero_expediente'  => ['required','string', 'unique:expedientes'],

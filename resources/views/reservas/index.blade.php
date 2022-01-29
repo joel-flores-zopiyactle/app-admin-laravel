@@ -72,7 +72,7 @@
         
         @else
             <div class="p-3">
-                <h3>No hay salas reservadas todabía</h3>
+                <h3>No hay audiencias reservadas todavía</h3>
             </div>
         @endif
     </div>

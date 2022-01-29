@@ -107,8 +107,8 @@ Route::middleware(['auth'])->group( function() {
     
     // Reserva se sala
     Route::get('/salas/reservadas', [ReservaSalaController::class, 'index'])->name('reservas.salas');
-    Route::get('/salas/reservar-nueva-sala', [ReservaSalaController::class, 'create'])->name('book.new.room');
-    Route::post('/salas/reservar-nueva-sala', [ReservaSalaController::class, 'store'])->name('post.room');
+    Route::get('/salas/reservar-nueva-audiencia', [ReservaSalaController::class, 'create'])->name('book.new.room');
+    Route::post('/salas/reservar-nueva-audiencia', [ReservaSalaController::class, 'store'])->name('post.room');
     Route::get('/salas/buscar/expediente', [ReservaSalaController::class, 'show'])->name('search.room');
     Route::get('/salas/expediente/reagendar/{id}', [ReservaSalaController::class, 'edit'])->name('edit.room');
     Route::put('/salas/expediente/reagendar/{id}', [ReservaSalaController::class, 'update'])->name('update.room');
