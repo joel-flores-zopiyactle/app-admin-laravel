@@ -196,15 +196,15 @@
 
         <div class="row">
             <div class="col-5">
-                <label>Conferencia</label>
+                <label>Habra videoconferencia?</label>
                 <div class="form-group">
                     <label for="conferenciaSi" class="form-check-label me-3">
-                        <input class="form-check-input" type="radio" name="conferencia" id="conferenciaSi" value="si">
+                        <input class="form-check-input" type="radio" name="videoconferencia" id="conferenciaSi" value="si">
                         Si
                     </label>
 
                     <label for="conferenciaNo" class="form-check-label">
-                        <input class="form-check-input" type="radio" name="conferencia" id="conferenciaNo" value="no" checked>
+                        <input class="form-check-input" type="radio" name="videoconferencia" id="conferenciaNo" value="no" checked>
                         No
                     </label>
                 </div>

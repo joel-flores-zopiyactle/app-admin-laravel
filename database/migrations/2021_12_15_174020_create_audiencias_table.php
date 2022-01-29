@@ -33,6 +33,7 @@ class CreateAudienciasTable extends Migration
             $table->date('fechaCelebracion');
             $table->timeTz('horaInicio', $precision = 0);
             $table->timeTz('horaFinalizar', $precision = 0);
+            $table->string('videoconferencia')->default('no');
         
             $table->boolean('estado')->default(true);
             $table->timestamps();
