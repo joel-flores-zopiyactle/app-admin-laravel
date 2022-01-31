@@ -37,17 +37,6 @@
       
             <div class="row mb-5">
                <div class="col-12">
-                  {{-- <div class="w-100 overflow-hidden">
-                     <img src="{{ asset('img/sinjo_logo.png') }}" class="img-fluid rounded border" alt="logo">
-                  </div> --}}
-         
-                  {{-- <div>
-                     <div class="d-flex justify-content-center mt-2 border p-2 bg-light">
-                        <button class="btn btn-success me-2 d-flex justify-content-center align-items-center"><span class="iconify h4 m-0" data-icon="akar-icons:play"></span></button>
-                        <button class="btn btn-light d-flex justify-content-center align-items-center me-2"><span class="iconify h4 m-0" data-icon="clarity:pause-solid"></span></button>
-                        <button class="btn btn-danger d-flex justify-content-center align-items-center"><span class="iconify h4 m-0" data-icon="healthicons:stop-outline"></span></button>
-                     </div>
-                  </div> --}}
                  {{--  <video-recording> --}}
                   <input type="text" name="numero_de_expediente" id="numero_de_expediente" value="{{ $expediente->numero_expediente }}" hidden>
                   <video-recording-obs />

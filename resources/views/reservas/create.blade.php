@@ -1,12 +1,12 @@
 @extends('layouts.dashboard')
 
 @section('title')
-    Reservar nueva sala
+    Reservar nueva audiencia
 @endsection
 
 @section('content')
 <div>
-    <h3>Reservar nueva sala</h3>
+    <h3>Reservar nueva audiencia</h3>
     <hr>
 
     <div class="mt-2">
@@ -190,6 +190,23 @@
                     @error('horaFinalizar')
                         <div class="alert alert-danger mt-1">{{ $message }}</div>
                     @enderror
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-5">
+                <label>Habra videoconferencia?</label>
+                <div class="form-group">
+                    <label for="conferenciaSi" class="form-check-label me-3">
+                        <input class="form-check-input" type="radio" name="videoconferencia" id="conferenciaSi" value="si">
+                        Si
+                    </label>
+
+                    <label for="conferenciaNo" class="form-check-label">
+                        <input class="form-check-input" type="radio" name="videoconferencia" id="conferenciaNo" value="no" checked>
+                        No
+                    </label>
                 </div>
             </div>
         </div>

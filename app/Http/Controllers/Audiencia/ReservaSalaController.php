@@ -61,7 +61,7 @@ class ReservaSalaController extends Controller
      */
     public function store(Request $request)
     {
-       
+        //return $request->all();
         $validatedData = $request->validate([
             // Expediente
             'numero_expediente'  => ['required','string', 'unique:expedientes'],
@@ -81,6 +81,7 @@ class ReservaSalaController extends Controller
             'fechaCelebracion'  => ['required'],
             'horaInicio'        => ['required'],
             'horaFinalizar'     => ['required'],
+            'videoconferencia'     => ['required'],
         ]);
 
         try {
@@ -106,6 +107,7 @@ class ReservaSalaController extends Controller
                     $newAudiencia->fechaCelebracion   = $request->fechaCelebracion;
                     $newAudiencia->horaInicio         = $request->horaInicio;
                     $newAudiencia->horaFinalizar      = $request->horaFinalizar;
+                    $newAudiencia->videoconferencia   = $request->videoconferencia;
 
                     if($newAudiencia->save()) {
                         $audiencia_id = $newAudiencia->id;
