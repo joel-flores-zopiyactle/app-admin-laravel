@@ -28,6 +28,7 @@ Vue.component('form-search', require('./components/FormSearch.vue').default);
 Vue.component('video-recording', require('./components/VideoRecording.vue').default);
 Vue.component('video-recording-obs', require('./components/VideoRecordOBS.vue').default);
 Vue.component('chart-bar-adiencias-celebradas', require('./components/ChartAudienceCelebratedYear.vue').default);
+Vue.component('chart-videoconferencia-total', require('./components/ChartVideoconferencia.vue').default);
 
 
 /**

@@ -1,12 +1,20 @@
 @extends('layouts.dashboard')
 
+@section('title')
+    @if (isset($sala))
+        Actualizar sala
+    @else
+     Registrar nueva Sala
+    @endif
+@endsection
+
 @section('content')
 <div class="container-fluid">
     
     @if (isset($sala))
         <h3 class="fs-5 text-uppercase">Actualizar datos de la Sala</h3>
     @else
-       <h3 class="fs-5 text-uppercase">Registrar nueva Sala</h3> 
+       <h3 class="fs-5 text-uppercase">Registrar Sala</h3> 
     @endif
    
     <hr>

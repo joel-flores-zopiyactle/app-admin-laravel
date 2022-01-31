@@ -29,20 +29,27 @@ class AuditoriasController extends Controller
 
         if(count($token) > 0) {
 
-           try {
-                $audiencia = AudienciaModel::where('expediente_id',$expediente->id)->first(); // Obtener el id del audiencia
-                
-                $actualizarAudiencia = AudienciaModel::find($audiencia->id);
-                $actualizarAudiencia->estadoAudiencia_id = 3; // estado celebrandose
-                $actualizarAudiencia->save();
+            $estadoAudiencia = AudienciaModel::where('expediente_id',$expediente->id)->first();
 
-                $numero_de_expediente = encrypt($expediente->id); // encriptamos el id y lo pasamos al url
+            if($estadoAudiencia->estadoAudiencia_id === 5 ||$estadoAudiencia->estadoAudiencia_id === 6 ) {
+                return back()->with('warning', "No puedes acceder a la audiencia, ya que fue cancelada o ya finalizo!");
+            } 
+            
 
-                return redirect("/evento/$numero_de_expediente");
+            try {
+                    $audiencia = AudienciaModel::where('expediente_id',$expediente->id)->first(); // Obtener el id del audiencia
+                    
+                    $actualizarAudiencia = AudienciaModel::find($audiencia->id);
+                    $actualizarAudiencia->estadoAudiencia_id = 3; // estado celebrandose
+                    $actualizarAudiencia->save();
 
-           } catch (\Throwable $th) {
-               return back()->with('error', "Hubo un error al acceder, intente de nuevo!");
-           }
+                    $numero_de_expediente = encrypt($expediente->id); // encriptamos el id y lo pasamos al url
+
+                    return redirect("/evento/$numero_de_expediente");
+
+            } catch (\Throwable $th) {
+                return back()->with('error', "Hubo un error al acceder, intente de nuevo!");
+            }
            //evento/{id}
         } else {
             return back()->with('error', "El token o Número de expediente son incorrectos!");

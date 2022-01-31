@@ -1,5 +1,13 @@
 @extends('layouts.dashboard')
 
+@section('title')
+    @if (isset($audiencia))
+        Actualizar datos de la Audiencia
+    @else
+       Registrar nueva Audiencia
+    @endif
+@endsection
+
 @section('content')
 <div class="container-fluid">
     

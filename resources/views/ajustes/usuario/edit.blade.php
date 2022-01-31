@@ -1,5 +1,9 @@
 @extends('layouts.dashboard')
 
+@section('title')
+    Actualizar datos de usuario
+@endsection
+
 @section('content')
 <div class="container-fluid">
     <div class="d-flex justify-content-between align-items-center">

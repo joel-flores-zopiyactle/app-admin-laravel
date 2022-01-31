@@ -85,7 +85,7 @@
 
         <div class="container">
         
-            <h1>Reservación de la sala</h1>
+            <h1>Reservación de la audiencia</h1>
 
             <div class="content">
                 <h2>Datos generales del Expediente</h2>

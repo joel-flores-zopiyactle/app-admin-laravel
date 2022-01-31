@@ -46,7 +46,7 @@
                </div>               
                {{-- salir --}}
                <div class="w-100 text-center mt-5 border p-3">
-                  <a href="{{ route('salir.evento',$expediente->audiencia->id ) }}" class="btn btn-primary rounded-pill px-3" onclick="return confirm('¿Estas seguro de finalizar la sala?')">Salir de la sala</a>
+                  <a href="{{ route('salir.evento',$expediente->audiencia->id ) }}" class="btn btn-primary rounded-pill px-3" onclick="return confirm('¿Estas seguro de salir de la audiencia?')">Salir de la audiencia</a>
                </div>
             </div>
    

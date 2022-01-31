@@ -1,5 +1,13 @@
 @extends('layouts.dashboard')
 
+@section('title')
+    @if (isset($juicio))
+        Actualizar datos del Juicio
+    @else
+       Registrar nuevo Juicio 
+    @endif
+@endsection
+
 @section('content')
 <div class="container-fluid">
     

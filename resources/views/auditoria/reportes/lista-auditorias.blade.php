@@ -1,13 +1,13 @@
 @extends('layouts.dashboard')
 
 @section('title')
-    Lista de Auditorias
+    Reporte de audiencias
 @endsection
 
 @section('content')
 <div class="container">
     <div>
-        <h5>Listado de audiencias celebradas</h5>
+        <h5>Reporte de audiencias celebradas</h5>
         <hr>
     </div>
 

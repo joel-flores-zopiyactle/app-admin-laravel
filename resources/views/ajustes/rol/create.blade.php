@@ -1,5 +1,13 @@
 @extends('layouts.dashboard')
 
+@section('title')
+    @if (isset($rol))
+        Actualizar datos del Rol
+    @else
+        Registrar nuevo Rol
+    @endif
+@endsection
+
 @section('content')
 <div class="container-fluid">
     

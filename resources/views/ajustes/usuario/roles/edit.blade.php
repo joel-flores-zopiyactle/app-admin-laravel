@@ -1,5 +1,9 @@
 @extends('layouts.dashboard')
 
+@section('title')
+Actualizar rol de usuario 
+@endsection
+
 @section('content')
 <div class="container-fluid">
     
