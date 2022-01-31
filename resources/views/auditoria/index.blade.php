@@ -1,11 +1,11 @@
-@extends('layouts.dashboard')
+@extends('layouts.dashboardVideo')
 
 @section('title')
     Auditoria en celebración
 @endsection
 
-@section('content')
-<div class="container">
+@section('video')
+<div class="container-fluid">
 
    <div class="bg-white shadow mb-3 p-3">
       <x-alert-message />
