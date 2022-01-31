@@ -4,6 +4,7 @@
     Agendar nueva audiencia
 @endsection
 
+
 @section('content')
 <div>
     <h3>Agendar nueva audiencia</h3>
@@ -209,7 +210,9 @@
                     @error('fechaCelebracion')
                         <div class="alert alert-danger mt-1">{{ $message }}</div>
                     @enderror
+
                 </div>
+
             </div>
 
             <div class="col-3">
@@ -263,3 +266,4 @@
     </form>
 </div>
 @endsection
+
