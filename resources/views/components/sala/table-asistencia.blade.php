@@ -1,10 +1,8 @@
-<div>
-    <h3 class="h4 mt-4">Lista de asistentes</h3>
+<div class="p-2">
+    <h3 class="h5 mt-2">Lista de asistencia</h3>
     <hr>
-
-    <input type="number" value="{{ $audienciaid }}" id="expediente_id_lista" hidden>
-
     <div>
+        <input type="number" value="{{ $audienciaid }}" id="expediente_id_lista" hidden>
         {{-- Componente de vue --}}
         <tabla-asistencia />
     </div>

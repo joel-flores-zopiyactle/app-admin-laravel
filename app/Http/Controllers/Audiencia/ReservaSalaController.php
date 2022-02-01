@@ -210,7 +210,7 @@ class ReservaSalaController extends Controller
     {
         $validatedData = $request->validate([
             
-            'sala_id' => ['required', 'numeric'],
+            //'sala_id' => ['required', 'numeric'],
             'fechaCelebracion'  => ['required', 'date'],
             'horaInicio'        => ['required'],
             'horaFinalizar'     => ['required'],

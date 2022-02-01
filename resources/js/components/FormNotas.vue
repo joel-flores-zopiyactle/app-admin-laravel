@@ -1,21 +1,23 @@
 <template>
     <div class="container-fluid">
-        <div class="row">
-             <div class="alert alert-success alert-dismissible fade show" role="alert"  v-if='resFile.status === 201'>
-                {{ resFile.mensaje }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
+        <div class="alert alert-success alert-dismissible fade show" role="alert"  v-if='resFile.status === 201'>
+            {{ resFile.mensaje }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
 
-            <div class="alert alert-danger alert-dismissible fade show" role="alert"  v-if='resFile.status === 500'>
-                {{ resFile.mensaje }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
+        <div class="alert alert-danger alert-dismissible fade show" role="alert"  v-if='resFile.status === 500'>
+            {{ resFile.mensaje }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        
+        <div v-else>
             
-            <div v-else>
-                
-            </div>
+        </div>
 
-            <div class="col-5">
+        <div class="row">
+            
+
+            <div class="col-6">
                 <form class="mb-4" v-on:submit.prevent="sendNota" method="POST">                    
                     <div>
                         <textarea name="nota" class="form-control" rows="2" placeholder="Ingrese su Nota..." minlength="4" v-model="formNote.nota" required></textarea>
@@ -37,7 +39,7 @@
                 </form>
             </div>
         <!--  Lista de notas -->
-            <div class="col-7">
+            <div class="col-6">
                 <table class="table table-responsive table-striped">
                     <thead class="">
                         <tr>

@@ -5840,6 +5840,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -6382,7 +6384,7 @@ var obs2 = new OBSWebSocket(); // Hace una conexion a una maquina externa median
           Swal.fire({
             icon: 'error',
             title: 'OBS no esta activo?',
-            text: 'La aplicacion OBS no esta activado parta empezar a grabar. Debe de abrir el programa OBS para grabar la audiencia?' // footer: '<a href="">Why do I have this issue?</a>'
+            text: 'La aplicacion OBS no esta activado para empezar a grabar. Debe de abrir el programa OBS para grabar la audiencia?' // footer: '<a href="">Why do I have this issue?</a>'
 
           }); //alert('OBS - No esta activado, pára empezar a grabar hay que activar OBS Studio!.')
         }
@@ -76991,7 +76993,7 @@ var staticRenderFns = [
         ]),
         _vm._v(" "),
         _c("th", { staticStyle: { width: "23%" }, attrs: { scope: "col" } }, [
-          _vm._v("Relación"),
+          _vm._v("Detalles"),
         ]),
         _vm._v(" "),
         _c("th", { staticStyle: { width: "23%" }, attrs: { scope: "col" } }, [
@@ -77314,58 +77316,50 @@ var render = function () {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container-fluid" }, [
+    _vm.resFile.status === 201
+      ? _c(
+          "div",
+          {
+            staticClass: "alert alert-success alert-dismissible fade show",
+            attrs: { role: "alert" },
+          },
+          [
+            _vm._v("\n        " + _vm._s(_vm.resFile.mensaje) + "\n        "),
+            _c("button", {
+              staticClass: "btn-close",
+              attrs: {
+                type: "button",
+                "data-bs-dismiss": "alert",
+                "aria-label": "Close",
+              },
+            }),
+          ]
+        )
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.resFile.status === 500
+      ? _c(
+          "div",
+          {
+            staticClass: "alert alert-danger alert-dismissible fade show",
+            attrs: { role: "alert" },
+          },
+          [
+            _vm._v("\n        " + _vm._s(_vm.resFile.mensaje) + "\n        "),
+            _c("button", {
+              staticClass: "btn-close",
+              attrs: {
+                type: "button",
+                "data-bs-dismiss": "alert",
+                "aria-label": "Close",
+              },
+            }),
+          ]
+        )
+      : _c("div"),
+    _vm._v(" "),
     _c("div", { staticClass: "row" }, [
-      _vm.resFile.status === 201
-        ? _c(
-            "div",
-            {
-              staticClass: "alert alert-success alert-dismissible fade show",
-              attrs: { role: "alert" },
-            },
-            [
-              _vm._v(
-                "\n            " +
-                  _vm._s(_vm.resFile.mensaje) +
-                  "\n            "
-              ),
-              _c("button", {
-                staticClass: "btn-close",
-                attrs: {
-                  type: "button",
-                  "data-bs-dismiss": "alert",
-                  "aria-label": "Close",
-                },
-              }),
-            ]
-          )
-        : _vm._e(),
-      _vm._v(" "),
-      _vm.resFile.status === 500
-        ? _c(
-            "div",
-            {
-              staticClass: "alert alert-danger alert-dismissible fade show",
-              attrs: { role: "alert" },
-            },
-            [
-              _vm._v(
-                "\n            " +
-                  _vm._s(_vm.resFile.mensaje) +
-                  "\n            "
-              ),
-              _c("button", {
-                staticClass: "btn-close",
-                attrs: {
-                  type: "button",
-                  "data-bs-dismiss": "alert",
-                  "aria-label": "Close",
-                },
-              }),
-            ]
-          )
-        : _c("div"),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-5" }, [
+      _c("div", { staticClass: "col-6" }, [
         _c(
           "form",
           {
@@ -77488,7 +77482,7 @@ var render = function () {
         ),
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "col-7" }, [
+      _c("div", { staticClass: "col-6" }, [
         _c("table", { staticClass: "table table-responsive table-striped" }, [
           _c("thead", {}, [
             _c("tr", [
@@ -77957,7 +77951,7 @@ var render = function () {
                     attrs: { type: "button" },
                     on: { click: _vm.showConfirmResumenRecord },
                   },
-                  [_vm._v("\n                    Renaurar\n                ")]
+                  [_vm._v("\n                    Reanudar\n                ")]
                 )
               : _vm._e(),
             _vm._v(" "),
