@@ -77460,7 +77460,7 @@ var render = function () {
                   staticClass: "form-check-label",
                   attrs: { id: "visibilidad_label", for: "visibilidad" },
                 },
-                [_vm._v("Establecer privado la nota")]
+                [_vm._v("Establecer en privado la nota")]
               ),
             ]),
             _vm._v(" "),
