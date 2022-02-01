@@ -38,8 +38,8 @@
                     @if (Auth::user()->tipoUsuario->permiso->ver_lista_auditoria)
                         <li>
                             <a href="{{ route('auditoria.lista') }}" class="link-dark rounded">
-                                <span class="iconify h4 me-1" data-icon="ri:team-fill"></span>
-                                Listado de Audiencias
+                                <span class="iconify h4 me-1" data-icon="tabler:report-search"></span>
+                                Reporte
                             </a>
                         </li>
                     @endif
@@ -55,8 +55,8 @@
                 <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                     <li>
                         <a href="{{ route('book.new.room') }}" class="link-dark rounded">
-                            <span class="iconify h4 me-1" data-icon="icon-park-outline:doc-success"></span>
-                            Reservar audiencia
+                            <span class="iconify h4 me-1" data-icon="fluent:calendar-agenda-28-regular"></span>
+                            Agendar audiencia
                         </a>
                     </li>
                 </ul>
@@ -111,7 +111,7 @@
                 <li>
                     <a href="{{ route('analisis.index') }}" class="link-dark rounded">
                         <span class="iconify h4 me-1" data-icon="carbon:chart-line-data"></span>
-                        Analisis estadístico
+                        Análisis estadístico
                     </a>
                 </li>
             </ul>
@@ -140,9 +140,9 @@
             </button>
             <div class="collapse" id="orders-collapse">
             <ul class="btn-toggle-nav list-unstyled fw-normal pb-2 small">
-                <li><a href="{{ route('centro.justicia') }}"    class="link-dark rounded"><span class="iconify h4 me-1" data-icon="ps:justice"></span>Centro de justicias</a></li>
+                <li><a href="{{ route('centro.justicia') }}"    class="link-dark rounded"><span class="iconify h4 me-1" data-icon="ps:justice"></span>Centro de justicia</a></li>
                 <li><a href="{{ route('roles') }}"              class="link-dark rounded"><span class="iconify h4 me-1" data-icon="eos-icons:cluster-role-binding"></span>Roles</a></li>
-                <li><a href="{{ route('salas') }}"              class="link-dark rounded"><span class="iconify h4 me-1" data-icon="fluent:conference-room-16-filled"></span>Salas</a></li>
+                <li><a href="{{ route('salas') }}"              class="link-dark rounded"><span class="iconify h4 me-1" data-icon="fluent:conference-room-16-filled"></span>Sala</a></li>
                 <li><a href="{{ route('audiencias') }}"         class="link-dark rounded"><span class="iconify h4 me-1" data-icon="fluent:people-audience-20-filled"></span>Tipo de audiencias</a></li>
                 <li><a href="{{ route('juicios') }}"            class="link-dark rounded"><span class="iconify h4 me-1" data-icon="healthicons:justice"></span>Tipo de juicios</a></li>
                 <li><a href="{{ route('usuarios') }}"           class="link-dark rounded"><span class="iconify h4 me-1" data-icon="gridicons:multiple-users"></span>Control de usuarios</a></li>

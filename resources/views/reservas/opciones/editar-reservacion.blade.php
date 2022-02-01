@@ -37,7 +37,7 @@
                 </div>
             </div>
 
-            <div class="row">
+           {{--  <div class="row">
                 <div class="col-3">
                     <div class="mb-3">
                         <label for="sala" class="form-label">Sala:</label>
@@ -52,7 +52,7 @@
                         @enderror
                     </div>
                 </div>
-            </div>
+            </div> --}}
 
              {{-- TIEMPOS --}}
             <div class="row">

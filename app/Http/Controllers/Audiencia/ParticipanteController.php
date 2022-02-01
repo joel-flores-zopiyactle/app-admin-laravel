@@ -42,10 +42,10 @@ class ParticipanteController extends Controller
      */
     public function store(Request $request)
     {
-        // return count($request->nombre);
+        //return $request->all();
         $validatedData = $request->validate([
             'nombre' => ['required', 'array'],
-            'descripcion' =>['required', 'array'],
+            'descripcion' => ['array'],
             'rol_id' => ['required', 'array'],
             'audiencia_id' => ['required', 'string'],
             'expediente_id' => ['required', 'string']
@@ -62,7 +62,7 @@ class ParticipanteController extends Controller
                 
                 $newParticipante = ParticipantesModel::create([
                     'nombre' => $request->nombre[$i],
-                    'descripcion' => $request->descripcion[$i],
+                    'descripcion' => $request->descripcion[$i] !== null ? $request->descripcion[$i] : '',
                     'rol_id' => $request->rol_id[$i],
                     'audiencia_id' => decrypt($request->audiencia_id), // desencriptamos el id
                 ]);

@@ -50,7 +50,9 @@ class CentroJusticiaController extends Controller
             ]);
     
             if($newCentro) {
-                return back()->with('success', 'Nuevo Centro de justicia registrado exitosamente!');
+                //return back()->with('success', 'Nuevo Centro de justicia registrado exitosamente!');
+                $centros = CentroJusticia::orderBy('id', 'desc')->paginate(15);
+                return view('ajustes.centro_justicia.index', compact('centros'));
             }
 
             return back()->with('warning', 'Hubo un error al guardar los datos por favor verifique sus datos.');

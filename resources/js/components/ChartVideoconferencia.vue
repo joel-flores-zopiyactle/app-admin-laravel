@@ -1,7 +1,7 @@
 <script>
-    import { Bar } from 'vue-chartjs'
+    import { Bar,Pie } from 'vue-chartjs'
     export default {
-        extends: Bar,
+        extends: Pie,
         data() {
             return {
                 data: null
@@ -16,15 +16,15 @@
         methods: {
            
             getDataAudienciasCelebradas() {
-                axios.get(`${baseURL}/analisis/estadistico/audiencias-celebredas`)
+                axios.get(`${baseURL}/analisis/estadistico/videoconferencias-celebredas`)
                 .then( response => response.data )
                 .then( data => {
                     this.renderChart({
-                        labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                        labels: ['Si', 'No'],
                         datasets: [
                                 {
-                                    label: 'Audiencias celebradas',
-                                    backgroundColor: '#f87979',
+                                    label: 'Videoconferencias celebradas',
+                                    backgroundColor:[ '#7881df', '#e86f3c'],
                                     data: data
                                 }
                             ]
@@ -41,12 +41,7 @@
         },
 
         mounted () {
-          /*   this.getDataAudienciasCelebradas();
-            // Overwriting base render method with actual data.
-            const datos = this.data;
-            console.log(datos); */
-
-           
+                    
         },
 
     }

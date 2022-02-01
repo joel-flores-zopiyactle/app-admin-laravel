@@ -40,14 +40,13 @@ class RolController extends Controller
 
         $validatedData = $request->validate([
             'rol' => ['required', 'unique:roles', 'max:255'],
-            'descripcion' => ['required'],
         ]);
 
         try {
 
             $newCentro = Role::create([
                 'rol' => $request->rol,
-                'descripcion' => $request->descripcion
+                'descripcion' => $request->descripcion ?? ''
             ]);
     
             if($newCentro) {

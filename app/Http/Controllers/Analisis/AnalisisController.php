@@ -17,16 +17,24 @@ class AnalisisController extends Controller
         $totalCelebradas = DB::table('audiencias')->where('estadoAudiencia_id', 6)->count();
         $totalReservadas = DB::table('audiencias')->where('estadoAudiencia_id', 1)->count();
         $totalCanceladas = DB::table('audiencias')->where('estadoAudiencia_id', 5)->count();
+        $totalCanceladas = DB::table('audiencias')->where('estadoAudiencia_id', 5)->count();
 
         $audienciaMayorDuracionExpedinete = [];
         $durationMaxVideo = DB::table('video_audiencias')->max('duracion'); // Obtengo la duracion maxica
-        $getInfoVideoMaxDuraction = VideoAudiencia::where('duracion', $durationMaxVideo)->first(); // Buscado en la lista el video de mayor duracion y obtengo toda la informacion
-        $expedienteMaxVideo = ExpedienteModel::find($getInfoVideoMaxDuraction->expediente_id); // Consulto el expediente relacionado con la mayor duracion
 
-        $audienciaMayorDuracion = array(
-            'duracion' => $getInfoVideoMaxDuraction->duracion,
-            'numero_expediente' => $expedienteMaxVideo->numero_expediente
-        );
+        if($durationMaxVideo) { // Si hay video grabado obtenemos los datos de la grabacion maximo
+
+            $getInfoVideoMaxDuraction = VideoAudiencia::where('duracion', $durationMaxVideo)->first(); // Buscado en la lista el video de mayor duracion y obtengo toda la informacion
+            $expedienteMaxVideo = ExpedienteModel::find($getInfoVideoMaxDuraction->expediente_id); // Consulto el expediente relacionado con la mayor duracion
+            $audienciaMayorDuracion = array(
+                'duracion' => $getInfoVideoMaxDuraction->duracion,
+                'numero_expediente' => $expedienteMaxVideo->numero_expediente
+            );
+
+        } else { // Si no enviamos un array vacio
+            $audienciaMayorDuracion = [];
+        }   
+
        
         // $audienciaMayorDuracion = DB::table('audiencias')->where('estadoAudiencia_id',1)->latest();
 
@@ -164,5 +172,19 @@ class AnalisisController extends Controller
         //$audiencias = Audiencia::where('estadoAudiencia_id', 6)->get();  // El número 6 es el estado de la audiencia
         return $data;
     }
+
+    public function totalDeVideoconferenciasSiyNo( )
+    {
+        // Se obtienen el numero de Videoconferencias que se llevaron a cabo
+        $getAllAudienciasConVideoconferenciaSi = Audiencia::where('videoconferencia', 'si')->select('videoconferencia')->get();
+        $totalAudienciasConVideoconferenciaSi  = count($getAllAudienciasConVideoconferenciaSi);
+
+        // Se obtienen el numero de audiencias que no fueron con Videoconferencias
+        $getAllAudienciasConVideoconferenciaNo = Audiencia::where('videoconferencia', 'no')->select('videoconferencia')->get();
+        $totalAudienciasConVideoconferenciaNo  = count($getAllAudienciasConVideoconferenciaNo);
+
+        return [$totalAudienciasConVideoconferenciaSi, $totalAudienciasConVideoconferenciaNo];
+
+    }
 }
- 
+           

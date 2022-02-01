@@ -54,7 +54,9 @@ class SalaController extends Controller
             ]);
     
             if($newSala) {
-                return back()->with('success', 'Nuevo Sala registrado exitosamente!');
+                //return back()->with('success', 'Nuevo Sala registrado exitosamente!');
+                $salas = Sala::orderBy('id', 'desc')->paginate(15);
+                return view('ajustes.sala.index', compact('salas'));
             }
 
             return back()->with('warning', 'Hubo un error al guardar los datos por favor verifique sus datos.');

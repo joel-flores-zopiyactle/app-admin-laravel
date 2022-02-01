@@ -5431,7 +5431,7 @@ __webpack_require__.r(__webpack_exports__);
         return response.data;
       }).then(function (data) {
         _this.renderChart({
-          labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+          labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
           datasets: [{
             label: 'Audiencias celebradas',
             backgroundColor: '#f87979',
@@ -5452,6 +5452,57 @@ __webpack_require__.r(__webpack_exports__);
       const datos = this.data;
       console.log(datos); */
   }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ChartVideoconferencia.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ChartVideoconferencia.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var vue_chartjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-chartjs */ "./node_modules/vue-chartjs/es/index.js");
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  "extends": vue_chartjs__WEBPACK_IMPORTED_MODULE_0__.Pie,
+  data: function data() {
+    return {
+      data: null
+    };
+  },
+  created: function created() {
+    this.getDataAudienciasCelebradas();
+  },
+  methods: {
+    getDataAudienciasCelebradas: function getDataAudienciasCelebradas() {
+      var _this = this;
+
+      axios.get("".concat(baseURL, "/analisis/estadistico/videoconferencias-celebredas")).then(function (response) {
+        return response.data;
+      }).then(function (data) {
+        _this.renderChart({
+          labels: ['Si', 'No'],
+          datasets: [{
+            label: 'Videoconferencias celebradas',
+            backgroundColor: ['#7881df', '#e86f3c'],
+            data: data
+          }]
+        }, {
+          responsive: true,
+          maintainAspectRatio: false
+        });
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    }
+  },
+  mounted: function mounted() {}
 });
 
 /***/ }),
@@ -7519,6 +7570,7 @@ Vue.component('form-search', (__webpack_require__(/*! ./components/FormSearch.vu
 Vue.component('video-recording', (__webpack_require__(/*! ./components/VideoRecording.vue */ "./resources/js/components/VideoRecording.vue")["default"]));
 Vue.component('video-recording-obs', (__webpack_require__(/*! ./components/VideoRecordOBS.vue */ "./resources/js/components/VideoRecordOBS.vue")["default"]));
 Vue.component('chart-bar-adiencias-celebradas', (__webpack_require__(/*! ./components/ChartAudienceCelebratedYear.vue */ "./resources/js/components/ChartAudienceCelebratedYear.vue")["default"]));
+Vue.component('chart-videoconferencia-total', (__webpack_require__(/*! ./components/ChartVideoconferencia.vue */ "./resources/js/components/ChartVideoconferencia.vue")["default"]));
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -76209,6 +76261,44 @@ component.options.__file = "resources/js/components/ChartAudienceCelebratedYear.
 
 /***/ }),
 
+/***/ "./resources/js/components/ChartVideoconferencia.vue":
+/*!***********************************************************!*\
+  !*** ./resources/js/components/ChartVideoconferencia.vue ***!
+  \***********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _ChartVideoconferencia_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ChartVideoconferencia.vue?vue&type=script&lang=js& */ "./resources/js/components/ChartVideoconferencia.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+var render, staticRenderFns
+;
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__["default"])(
+  _ChartVideoconferencia_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"],
+  render,
+  staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/ChartVideoconferencia.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/components/FormFile.vue":
 /*!**********************************************!*\
   !*** ./resources/js/components/FormFile.vue ***!
@@ -76511,6 +76601,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ChartAudienceCelebratedYear_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./ChartAudienceCelebratedYear.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ChartAudienceCelebratedYear.vue?vue&type=script&lang=js&");
  /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ChartAudienceCelebratedYear_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/ChartVideoconferencia.vue?vue&type=script&lang=js&":
+/*!************************************************************************************!*\
+  !*** ./resources/js/components/ChartVideoconferencia.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ChartVideoconferencia_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./ChartVideoconferencia.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ChartVideoconferencia.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ChartVideoconferencia_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
@@ -77738,12 +77844,7 @@ var staticRenderFns = [
     return _c("div", { staticClass: "w-100" }, [
       _c("textarea", {
         staticClass: "form-control w-100",
-        attrs: {
-          name: "descripcion[]",
-          rows: "1",
-          placeholder: "Descripcíon",
-          required: "",
-        },
+        attrs: { name: "descripcion[]", rows: "1", placeholder: "Descripcíon" },
       }),
     ])
   },

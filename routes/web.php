@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Modules\CentroJusticiaController;
@@ -33,8 +34,16 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// TODO: Desactivar la opcion Register en laravel ["register" => false])
-Auth::routes();
+// Verificamos si existe un usuario
+$userLenght = User::all();
+
+if($userLenght->count() > 0) { // Si existe un usuario desactivamos la opcion de register del Auth
+    Auth::routes(["register" => false]);
+} else {
+    Auth::routes();
+}
+
+
 
 Route::middleware(['auth'])->group( function() {
     
@@ -174,7 +183,7 @@ Route::middleware(['auth'])->group( function() {
     
     // Invitado
     Route::get('/invitado/login', [InvitadoController::class, 'show'])->name('invitado.login');
-    Route::get('/invitado/login/accesso', [InvitadoController::class, 'singIn'])->name('invitado.singIn');
+    Route::get('/invitado/login/acceso/audiencia', [InvitadoController::class, 'singIn'])->name('invitado.singIn');
     
     // Reportes de auditorias
     Route::get('/auditorias/lista', [ReporteController::class, 'index'])->name('auditoria.lista');
@@ -184,5 +193,6 @@ Route::middleware(['auth'])->group( function() {
     // Analisis estadistico
     Route::get('/analisis/estadistico', [AnalisisController::class, 'index'])->name('analisis.index');
     Route::get('/analisis/estadistico/audiencias-celebredas', [AnalisisController::class, 'audienciasCelebreadasAlYear'])->name('analisis.audiencias.celebradas');
+    Route::get('/analisis/estadistico/videoconferencias-celebredas', [AnalisisController::class, 'totalDeVideoconferenciasSiyNo'])->name('analisis.audiencias.videoconferencias');
 });
 

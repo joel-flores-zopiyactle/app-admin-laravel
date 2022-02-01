@@ -1,12 +1,24 @@
 @extends('layouts.dashboard')
 
+@section('title')
+    Centro de justicia
+@endsection
+
 @section('content')
 <div class="container-fluid">
     <div class="con d-flex justify-content-between align-items-center">
-        <h4>Lista de centros de justicias</h4>
-        <div>
-            <a class="btn btn-primary btn-sm" href="{{ route('create.centro') }}">Agregar nuevo centro</a>
-        </div>
+        <h4>Centro de justicia</h4>
+        
+        {{-- 
+            El siguiente condicion evalua si ya hay un registro en la base de datos, si existe un registro ocultamos la opcion
+            agregar un nuevo centro, si queremos agregar mas de un centro simplemente quitamos el condicional...
+        --}}
+        @if ($centros->count() === 0)
+            <div>
+                <a class="btn btn-primary btn-sm" href="{{ route('create.centro') }}">Agregar nuevo centro</a>
+            </div>
+        @endif
+        
     </div>
 
     <hr>
@@ -44,14 +56,19 @@
                                         <span class="iconify h5 m-0" data-icon="akar-icons:edit"></span>
                                     </a>
     
-                                    <form class="ml-2" action="{{route('delete.centro', $centro->id)}}" method="post">
+                                    {{-- 
+                                        El siguiente codigo ejecuta la funcion de eliminar un centro de justicia
+                                        Para usar esta opcion hay que descomentar el codigo de form eleminar
+                                    --}}
+
+                                   {{--  <form class="ml-2" action="{{route('delete.centro', $centro->id)}}" method="post">
                                         @csrf
                                         @method('DELETE')
                                         <button class="btn btn-sm btn-light rounded-circle d-flex justify-content-center align-items-center p-1" type="submit" 
                                         onclick="return confirm('¿Estas seguro de eliminar : {{ $centro->nombre }}?')" title="Eliminar">
                                             <span class="iconify h5 m-0" data-icon="fluent:delete-20-filled"></span>
                                         </button>
-                                    </form>
+                                    </form> --}}
                                 </div>
                             </td>
                         </tr>       
@@ -62,7 +79,9 @@
             {{ $centros->links() }}  
         @else
             <div class="d-flex justify-content-center align-items-center">
-                <h3 class="fs-5">No hay centros de justicia registradas todavía</h3>
+                {{-- Plural --}}
+                {{--  <h3 class="fs-5">No hay centros de justicia registradas todavía</h3> --}}
+                <h3 class="fs-5">No hay centro de justicia registrada todavía</h3>
             </div>
         @endif
     </div>

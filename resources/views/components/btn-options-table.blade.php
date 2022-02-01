@@ -12,7 +12,7 @@
                 @if ($estadoAudiencia->id === 1 || $estadoAudiencia->id === 2 || $estadoAudiencia->id === 5)
                     <li>
                         <a class="dropdown-item" href="{{ route('edit.room', encrypt($expedienteId) ) }}">
-                            <span class="iconify me-1" data-icon="uit:calender"></span>Agendar
+                            <span class="iconify me-1" data-icon="uit:calender"></span>Reagendar
                         </a>
                     </li>
                 @endif
@@ -26,7 +26,7 @@
                             @csrf
                             @method('DELETE')
                             <button class="dropdown-item" type="submit" 
-                            onclick="return confirm('¿Estas seguro de eliminar el expediente numero : {{ $expedienteId }}?')" title="Eliminar">
+                            onclick="return confirm('¿Estas seguro de eliminar el expediente?')" title="Eliminar">
                             <span class="iconify me-1" data-icon="fluent:delete-20-regular"></span>Eliminar
                             </button>
                         </form>

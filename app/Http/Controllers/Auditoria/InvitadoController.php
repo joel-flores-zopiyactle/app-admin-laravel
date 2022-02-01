@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auditoria;
 
 use App\Http\Controllers\Controller;
+use App\Models\Expediente as ExpedienteModel;
 use Illuminate\Http\Request;
 use App\Models\TokenAudienciaInvitado as TokenAudienciaInvitadoModel;
 
@@ -20,9 +21,10 @@ class InvitadoController extends Controller
         ]);
 
         $acceso = TokenAudienciaInvitadoModel::where('token', $request->token)->first();
-
+        
         if($acceso) {
-            return view('invitado.sala');
+            $expediente = ExpedienteModel::where('id', $acceso->expediente_id)->first();
+            return view('invitado.sala',compact('expediente'));
         }
 
         return back()->with('error', "El token es invalido!");

@@ -2,7 +2,7 @@
 @extends('layouts.dashboard')
 
 @section('title')
-    Acceder Audiencia
+  Ingresar Audiencia
 @endsection
 
 @section('content')

@@ -1,5 +1,9 @@
 @extends('layouts.dashboard')
 
+@section('title')
+    Actualizar centro de justicia
+@endsection
+
 @section('content')
 <div class="container-fluid">
     
