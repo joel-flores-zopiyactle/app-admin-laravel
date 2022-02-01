@@ -25,7 +25,7 @@
 
                     <div class="mb-3 mt-3 form-check">
                         <input type="checkbox" class="form-check-input" name="visibilidad" id="visibilidad" v-model="formNote.visibilidad">
-                        <label class="form-check-label" id="visibilidad_label" for="visibilidad">Establecer privado la nota</label>
+                        <label class="form-check-label" id="visibilidad_label" for="visibilidad">Establecer en privado la nota</label>
                     </div>
 
                     <div class="mt-3 d-flex">
