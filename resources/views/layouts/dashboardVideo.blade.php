@@ -35,7 +35,7 @@
     </script>
 
   </head>
-  <body>
+  <body class="bg-light">
     
     <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
         <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 text-center" href="#">
@@ -73,11 +73,9 @@
     </header>
 
     <div class="container-fluid" id="app">
-        <div class="row">
-            <main class="col-md-12 ms-sm-auto col-lg-12 px-md-4 py-4 mb-5">
-                @yield('video')
-            </main>
-        </div>
+        <main class='p-3'>
+            @yield('video')
+        </main>
     </div>
 
     <script src="{{ asset('js/app.js') }}"></script>

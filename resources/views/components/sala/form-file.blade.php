@@ -1,6 +1,5 @@
-<div>
-
-   <h3 class="h5 mt-3">Subir archivo</h3>
+<div class="p-2">
+   <h3 class="h5 mt-2">Subir archivo</h3>
    <hr>
 
    <input type="text" name="expediente_id" id="expediente_id" required hidden value="{{ $audienciaid }}" />

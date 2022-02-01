@@ -6,7 +6,7 @@
                 <tr>
                 <th scope="col"  style="width: 23%;">Nombre</th>
                 <th scope="col"  style="width: 23%;">Rol</th>
-                <th scope="col"  style="width: 23%;">Relación</th>
+                <th scope="col"  style="width: 23%;">Detalles</th>
                 <th scope="col"  style="width: 23%;">Asistencia</th>
                 <th scope="col"  style="width: 10%;"></th>
                 </tr>

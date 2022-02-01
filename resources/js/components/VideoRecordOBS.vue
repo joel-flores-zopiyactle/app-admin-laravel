@@ -32,7 +32,7 @@
                     </button>
 
                     <button v-if="controls.showResumen" type="button" class="btn btn-outline-dark me-2" @click="showConfirmResumenRecord">
-                        Renaurar
+                        Reanudar
                     </button>
 
                     <button v-if="controls.showStop" type="button" class="btn btn-outline-danger" @click="showConfirmStopRecord">
@@ -163,7 +163,7 @@ export default {
                     Swal.fire({
                         icon: 'error',
                         title: 'OBS no esta activo?',
-                        text: 'La aplicacion OBS no esta activado parta empezar a grabar. Debe de abrir el programa OBS para grabar la audiencia?',
+                        text: 'La aplicacion OBS no esta activado para empezar a grabar. Debe de abrir el programa OBS para grabar la audiencia?',
                        // footer: '<a href="">Why do I have this issue?</a>'
                     })
                     //alert('OBS - No esta activado, pára empezar a grabar hay que activar OBS Studio!.')
