@@ -286,7 +286,7 @@ export default {
 
         showConfirmRecesoRecord() {
             Swal.fire({
-                title: 'Seleccione el tipo de acción a realizar en la audiencia?',
+                title: 'Seleccione el tipo de acción a realizar?',
                 showDenyButton: true,
                 showCancelButton: true,
                 confirmButtonText: 'Pausar grabación',
@@ -328,21 +328,21 @@ export default {
 
         showConfirmResumenRecord() {
             Swal.fire({
-                title: 'Seleccione el tipo de acción a realizar en la audiencia?',
+                title: 'Seleccione el tipo de acción a realizar?',
                 showDenyButton: true,
                 showCancelButton: true,
-                confirmButtonText: 'Renaurar grabación',
+                confirmButtonText: 'Reanudar grabación',
                 denyButtonText: `Entrar en receso`,
                 }).then((result) => {
               
                 if (result.isConfirmed) { // renaurar  grabación
                     Swal.fire({
-                        title: '¿Estas seguro de renaurar la grabación?',
+                        title: '¿Estas seguro de Reanudar la grabación?',
                         icon: 'warning',
                         showCancelButton: true,
                         confirmButtonColor: '#3085d6',
                         cancelButtonColor: '#d33',
-                        confirmButtonText: 'Si, Renaurar grabación!',
+                        confirmButtonText: 'Si, Reanudar grabación!',
                         cancelButtonText: 'Cancelar',
                         }).then((result) => {
                         if (result.isConfirmed) {
@@ -352,12 +352,12 @@ export default {
                    
                 } else if (result.isDenied) { // Establece enm receso la audeicia
                     Swal.fire({
-                        title: '¿Estas seguro de esatablecer en receso la audiencia?',
+                        title: '¿Estas seguro de establecer en receso la audiencia?',
                         icon: 'warning',
                         showCancelButton: true,
                         confirmButtonColor: '#3085d6',
                         cancelButtonColor: '#d33',
-                        confirmButtonText: 'Si, Establecer en receso al audiencia!',
+                        confirmButtonText: 'Si, Establecer en receso la audiencia!',
                         cancelButtonText: 'Cancelar',
                         }).then((result) => {
                         if (result.isConfirmed) {
@@ -371,12 +371,12 @@ export default {
         showConfirmStopRecord() {
             Swal.fire({
                 title: '¿Estas seguro de finalizar la audiencia?',
-                text: "Una vez que finalice, se cerrara la audiencia!",
+                text: "Una vez que finalice, ya no podra ingresar a la audiencia!",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
-                confirmButtonText: 'Si, finalizar grabación!',
+                confirmButtonText: 'Si, Finalizar grabación!',
                 cancelButtonText: 'Cancelar',
                 }).then((result) => {
                 if (result.isConfirmed) {
@@ -547,7 +547,7 @@ export default {
                     Swal.fire({
                         icon: 'error',
                         title: 'Error',
-                        text: 'Ocurrio un error al establecer en receso la audiencia, Intente de nuevo o pare la grabación desde OBS y recargue la página',
+                        text: 'Ocurrio un error al establecer en receso la audiencia, Intente de nuevo o detenga la grabación desde OBS y recargue la página',
                     })
                 }
 

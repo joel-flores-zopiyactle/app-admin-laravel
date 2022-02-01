@@ -5737,7 +5737,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                   _this3.getFiles();
                 } else {
-                  _this3.resFile.mensaje = 'No se pudo eliminar el archivo intente de nuevo';
+                  _this3.resFile.mensaje = 'No se pudo eliminar el archivo, intente de nuevo';
                   _this3.resFile.status = 500;
                 }
 
@@ -6517,7 +6517,7 @@ var obs2 = new OBSWebSocket(); // Hace una conexion a una maquina externa median
       var _this5 = this;
 
       Swal.fire({
-        title: 'Seleccione el tipo de acción a realizar en la audiencia?',
+        title: 'Seleccione el tipo de acción a realizar?',
         showDenyButton: true,
         showCancelButton: true,
         confirmButtonText: 'Pausar grabación',
@@ -6561,21 +6561,21 @@ var obs2 = new OBSWebSocket(); // Hace una conexion a una maquina externa median
       var _this6 = this;
 
       Swal.fire({
-        title: 'Seleccione el tipo de acción a realizar en la audiencia?',
+        title: 'Seleccione el tipo de acción a realizar?',
         showDenyButton: true,
         showCancelButton: true,
-        confirmButtonText: 'Renaurar grabación',
+        confirmButtonText: 'Reanudar grabación',
         denyButtonText: "Entrar en receso"
       }).then(function (result) {
         if (result.isConfirmed) {
           // renaurar  grabación
           Swal.fire({
-            title: '¿Estas seguro de renaurar la grabación?',
+            title: '¿Estas seguro de Reanudar la grabación?',
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Si, Renaurar grabación!',
+            confirmButtonText: 'Si, Reanudar grabación!',
             cancelButtonText: 'Cancelar'
           }).then(function (result) {
             if (result.isConfirmed) {
@@ -6585,12 +6585,12 @@ var obs2 = new OBSWebSocket(); // Hace una conexion a una maquina externa median
         } else if (result.isDenied) {
           // Establece enm receso la audeicia
           Swal.fire({
-            title: '¿Estas seguro de esatablecer en receso la audiencia?',
+            title: '¿Estas seguro de establecer en receso la audiencia?',
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Si, Establecer en receso al audiencia!',
+            confirmButtonText: 'Si, Establecer en receso la audiencia!',
             cancelButtonText: 'Cancelar'
           }).then(function (result) {
             if (result.isConfirmed) {
@@ -6605,12 +6605,12 @@ var obs2 = new OBSWebSocket(); // Hace una conexion a una maquina externa median
 
       Swal.fire({
         title: '¿Estas seguro de finalizar la audiencia?',
-        text: "Una vez que finalice, se cerrara la audiencia!",
+        text: "Una vez que finalice, ya no podra ingresar a la audiencia!",
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Si, finalizar grabación!',
+        confirmButtonText: 'Si, Finalizar grabación!',
         cancelButtonText: 'Cancelar'
       }).then(function (result) {
         if (result.isConfirmed) {
@@ -6927,7 +6927,7 @@ var obs2 = new OBSWebSocket(); // Hace una conexion a una maquina externa median
                   Swal.fire({
                     icon: 'error',
                     title: 'Error',
-                    text: 'Ocurrio un error al establecer en receso la audiencia, Intente de nuevo o pare la grabación desde OBS y recargue la página'
+                    text: 'Ocurrio un error al establecer en receso la audiencia, Intente de nuevo o detenga la grabación desde OBS y recargue la página'
                   });
                 }
 
@@ -77119,7 +77119,7 @@ var render = function () {
                 _c(
                   "label",
                   { staticClass: "form-label", attrs: { for: "formFile" } },
-                  [_vm._v("Subir archivos")]
+                  [_vm._v("Subir archivo")]
                 ),
                 _vm._v(" "),
                 _c("input", {
@@ -77460,7 +77460,7 @@ var render = function () {
                   staticClass: "form-check-label",
                   attrs: { id: "visibilidad_label", for: "visibilidad" },
                 },
-                [_vm._v("Privado")]
+                [_vm._v("Establecer privado la nota")]
               ),
             ]),
             _vm._v(" "),
@@ -77489,7 +77489,7 @@ var render = function () {
               _c(
                 "th",
                 { staticStyle: { width: "90%" }, attrs: { scope: "col" } },
-                [_vm._v("Nota")]
+                [_vm._v("Notas")]
               ),
               _vm._v(" "),
               _c(

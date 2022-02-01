@@ -25,7 +25,7 @@
 
                     <div class="mb-3 mt-3 form-check">
                         <input type="checkbox" class="form-check-input" name="visibilidad" id="visibilidad" v-model="formNote.visibilidad">
-                        <label class="form-check-label" id="visibilidad_label" for="visibilidad">Privado</label>
+                        <label class="form-check-label" id="visibilidad_label" for="visibilidad">Establecer privado la nota</label>
                     </div>
 
                     <div class="mt-3 d-flex">
@@ -43,7 +43,7 @@
                 <table class="table table-responsive table-striped">
                     <thead class="">
                         <tr>
-                            <th style="width: 90%" scope="col">Nota</th>
+                            <th style="width: 90%" scope="col">Notas</th>
                             <th style="width: 10%" scope="col">
                                 <button class="btn btn-sm btn-light" @click="getDataNotes" title="Recargar datos">
                                     <span class="iconify" data-icon="ci:refresh-02"></span>

@@ -21,7 +21,7 @@
                     <form v-on:submit.prevent="uploadFile" enctype="multipart/form-data" method="POST">
                         
                         <div class="mb-3">
-                            <label for="formFile" class="form-label">Subir archivos</label>
+                            <label for="formFile" class="form-label">Subir archivo</label>
                             <input class="form-control" type="file" name="file" id="file" @change="getImage()">
                         </div>
 
@@ -188,7 +188,7 @@
                         this.resFile.status = 201
                         this.getFiles()
                     } else {
-                        this.resFile.mensaje = 'No se pudo eliminar el archivo intente de nuevo'
+                        this.resFile.mensaje = 'No se pudo eliminar el archivo, intente de nuevo'
                         this.resFile.status = 500
                     }
 
