@@ -42,7 +42,7 @@ if($userLenght->count() > 0) { // Si existe un usuario desactivamos la opcion de
     Auth::routes(["register" => false]);
 } else {
     Auth::routes();
-    Artisan::call('storage:link');
+    Artisan::call('storage:link'); // Se publica el storage a la carpeta public
     //php artisan storage:link
 }
 
