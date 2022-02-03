@@ -25,6 +25,10 @@ class AuditoriasController extends Controller
 
         $expediente = ExpedienteModel::where('numero_expediente', $request->numero_de_expediente)->first();
 
+        if(!$expediente) {
+            return back()->with('warning', "El token o Número de expediente es incorrecto!");
+        }
+
         $token = TokenAudienciaModel::where('token', $request->token)->where('expediente_id', $expediente->id)->get();
 
         if(count($token) > 0) {

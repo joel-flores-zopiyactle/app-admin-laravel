@@ -6270,16 +6270,19 @@ var obs2 = new OBSWebSocket(); // Hace una conexion a una maquina externa median
       // Escenas disponibles en OBS
       videoSourcesSelect: [],
       videoSourceId: '',
-      // Id del dispositivo web
+      // Id del dispositivo webfechaCelebracionAudiencia
       audioSourcesSelect: [],
       activeSceneCurrent: 'HD60-S',
       // Muestra el Escena actual activo en OBS
       expedienteID: 0,
+      fechaCelebracionAudiencia: '',
       numeroExpediente: 0,
       durationVideo: '',
       // Duracion del video grabado desde OBS
       ubicationVideo: '',
       // Ubicaccion del video gurdado desde OBS
+      nameVideo: '',
+      // Nombre del video grabado
       // Crnometro
       tiempoRef: Date.now(),
       cronometrar: false,
@@ -6316,8 +6319,11 @@ var obs2 = new OBSWebSocket(); // Hace una conexion a una maquina externa median
       var expedienteID = document.getElementById('expediente_id');
       var numeroExpediente = document.getElementById('numero_de_expediente'); // Numero de expediente
 
+      var fechaCelebracionAudiencia = document.getElementById('fechaCelebracion'); // Numero de expediente
+
       this.expedienteID = expedienteID.value;
-      this.numeroExpediente = numeroExpediente.value; //console.log(this.expedienteID);
+      this.numeroExpediente = numeroExpediente.value;
+      this.fechaCelebracionAudiencia = fechaCelebracionAudiencia.value; //console.log(this.expedienteID);
     },
     // Obtener video de la WebCam
     startVideoWebCam: function startVideoWebCam() {
@@ -6781,12 +6787,12 @@ var obs2 = new OBSWebSocket(); // Hace una conexion a una maquina externa median
 
                 _context5.next = 13;
                 return obs.send('SetFilenameFormatting', {
-                  'filename-formatting': "video-expediente-numero_".concat(_this11.numeroExpediente)
+                  'filename-formatting': "video-".concat(_this11.numeroExpediente, "-").concat(_this11.fechaCelebracionAudiencia)
                 });
 
               case 13:
-                _this11.showFormFile = true; //Controls
-
+                //this.showFormFile = true; muestra el formualrio para subir el video grabado
+                //Controls
                 _this11.controls.showPlay = true;
                 _this11.controls.showPause = false;
                 _this11.controls.showResumen = false;
@@ -6800,16 +6806,19 @@ var obs2 = new OBSWebSocket(); // Hace una conexion a una maquina externa median
                   timer: 1500
                 }); // OBS 2
 
-                _context5.next = 21;
+                _context5.next = 20;
                 return obs2.send('StopRecording');
 
-              case 21:
-                _context5.next = 23;
+              case 20:
+                _context5.next = 22;
                 return obs2.send('SetFilenameFormatting', {
-                  'filename-formatting': "video-expediente-numero_".concat(_this11.numeroExpediente)
+                  'filename-formatting': "video-".concat(_this11.numeroExpediente, "-").concat(_this11.fechaCelebracionAudiencia)
                 });
 
-              case 23:
+              case 22:
+                _this11.saveInfoVideoRecord(); // GUardamos los dato del video grabado en la BD
+
+
                 _context5.next = 26;
                 break;
 
@@ -6884,12 +6893,12 @@ var obs2 = new OBSWebSocket(); // Hace una conexion a una maquina externa median
 
                 _context6.next = 13;
                 return obs.send('SetFilenameFormatting', {
-                  'filename-formatting': "video-expediente-numero_".concat(_this12.numeroExpediente)
+                  'filename-formatting': "video-".concat(_this12.numeroExpediente, "-").concat(_this12.fechaCelebracionAudiencia)
                 });
 
               case 13:
-                _this12.showFormFile = true; //Controls
-
+                //this.showFormFile = true; muestra el formualrio para subir el video grabado
+                //Controls
                 _this12.controls.showPlay = true;
                 _this12.controls.showPause = false;
                 _this12.controls.showResumen = false;
@@ -6903,16 +6912,19 @@ var obs2 = new OBSWebSocket(); // Hace una conexion a una maquina externa median
                   timer: 1500
                 }); // OBS 2
 
-                _context6.next = 21;
+                _context6.next = 20;
                 return obs2.send('StopRecording');
 
-              case 21:
-                _context6.next = 23;
+              case 20:
+                _context6.next = 22;
                 return obs2.send('SetFilenameFormatting', {
-                  'filename-formatting': "video-expediente-numero_".concat(_this12.numeroExpediente)
+                  'filename-formatting': "video-".concat(_this12.numeroExpediente, "-").concat(_this12.fechaCelebracionAudiencia)
                 });
 
-              case 23:
+              case 22:
+                _this12.saveInfoVideoRecord(); // GUardamos los dato del video grabado en la BD
+
+
                 _context6.next = 26;
                 break;
 
@@ -7054,10 +7066,70 @@ var obs2 = new OBSWebSocket(); // Hace una conexion a una maquina externa median
           }
         }, _callee7);
       }))();
+    },
+    saveInfoVideoRecord: function saveInfoVideoRecord() {
+      var _this15 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee8() {
+        var formData, token, config, res;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee8$(_context8) {
+          while (1) {
+            switch (_context8.prev = _context8.next) {
+              case 0:
+                formData = {
+                  video: _this15.nameVideo,
+                  expediente_id: _this15.expedienteID,
+                  duracion: _this15.durationVideo,
+                  ubicacion: _this15.ubicationVideo
+                };
+                token = document.getElementsByName('_token');
+                config = {
+                  headers: {
+                    'Content-Type': 'application/json'
+                  },
+                  'X-CSRF-TOKEN': token[0].value // <--- aquí el token
+
+                }; // Envio los datos al servidor
+
+                _context8.next = 5;
+                return axios.post("".concat(baseURL, "/evento/video"), formData, config);
+
+              case 5:
+                res = _context8.sent;
+
+                if (res.data.status === 201) {
+                  // Alerta de exito
+                  Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'Datos de grabación guardado correctamente ',
+                    showConfirmButton: false,
+                    timer: 2000
+                  });
+                }
+
+                if (res.data.status === 500) {
+                  // Alerta de exito
+                  Swal.fire({
+                    position: 'top-end',
+                    icon: 'error',
+                    title: 'Los datos de la grabación no se pudo guardar, ',
+                    showConfirmButton: false,
+                    timer: 2000
+                  });
+                }
+
+              case 8:
+              case "end":
+                return _context8.stop();
+            }
+          }
+        }, _callee8);
+      }))();
     }
   },
   mounted: function mounted() {
-    var _this15 = this;
+    var _this16 = this;
 
     this.startVideoWebCam();
     this.listMediaDevices();
@@ -7066,16 +7138,23 @@ var obs2 = new OBSWebSocket(); // Hace una conexion a una maquina externa median
     obs.on('SwitchScenes', function (data) {
       // Espera en cambio de escnea
       // console.log(data);
-      _this15.activeSceneCurrent = data.sceneName;
+      _this16.activeSceneCurrent = data.sceneName;
     });
     obs.on('RecordingStopping', function (data) {
-      _this15.durationVideo = data.recTimecode;
-      _this15.ubicationVideo = data.recordingFilename;
+      _this16.durationVideo = data.recTimecode;
+      _this16.ubicationVideo = data.recordingFilename;
+      var arrayName = data.recordingFilename.split('/'); // Separamos la ruta del video en un array
+
+      arrayName.map(function (name) {
+        // Si el utimo valor del array es igual al nombre asigamos al videoNombre el valor del ultimo
+        // array,por defecto el ultimo valor del array es el nombre del video 
+        if (name === arrayName[arrayName.length - 1]) _this16.nameVideo = name;
+      });
     });
 
     navigator.mediaDevices.ondevicechange = function () {
       // se dispara mas de una vez al quitar o agregar un dispositivo
-      _this15.listMediaDevices();
+      _this16.listMediaDevices();
     };
   },
   destroyed: function destroyed() {

@@ -81,13 +81,15 @@ export default {
             video: [], // video del stream de la WebCam
             scenes: [], // Escenas disponibles en OBS
             videoSourcesSelect: [],
-            videoSourceId: '', // Id del dispositivo web
+            videoSourceId: '', // Id del dispositivo webfechaCelebracionAudiencia
             audioSourcesSelect: [],
             activeSceneCurrent: 'HD60-S', // Muestra el Escena actual activo en OBS
             expedienteID: 0,
+            fechaCelebracionAudiencia: '',
             numeroExpediente: 0,
             durationVideo: '', // Duracion del video grabado desde OBS
             ubicationVideo: '', // Ubicaccion del video gurdado desde OBS
+            nameVideo: '', // Nombre del video grabado
             // Crnometro
             tiempoRef : Date.now(),
             cronometrar : false,
@@ -121,8 +123,10 @@ export default {
             // ID
             const expedienteID =  document.getElementById('expediente_id');
             const numeroExpediente =  document.getElementById('numero_de_expediente'); // Numero de expediente
+            const fechaCelebracionAudiencia =  document.getElementById('fechaCelebracion'); // Numero de expediente
             this.expedienteID = expedienteID.value;
             this.numeroExpediente = numeroExpediente.value;
+            this.fechaCelebracionAudiencia = fechaCelebracionAudiencia.value;
             //console.log(this.expedienteID);
         },
         // Obtener video de la WebCam
@@ -462,8 +466,10 @@ export default {
                     this.video.pause();   
                     this.cronometrar = false
                      //Permite asignar el nombre del archivo
-                    await obs.send('SetFilenameFormatting', { 'filename-formatting': `video-expediente-numero_${this.numeroExpediente}` })
-                    this.showFormFile = true;
+                    await obs.send('SetFilenameFormatting', { 'filename-formatting': `video-${this.numeroExpediente}-${this.fechaCelebracionAudiencia}` })
+
+                    //this.showFormFile = true; muestra el formualrio para subir el video grabado
+
                     //Controls
                     this.controls.showPlay   = true;
                     this.controls.showPause   = false;
@@ -479,7 +485,9 @@ export default {
                     })
                     // OBS 2
                     await obs2.send('StopRecording')
-                    await obs2.send('SetFilenameFormatting', { 'filename-formatting': `video-expediente-numero_${this.numeroExpediente}` })
+                    await obs2.send('SetFilenameFormatting', { 'filename-formatting': `video-${this.numeroExpediente}-${this.fechaCelebracionAudiencia}` })
+
+                    this.saveInfoVideoRecord() // GUardamos los dato del video grabado en la BD
 
                 } else if(res.data.status === 404) {
                     Swal.fire({
@@ -517,8 +525,10 @@ export default {
                     this.video.pause();   
                     this.cronometrar = false
                      //Permite asignar el nombre del archivo
-                    await obs.send('SetFilenameFormatting', { 'filename-formatting': `video-expediente-numero_${this.numeroExpediente}` })
-                    this.showFormFile = true;
+                    await obs.send('SetFilenameFormatting', { 'filename-formatting': `video-${this.numeroExpediente}-${this.fechaCelebracionAudiencia}` })
+
+                    //this.showFormFile = true; muestra el formualrio para subir el video grabado
+
                     //Controls
                     this.controls.showPlay   = true;
                     this.controls.showPause   = false;
@@ -534,7 +544,9 @@ export default {
                     })
                     // OBS 2
                     await obs2.send('StopRecording')
-                    await obs2.send('SetFilenameFormatting', { 'filename-formatting': `video-expediente-numero_${this.numeroExpediente}` })
+                    await obs2.send('SetFilenameFormatting', { 'filename-formatting': `video-${this.numeroExpediente}-${this.fechaCelebracionAudiencia}` })
+
+                    this.saveInfoVideoRecord() // GUardamos los dato del video grabado en la BD
 
                 } else if(res.data.status === 404) {
                     Swal.fire({
@@ -646,6 +658,49 @@ export default {
                 document.getElementById('uploadFileVideo').value = "";
             }
         },
+
+        async saveInfoVideoRecord() {
+            
+            let formData = {
+                video:         this.nameVideo,
+                expediente_id: this.expedienteID,
+                duracion:      this.durationVideo,
+                ubicacion:     this.ubicationVideo
+            }
+
+            const token =  document.getElementsByName('_token')
+
+             const config = { 
+                    headers: { 'Content-Type': 'application/json' },
+                    'X-CSRF-TOKEN': token[0].value,// <--- aquí el token
+            };
+
+            // Envio los datos al servidor
+            const res = await axios.post(`${baseURL}/evento/video`, formData, config)
+
+            if(res.data.status === 201) {
+                    // Alerta de exito
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'Datos de grabación guardado correctamente ',
+                        showConfirmButton: false,
+                        timer: 2000
+                    })
+            }
+         
+            if(res.data.status === 500) {
+                // Alerta de exito
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'error',
+                    title: 'Los datos de la grabación no se pudo guardar, ',
+                    showConfirmButton: false,
+                    timer: 2000
+                })
+            }
+
+        }
     },
 
     mounted() {
@@ -661,6 +716,14 @@ export default {
         obs.on('RecordingStopping', data => {
                this.durationVideo   = data.recTimecode;
                this.ubicationVideo  = data.recordingFilename
+
+               let arrayName = data.recordingFilename.split('/'); // Separamos la ruta del video en un array
+               arrayName.map(name => {
+                   // Si el utimo valor del array es igual al nombre asigamos al videoNombre el valor del ultimo
+                   // array,por defecto el ultimo valor del array es el nombre del video 
+                   if(name === arrayName[arrayName.length - 1])   this.nameVideo = name
+               })
+              
         });
 
         navigator.mediaDevices.ondevicechange = () => { // se dispara mas de una vez al quitar o agregar un dispositivo

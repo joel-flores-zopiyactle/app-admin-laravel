@@ -41,7 +41,10 @@
          <div class="w-full tab-pane fade show active" id="v-pills-audiencia" role="tabpanel" aria-labelledby="v-pills-audiencia-tab">
 
             <div>
+               
                <input type="text" name="numero_de_expediente" id="numero_de_expediente" value="{{ $expediente->numero_expediente }}" hidden>
+               <input type="text" id="fechaCelebracion" value="{{ $expediente->audiencia->fechaCelebracion }}" hidden>
+               
                <video-recording-obs />
             </div>         
          </div>

@@ -11,45 +11,62 @@ class VideoAudienciaController extends Controller
 {
     public function store(Request $request) {
 
-        // return $request->all();
-
-        if($request->hasFile('video')) {
-
-            $videoFormat = ['MP4', 'MKV', 'FLV', 'MOV', 'WEBM'];
-            $fileExtension = strtoupper($request->file('video')->getClientOriginalExtension());
-                       
-            if(!in_array($fileExtension ,$videoFormat,true)) {
-                return ['mensaje' => 'El formato que esta tratando de subir no es aceptado en la plataforma', 'status' => 500];
-            }
-
-            $fileName = $request->file('video')->getClientOriginalName();
-            $path = $request->file('video')->store('public/VIDEO-AUDIENCIA'); 
-
-            try {
+        //return $request->all();
+       
+        try {
                 
-                $video = new VideoAudiencia;
-                $video->nombre        = $fileName;
-                $video->url           = $path;
-                $video->duracion      = $request->duracion;
-                $video->expediente_id = $request->expediente_id;
+            $video = new VideoAudiencia;
+            $video->nombre        = $request->video;
+            $video->url           = $request->ubicacion;
+            $video->duracion      = $request->duracion;
+            $video->expediente_id = $request->expediente_id;
 
-                if($video->save()) {
-                    return ['mensaje' => 'Video subido correctamente!', 'status' => 201];
-                }
-
-            } catch (\Throwable $th) {
-                return ['error' => 'El video no se pudo subir a la plataforma!, Intentalo de nuevo', 'status' => 500];
+            if($video->save()) {
+                return ['mensaje' => 'Video subido correctamente!', 'status' => 201];
             }
-            
+
+        } catch (\Throwable $th) {
+            return ['error' => 'El video no se pudo subir a la plataforma!, Intentalo de nuevo', 'status' => 500];
         }
 
-        return ['mensaje' => 'No ha seleccionado nungún video', 'status' => 404];
+        // if($request->hasFile('video')) {
+
+        //     $videoFormat = ['MP4', 'MKV', 'FLV', 'MOV', 'WEBM'];
+        //     $fileExtension = strtoupper($request->file('video')->getClientOriginalExtension());
+                       
+        //     if(!in_array($fileExtension ,$videoFormat,true)) {
+        //         return ['mensaje' => 'El formato que esta tratando de subir no es aceptado en la plataforma', 'status' => 500];
+        //     }
+
+        //     $fileName = $request->file('video')->getClientOriginalName();
+        //     $path = $request->file('video')->store('public/VIDEO-AUDIENCIA'); 
+
+        //     try {
+                
+        //         $video = new VideoAudiencia;
+        //         $video->nombre        = $fileName;
+        //         $video->url           = $path;
+        //         $video->duracion      = $request->duracion;
+        //         $video->expediente_id = $request->expediente_id;
+
+        //         if($video->save()) {
+        //             return ['mensaje' => 'Video subido correctamente!', 'status' => 201];
+        //         }
+
+        //     } catch (\Throwable $th) {
+        //         return ['error' => 'El video no se pudo subir a la plataforma!, Intentalo de nuevo', 'status' => 500];
+        //     }
+            
+        // }
+
+        // return ['mensaje' => 'No ha seleccionado nungún video', 'status' => 404];
 
     }
 
+    /* Primer version para subir un video */
     public function storeVideo(Request $request) {
-        /* return "hola";
-        return $request->all(); */
+       
+        //return $request->all();
 
         if($request->hasFile('video')) {
 

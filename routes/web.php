@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 
+use App\Http\Controllers\CommandsConfigController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Modules\CentroJusticiaController;
 use App\Http\Controllers\Modules\RolController;
@@ -31,21 +32,33 @@ use App\Http\Controllers\Auditoria\ReporteController;
 
 use App\Http\Controllers\Analisis\AnalisisController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
-// Verificamos si existe un usuario
-$userLenght = User::all();
 
-if($userLenght->count() > 0) { // Si existe un usuario desactivamos la opcion de register del Auth
-    Auth::routes(["register" => false]);
-} else {
-    Auth::routes();
-    Artisan::call('storage:link'); // Se publica el storage a la carpeta public
-    //php artisan storage:link
+
+
+
+
+try {
+
+    Route::get('/', [CommandsConfigController::class, 'welcome']); // inicio
+      
+    $users = User::all(); // Si no existe table users vamos a las configuraciones
+
+    if($users->count() > 0) { // Si existe un usuario desactivamos la opcion de register del Auth
+
+        Auth::routes(["register" => false]);
+
+    } else {
+
+        Auth::routes();
+        Artisan::call('storage:link'); // Se publica el storage a la carpeta public
+    }
+} catch (\Illuminate\Database\QueryException $th) {
+
+    Route::get('/', [CommandsConfigController::class, 'configDB']); // configuraciones
+    Route::get('/migrate', [CommandsConfigController::class, 'migrateDB'])->name('migrate'); // migraciones
+    
 }
-
 
 
 Route::middleware(['auth'])->group( function() {
