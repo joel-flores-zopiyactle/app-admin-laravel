@@ -46,7 +46,7 @@ try {
       
     $users = User::all(); // Si no existe table users vamos a las configuraciones
 
-    if($users->count() > 0) { // Si existe un usuario desactivamos la opcion de register del Auth
+    if($users->count() > 0) {   // Si existe un usuario desactivamos la opcion de register del Auth
 
         Auth::routes(["register" => false]);
 
@@ -54,6 +54,7 @@ try {
 
         Auth::routes();
         Artisan::call('storage:link'); // Se publica el storage a la carpeta public
+       
     }
 } catch (\Illuminate\Database\QueryException $th) {
 
@@ -162,6 +163,7 @@ Route::middleware(['auth'])->group( function() {
     // PDF Expediente
     Route::get('/expediente/pdf/vista/{id}', [ExpedientePDFController::class, 'index'])->name('show.pdf.imprimir');
     Route::get('/expediente/pdf/{id}', [ExpedientePDFController::class, 'show'])->name('show.pdf.expediente');
+    Route::get('/expediente/pdf/show/pdf/{id}', [ExpedientePDFController::class, 'showPDFDownload'])->name('show.pdf.expediente.download');
     
     
     // Agenda
@@ -212,8 +214,12 @@ Route::middleware(['auth'])->group( function() {
     Route::get('/analisis/estadistico', [AnalisisController::class, 'index'])->name('analisis.index');
     Route::get('/analisis/estadistico/audiencias-celebredas', [AnalisisController::class, 'audienciasCelebreadasAlYear'])->name('analisis.audiencias.celebradas');
     Route::get('/analisis/estadistico/videoconferencias-celebredas', [AnalisisController::class, 'totalDeVideoconferenciasSiyNo'])->name('analisis.audiencias.videoconferencias');
+
+    // Disk
+    Route::get('/info/disk', [DiskController::class, 'get_disk_total_space']);
 });
 
 
-Route::get('/info/disk', [DiskController::class, 'get_disk_total_space']);
+Route::get('/pruebas', [DiskController::class, 'pruebas']);
+
 

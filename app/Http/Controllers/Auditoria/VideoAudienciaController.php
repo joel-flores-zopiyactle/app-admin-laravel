@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auditoria;
 
 use App\Http\Controllers\Controller;
+use App\Models\ControlDeConsumoDisco;
 use App\Models\VideoAudiencia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -21,9 +22,19 @@ class VideoAudienciaController extends Controller
             $video->duracion      = $request->duracion;
             $video->expediente_id = $request->expediente_id;
 
-            if($video->save()) {
-                return ['mensaje' => 'Video subido correctamente!', 'status' => 201];
+            if($video->save()) {                
+
+                $controlDiscoConsumoMB = new ControlDeConsumoDisco;
+                $controlDiscoConsumoMB->unidad = $request->unidad;
+                $controlDiscoConsumoMB->total_mb_usado = floatval(filesize($request->ubicacion));
+                $controlDiscoConsumoMB->expediente_id =$request->expediente_id;
+
+                if($controlDiscoConsumoMB->save()) { 
+                    return ['mensaje' => 'Video subido correctamente!', 'status' => 201];
+                }                
             }
+
+            return ['mensaje' => 'No se pudo guardar el video!', 'status' => 500];
 
         } catch (\Throwable $th) {
             return ['error' => 'El video no se pudo subir a la plataforma!, Intentalo de nuevo', 'status' => 500];
@@ -95,7 +106,7 @@ class VideoAudienciaController extends Controller
 
     }
 
-    public function dowloadVideoAudiencia($id)
+    public function dowloadVideoAudiencia($id) // Descarga el video de la audiencia grabada 
     {
         $id =  decrypt($id);
         $archivo = VideoAudiencia::find($id);

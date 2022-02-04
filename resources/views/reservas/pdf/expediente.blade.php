@@ -4,62 +4,93 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Expediente numero-{{ $expediente->numero_expediente }}</title>
+    <title>Expediente número -{{ $expediente->numero_expediente }}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
    {{--  <link rel="stylesheet" href="{{ asset('css/app.css') }}"> --}}
    <style>
        * {
            padding: 0;
            margin: 0;
            box-sizing: border-box;
-           font-family: sans-serif;
-           font-size: 14px;
+         font-family: 'Roboto', sans-serif;
+           font-size: 12px;
        }
 
       
        /* spacing */
        header {
             width: 100%;
-            height: 30px;
-            background: rgb(90, 99, 181);
+            height: 10px;
+            background: #c4c4c4;
             padding: 10px;   
-       }
-
-       h1 {
-           margin-top: 15px;
-           font-size: 25px;
-           margin-bottom: 10px;
        }
 
        .container {
            width: 100%;
            max-width: 95%;
            margin: auto;
+           margin-top: 20px;
+       }
+
+       .banner {
+           text-align: center;
+           width: 100%;
+           max-width: 60%;
+           margin: auto;
+           margin-top: 50px;
+           padding-bottom: 45px;
+       }
+
+       .banner > h1 {
+           font-size: 20px;
+           border-bottom:  1px solid #696767;
+
+       }
+
+       .banner > section {
+           margin-bottom: 15px;
+           margin-top:5px;
+           font-size: 16px; 
+       }
+
+       .banner > section > b {
+        font-size: 14px; 
+        display: flex;
+        flex-wrap: wrap;
        }
 
        .content {
            margin: auto;
            padding: 10px;
            margin-top: 20px;
-           margin-bottom: 10px;
-           background: rgb(90, 99, 181);
-           color: #fff;
+           padding-bottom: 10px;
+           font-weight: 500;
+          /*  background: #9f8e86;
+           color: #fff; */
            text-align: center;
-           text-transform: capitalize;
+           /* text-transform: capitalize; */
+           border-bottom:  1px solid #696767;
+       }
+
+       .content > h3 {
+        font-size: 16px;
        }
 
        table {
-        margin-top: 20px;
         width: 100%;
+        font-size: 18px;
+        margin-bottom: 10px;
        }
 
        table > thead {
-        background: rgb(90, 99, 181);
+        background: #726660;
         color: #fff;
         text-align: center;
        }
 
        table > thead > tr > td {
-           padding: 10px;
+           padding: 8px;
        }
 
        table > tbody {
@@ -71,7 +102,7 @@
        }
 
         table, th {
-            /* border: 1px solid rgb(104, 104, 104); */
+            /* border: 1px solid #9a8882; */
         }
    </style>
 </head>
@@ -85,16 +116,25 @@
 
         <div class="container">
         
-            <h1>Reservación de la audiencia</h1>
+           <div class="banner">
+                <h1>Reservación de la audiencia</h1>
+                
+                <section>
+                   <p><b> Centro de justicia</b> : {{$expediente->audiencia->centroJusticia->nombre}}</p>
+                   <p><b> Sala</b>: {{  $expediente->audiencia->sala->sala}}</p>
+                   <p><b> Agendada</b>: {{ \Carbon\Carbon::parse($expediente->created_at)->format('d/m/Y')}}</p>
+                </section>
+           </div>
 
             <div class="content">
-                <h2>Datos generales del Expediente</h2>
+                <h3>Datos generales del expediente</h3>
+               
             </div>
 
             <table style="width:50%">
                 <thead>
                     <tr>
-                        <td style="width: 50%">Numero de expediente:</td>
+                        <td style="width: 50%">Número de expediente:</td>
                         <td style="width: 50%">Folio:</td>
                     
                     </tr>
@@ -169,7 +209,7 @@
             </table>
 
             <div class="content">
-                <h2>Lista de Participantes</h2>
+                <h3>Lista de participantes</h3>
             </div>
 
             @if (count(($expediente->audiencia->participantes)) > 0)

@@ -90,6 +90,7 @@ export default {
             durationVideo: '', // Duracion del video grabado desde OBS
             ubicationVideo: '', // Ubicaccion del video gurdado desde OBS
             nameVideo: '', // Nombre del video grabado
+            unidadDisk: '', // Nombre de la unidad donde se guarda el video
             // Crnometro
             tiempoRef : Date.now(),
             cronometrar : false,
@@ -542,11 +543,12 @@ export default {
                         showConfirmButton: false,
                         timer: 1500
                     })
+                    this.saveInfoVideoRecord() // GUardamos los dato del video grabado en la BD
                     // OBS 2
                     await obs2.send('StopRecording')
                     await obs2.send('SetFilenameFormatting', { 'filename-formatting': `video-${this.numeroExpediente}-${this.fechaCelebracionAudiencia}` })
 
-                    this.saveInfoVideoRecord() // GUardamos los dato del video grabado en la BD
+                   
 
                 } else if(res.data.status === 404) {
                     Swal.fire({
@@ -665,18 +667,23 @@ export default {
                 video:         this.nameVideo,
                 expediente_id: this.expedienteID,
                 duracion:      this.durationVideo,
-                ubicacion:     this.ubicationVideo
+                ubicacion:     this.ubicationVideo,
+                unidad: this.unidadDisk
             }
+
+           //console.log(formData);
 
             const token =  document.getElementsByName('_token')
 
-             const config = { 
+            const config = { 
                     headers: { 'Content-Type': 'application/json' },
                     'X-CSRF-TOKEN': token[0].value,// <--- aquí el token
             };
 
             // Envio los datos al servidor
             const res = await axios.post(`${baseURL}/evento/video`, formData, config)
+
+            
 
             if(res.data.status === 201) {
                     // Alerta de exito
@@ -716,12 +723,14 @@ export default {
         obs.on('RecordingStopping', data => {
                this.durationVideo   = data.recTimecode;
                this.ubicationVideo  = data.recordingFilename
-
+               // console.log( data.recordingFilename);
                let arrayName = data.recordingFilename.split('/'); // Separamos la ruta del video en un array
                arrayName.map(name => {
+                   if(name === arrayName[0]) {this.unidadDisk = name}   // Recupera la unidad donde se guarda el video Ejempl en el disco  : 'D'
                    // Si el utimo valor del array es igual al nombre asigamos al videoNombre el valor del ultimo
                    // array,por defecto el ultimo valor del array es el nombre del video 
                    if(name === arrayName[arrayName.length - 1])   this.nameVideo = name
+                   
                })
               
         });

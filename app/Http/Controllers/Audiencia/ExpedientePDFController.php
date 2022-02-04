@@ -25,4 +25,14 @@ class ExpedientePDFController extends Controller
         $pdf = PDF::loadView('reservas.pdf.expediente', compact('expediente'));
         return $pdf->download("expediente-$expediente->numero_expediente.pdf");
     }
+
+    public function showPDFDownload($id)
+    {
+        $id = decrypt($id);
+        
+        $expediente = ExpedienteModel::find($id);
+        return view('reservas.pdf.expediente', compact('expediente'));
+        
+      
+    }
 }
