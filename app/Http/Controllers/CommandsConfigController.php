@@ -23,4 +23,7 @@ class CommandsConfigController extends Controller
         Artisan::call('migrate');
         return redirect('/');
     }
+
+
 }
+

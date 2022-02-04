@@ -28,6 +28,10 @@
          <button class="nav-link" id="v-pills-asistencia-tab" data-bs-toggle="pill" data-bs-target="#v-pills-asistencia" type="button" role="tab" aria-controls="v-pills-asistencia" aria-selected="false"><span class="iconify h4 me-1" data-icon="bi:file-check-fill"></span><br>Asistencia</button>
          <button class="nav-link" id="v-pills-notas-tab" data-bs-toggle="pill" data-bs-target="#v-pills-notas" type="button" role="tab" aria-controls="v-pills-notas" aria-selected="false"><span class="iconify h4 me-1" data-icon="fa-solid:sticky-note"></span><br>Notas</button>
          <button class="nav-link" id="v-pills-archivos-tab" data-bs-toggle="pill" data-bs-target="#v-pills-archivos" type="button" role="tab" aria-controls="v-pills-archivos" aria-selected="false"><span class="iconify h4 me-1" data-icon="ant-design:file-zip-filled"></span><br>Archivos</button>
+         
+        <div>
+         <analisis-disc-local />
+        </div>
 
          <a href="{{ route('salir.evento',$expediente->audiencia->id ) }}" class="nav-link text-center mt-4"
             onclick="return confirm('¿Estas seguro de salir de la audiencia?')" title="Salir de la audiencia">

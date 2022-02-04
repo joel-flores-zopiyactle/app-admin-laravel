@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 
 use App\Http\Controllers\CommandsConfigController;
+use App\Http\Controllers\DiskController;
+
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Modules\CentroJusticiaController;
 use App\Http\Controllers\Modules\RolController;
@@ -211,4 +213,7 @@ Route::middleware(['auth'])->group( function() {
     Route::get('/analisis/estadistico/audiencias-celebredas', [AnalisisController::class, 'audienciasCelebreadasAlYear'])->name('analisis.audiencias.celebradas');
     Route::get('/analisis/estadistico/videoconferencias-celebredas', [AnalisisController::class, 'totalDeVideoconferenciasSiyNo'])->name('analisis.audiencias.videoconferencias');
 });
+
+
+Route::get('/info/disk', [DiskController::class, 'get_disk_total_space']);
 
