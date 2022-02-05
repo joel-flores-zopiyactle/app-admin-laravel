@@ -68,7 +68,7 @@
             </div> 
         @else
             <div class="d-flex justify-content-center align-items-center">
-                <h3 class="fs-5">No hay tipos de juicios registradas todavía</h3>
+                <h3 class="fs-5">No hay tipos de juicio registradas todavía</h3>
             </div>
         @endif
     </div>

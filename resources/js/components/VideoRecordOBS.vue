@@ -484,11 +484,13 @@ export default {
                         showConfirmButton: false,
                         timer: 1500
                     })
+
+                    this.saveInfoVideoRecord() // GUardamos los dato del video grabado en la BD
                     // OBS 2
                     await obs2.send('StopRecording')
                     await obs2.send('SetFilenameFormatting', { 'filename-formatting': `video-${this.numeroExpediente}-${this.fechaCelebracionAudiencia}` })
 
-                    this.saveInfoVideoRecord() // GUardamos los dato del video grabado en la BD
+                   
 
                 } else if(res.data.status === 404) {
                     Swal.fire({

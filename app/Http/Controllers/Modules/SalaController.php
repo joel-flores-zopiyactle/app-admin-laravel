@@ -41,7 +41,7 @@ class SalaController extends Controller
             'sala' => ['required', 'unique:salas', 'max:255'],
             'numero' => ['required'],
             'capacidad' => ['required'],
-            'ubicacion' => ['required'],
+            'ubicacion' => [],
         ]);
 
         try {
@@ -50,7 +50,7 @@ class SalaController extends Controller
                 'sala' => $request->sala,
                 'numero' => $request->numero,
                 'capacidad' => $request->capacidad,
-                'ubicacion' => $request->ubicacion
+                'ubicacion' => $request->ubicacion ?? ''
             ]);
     
             if($newSala) {
@@ -106,7 +106,7 @@ class SalaController extends Controller
             $updateSala->sala = $request->sala;
             $updateSala->numero = $request->numero;
             $updateSala->capacidad = $request->capacidad;
-            $updateSala->ubicacion = $request->ubicacion;
+            $updateSala->ubicacion = $request->ubicacion ?? '';
             $updateSala->estado = $request->estado ?? 0;
 
             if($updateSala->save()) {

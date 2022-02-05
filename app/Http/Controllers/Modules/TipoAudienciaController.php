@@ -39,14 +39,14 @@ class TipoAudienciaController extends Controller
     {
         $validatedData = $request->validate([
             'nombre' => ['required', 'unique:centro_justicias', 'max:255'],
-            'descripcion' => ['required'],
+            'descripcion' => [],
         ]);
 
         try {
 
             $newAudiencia = TipoAudiencia::create([
                 'nombre' => $request->nombre,
-                'descripcion' => $request->descripcion
+                'descripcion' => $request->descripcion ?? ''
             ]);
     
             if($newAudiencia) {
@@ -98,7 +98,7 @@ class TipoAudienciaController extends Controller
 
             $updateAudiencia = TipoAudiencia::find($id);
             $updateAudiencia->nombre = $request->nombre;
-            $updateAudiencia->descripcion = $request->descripcion;
+            $updateAudiencia->descripcion = $request->descripcion ?? '';
             $updateAudiencia->estado = $request->estado ?? 0;
 
             if($updateAudiencia->save()) {

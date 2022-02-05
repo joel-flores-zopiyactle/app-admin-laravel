@@ -30,7 +30,7 @@
                                 <th>Total de GB disponible</th>
                                 <th>Total de GB usado</th>
                                 <th>Total de % usado</th>
-                                <th>Total de % sisponible</th>
+                                <th>Total de % disponible</th>
                             </tr>
                         </thead>
                         <tbody>

@@ -48,14 +48,14 @@ class UsuariosController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'telefono' => ['required', 'numeric', 'min:10',  'unique:users'],
-            'avatar' => ['required','image'],
+            'avatar' => ['image'],
             'tipo_usuario_id' => ['required', 'numeric'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
 
         try {
 
-            $urlFile  =  'default'; // Si no hay archivo se queda como defaul
+            $urlFile  =  'default-sinjo-2021.jpg'; // Si no hay archivo se queda como defaul
             
             if($request->hasFile('avatar')) {
                 //$path = Storage::disk('public')->put('AVATARS', $request->file('avatar'));

@@ -49,6 +49,7 @@ try {
     if($users->count() > 0) {   // Si existe un usuario desactivamos la opcion de register del Auth
 
         Auth::routes(["register" => false]);
+        Artisan::call('storage:link'); // Se publica el storage a la carpeta public
 
     } else {
 
@@ -150,9 +151,11 @@ Route::middleware(['auth'])->group( function() {
     Route::get('/agregar/participantes/{id}/{expediente_id}', [ParticipanteController::class, 'create'])->name('add.participante');
     Route::post('/agregar/participantes/', [ParticipanteController::class, 'store'])->name('post.participante');
     Route::get('/participantes/{id}', [ParticipanteController::class, 'show'])->name('show.participantes');
+    Route::get('/personal/asistencia/{id}', [ParticipanteController::class, 'showAsistentesPersonal'])->name('show.personal.asistencia'); // Peronal son los que se registran al principio de la audiencia en agendar
     Route::delete('/agregar/participantes/{id}', [ParticipanteController::class, 'destroy'])->name('delete.participante');
     // Tomar asistencia
     Route::put('/asistencia/participante/{id}', [ParticipanteController::class, 'asistencia'])->name('asistencia.participante');
+    Route::put('/asistencia/personal/{id}', [ParticipanteController::class, 'asistenciaPersonal'])->name('asistencia.personal');
     
     
     // Buscar Expediente
@@ -214,6 +217,7 @@ Route::middleware(['auth'])->group( function() {
     Route::get('/analisis/estadistico', [AnalisisController::class, 'index'])->name('analisis.index');
     Route::get('/analisis/estadistico/audiencias-celebredas', [AnalisisController::class, 'audienciasCelebreadasAlYear'])->name('analisis.audiencias.celebradas');
     Route::get('/analisis/estadistico/videoconferencias-celebredas', [AnalisisController::class, 'totalDeVideoconferenciasSiyNo'])->name('analisis.audiencias.videoconferencias');
+    Route::get('/analisis/estadistico/vide/consumo/mb', [AnalisisController::class, 'totalDatosConsumidoPorYear'])->name('analisis.audiencias.video.consumo.mb');
 
     // Disk
     Route::get('/info/disk', [DiskController::class, 'get_disk_total_space']);

@@ -24,12 +24,14 @@ Vue.component('input-form', require('./components/InputForm.vue').default);
 Vue.component('form-note', require('./components/FormNotas.vue').default);
 Vue.component('form-file', require('./components/FormFile.vue').default);
 Vue.component('tabla-asistencia', require('./components/Asistencia.vue').default);
+Vue.component('tabla-asistencia-personal', require('./components/AsistenciaPersonal.vue').default);
 Vue.component('form-search', require('./components/FormSearch.vue').default);
 Vue.component('video-recording', require('./components/VideoRecording.vue').default);
 Vue.component('video-recording-obs', require('./components/VideoRecordOBS.vue').default);
 Vue.component('chart-bar-adiencias-celebradas', require('./components/ChartAudienceCelebratedYear.vue').default);
 Vue.component('chart-videoconferencia-total', require('./components/ChartVideoconferencia.vue').default);
 Vue.component('analisis-disc-local', require('./components/AnalisisDiscLocal.vue').default);
+Vue.component('chart-disk-consumo-mb', require('./components/ChartVideoDiskYear.vue').default);
 
 
 /**

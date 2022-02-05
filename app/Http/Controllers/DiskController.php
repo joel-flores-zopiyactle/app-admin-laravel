@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ControlDeConsumoDisco;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class DiskController extends Controller
 {
@@ -115,10 +117,20 @@ class DiskController extends Controller
     
     }
 
-    public function pruebas($urlVideo)
+    public function pruebas( )
     {
 
-        $bytes = floatval(filesize($urlVideo));
+        
+       echo 'pruebas <br/>';
+       echo $this->FileSizeConvert(floatval(disk_free_space(('c:'))));
+
+      
+    }
+
+    public function FileSizeConvert($totalBytes)
+    {
+
+        $bytes = $totalBytes;
         
         $arBytes = array(
             0 => array(
@@ -152,7 +164,9 @@ class DiskController extends Controller
                 break;
             }
         }
-        echo $result;
+        return $result;
     }
+
+    
     
 }

@@ -72,8 +72,32 @@
             </tbody>
         </table>
 
+        {{-- Participantes--}}
+        <table class="table w-100 table-responsive mt-3">
+            <thead class="table-dark">
+                <tr>
+                    <td>Nombre</td>
+                    <td>Rol</td>
+                    <td>Asistencia</td>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach ($expediente->audiencia->personal as $personal)
+                <tr>
+                    <td> {{ $personal->nombre }} </td>
+                    <td> {{ $personal->rolPersonal->tipo_personal }} </td>
+                    <td> {{ $personal->asitencia->asistencia }}</td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+
 
         {{-- Participantes--}}
+        <hr>
+        <h5 class="fs-5 mt-5">Participante</h5>
+        
         <table class="table w-100 table-responsive">
             <thead class="table-dark">
                 <tr>

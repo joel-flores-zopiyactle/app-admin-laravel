@@ -62,4 +62,9 @@ class Audiencia extends Model
     {
         return $this->hasMany(Participantes::class);
     }
+
+    public function personal()
+    {
+        return $this->hasMany(PersonalAudiencia::class);
+    }
 }

@@ -2,20 +2,18 @@
     <div>
         
         <table class="table table-striped">
-            <thead class="table-success">
+            <thead class="table-primary">
                 <tr>
                 <th scope="col"  style="width: 23%;">Nombre</th>
                 <th scope="col"  style="width: 23%;">Rol</th>
-                <th scope="col"  style="width: 23%;">Detalles</th>
                 <th scope="col"  style="width: 23%;">Asistencia</th>
                 <th scope="col"  style="width: 10%;"></th>
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="asistente in asistentes" :key="asistente.id">
+                <tr v-for="asistente in asistencia" :key="asistente.id">
                     <td> {{ asistente.nombre }} </td>
                     <td> {{ asistente.rol.rol }} </td>
-                    <td> {{ asistente.descripcion }} </td>
                     <td>
                         <span :class="['badge', asistente.asistencia.color]">{{ asistente.asistencia.asistencia }}</span>
                     </td>
@@ -27,19 +25,19 @@
 
                             <ul class="dropdown-menu">
                                 <li>
-                                    <button type="button" @click="asistencia(asistente.asistencia.id)" class="btn btn-sm btn-light w-100">
+                                    <button type="button" @click="asistenciaPersonal(asistente.asistencia.id)" class="btn btn-sm btn-light w-100">
                                         <span class="badge bg-success w-100">Asistencia</span> 
                                     </button>
                                 </li>
                                 
                                 <li>
-                                    <button type="button"  @click="retardo(asistente.asistencia.id)" class="btn btn-sm btn-light w-100">
+                                    <button type="button"  @click="retardoPersonal(asistente.asistencia.id)" class="btn btn-sm btn-light w-100">
                                         <span class="badge bg-warning w-100">Retardo</span> 
                                     </button>
                                 </li>
                                 
                                 <li>
-                                    <button type="button"  @click="falta(asistente.asistencia.id)" class="btn btn-sm btn-light w-100">
+                                    <button type="button"  @click="faltaPersonal(asistente.asistencia.id)" class="btn btn-sm btn-light w-100">
                                         <span class="badge bg-danger w-100">Falta</span> 
                                     </button>
                                 </li>
@@ -58,13 +56,13 @@ export default {
     data() {
         return {
             expediente_id: 0,
-            asistentes: [],
+            asistencia: [],
         }
     },
 
     created() {
         this.getIdExpedinete(); 
-        this.getAsistentes();          
+        this.getAsistentesPersonal();          
     },
 
     methods: {
@@ -75,19 +73,19 @@ export default {
             this.expediente_id = expedienteID.value;            
         },
 
-        getAsistentes() {
-            axios.get(`${baseURL}/participantes/${this.expediente_id}`)
+        getAsistentesPersonal() {
+            axios.get(`${baseURL}/personal/asistencia/${this.expediente_id}`)
             .then( response => response.data )
             .then( participantes => {
                 // console.log(participantes);
-                this.asistentes = participantes;
+                this.asistencia = participantes;
             }) 
             .catch(function (error) {
                 console.log(error);
             })
         },
 
-        asistencia(id) {
+        asistenciaPersonal(id) {
            
             // Get token
             const token =  document.getElementsByName('_token');
@@ -102,18 +100,18 @@ export default {
                 'color' : 'bg-success',
             }
         
-            axios.put(`${baseURL}/asistencia/participante/${id}`, data, config)
+            axios.put(`${baseURL}/asistencia/personal/${id}`, data, config)
             .then( response => {
-                this.getAsistentes();
+                 this.getAsistentesPersonal();
             })
             .catch(function (error) {
                 console.log(error);
             });
 
-            this.getAsistentes();
+            this.getAsistentesPersonal();
         },
 
-        retardo(id) {
+        retardoPersonal(id) {
            
             // Get token
             const token =  document.getElementsByName('_token');
@@ -128,18 +126,18 @@ export default {
                 'color' : 'bg-warning',
             }
         
-            axios.put(`${baseURL}/asistencia/participante/${id}`, data, config)
+            axios.put(`${baseURL}/asistencia/personal/${id}`, data, config)
             .then( response => {
-                this.getAsistentes();
+                this.getAsistentesPersonal();
             })
             .catch(function (error) {
                 console.log(error);
             });
 
-            this.getAsistentes();
+            this.getAsistentesPersonal();
         },
 
-        falta(id) {
+        faltaPersonal(id) {
            
             // Get token
             const token =  document.getElementsByName('_token');
@@ -154,15 +152,15 @@ export default {
                 'color' : 'bg-danger',
             }
         
-            axios.put(`${baseURL}/asistencia/participante/${id}`, data, config)
+            axios.put(`${baseURL}/asistencia/personal/${id}`, data, config)
             .then( response => {
-                this.getAsistentes();
+                 this.getAsistentesPersonal();
             })
             .catch(function (error) {
                 console.log(error);
             });
 
-            this.getAsistentes();
+            this.getAsistentesPersonal();
         }
     }
 }

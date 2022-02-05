@@ -39,17 +39,15 @@ class TipoUsuariosController extends Controller
      */
     public function store(Request $request)
     {
-              
-        try {
+        $validatedData = $request->validate([
+            'rol' => ['required', 'max:255'],
+        ]);
 
-            $validatedData = $request->validate([
-                'rol' => ['required', 'max:255'],
-                'descripcion' => ['required', 'max:255'],
-            ]);
+        try {
             
             $tipo = new TipoUsuarioModel;
             $tipo->tipo          = $request->rol;
-            $tipo->descripcion   = $request->descripcion;
+            $tipo->descripcion   = $request->descripcion ?? '';
 
             if($tipo->save()) {
                 
@@ -75,6 +73,8 @@ class TipoUsuariosController extends Controller
                 return back()->with('success', "Rol de usuario registrado correctamente!");
             }
 
+            return back()->with('warning', "No se pudo registrado el rol de usuario!");
+
         } catch (\Throwable $th) {
 
             /* 
@@ -84,7 +84,10 @@ class TipoUsuariosController extends Controller
 
             if($tipo) {
                 $tipo = TipoUsuarioModel::find($tipo->id);
-                $tipo->delete();
+                if($tipo) {
+                    $tipo->delete();
+                }
+                
             }
 
             return back()->with('success', "Ocurrio un error al registrar el rol de usuario, Intente más tarde!". $th);
@@ -129,7 +132,7 @@ class TipoUsuariosController extends Controller
 
         $validatedData = $request->validate([
             'rol' => ['required', 'max:255'],
-            'descripcion' => ['required', 'max:255'],
+            'descripcion' => [],
             'permiso_id' => ['required'],
         ]);
 
@@ -137,7 +140,7 @@ class TipoUsuariosController extends Controller
                      
             $tipo = TipoUsuarioModel::find($id);
             $tipo->tipo          = $request->rol;
-            $tipo->descripcion   = $request->descripcion;
+            $tipo->descripcion   = $request->descripcion ?? '';
             $tipo->estado        = $request->estado ?? 0;
 
             if($tipo->save()) {

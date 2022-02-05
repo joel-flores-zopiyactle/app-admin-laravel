@@ -4,7 +4,16 @@
     <div>
         <input type="number" value="{{ $audienciaid }}" id="expediente_id_lista" hidden>
         {{-- Componente de vue --}}
-        <tabla-asistencia />
+       
+        <div>
+            <tabla-asistencia-personal />
+        </div>
+        <h4>Participantes</h4>
+        <hr>
+        <div>
+             <tabla-asistencia />
+        </div>
+       
     </div>
 
     {{-- 

@@ -39,14 +39,14 @@ class CentroJusticiaController extends Controller
     {
         $validatedData = $request->validate([
             'nombre'      => ['required', 'unique:centro_justicias', 'max:255'],
-            'descripcion' => ['required'],
+            'descripcion' => [''],
         ]);
 
         try {
 
             $newCentro = CentroJusticia::create([
                 'nombre'      => $request->nombre,
-                'descripcion' => $request->descripcion
+                'descripcion' => $request->descripcion ?? ''
             ]);
     
             if($newCentro) {
@@ -103,7 +103,7 @@ class CentroJusticiaController extends Controller
         try {
             $updateCentro = CentroJusticia::find($id);
             $updateCentro->nombre       = $request->nombre;
-            $updateCentro->descripcion  = $request->descripcion;
+            $updateCentro->descripcion  = $request->descripcion ?? '';
             $updateCentro->estado       = $request->estado ?? 0;
 
             if($updateCentro->save()) {

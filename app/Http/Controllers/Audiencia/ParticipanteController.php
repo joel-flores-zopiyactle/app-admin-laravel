@@ -3,10 +3,14 @@
 namespace App\Http\Controllers\Audiencia;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\RolesPersonalResource;
 use App\Http\Resources\RolResource;
 use App\Models\Asistencia as AsistenciaModel;
+use App\Models\AsistenciaPersonalAudiencia;
 use App\Models\Participantes as ParticipantesModel;
+use App\Models\PersonalAudiencia;
 use App\Models\role as RoleModel;
+use App\Models\RolesPersonal;
 use Illuminate\Http\Request;
 
 class ParticipanteController extends Controller
@@ -87,35 +91,9 @@ class ParticipanteController extends Controller
             return back()->with('success', 'Nuevo Participante registrado exitosamente!');
 
         } catch (\Throwable $th) {
-            return back()->with('warning', 'Hubo un error al guardar los datos por favor verifique sus datos.');
+            return back()->with('warning', 'Hubo un error al guardar los datos por favor verifique sus datos.' . $th);
         }
 
-        // try {
-
-        //     $newParticipante = ParticipantesModel::create([
-        //         'nombre' => $request->nombre,
-        //         'descripcion' => $request->descripcion,
-        //         'rol_id' => $request->rol_id,
-        //         'audiencia_id' => $request->audiencia_id,
-        //     ]);
-    
-        //     if($newParticipante) {
-
-        //         $asistencia  = new AsistenciaModel;
-        //         $asistencia->asistencia = 'resgistrado';
-        //         $asistencia->color = 'bg-light';
-        //         $asistencia->participante_id = $newParticipante->id;
-
-        //         $asistencia->save();
-
-        //         return back()->with('success', 'Nuevo Participante registrado exitosamente!');
-        //     }
-
-        //     return back()->with('warning', 'Hubo un error al guardar los datos por favor verifique sus datos.');
-            
-        // } catch (\Throwable $th) {
-        //     return back()->with('error', 'Fallo al registrar los datos!, verifique su conexion a Internet o recarga la página');
-        // }
     }
 
     /**
@@ -139,6 +117,38 @@ class ParticipanteController extends Controller
                 'nombre' => $participante->nombre,
                 'descripcion' => $participante->descripcion,
                 'rol' => new RolResource(RoleModel::findOrFail($participante->rol_id)),
+                'asistencia' => array(
+                    'id' =>  $asistencia->id ?? 0,
+                    'asistencia' => $asistencia->asistencia ?? 'registrado',
+                    'color' => $asistencia->color ?? 'bg-dark'
+                )
+            );
+
+            array_push($data, $newParticipante);
+        }
+ 
+
+        return response()->json($data);
+    }
+
+    /* 
+    *    Personas que se registran al agedar audiencia
+    *
+    */
+    public function showAsistentesPersonal($id)
+    {
+        $data = [];
+
+        $participantes = PersonalAudiencia::where('audiencia_id', $id)->get();
+
+        foreach ($participantes as $participante) {
+
+            $asistencia = AsistenciaPersonalAudiencia::where('personal_id', $participante->id)->first(); // Get asistencia participante
+
+            $newParticipante = array(
+                'id' => $participante->id,
+                'nombre' => $participante->nombre,
+                'rol' => new RolesPersonalResource(RolesPersonal::findOrFail($participante->rol_personal_id)),
                 'asistencia' => array(
                     'id' =>  $asistencia->id ?? 0,
                     'asistencia' => $asistencia->asistencia ?? 'registrado',
@@ -208,6 +218,22 @@ class ParticipanteController extends Controller
         ]);
 
         $asistencia  = AsistenciaModel::find($id);
+        $asistencia->asistencia = $request->asistencia;
+        $asistencia->color = $request->color;
+        return $asistencia->save();
+    }
+
+
+    // Tomar asistencia del participante
+    public function asistenciaPersonal(Request $request, $id)
+    {
+
+        $validatedData = $request->validate([
+            'asistencia' => ['required','max:20'],
+            'color' => ['required']
+        ]);
+
+        $asistencia  = AsistenciaPersonalAudiencia::find($id);
         $asistencia->asistencia = $request->asistencia;
         $asistencia->color = $request->color;
         return $asistencia->save();

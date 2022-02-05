@@ -100,7 +100,7 @@ class RolController extends Controller
             
             $updateRol = Role::find($id);
             $updateRol->rol = $request->rol;
-            $updateRol->descripcion = $request->descripcion;
+            $updateRol->descripcion = $request->descripcion ?? '';
             $updateRol->estado = $request->estado ?? 0;
 
             if($updateRol->save()) {

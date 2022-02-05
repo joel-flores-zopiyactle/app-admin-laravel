@@ -3,17 +3,18 @@
 namespace App\Http\Controllers\Audiencia;
 
 use App\Http\Controllers\Controller;
+use App\Models\AsistenciaPersonalAudiencia;
 use App\Models\Audiencia as AudienciaModel;
 use App\Models\CentroJusticia as CentroJusticiaModel;
 use App\Models\EstadoAudiencia as EstadoAudienciaModel;
 use App\Models\Expediente as ExpedienteModel;
+use App\Models\PersonalAudiencia;
 use App\Models\Sala as SalaModel;
 use App\Models\TipoAudiencia as TipoAudienciaModel;
 use App\Models\TipoJuicio as TipoJuicioModel;
 use App\Models\TokenAudiencia as TokenAudienciaModel;
 use App\Models\TokenAudienciaInvitado as TokenAudienciaInvitadoModel;
 use Illuminate\Http\Request;
-
 
 class ReservaSalaController extends Controller
 {
@@ -67,7 +68,7 @@ class ReservaSalaController extends Controller
             'numero_expediente'  => ['required','string', 'unique:expedientes'],
             'folio'                 => ['required', 'numeric', 'unique:expedientes'],
             'juez'                  => ['required'],
-            'juzgado'               => ['required'],
+            'testigo'               => ['required'],
             'actor'                 => ['required'],
             'demandado'             => ['required'],
             'secretario'            => ['required'],
@@ -90,7 +91,7 @@ class ReservaSalaController extends Controller
                 $newExpediente->numero_expediente   = $request->numero_expediente;
                 $newExpediente->folio   = $request->folio;
                 $newExpediente->juez    = $request->juez;
-                $newExpediente->juzgado = $request->juzgado;
+                $newExpediente->juzgado = $request->testigo;
                 $newExpediente->actor   = $request->actor;
                 $newExpediente->demandado  = $request->demandado;
                 $newExpediente->secretario = $request->secretario;
@@ -108,8 +109,12 @@ class ReservaSalaController extends Controller
                     $newAudiencia->horaInicio         = $request->horaInicio;
                     $newAudiencia->horaFinalizar      = $request->horaFinalizar;
                     $newAudiencia->videoconferencia   = $request->videoconferencia;
+    
 
                     if($newAudiencia->save()) {
+
+                        $this->registerPersonalAudiencia($request, $newAudiencia->id); // Se registran juez, demandado, secrretario actor, testigo en un tabla mas para tomar asistencia
+
                         $audiencia_id = $newAudiencia->id;
                         
                         //return view(('reservas.participantes'));
@@ -151,7 +156,7 @@ class ReservaSalaController extends Controller
             $deleteExpediente = ExpedienteModel::findOrFail($newExpediente->id);
             $deleteExpediente->delete();
 
-            return back()->with('error', 'Hubo un error al guaradar los datos. Verifique su conexion a Internte o recarga la página!');
+            return back()->with('error', 'Hubo un error al guaradar los datos. Verifique su conexion a Internte o recarga la página!'.$th);
         }
 
     }
@@ -335,6 +340,109 @@ class ReservaSalaController extends Controller
         } catch (\Throwable $th) {
             return array( 'mensaje' => 'Hubo un error al finalizar la Audiencia, Intente de nuevo', 'status' => 500);
         }
+    }
+
+
+    public function registerPersonalAudiencia(Request $request, $audiencia_id)
+    {
+        /* 
+        *    Add participantes
+        **/
+    
+        if($request->juez ) {
+
+            $newPersonal = new PersonalAudiencia;
+            $newPersonal->nombre = $request->juez;
+            $newPersonal->rol_personal_id = 1;
+            $newPersonal->audiencia_id = $audiencia_id; // desencriptamos el id
+
+
+            if($newPersonal->save()) {
+
+                $asistencia  = new AsistenciaPersonalAudiencia;
+                $asistencia->asistencia = 'resgistrado';
+                $asistencia->color = 'bg-dark';
+                $asistencia->personal_id = $newPersonal->id;
+
+                $asistencia->save();
+            }
+        }
+
+        if($request->secretario ) {
+
+            $newPersonal = new PersonalAudiencia;
+            $newPersonal->nombre = $request->secretario;
+            $newPersonal->rol_personal_id = 2;
+            $newPersonal->audiencia_id = $audiencia_id; // desencriptamos el id
+
+
+            if($newPersonal->save()) {
+
+                $asistencia  = new AsistenciaPersonalAudiencia;
+                $asistencia->asistencia = 'resgistrado';
+                $asistencia->color = 'bg-dark';
+                $asistencia->personal_id = $newPersonal->id;
+
+                $asistencia->save();
+            }
+        }
+
+        if($request->testigo ) {
+
+            $newPersonal = new PersonalAudiencia;
+            $newPersonal->nombre = $request->testigo;
+            $newPersonal->rol_personal_id = 3;
+            $newPersonal->audiencia_id = $audiencia_id; // desencriptamos el id
+
+
+            if($newPersonal->save()) {
+
+                $asistencia  = new AsistenciaPersonalAudiencia;
+                $asistencia->asistencia = 'resgistrado';
+                $asistencia->color = 'bg-dark';
+                $asistencia->personal_id = $newPersonal->id;
+
+                $asistencia->save();
+            }
+        }
+
+        if($request->actor ) {
+            $newPersonal = new PersonalAudiencia;
+            $newPersonal->nombre = $request->actor;
+            $newPersonal->rol_personal_id = 4;
+            $newPersonal->audiencia_id = $audiencia_id; // desencriptamos el id
+
+
+            if($newPersonal->save()) {
+
+                $asistencia  = new AsistenciaPersonalAudiencia;
+                $asistencia->asistencia = 'resgistrado';
+                $asistencia->color = 'bg-dark';
+                $asistencia->personal_id = $newPersonal->id;
+
+                $asistencia->save();
+            }
+        }
+
+        if($request->demandado) {
+            $newPersonal = new PersonalAudiencia;
+            $newPersonal->nombre = $request->demandado;
+            $newPersonal->rol_personal_id = 5;
+            $newPersonal->audiencia_id = $audiencia_id; // desencriptamos el id
+
+
+            if($newPersonal->save()) {
+
+                $asistencia  = new AsistenciaPersonalAudiencia;
+                $asistencia->asistencia = 'resgistrado';
+                $asistencia->color = 'bg-dark';
+                $asistencia->personal_id = $newPersonal->id;
+
+                $asistencia->save();
+            }
+        }      
+
+
     }
 
 }

@@ -55,9 +55,9 @@
 
             <div class="col-4">
                 <div class="mb-3">
-                    <label for="juzgado" class="form-label">Juzgado:</label>
-                    <input type="text" class="form-control @error('juzgado') is-invalid @enderror" name="juzgado" id="juzgado" value="{{ old('juzgado') }}" placeholder="Nombre del juzgado">
-                    @error('juzgado')
+                    <label for="secretario" class="form-label">Secretario:</label>
+                    <input type="text" class="form-control @error('secretario') is-invalid @enderror" name="secretario" id="secretario" value="{{ old('secretario') }}" placeholder="Nombre del secretario">
+                    @error('secretario')
                     <div class="alert alert-danger mt-1">{{ $message }}</div>
                     @enderror
                 </div>
@@ -65,9 +65,9 @@
 
             <div class="col-4">
                 <div class="mb-3">
-                    <label for="actor" class="form-label">Actor:</label>
-                    <input type="text" class="form-control  @error('actor') is-invalid @enderror" name="actor" id="actor" value="{{ old('actor') }}" placeholder="Nombre del actor">
-                    @error('actor')
+                    <label for="testigo" class="form-label">Testigo:</label>
+                    <input type="text" class="form-control @error('testigo') is-invalid @enderror" name="testigo" id="testigo" value="{{ old('juzgado') }}" placeholder="Nombre del testigo">
+                    @error('testigo')
                     <div class="alert alert-danger mt-1">{{ $message }}</div>
                     @enderror
                 </div>
@@ -76,26 +76,28 @@
         </div>
 
         <div class="row">
+
+            <div class="col-4">
+                <div class="mb-3">
+                    <label for="actor" class="form-label">Parte Actora:</label>
+                    <input type="text" class="form-control  @error('actor') is-invalid @enderror" name="actor" id="actor" value="{{ old('actor') }}" placeholder="Parte Actora">
+                    @error('actor')
+                    <div class="alert alert-danger mt-1">{{ $message }}</div>
+                    @enderror
+                </div>
+            </div>
             
             <div class="col-4">
                 <div class="mb-3">
-                    <label for="demandado" class="form-label">Demandado:</label>
-                    <input type="text" class="form-control @error('demandado') is-invalid @enderror" name="demandado" id="demandado" value="{{ old('demandado') }}" placeholder="Nombre del demandado">
+                    <label for="demandado" class="form-label">Parte Demandada:</label>
+                    <input type="text" class="form-control @error('demandado') is-invalid @enderror" name="demandado" id="demandado" value="{{ old('demandado') }}" placeholder="Parte Demandada">
                     @error('demandado')
                     <div class="alert alert-danger mt-1">{{ $message }}</div>
                     @enderror
                 </div>
             </div>
 
-            <div class="col-4">
-                <div class="mb-3">
-                    <label for="secretario" class="form-label">Secretario:</label>
-                    <input type="text" class="form-control @error('secretario') is-invalid @enderror" name="secretario" id="secretario" value="{{ old('secretario') }}" placeholder="Nombre del secretario">
-                    @error('secretario')
-                    <div class="alert alert-danger mt-1">{{ $message }}</div>
-                    @enderror
-                </div>
-            </div>
+            
         </div>
         
         {{-- LISTAS DE SELECCION --}}
@@ -104,19 +106,19 @@
                 <div class="mb-3">
                     <label for="centroJusticia" class="form-label">Centro de justicia:</label>
 
-                    @if ($listaCentroJusticia->count() === 0)
+                    @if (count($listaCentroJusticia) === 0)
                         <input type="text" class="form-control  @error('centroJusticia_id') is-invalid @enderror" placeholder="No hay un centro de justicia registrada todavía" disabled>
                         @error('centroJusticia_id')
                             <div class="alert alert-danger mt-1">{{ 'No hay un centro de justicia registrada todavía' }}</div>
                         @enderror
-                    @elseif($salas->count() === 1) {{-- Si hay 1 centro mostramos como default con input type text --}}
+                    @elseif($listaCentroJusticia->count() === 1) {{-- Si hay 1 centro mostramos como default con input type text --}}
 
                         @foreach ($listaCentroJusticia as $centro) 
                             <input type="hidden" name="centroJusticia_id" value="{{ $centro->id}}"> {{-- Envia el id del centro --}}
                             <input type="text" class="form-control @error('centroJusticia_id') is-invalid @enderror" value="{{ $centro->nombre}}" disabled> {{-- Muetsra el nombre del centro --}}
                         @endforeach  
 
-                    @elseif($salas->count() > 1) {{-- Si hay mas de 1 mostramos un lista de centro para seleccionar --}}    
+                    @elseif($listaCentroJusticia->count() > 1) {{-- Si hay mas de 1 mostramos un lista de centro para seleccionar --}}    
                         <select class="form-select  @error('centroJusticia_id') is-invalid @enderror"  name="centroJusticia_id" value="{{ old('centroJusticia_id') }}">
                             <option selected>Seleccione un centro de justicia</option>
                             @foreach ($listaCentroJusticia as $centro)
@@ -139,7 +141,7 @@
                 <div class="mb-3">
                     <label for="sala"  class="form-label">Sala:</label>
 
-                    @if ($listaCentroJusticia->count() === 0)
+                    @if ($salas->count() === 0)
                         <input type="text" class="form-control @error('sala_id') is-invalid @enderror" placeholder="No hay una sala registrada todavía" disabled>
                         
                         @error('sala_id')

@@ -7,7 +7,7 @@
 @section('content')
 <div class="container-fluid">
     <div class="con d-flex justify-content-between align-items-center">
-        <h4> Control de usuarios </h4>
+        <h4> Control de usuarios para el sistema </h4>
         <div>
             <a class="btn btn-outline-primary btn-sm me-3" href="{{ route('roles.usuarios') }}">Listado de roles de administración</a>
             <a class="btn btn-primary btn-sm" href="{{ route('create.usuario') }}">Agregar nuevo usuario</a>

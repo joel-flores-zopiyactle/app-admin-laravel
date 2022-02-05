@@ -69,7 +69,7 @@
                 <li>
                     <a  href="{{ route('buscar.expediente') }}" class="link-dark rounded">
                         <span class="iconify h4 me-1" data-icon="bx:bx-search"></span>
-                        Buscar expediente
+                        Buscar audiencia
                     </a>
                 </li>
             </ul>

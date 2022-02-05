@@ -6,11 +6,12 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Audiencia;
+use App\Models\ControlDeConsumoDisco;
 use App\Models\Expediente as ExpedienteModel;
 use App\Models\VideoAudiencia;
 
 
-class AnalisisController extends Controller
+class AnalisisController extends Controller 
 {
     public function index( )
     {
@@ -185,6 +186,179 @@ class AnalisisController extends Controller
 
         return [$totalAudienciasConVideoconferenciaSi, $totalAudienciasConVideoconferenciaNo];
 
+    }
+
+    public function totalDatosConsumidoPorYear() {
+        // TODO: Obtener el total de audiencias celebredas del año actual
+        $yearActually= date('Y'); // Obtenemos el año actial
+        $dateStart = $yearActually . '-01-01';  // '202X-01-01'; 
+        $dateEnd   = $yearActually . '-12-31';  // '202X-12-31'; 
+
+        $controlDiscoConsumoMB = DB::table('control_de_consumo_discos')
+                                ->where('created_at','>=', $dateStart)
+                                ->where('created_at','<=', $dateEnd)
+                                ->get();
+
+        // TODO: Obtener el total de audiencia celebradas por meses del año
+
+        $january   = [];
+        $february  = [];
+        $march     = [];
+        $april     = [];
+        $may       = [];
+        $june      = [];
+        $july      = [];
+        $august    = [];
+        $september = [];
+        $october   = [];
+        $november  = [];
+        $december  = [];       
+
+        foreach ($controlDiscoConsumoMB as $video) {
+            //return  date("Ymd", strtotime($video->fechaCelebracion));
+            // Enero
+            if ( date("Ymd", strtotime($video->created_at)) >= date("Ymd", strtotime($yearActually . '-01-01')) &&
+                 date("Ymd", strtotime($video->created_at)) <= date("Ymd", strtotime($yearActually . '-01-31'))) {
+                            
+                array_push($january, $video->total_mb_usado);
+            } 
+            // Febrero
+            if ( date("Ymd", strtotime($video->created_at)) >= date("Ymd", strtotime($yearActually . '-02-01')) &&
+                 date("Ymd", strtotime($video->created_at)) <= date("Ymd", strtotime($yearActually . '-02-31'))) {
+
+                array_push($february, $video->total_mb_usado);
+            } 
+            // Marzo
+            if ( date("Ymd", strtotime($video->created_at)) >= date("Ymd", strtotime($yearActually . '-03-01')) &&
+                 date("Ymd", strtotime($video->created_at)) <= date("Ymd", strtotime($yearActually . '-03-31'))) {
+
+                array_push($march, $video->total_mb_usado);
+            } 
+
+            // Abril
+            if ( date("Ymd", strtotime($video->created_at)) >= date("Ymd", strtotime($yearActually . '-04-01')) &&
+                 date("Ymd", strtotime($video->created_at)) <= date("Ymd", strtotime($yearActually . '-04-31'))) {
+
+                array_push($april, $video->total_mb_usado);
+            } 
+
+            // Mayo
+            if ( date("Ymd", strtotime($video->created_at)) >= date("Ymd", strtotime($yearActually . '-05-01')) &&
+                 date("Ymd", strtotime($video->created_at)) <= date("Ymd", strtotime($yearActually . '-05-31'))) {
+
+                array_push($may, $video->total_mb_usado);
+            } 
+
+             // Junio
+            if ( date("Ymd", strtotime($video->created_at)) >= date("Ymd", strtotime($yearActually . '-06-01')) &&
+                  date("Ymd", strtotime($video->created_at)) <= date("Ymd", strtotime($yearActually . '-06-31'))) {
+
+                array_push($june, $video->total_mb_usado);
+            } 
+
+            // Julio
+            if ( date("Ymd", strtotime($video->created_at)) >= date("Ymd", strtotime($yearActually . '-07-01')) &&
+                 date("Ymd", strtotime($video->created_at)) <= date("Ymd", strtotime($yearActually . '-07-31'))) {
+
+                array_push($july, $video->total_mb_usado);
+            }
+            
+            // Agosto
+            if ( date("Ymd", strtotime($video->created_at)) >= date("Ymd", strtotime($yearActually . '-08-01')) &&
+                 date("Ymd", strtotime($video->created_at)) <= date("Ymd", strtotime($yearActually . '-08-31'))) {
+
+                array_push($august, $video->total_mb_usado);
+            }
+
+            // Septiembre
+            if ( date("Ymd", strtotime($video->created_at)) >= date("Ymd", strtotime($yearActually . '-09-01')) &&
+                 date("Ymd", strtotime($video->created_at)) <= date("Ymd", strtotime($yearActually . '-09-31'))) {
+
+                array_push($september, $video->total_mb_usado);
+            }
+
+            // Octumbre
+            if ( date("Ymd", strtotime($video->created_at)) >= date("Ymd", strtotime($yearActually . '-10-01')) &&
+                 date("Ymd", strtotime($video->created_at)) <= date("Ymd", strtotime($yearActually . '-10-31'))) {
+
+                array_push($october, $video->total_mb_usado);
+            }
+
+            // Noviembre
+            if ( date("Ymd", strtotime($video->created_at)) >= date("Ymd", strtotime($yearActually . '-11-01')) &&
+                 date("Ymd", strtotime($video->created_at)) <= date("Ymd", strtotime($yearActually . '-11-31'))) {
+
+                array_push($november, $video->total_mb_usado);
+            }
+
+            // Diciembre
+            if ( date("Ymd", strtotime($video->created_at)) >= date("Ymd", strtotime($yearActually . '-12-01')) &&
+                 date("Ymd", strtotime($video->created_at)) <= date("Ymd", strtotime($yearActually . '-12-31'))) {
+
+                array_push($december, $video->total_mb_usado);
+            }
+        }
+
+        // Develvemos un array con el numero de videos celebradas por mes DiskController
+        $data = [
+            array_sum($january), 
+            array_sum($february), 
+            array_sum($march), 
+            array_sum($april), 
+            array_sum($may), 
+            array_sum($june), 
+            array_sum($july), 
+            array_sum($august), 
+            array_sum($september), 
+            array_sum($october), 
+            array_sum($november), 
+            array_sum($december)
+ 
+            
+        ];
+
+        return $data;
+    }
+
+    public function FileSizeConvert($totalBytes)
+    {
+
+        $bytes = $totalBytes;
+        $result = 0;
+        
+        $arBytes = array(
+            0 => array(
+                "UNIT" => "TB",
+                "VALUE" => pow(1024, 4)
+            ),
+            1 => array(
+                "UNIT" => "GB",
+                "VALUE" => pow(1024, 3)
+            ),
+            2 => array(
+                "UNIT" => "MB",
+                "VALUE" => pow(1024, 2)
+            ),
+            3 => array(
+                "UNIT" => "KB",
+                "VALUE" => 1024
+            ),
+            4 => array(
+                "UNIT" => "B",
+                "VALUE" => 1
+            ),
+        );
+
+        foreach($arBytes as $arItem)
+        {
+            if($bytes >= $arItem["VALUE"])
+            {
+                $result = $bytes / $arItem["VALUE"];
+                $result = str_replace(".", "," , strval(round($result, 2)))." ".$arItem["UNIT"];
+                break;
+            }
+        }
+        return $result;
     }
 }
            

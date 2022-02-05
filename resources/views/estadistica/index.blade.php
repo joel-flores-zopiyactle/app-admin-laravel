@@ -92,5 +92,15 @@
         </div>
         <chart-videoconferencia-total />
     </div>
+
+    <div class="row mt-5 bg-white shadow rounded" style="height: 550px;">
+        <div class="p-3">
+            <h5>Total de MB consumidos. </h5>
+            <hr>
+        </div>
+        <chart-disk-consumo-mb />
+    </div>
+
+    
 </div>
 @endsection

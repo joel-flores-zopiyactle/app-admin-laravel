@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Audiencia;
 use App\Models\EstadoAudiencia as EstadoAudienciaModel;
+use App\Models\RolesPersonal;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
@@ -28,6 +29,7 @@ class HomeController extends Controller
     public function index()
     {
         $this->insertDataEstadoAudiencia();
+        $this->insertDataParaPersonal();
         $fechaHoy =  date('Y,m,d');  // '2021-12-31'; 
 
         $audienciasAgendadasHoy = Audiencia::where('fechaCelebracion', $fechaHoy)->get();
@@ -86,5 +88,47 @@ class HomeController extends Controller
         } catch (\Throwable $th) {
             return "La aplicaccion no se puede inicar ya que no se esta conectado a una Base de datos";
         }
+
+
+
+    }
+
+
+    public function insertDataParaPersonal()
+    {
+        
+        try {
+            $roles = RolesPersonal::all();
+            
+            $data = [
+                [
+                 'personal' => 'Juez',
+                ],
+                [
+                 'personal' => 'Secretario',
+                ],
+                [
+                 'personal' => 'Testigo',
+                ],
+                [
+                 'personal' => 'Parte Actora',
+                ],
+                [
+                 'personal' => 'Parte Demandada',
+                ],
+            ];
+
+            if(count($roles) > 0) return;
+            foreach ($data as $value) {
+                $estado =  new RolesPersonal;
+                $estado->tipo_personal = $value['personal'];
+                $estado->save();
+            }
+        } catch (\Throwable $th) {
+            return "La aplicaccion no se puede inicar ya que no se esta conectado a una Base de datos";
+        }
+
+
+        
     }
 }

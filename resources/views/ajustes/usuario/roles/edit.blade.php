@@ -57,7 +57,7 @@ Actualizar rol de usuario
                     @else
                         <input type="checkbox" name="permiso_5" id="permiso_5" class="form-check-input me-2">
                     @endif     
-                    Acceder sala
+                    Ingresar audiencia
                 </label>
 
                 <label for="permiso_6" class="form-check-label">
@@ -66,7 +66,7 @@ Actualizar rol de usuario
                     @else
                         <input type="checkbox" name="permiso_6" id="permiso_6" class="form-check-input me-2">
                     @endif
-                    Lista de auditorias
+                    Reporte
                 </label>
 
                 <label for="permiso_7" class="form-check-label">
@@ -75,7 +75,7 @@ Actualizar rol de usuario
                     @else
                         <input type="checkbox" name="permiso_7" id="permiso_7" class="form-check-input me-2">
                     @endif
-                    Reservar audiencia
+                    Agendar audiencia
                 </label>
 
                 <label for="permiso_8" class="form-check-label">
@@ -84,7 +84,7 @@ Actualizar rol de usuario
                     @else
                         <input type="checkbox" name="permiso_8" id="permiso_8" class="form-check-input me-2">
                     @endif
-                    Buscar expediente
+                    Buscar audiencia
                 </label>
 
                 <label for="permiso_9" class="form-check-label">
@@ -144,7 +144,7 @@ Actualizar rol de usuario
                 <hr>
 
                 <p class="text-black-50 text-small">
-                    Para los módulos de lista de auditorías, Administración y buscar expediente seleccione el tipo de acciones a realizar.
+                    Para los módulos de lista de Audiencias, Administración y buscar audiencia seleccione el tipo de acciones a realizar.
                 </p>
 
                 <label for="permiso_1" class="form-check-label mt-3">

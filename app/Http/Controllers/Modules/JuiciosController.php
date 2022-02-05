@@ -39,7 +39,7 @@ class JuiciosController extends Controller
     {
         $validatedData = $request->validate([
             'nombre' => ['required', 'unique:tipo_juicios', 'max:255'],
-            'descripcion' => ['required'],
+            'descripcion' => [],
         ]);
         
 
@@ -47,7 +47,7 @@ class JuiciosController extends Controller
 
             $newJuicio = TipoJuicio::create([
                 'nombre' => $request->nombre,
-                'descripcion' => $request->descripcion
+                'descripcion' => $request->descripcion ?? ''
             ]);
     
             if($newJuicio) {
@@ -99,7 +99,7 @@ class JuiciosController extends Controller
 
         $updateCentro = TipoJuicio::find($id);
         $updateCentro->nombre = $request->nombre;
-        $updateCentro->descripcion = $request->descripcion;
+        $updateCentro->descripcion = $request->descripcion ?? '';
         $updateCentro->estado = $request->estado ?? 0;
 
         if($updateCentro->save()) {
