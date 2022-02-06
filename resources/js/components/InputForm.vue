@@ -1,7 +1,7 @@
 <template>
     <div class="d-flex justify-content-between">
         <div class="w-100">
-            <input class="form-control w-100" type="text" name="nombre[]" placeholder="Nombre completo..." required>
+            <input class="form-control w-100" type="text" name="nombre[]" placeholder="Nombre completo ..." required>
         </div>
 
         <div class="w-100">

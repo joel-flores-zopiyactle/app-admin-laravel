@@ -71,11 +71,11 @@ Route::middleware(['auth'])->group( function() {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
 
     // Centro de justicia
-    Route::get('/ajustes/centro-justicia', [CentroJusticiaController::class, 'index'])->name('centro.justicia');
-    Route::get('/ajustes/centro-justicia/nuevo', [CentroJusticiaController::class, 'create'])->name('create.centro');
-    Route::post('/ajustes/centro-justicia/nuevo', [CentroJusticiaController::class, 'store'])->name('post.centro');
-    Route::get('/ajustes/centro-justicia/editar/{id}', [CentroJusticiaController::class, 'edit'])->name('edit.centro');
-    Route::put('/ajustes/centro-justicia/editar/{id}', [CentroJusticiaController::class, 'update'])->name('update.centro');
+    Route::get('/ajustes/centro-de-justicia', [CentroJusticiaController::class, 'index'])->name('centro.justicia');
+    Route::get('/ajustes/centro-de-justicia/nuevo', [CentroJusticiaController::class, 'create'])->name('create.centro');
+    Route::post('/ajustes/centro-de-justicia/nuevo', [CentroJusticiaController::class, 'store'])->name('post.centro');
+    Route::get('/ajustes/centro-de-justicia/editar/{id}', [CentroJusticiaController::class, 'edit'])->name('edit.centro');
+    Route::put('/ajustes/centro-de-justicia/editar/{id}', [CentroJusticiaController::class, 'update'])->name('update.centro');
     Route::delete('/ajustes/centro-justicia/{id}', [CentroJusticiaController::class, 'destroy'])->name('delete.centro');
     
     // Roles
@@ -90,7 +90,7 @@ Route::middleware(['auth'])->group( function() {
     
     
     // Sala
-    Route::get('/ajustes/salas', [SalaController::class, 'index'])->name('salas');
+    Route::get('/ajustes/sala', [SalaController::class, 'index'])->name('salas');
     Route::get('/ajustes/sala/nuevo', [SalaController::class, 'create'])->name('create.sala');
     Route::post('/ajustes/sala/nuevo', [SalaController::class, 'store'])->name('post.sala');
     Route::get('/ajustes/sala/editar/{id}', [SalaController::class, 'edit'])->name('edit.sala');
@@ -142,17 +142,17 @@ Route::middleware(['auth'])->group( function() {
     
     
     // Reserva se sala
-    Route::get('/salas/reservadas', [ReservaSalaController::class, 'index'])->name('reservas.salas');
-    Route::get('/salas/reservar-nueva-audiencia', [ReservaSalaController::class, 'create'])->name('book.new.room');
-    Route::post('/salas/reservar-nueva-audiencia', [ReservaSalaController::class, 'store'])->name('post.room');
-    Route::get('/salas/buscar/expediente', [ReservaSalaController::class, 'show'])->name('search.room');
-    Route::get('/salas/expediente/reagendar/{id}', [ReservaSalaController::class, 'edit'])->name('edit.room');
-    Route::put('/salas/expediente/reagendar/{id}', [ReservaSalaController::class, 'update'])->name('update.room');
-    Route::put('/salas/expediente/cancelar/{id}', [ReservaSalaController::class, 'cancelarAudiencia'])->name('cancelar.room');
-    Route::delete('/salas/reservadas/{id}', [ReservaSalaController::class, 'destroy'])->name('delete.room');
+    Route::get('/lista/audiencias/agendadas', [ReservaSalaController::class, 'index'])->name('lista.audiencias');
+    Route::get('/audiencia/agendar-nueva-audiencia', [ReservaSalaController::class, 'create'])->name('book.new.room');
+    Route::post('/audiencia/agendar-nueva-audiencia', [ReservaSalaController::class, 'store'])->name('post.room');
+    Route::get('/audiencia/buscar', [ReservaSalaController::class, 'show'])->name('search.room');
+    Route::get('/audiencia/reagendar/{id}', [ReservaSalaController::class, 'edit'])->name('edit.room');
+    Route::put('/audiencia/reagendar/{id}', [ReservaSalaController::class, 'update'])->name('update.room');
+    Route::put('/audiencia/cancelar/{id}', [ReservaSalaController::class, 'cancelarAudiencia'])->name('cancelar.room');
+    Route::delete('/audiencia/agendada/{id}', [ReservaSalaController::class, 'destroy'])->name('delete.room');
     
-    Route::put('/salas/expediente/pausar/{id}', [ReservaSalaController::class, 'pausarAudiencia'])->name('pausar.room');
-    Route::put('/salas/expediente/finalizar/{id}', [ReservaSalaController::class, 'stopAudiencia'])->name('stop.room');
+    Route::put('/audiencias/expediente/pausar/{id}', [ReservaSalaController::class, 'pausarAudiencia'])->name('pausar.room');
+    Route::put('/audiencias/expediente/finalizar/{id}', [ReservaSalaController::class, 'stopAudiencia'])->name('stop.room');
     
     // Participantes
     Route::get('/agregar/participantes/{id}/{expediente_id}', [ParticipanteController::class, 'create'])->name('add.participante');
@@ -166,12 +166,12 @@ Route::middleware(['auth'])->group( function() {
     
     
     // Buscar Expediente
-    Route::get('/buscar/expediente', [BuscarExpedienteController::class, 'expediente'])->name('buscar.expediente');
+    Route::get('/buscar/audiencia', [BuscarExpedienteController::class, 'expediente'])->name('buscar.expediente');
     Route::get('/buscar/expediente/tipo-audiencias/all', [BuscarExpedienteController::class, 'getTipoAudiencia'])->name('get.tipo.audiencias');
-    Route::get('/buscar/expediente', [BuscarExpedienteController::class, 'buscarExpediente'])->name('buscar.expediente');
+    Route::get('/buscar/audiencia', [BuscarExpedienteController::class, 'buscarExpediente'])->name('buscar.expediente');
     
     // PDF Expediente
-    Route::get('/expediente/pdf/vista/{id}', [ExpedientePDFController::class, 'index'])->name('show.pdf.imprimir');
+    Route::get('/expediente/pdf/descargar/{id}', [ExpedientePDFController::class, 'index'])->name('show.pdf.imprimir');
     Route::get('/expediente/pdf/{id}', [ExpedientePDFController::class, 'show'])->name('show.pdf.expediente');
     Route::get('/expediente/pdf/show/pdf/{id}', [ExpedientePDFController::class, 'showPDFDownload'])->name('show.pdf.expediente.download');
     

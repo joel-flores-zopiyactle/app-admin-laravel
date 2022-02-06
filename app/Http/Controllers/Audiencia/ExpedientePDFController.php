@@ -7,7 +7,7 @@ use App\Models\Audiencia;
 use App\Models\Expediente as ExpedienteModel;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade as PDF;
-
+use DateTime;
 
 class ExpedientePDFController extends Controller
 {
@@ -23,9 +23,12 @@ class ExpedientePDFController extends Controller
         $expediente = ExpedienteModel::find($id);
         $audiencia = Audiencia::where('expediente_id', $id)->first();
         //return view('reservas.pdf.expediente', compact('expediente'));
+
+        $horaInicio = new DateTime($audiencia->horaInicio); 
+        $meridianoInicio = $horaInicio->format('H:i A'); // nos dice si es AM o PM
         
         $pdf = PDF::loadView('reservas.pdf.expediente', compact('expediente'));
-        return $pdf->download("$expediente->numero_expediente - $audiencia->fechaCelebracion.pdf");
+        return $pdf->download("$expediente->numero_expediente - $audiencia->fechaCelebracion - $meridianoInicio.pdf");
     }
 
     public function showPDFDownload($id)

@@ -107,7 +107,7 @@
 
             <hr>
           <div>
-            <a href="{{ route('reservas.salas') }}" class="btn btn-outline-danger me-2">Regresar</a>
+            <a href="{{ route('lista.audiencias') }}" class="btn btn-outline-danger me-2">Regresar</a>
             <button type="submit" class="btn btn-success">Reagendar</button>
           </div>
         </form>

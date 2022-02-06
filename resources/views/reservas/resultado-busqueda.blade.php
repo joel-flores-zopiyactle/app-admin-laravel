@@ -63,7 +63,7 @@
     </div>
 
     <div class="mt-5">
-        <a class="d-flex align-content-center" href="{{ route('reservas.salas') }}">
+        <a class="d-flex align-content-center" href="{{ route('lista.audiencias') }}">
             <span class="iconify h3 mr-2" data-icon="bx:bxs-left-arrow-circle"></span> 
             <span>Regresar</span>
         </a>

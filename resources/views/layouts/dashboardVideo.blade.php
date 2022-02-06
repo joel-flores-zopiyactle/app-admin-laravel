@@ -8,6 +8,8 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ config('app.name', 'Laravel') }} | @yield('title') </title>
 
+    <link rel="shortcut icon" href="{{ asset('img/icon.jpg')}}" type="image/x-icon">
+
     <style>
         .bd-placeholder-img {
             font-size: 1.125rem;
@@ -37,9 +39,9 @@
   </head>
   <body class="bg-light">
     
-    <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+    <header class="navbar navbar-dark sticky-top bg-light flex-md-nowrap p-0 shadow">
         <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 text-center" href="#">
-            <img class="bg-white" style="width: 80px;" src="{{ asset('img/sinjo_logo.png') }}" alt="" srcset="">
+            <img class="bg-white" style="width: 80px;" src="{{ asset('img/logo.jpg') }}" alt="" srcset="">
         </a>
             
         <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">

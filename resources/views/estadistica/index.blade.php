@@ -93,12 +93,12 @@
         <chart-videoconferencia-total />
     </div>
 
-    <div class="row mt-5 bg-white shadow rounded" style="height: 550px;">
-        <div class="p-3">
-            <h5>Total de MB consumidos. </h5>
-            <hr>
+    <div class="row mt-5 bg-white shadow rounded p-3 mb-5">
+        <h5>Total de datos consumidos durante la grabación de audiencias. </h5>
+        <hr>
+        <div>
+            <chart-disk-consumo-mb />
         </div>
-        <chart-disk-consumo-mb />
     </div>
 
     

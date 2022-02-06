@@ -26,8 +26,8 @@
           </div>
 
           <div>
-            <button type="submit"  class="btn btn-primary" 
-            onclick="return confirm('¿Estas seguro de finalizar el expediente? \nRevise bien sus datos ingresados, una vez finalizada ya no podras editar los datos de los integrantes..')"
+            <button type="submit"  class="btn btn-primary mt-3" 
+            onclick="return confirm('¿Estas seguro de finalizar? \n\n')"
             >Generar expediente</button>
           </div>
         </form>
