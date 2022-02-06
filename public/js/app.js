@@ -6673,6 +6673,7 @@ var obs2 = new OBSWebSocket(); // Hace una conexion a una maquina externa median
     this.connectOBS();
     this.connectOBSExterno();
     this.getIdExpedinete();
+    this.getEstadoAudiencia();
   },
   methods: {
     // Obtener ID del expediente
@@ -7163,7 +7164,7 @@ var obs2 = new OBSWebSocket(); // Hace una conexion a una maquina externa median
 
                 };
                 _context6.next = 5;
-                return axios.put("".concat(baseURL, "/salas/expediente/finalizar/").concat(_this13.expedienteID), config);
+                return axios.put("".concat(baseURL, "/audiencia/expediente/finalizar/").concat(_this13.expedienteID), config);
 
               case 5:
                 res = _context6.sent;
@@ -7212,7 +7213,7 @@ var obs2 = new OBSWebSocket(); // Hace una conexion a una maquina externa median
               case 21:
                 _context6.next = 23;
                 return obs2.send('SetFilenameFormatting', {
-                  'filename-formatting': "video-".concat(_this13.numeroExpediente, "-").concat(_this13.fechaCelebracionAudiencia)
+                  'filename-formatting': "".concat(_this13.numeroExpediente, "-").concat(_this13.fechaCelebracionAudiencia)
                 });
 
               case 23:
@@ -7270,7 +7271,7 @@ var obs2 = new OBSWebSocket(); // Hace una conexion a una maquina externa median
 
                 };
                 _context7.next = 5;
-                return axios.put("".concat(baseURL, "/salas/expediente/pausar/").concat(_this14.expedienteID), config);
+                return axios.put("".concat(baseURL, "/audiencia/expediente/pausar/").concat(_this14.expedienteID), config);
 
               case 5:
                 res = _context7.sent;
@@ -7319,7 +7320,7 @@ var obs2 = new OBSWebSocket(); // Hace una conexion a una maquina externa median
               case 21:
                 _context7.next = 23;
                 return obs2.send('SetFilenameFormatting', {
-                  'filename-formatting': "video-".concat(_this14.numeroExpediente, "-").concat(_this14.fechaCelebracionAudiencia)
+                  'filename-formatting': "".concat(_this14.numeroExpediente, "-").concat(_this14.fechaCelebracionAudiencia)
                 });
 
               case 23:
@@ -7526,10 +7527,42 @@ var obs2 = new OBSWebSocket(); // Hace una conexion a una maquina externa median
           }
         }, _callee9);
       }))();
+    },
+    getEstadoAudiencia: function getEstadoAudiencia() {
+      var _this18 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee10() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee10$(_context10) {
+          while (1) {
+            switch (_context10.prev = _context10.next) {
+              case 0:
+                _context10.next = 2;
+                return axios.get("".concat(baseURL, "/audiencia/expediente/estado/").concat(_this18.expedienteID)).then(function (response) {
+                  return response.data;
+                }).then(function (estado) {
+                  if (estado === 'Finalizada') {
+                    _this18.controls.showPlay = false;
+                    Swal.fire({
+                      icon: 'warning',
+                      title: 'Error',
+                      text: 'La audiencia a finalizado, ya no puedes grabar.'
+                    });
+                  }
+                })["catch"](function (error) {
+                  console.log(error);
+                });
+
+              case 2:
+              case "end":
+                return _context10.stop();
+            }
+          }
+        }, _callee10);
+      }))();
     }
   },
   mounted: function mounted() {
-    var _this18 = this;
+    var _this19 = this;
 
     this.startVideoWebCam();
     this.listMediaDevices();
@@ -7538,29 +7571,29 @@ var obs2 = new OBSWebSocket(); // Hace una conexion a una maquina externa median
     obs.on('SwitchScenes', function (data) {
       // Espera en cambio de escnea
       // console.log(data);
-      _this18.activeSceneCurrent = data.sceneName;
+      _this19.activeSceneCurrent = data.sceneName;
     });
     obs.on('RecordingStopping', function (data) {
-      _this18.durationVideo = data.recTimecode;
-      _this18.ubicationVideo = data.recordingFilename;
+      _this19.durationVideo = data.recTimecode;
+      _this19.ubicationVideo = data.recordingFilename;
       console.log(data.recordingFilename);
       var arrayName = data.recordingFilename.split('/'); // Separamos la ruta del video en un array
 
       arrayName.map(function (name) {
         if (name === arrayName[0]) {
-          _this18.unidadDisk = name;
+          _this19.unidadDisk = name;
         } // Recupera la unidad donde se guarda el video Ejempl en el disco  : 'D'
         // Si el utimo valor del array es igual al nombre asigamos al videoNombre el valor del ultimo
         // array,por defecto el ultimo valor del array es el nombre del video 
 
 
-        if (name === arrayName[arrayName.length - 1]) _this18.nameVideo = name;
+        if (name === arrayName[arrayName.length - 1]) _this19.nameVideo = name;
       });
     });
 
     navigator.mediaDevices.ondevicechange = function () {
       // se dispara mas de una vez al quitar o agregar un dispositivo
-      _this18.listMediaDevices();
+      _this19.listMediaDevices();
     };
   },
   destroyed: function destroyed() {
@@ -77788,7 +77821,7 @@ var staticRenderFns = [
       _c(
         "h5",
         { staticClass: "modal-title", attrs: { id: "exampleModalLabel" } },
-        [_vm._v("Analisis de Almacenamiento del Disco Duro")]
+        [_vm._v("Análisis de Almacenamiento del Disco Duro")]
       ),
       _vm._v(" "),
       _c("button", {
@@ -77815,9 +77848,9 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("Total de GB usado")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Total de % usado")]),
+        _c("th", [_vm._v("Total de porcentaje usado")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Total de % disponible")]),
+        _c("th", [_vm._v("Total de porcentaje disponible")]),
       ]),
     ])
   },

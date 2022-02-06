@@ -16,7 +16,7 @@
             <div class="modal-dialog modal-xl">
                 <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Analisis de Almacenamiento del Disco Duro</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Análisis de Almacenamiento del Disco Duro</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -29,8 +29,8 @@
                                 <th>Total de GB</th>
                                 <th>Total de GB disponible</th>
                                 <th>Total de GB usado</th>
-                                <th>Total de % usado</th>
-                                <th>Total de % disponible</th>
+                                <th>Total de porcentaje usado</th>
+                                <th>Total de porcentaje disponible</th>
                             </tr>
                         </thead>
                         <tbody>

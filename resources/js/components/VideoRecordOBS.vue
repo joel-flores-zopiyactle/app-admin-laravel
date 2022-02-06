@@ -70,6 +70,7 @@
 </template>
 
 <script>
+
 // OBS 
 const OBSWebSocket = require('obs-websocket-js');
 const Swal = require('sweetalert2')
@@ -119,6 +120,7 @@ export default {
         this.connectOBS()
         this.connectOBSExterno()
         this.getIdExpedinete()
+        this.getEstadoAudiencia()
     },
     
     methods: {
@@ -482,7 +484,7 @@ export default {
                     'X-CSRF-TOKEN': token[0].value,// <--- aquí el token
                 };
 
-                const res = await axios.put(`${baseURL}/salas/expediente/finalizar/${this.expedienteID}`, config)
+                const res = await axios.put(`${baseURL}/audiencia/expediente/finalizar/${this.expedienteID}`, config)
 
                 if(res.data.status === 200) {
                     await obs.send('StopRecording')
@@ -510,7 +512,7 @@ export default {
                     this.saveInfoVideoRecord() // GUardamos los dato del video grabado en la BD
                     // OBS 2
                     await obs2.send('StopRecording')
-                    await obs2.send('SetFilenameFormatting', { 'filename-formatting': `video-${this.numeroExpediente}-${this.fechaCelebracionAudiencia}` })
+                    await obs2.send('SetFilenameFormatting', { 'filename-formatting': `${this.numeroExpediente}-${this.fechaCelebracionAudiencia}` })
 
                    
 
@@ -543,7 +545,7 @@ export default {
                     'X-CSRF-TOKEN': token[0].value,// <--- aquí el token
                 };
 
-                const res = await axios.put(`${baseURL}/salas/expediente/pausar/${this.expedienteID}`, config)
+                const res = await axios.put(`${baseURL}/audiencia/expediente/pausar/${this.expedienteID}`, config)
 
                 if(res.data.status === 200) {
                     await obs.send('StopRecording')
@@ -570,7 +572,7 @@ export default {
                     this.saveInfoVideoRecord() // GUardamos los dato del video grabado en la BD
                     // OBS 2
                     await obs2.send('StopRecording')
-                    await obs2.send('SetFilenameFormatting', { 'filename-formatting': `video-${this.numeroExpediente}-${this.fechaCelebracionAudiencia}` })
+                    await obs2.send('SetFilenameFormatting', { 'filename-formatting': `${this.numeroExpediente}-${this.fechaCelebracionAudiencia}` })
 
                    
 
@@ -731,6 +733,25 @@ export default {
                 })
             }
 
+        },
+
+        async getEstadoAudiencia() {
+            await axios.get(`${baseURL}/audiencia/expediente/estado/${this.expedienteID}`)
+                .then( response => response.data )
+                .then( estado => {
+                    if(estado === 'Finalizada') {
+                        this.controls.showPlay  = false;
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'Error',
+                            text: 'La audiencia a finalizado, ya no puedes grabar.',
+                        })
+                    }
+                                    
+                }) 
+                .catch(function (error) {
+                    console.log(error);
+                })
         }
     },
 

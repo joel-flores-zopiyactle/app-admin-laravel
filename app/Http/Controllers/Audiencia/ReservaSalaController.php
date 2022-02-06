@@ -450,4 +450,13 @@ class ReservaSalaController extends Controller
 
     }
 
+    public function getEstadoAudiencia($id)
+    {
+        $audiencia = AudienciaModel::where('expediente_id', $id)->first();
+
+        $estado = $audiencia->estadoAudiencia->estado;
+
+        return $estado;
+    }
+
 }

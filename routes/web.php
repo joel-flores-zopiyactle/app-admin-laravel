@@ -151,8 +151,9 @@ Route::middleware(['auth'])->group( function() {
     Route::put('/audiencia/cancelar/{id}', [ReservaSalaController::class, 'cancelarAudiencia'])->name('cancelar.room');
     Route::delete('/audiencia/agendada/{id}', [ReservaSalaController::class, 'destroy'])->name('delete.room');
     
-    Route::put('/audiencias/expediente/pausar/{id}', [ReservaSalaController::class, 'pausarAudiencia'])->name('pausar.room');
-    Route::put('/audiencias/expediente/finalizar/{id}', [ReservaSalaController::class, 'stopAudiencia'])->name('stop.room');
+    Route::put('/audiencia/expediente/pausar/{id}', [ReservaSalaController::class, 'pausarAudiencia'])->name('pausar.room');
+    Route::put('/audiencia/expediente/finalizar/{id}', [ReservaSalaController::class, 'stopAudiencia'])->name('stop.room');
+    Route::get('/audiencia/expediente/estado/{id}', [ReservaSalaController::class, 'getEstadoAudiencia'])->name('stop.room.estado');
     
     // Participantes
     Route::get('/agregar/participantes/{id}/{expediente_id}', [ParticipanteController::class, 'create'])->name('add.participante');
