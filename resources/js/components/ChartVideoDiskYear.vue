@@ -1,10 +1,27 @@
+<template>
+    <div>
+        <div class="container">
+            <div class="row gap-3">
+                <div class="col-3 card shadow" v-for="mes of data" :key="mes.id">
+                   
+                    <div class="card-body">
+                         <section class="text-center">{{mes.mes}}</section>
+                         <section class="text-center">{{mes.datos}}</section>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+
+
 <script>
-    import { Bar } from 'vue-chartjs'
     export default {
-        extends: Bar,
+       
         data() {
             return {
-                data: null
+                data: []
             }
         },
 
@@ -19,29 +36,13 @@
                 axios.get(`${baseURL}/analisis/estadistico/vide/consumo/mb`)
                 .then( response => response.data )
                 .then( data => {
-                    this.renderChart({
-                        labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
-                        datasets:data
-                        },
-                        {
-                            responsive: true,
-                            maintainAspectRatio: false
-                        })            
+                   this.data = data           
                 }) 
                 .catch(function (error) {
                     console.log(error);
                 })
             },
-        },
-
-        mounted () {
-          /*   this.getDataAudienciasCelebradas();
-            // Overwriting base render method with actual data.
-            const datos = this.data;
-            console.log(datos); */
-
-           
-        },
+        }
 
     }
 </script>

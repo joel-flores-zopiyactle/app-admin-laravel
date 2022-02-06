@@ -301,20 +301,67 @@ class AnalisisController extends Controller
 
         // Develvemos un array con el numero de videos celebradas por mes DiskController
         $data = [
-            array_sum($january), 
-            array_sum($february), 
-            array_sum($march), 
-            array_sum($april), 
-            array_sum($may), 
-            array_sum($june), 
-            array_sum($july), 
-            array_sum($august), 
-            array_sum($september), 
-            array_sum($october), 
-            array_sum($november), 
-            array_sum($december)
- 
-            
+            [
+                'mes'   => 'Enero',
+                'datos' => $this->FileSizeConvert(array_sum($january))
+            ],
+            [
+                'mes'   => 'Febrero',
+                'datos' =>  $this->FileSizeConvert(array_sum($february)), 
+            ],
+
+            [
+                'mes'   => 'Marzo',
+                'datos' => $this->FileSizeConvert(array_sum($march)), 
+            ],
+
+            [
+                'mes'   => 'Abril',
+                'datos' =>  $this->FileSizeConvert(array_sum($april)),
+            ],
+
+            [
+                'mes'   => 'Mayo',
+                'datos' =>  $this->FileSizeConvert(array_sum($may)), 
+            ],
+
+            [
+                'mes'   => 'Junio',
+                'datos' => $this->FileSizeConvert(array_sum($june)), 
+            ],
+
+
+            [
+                'mes'   => 'Julio',
+                'datos' =>  $this->FileSizeConvert(array_sum($july)), 
+            ],
+
+
+            [
+                'mes'   => 'Agosto',
+                'datos' => $this->FileSizeConvert(array_sum($august)), 
+            ],
+
+
+            [
+                'mes'   => 'Septiembre',
+                'datos' => $this->FileSizeConvert(array_sum($september)), 
+            ],
+
+            [
+                'mes'   => 'Octubre',
+                'datos' => $this->FileSizeConvert(array_sum($october)), 
+            ],
+
+            [
+                'mes'   => 'Noviembre',
+                'datos' => $this->FileSizeConvert(array_sum($november)), 
+            ],
+
+            [
+                'mes'   => 'Diciembre',
+                'datos' => $this->FileSizeConvert(array_sum($december))
+            ],
         ];
 
         return $data;

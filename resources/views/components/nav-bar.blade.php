@@ -1,7 +1,7 @@
-<div class="vh-100 bg-white pt-4 px-2 overflow-scroll">
+<div class="vh-100 px-2 overflow-scroll">
     <ul class="list-unstyled ps-0">
 
-        <li class="mb-1 mt-3" >
+        <li class="mb-1 mt-4" >
             <div class="mb-3 d-flex justify-content-center">
                 <div class="avatar" style="background-image: url({{ asset(Storage::url(Auth::user()->avatar)) }})"></div>
             </div>
@@ -29,7 +29,7 @@
                     @if (Auth::user()->tipoUsuario->permiso->ver_auditoria)
                         <li>
                             <a href="{{ route('ingresar.evento') }}" class="link-dark rounded">
-                                <span class="iconify h4 me-1" data-icon="ri:team-fill"></span>
+                                <span class="iconify h4 me-1" data-icon="ic:outline-record-voice-over"></span>
                                 Ingresar Audiencia
                             </a>
                         </li>
@@ -81,7 +81,7 @@
         <li class="mb-1" >
             <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                 <li>
-                    <a href="{{ route('reservas.salas') }}" class="link-dark rounded">
+                    <a href="{{ route('lista.audiencias') }}" class="link-dark rounded">
                         <span class="iconify h4 me-1" data-icon="bx:bx-archive"></span>
                         Administración
                     </a>
@@ -146,7 +146,7 @@
                 <li><a href="{{ route('audiencias') }}"         class="link-dark rounded"><span class="iconify h4 me-1" data-icon="fluent:people-audience-20-filled"></span>Tipo de audiencias</a></li>
                 <li><a href="{{ route('juicios') }}"            class="link-dark rounded"><span class="iconify h4 me-1" data-icon="healthicons:justice"></span>Tipo de juicios</a></li>
                 <li><a href="{{ route('usuarios') }}"           class="link-dark rounded"><span class="iconify h4 me-1" data-icon="gridicons:multiple-users"></span>Control de usuarios</a></li>
-                <li><a href="{{ route('config.obs') }}"         class="link-dark rounded"><span class="iconify h4 me-1" data-icon="simple-icons:obsstudio"></span>OBS</a></li>
+                <li><a href="{{ route('config.obs') }}"         class="link-dark rounded"><span class="iconify h4 me-1" data-icon="ri:remote-control-fill"></span>Configurar IP OBS</a></li>
             </ul>
             </div>
         </li>

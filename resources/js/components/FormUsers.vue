@@ -10,7 +10,7 @@
         </div>
     </div>
 
-    <h3 v-else>No hay un campo para agregar un participante</h3>
+    <h3 class="text-center my-4" v-else>No hay un campo para agregar un participante</h3>
     
 
     <div class="mt-3">
