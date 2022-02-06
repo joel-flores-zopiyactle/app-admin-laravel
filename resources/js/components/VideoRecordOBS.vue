@@ -91,6 +91,7 @@ export default {
             ubicationVideo: '', // Ubicaccion del video gurdado desde OBS
             nameVideo: '', // Nombre del video grabado
             unidadDisk: '', // Nombre de la unidad donde se guarda el video
+            ip_address: '', // Direccion ip para el obs externo
             // Crnometro
             tiempoRef : Date.now(),
             cronometrar : false,
@@ -111,8 +112,10 @@ export default {
                 showStop: false
             },
         }
+    
     },
     created() {
+        this.getIPAddress()
         this.connectOBS()
         this.connectOBSExterno()
         this.getIdExpedinete()
@@ -129,6 +132,26 @@ export default {
             this.numeroExpediente = numeroExpediente.value;
             this.fechaCelebracionAudiencia = fechaCelebracionAudiencia.value;
             //console.log(this.expedienteID);
+        },
+
+        async getIPAddress() {
+            ///ajustes/obs/ip/address
+            await axios.get(`${baseURL}/ajustes/obs/ip/address`)
+                .then( response => response.data )
+                .then( ip => {
+                    if(ip === '0.0.0.0') {
+                        Swal.fire(
+                            'Direccion IP?',
+                            'Configura la dirección IP para la conexión remota a OBS?',
+                            'question'
+                        )
+                    }
+                    
+                    this.ip_address = ip                
+                }) 
+                .catch(function (error) {
+                    console.log(error);
+                })
         },
         // Obtener video de la WebCam
         async startVideoWebCam() {
@@ -161,6 +184,8 @@ export default {
             }).then(data => {
                 // console.log(data.scenes);
                 this.scenes = data.scenes
+                //Permite asignar el nombre del archivo
+                obs.send('SetFilenameFormatting', { 'filename-formatting': `${this.numeroExpediente}-${this.fechaCelebracionAudiencia}` })
             })
             .catch(err => { // Promise convention dicates you have a catch on every chain.
                 // console.log(err);
@@ -178,23 +203,20 @@ export default {
         },
         connectOBSExterno() {
             // Si la direccion es cambiada hay que actualizar por la nueva direccion de la maquina externa
-            obs2.connect({ address: '192.168.0.103:4444', password: ''}).then(() => { // TODO: Conexion por direccion IP
+            obs2.connect({ address: `${this.ip_address}:4444`, password: ''}).then(() => { // Conexion por direccion IP
                 // console.log(`Success! We're connected & authenticated.`);
                 return obs.send('GetSceneList');
             }).then(data => { 
                 console.log(data.scenes);
+                obs2.send('SetFilenameFormatting', { 'filename-formatting': `${this.numeroExpediente}-${this.fechaCelebracionAudiencia}` })
                 //this.scenes = data.scenes
             })
             .catch(err => { // Promise convention dicates you have a catch on every chain.
-                console.log(err);
-                if(err.code === 'CONNECTION_ERROR') {
-                    Swal.fire(
-                        'OBS no esta activo?',
-                        'La aplicacion OBS no esta activo en la maquina externo de respaldo?',
-                        'question'
-                    )
-                    //alert('El segundo OBS externo - No esta activado.')
-                }
+                Swal.fire(
+                    'No se pudo conectar a OBS externo',
+                    'No se pudo conectar a la aplicación de OBS, verifica que este activa o la dirección IP este correcta del PC a la que se esta conecta?',
+                    'question'
+                )
             });
         },
         changeSceneHD60_S() {
@@ -467,12 +489,12 @@ export default {
                     this.video.pause();   
                     this.cronometrar = false
                      //Permite asignar el nombre del archivo
-                    await obs.send('SetFilenameFormatting', { 'filename-formatting': `video-${this.numeroExpediente}-${this.fechaCelebracionAudiencia}` })
+                    await obs.send('SetFilenameFormatting', { 'filename-formatting': `${this.numeroExpediente}-${this.fechaCelebracionAudiencia}` })
 
                     //this.showFormFile = true; muestra el formualrio para subir el video grabado
 
                     //Controls
-                    this.controls.showPlay   = true;
+                    this.controls.showPlay   = false;
                     this.controls.showPause   = false;
                     this.controls.showResumen = false;
                     this.controls.showStop    = false;
@@ -528,7 +550,7 @@ export default {
                     this.video.pause();   
                     this.cronometrar = false
                      //Permite asignar el nombre del archivo
-                    await obs.send('SetFilenameFormatting', { 'filename-formatting': `video-${this.numeroExpediente}-${this.fechaCelebracionAudiencia}` })
+                    await obs.send('SetFilenameFormatting', { 'filename-formatting': `${this.numeroExpediente}-${this.fechaCelebracionAudiencia}` })
 
                     //this.showFormFile = true; muestra el formualrio para subir el video grabado
 
@@ -725,7 +747,7 @@ export default {
         obs.on('RecordingStopping', data => {
                this.durationVideo   = data.recTimecode;
                this.ubicationVideo  = data.recordingFilename
-               // console.log( data.recordingFilename);
+               console.log( data.recordingFilename);
                let arrayName = data.recordingFilename.split('/'); // Separamos la ruta del video en un array
                arrayName.map(name => {
                    if(name === arrayName[0]) {this.unidadDisk = name}   // Recupera la unidad donde se guarda el video Ejempl en el disco  : 'D'

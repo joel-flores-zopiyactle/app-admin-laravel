@@ -146,6 +146,7 @@
                 <li><a href="{{ route('audiencias') }}"         class="link-dark rounded"><span class="iconify h4 me-1" data-icon="fluent:people-audience-20-filled"></span>Tipo de audiencias</a></li>
                 <li><a href="{{ route('juicios') }}"            class="link-dark rounded"><span class="iconify h4 me-1" data-icon="healthicons:justice"></span>Tipo de juicios</a></li>
                 <li><a href="{{ route('usuarios') }}"           class="link-dark rounded"><span class="iconify h4 me-1" data-icon="gridicons:multiple-users"></span>Control de usuarios</a></li>
+                <li><a href="{{ route('config.obs') }}"         class="link-dark rounded"><span class="iconify h4 me-1" data-icon="simple-icons:obsstudio"></span>OBS</a></li>
             </ul>
             </div>
         </li>

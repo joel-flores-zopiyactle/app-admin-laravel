@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Audiencia;
 
 use App\Http\Controllers\Controller;
+use App\Models\Audiencia;
 use App\Models\Expediente as ExpedienteModel;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade as PDF;
@@ -20,10 +21,11 @@ class ExpedientePDFController extends Controller
         $id = decrypt($id);
         
         $expediente = ExpedienteModel::find($id);
+        $audiencia = Audiencia::where('expediente_id', $id)->first();
         //return view('reservas.pdf.expediente', compact('expediente'));
         
         $pdf = PDF::loadView('reservas.pdf.expediente', compact('expediente'));
-        return $pdf->download("expediente-$expediente->numero_expediente.pdf");
+        return $pdf->download("$expediente->numero_expediente - $audiencia->fechaCelebracion.pdf");
     }
 
     public function showPDFDownload($id)

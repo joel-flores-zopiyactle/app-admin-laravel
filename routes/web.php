@@ -14,6 +14,7 @@ use App\Http\Controllers\Modules\RolController;
 use App\Http\Controllers\Modules\SalaController;
 use App\Http\Controllers\Modules\TipoAudienciaController;
 use App\Http\Controllers\Modules\JuiciosController;
+use App\Http\Controllers\ConfigConexionObsController;
 
 use App\Http\Controllers\User\UsuariosController;
 use App\Http\Controllers\User\TipoUsuariosController;
@@ -131,7 +132,13 @@ Route::middleware(['auth'])->group( function() {
     Route::get('/ajustes/usuario/rol/{id}', [TipoUsuariosController::class, 'edit'])->name('edit.roles.usuarios');
     Route::put('/ajustes/usuario/rol/{id}', [TipoUsuariosController::class, 'update'])->name('update.roles.usuarios');
     Route::delete('/ajustes/usuario/rol/{id}', [TipoUsuariosController::class, 'destroy'])->name('delete.roles.usuarios');
-    
+
+
+     // Confugurar OBS
+     Route::get('/ajustes/conexión/remota/obs', [ConfigConexionObsController::class, 'index'])->name('config.obs');
+     Route::post('/ajustes/obs', [ConfigConexionObsController::class, 'store'])->name('config.obs.post');
+     Route::put('/ajustes/obs/{id}', [ConfigConexionObsController::class, 'update'])->name('config.obs.update');
+     Route::get('/ajustes/obs/ip/address', [ConfigConexionObsController::class, 'getIPAddress'])->name('config.obs.ip.address');
     
     
     // Reserva se sala
