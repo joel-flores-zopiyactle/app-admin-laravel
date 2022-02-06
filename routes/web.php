@@ -49,7 +49,7 @@ try {
     if($users->count() > 0) {   // Si existe un usuario desactivamos la opcion de register del Auth
 
         Auth::routes(["register" => false]);
-        Artisan::call('storage:link'); // Se publica el storage a la carpeta public
+        //Artisan::call('storage:link'); // Se publica el storage a la carpeta public
 
     } else {
 
