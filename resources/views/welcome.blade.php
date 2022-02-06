@@ -40,7 +40,9 @@
 
             <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
                 <div class="flex justify-center pt-8 sm:justify-start sm:pt-0">
-                   <img src="{{ asset('img/logo.jpg') }}" class="img-fluid" alt="imagen de sinjo">
+                   <div>
+                    <img src="{{ asset('img/logo.jpg') }}" style="width: 100%" alt="imagen de sinjo">
+                   </div>
                 </div>
 
                 <div class="mt-8 bg-white dark:bg-gray-800 overflow-hidden shadow sm:rounded-lg">
