@@ -214,12 +214,12 @@
                 <tr>
                    <td>Grabación de la audiencia</td>
                    <td></td>
-                   <td></td>
+                 {{--   <td></td> --}}
                 </tr>
                 <tr>
                     <td>Nombre</td>
                     <td>Duración</td>
-                    <td>Grabación </td>
+                   {{--  <td>Grabación </td> --}}
                 </tr>
             </thead>
 
@@ -229,9 +229,9 @@
                 <tr>
                     <td> {{ $video->nombre }} </td>
                     <td> {{ $video->duracion }} </td>
-                    <td>
+                   {{--  <td>
                         {{ $video->created_at->diffForHumans()  }}
-                        <div class="d-flex justify-content-end">
+                        <div class="d-flex justify-content-end"> --}}
                             {{-- <a class="btn btn-sm btn-outline-secondary me-1" href="{{ $video->url }}">Ver</a> --}}
 
                             {{-- permiso de descargar archivos --}}
@@ -239,8 +239,8 @@
                                 <a class="btn btn-sm btn-outline-secondary" href="{{ route('video.download.audiencia', encrypt($video->id)) }}">Descargar</a>
                             @endif --}}
                            
-                        </div>
-                    </td>
+                        {{-- </div>
+                    </td> --}}
                 </tr>
                 @endforeach
             </tbody>

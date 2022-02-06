@@ -217,9 +217,9 @@ Route::middleware(['auth'])->group( function() {
     Route::get('/invitado/login/acceso/audiencia', [InvitadoController::class, 'singIn'])->name('invitado.singIn');
     
     // Reportes de auditorias
-    Route::get('/auditorias/lista', [ReporteController::class, 'index'])->name('auditoria.lista');
-    Route::get('/auditorias/lista/buscar', [ReporteController::class, 'showExpediente'])->name('auditoria.lista.buscar');
-    Route::get('/auditorias/lista/ver/{id}', [ReporteController::class, 'show'])->name('auditoria.lista.ver');
+    Route::get('/lista/audiencias', [ReporteController::class, 'index'])->name('auditoria.lista');
+    Route::get('/audiencia/lista/buscar', [ReporteController::class, 'showExpediente'])->name('auditoria.lista.buscar');
+    Route::get('/audiencia/lista/ver/{id}', [ReporteController::class, 'show'])->name('auditoria.lista.ver');
 
     // Analisis estadistico
     Route::get('/analisis/estadistico', [AnalisisController::class, 'index'])->name('analisis.index');
