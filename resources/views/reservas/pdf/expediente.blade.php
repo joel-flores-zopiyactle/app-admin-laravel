@@ -134,8 +134,8 @@
             <table style="width:50%">
                 <thead>
                     <tr>
-                        <td style="width: 50%">Número de expediente:</td>
-                        <td style="width: 50%">Folio:</td>
+                        <td style="width: 50%">Número de expediente</td>
+                        <td style="width: 50%">Folio</td>
                     
                     </tr>
                 </thead>
@@ -152,18 +152,18 @@
                 <thead>
                 <tr>
                     <td style="width: 25%">Juez</td>
-                    <td style="width: 25%">Juzgado</td>
-                    <td style="width: 25%">Actor</td>
                     <td style="width: 25%">Secretario</td>
-                    <td style="width: 25%">Demandado</td>
+                    <td style="width: 25%">Testigo</td>
+                    <td style="width: 25%">Parte Actora</td>
+                    <td style="width: 25%">Parte Demandada</td>
                 </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <td style="width: 25%">{{ $expediente->juez }}</td>
+                        <td style="width: 25%">{{ $expediente->secretario }}</td>
                         <td style="width: 25%">{{ $expediente->juzgado }}</td>
                         <td style="width: 25%">{{ $expediente->actor }}</td>
-                        <td style="width: 25%">{{ $expediente->secretario }}</td>
                         <td style="width: 25%">{{ $expediente->demandado }}</td>
                     </tr>
                 </tbody>
@@ -230,7 +230,7 @@
                     </tbody>
                 </table>
             @else
-                <section style="text-align: center;">
+                <section style="text-align: center; padding-bottom: 25px;">
                     No hay participantes en la audiencia
                 </section>
             @endif
@@ -240,7 +240,7 @@
             <table>
                 <thead>
                 <tr>
-                    <td>Token de acceso:</td>
+                    <td>Token de acceso</td>
                 </tr>
                 </thead>
                 <tbody>
@@ -254,7 +254,7 @@
             <table>
                 <thead>
                 <tr>
-                    <td>Token de invitado:</td>
+                    <td>Token de invitado</td>
                 </tr>
                 </thead>
                 <tbody>

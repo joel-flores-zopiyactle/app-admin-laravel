@@ -14,6 +14,8 @@ use App\Models\TipoAudiencia as TipoAudienciaModel;
 use App\Models\TipoJuicio as TipoJuicioModel;
 use App\Models\TokenAudiencia as TokenAudienciaModel;
 use App\Models\TokenAudienciaInvitado as TokenAudienciaInvitadoModel;
+use Carbon\Carbon;
+use DateTime;
 use Illuminate\Http\Request;
 
 class ReservaSalaController extends Controller
@@ -84,6 +86,17 @@ class ReservaSalaController extends Controller
             'horaFinalizar'     => ['required'],
             'videoconferencia'     => ['required'],
         ]);
+
+        $dateActual = date('dmY'); // Obtenemosla fecha actual
+        $timestampSeleccionado = strtotime($request->fechaCelebracion); // Convertimos la fecha seleccionado por el usuario a timestamp
+
+        if(date('dmY', $timestampSeleccionado) < $dateActual) { // Verificamos que no sea una fecha pasada
+            return back()->with('error-fecha', 'No puede usar una fecha anterior');
+        }
+        
+        if($request->horaInicio > $request->horaFinalizar) { 
+            return back()->with('error-hora', 'La hora que selecciono no coincide con los tiempos');
+        }       
 
         try {
             

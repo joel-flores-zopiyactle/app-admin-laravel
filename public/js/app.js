@@ -6441,11 +6441,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
       data: [1],
-      roles: []
+      roles: [],
+      count: 2
     };
   },
   created: function created() {
@@ -6453,10 +6458,11 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     addFormUser: function addFormUser() {
-      this.data.push(1);
+      this.data.push(this.count);
+      this.count = this.count + 1;
     },
     removeInput: function removeInput(index) {
-      console.log(index);
+      //console.log(index);
       this.data.splice(index, 1);
     },
     getRoles: function getRoles() {
@@ -78785,51 +78791,54 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "bg-white p-2 shadow" },
-    [
-      _vm._l(_vm.data, function (input) {
-        return _c("div", { key: input.index, staticClass: "w-100" }, [
-          _c("div", { staticClass: "row w-100 gap-2" }, [
-            _c(
-              "div",
-              { staticClass: "col-12" },
-              [_c("input-form", { attrs: { roles: _vm.roles } })],
-              1
-            ),
-          ]),
-        ])
-      }),
-      _vm._v(" "),
-      _c("div", { staticClass: "mt-3" }, [
-        _c(
-          "button",
-          {
-            staticClass: "btn btn-sm btn-outline-danger",
-            attrs: { type: "button" },
-            on: {
-              click: function ($event) {
-                return _vm.removeInput(1)
+  return _c("div", { staticClass: "bg-white p-2 shadow" }, [
+    _vm.data.length > 0
+      ? _c(
+          "div",
+          _vm._l(_vm.data, function (input) {
+            return _c("div", { key: input.index, staticClass: "w-100" }, [
+              _c("div", { staticClass: "row w-100 gap-2" }, [
+                _c(
+                  "div",
+                  { staticClass: "col-12" },
+                  [_c("input-form", { attrs: { roles: _vm.roles } })],
+                  1
+                ),
+              ]),
+            ])
+          }),
+          0
+        )
+      : _c("h3", [_vm._v("No hay un campo para agregar un participante")]),
+    _vm._v(" "),
+    _c("div", { staticClass: "mt-3" }, [
+      _vm.data.length > 0
+        ? _c(
+            "button",
+            {
+              staticClass: "btn btn-sm btn-outline-danger",
+              attrs: { type: "button" },
+              on: {
+                click: function ($event) {
+                  return _vm.removeInput(0)
+                },
               },
             },
-          },
-          [_vm._v("X")]
-        ),
-        _vm._v(" "),
-        _c(
-          "button",
-          {
-            staticClass: "btn btn-sm btn-light me-2",
-            attrs: { type: "button" },
-            on: { click: _vm.addFormUser },
-          },
-          [_vm._v("Agregar")]
-        ),
-      ]),
-    ],
-    2
-  )
+            [_vm._v("X")]
+          )
+        : _vm._e(),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-sm btn-primary me-2",
+          attrs: { type: "button" },
+          on: { click: _vm.addFormUser },
+        },
+        [_vm._v("Agregar")]
+      ),
+    ]),
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -78897,7 +78906,7 @@ var staticRenderFns = [
     return _c("div", { staticClass: "w-100" }, [
       _c("textarea", {
         staticClass: "form-control w-100",
-        attrs: { name: "descripcion[]", rows: "1", placeholder: "Descripcíon" },
+        attrs: { name: "descripcion[]", rows: "1", placeholder: "Descripción" },
       }),
     ])
   },

@@ -66,7 +66,7 @@
             <div class="col-4">
                 <div class="mb-3">
                     <label for="testigo" class="form-label">Testigo:</label>
-                    <input type="text" class="form-control @error('testigo') is-invalid @enderror" name="testigo" id="testigo" value="{{ old('juzgado') }}" placeholder="Nombre del testigo">
+                    <input type="text" class="form-control @error('testigo') is-invalid @enderror" name="testigo" id="testigo" value="{{ old('testigo') }}" placeholder="Nombre del testigo">
                     @error('testigo')
                     <div class="alert alert-danger mt-1">{{ $message }}</div>
                     @enderror
@@ -115,7 +115,7 @@
 
                         @foreach ($listaCentroJusticia as $centro) 
                             <input type="hidden" name="centroJusticia_id" value="{{ $centro->id}}"> {{-- Envia el id del centro --}}
-                            <input type="text" class="form-control @error('centroJusticia_id') is-invalid @enderror" value="{{ $centro->nombre}}" disabled> {{-- Muetsra el nombre del centro --}}
+                            <input type="text" class="form-control @error('centroJusticia_id') is-invalid @enderror" value="{{ $centro->nombre}}"> {{-- Muetsra el nombre del centro --}}
                         @endforeach  
 
                     @elseif($listaCentroJusticia->count() > 1) {{-- Si hay mas de 1 mostramos un lista de centro para seleccionar --}}    
@@ -151,7 +151,7 @@
 
                         @foreach ($salas as $sala) 
                             <input type="hidden" name="sala_id" value="{{  $sala->id }}"> {{-- Envia el id de la sala --}}
-                            <input type="text" class="form-control @error('sala_id') is-invalid @enderror" value="{{ $sala->sala }}" disabled> {{-- Muetsra el nombre de la sala --}}
+                            <input type="text" class="form-control @error('sala_id') is-invalid @enderror" value="{{ $sala->sala }}"> {{-- Muetsra el nombre de la sala --}}
                         @endforeach  
 
                     @elseif($salas->count() > 1) {{-- Si hay mas de 1 mostramos un lista de centro para seleccionar --}}    
@@ -213,6 +213,13 @@
                         <div class="alert alert-danger mt-1">{{ $message }}</div>
                     @enderror
 
+                    @if (session('error-fecha'))
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <strong> {{ session('error-fecha') }}</strong>
+                            <button type="button" class="btn-close btn-sm" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>                        
+                    @endif
+
                 </div>
 
             </div>
@@ -224,6 +231,13 @@
                     @error('horaInicio')
                         <div class="alert alert-danger mt-1">{{ $message }}</div>
                     @enderror
+
+                    @if (session('error-hora'))
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <strong> {{ session('error-hora') }}</strong>
+                            <button type="button" class="btn-close btn-sm" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>                        
+                    @endif
                 </div>
             </div>
 

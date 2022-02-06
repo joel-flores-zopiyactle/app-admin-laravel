@@ -3,7 +3,7 @@
 
         <li class="mb-1 mt-3" >
             <div class="mb-3 d-flex justify-content-center">
-                <div class="avatar" style="background-image: url({{ Storage::url(Auth::user()->avatar) }})"></div>
+                <div class="avatar" style="background-image: url({{ asset(Storage::url(Auth::user()->avatar)) }})"></div>
             </div>
             <p class=" text-center w-100"> {{ Auth::user()->name }}</p>
         </li>

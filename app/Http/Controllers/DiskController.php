@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\ControlDeConsumoDisco;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -119,10 +120,19 @@ class DiskController extends Controller
 
     public function pruebas( )
     {
-
+        //date_default_timezone_set('UTC');
         
        echo 'pruebas <br/>';
-       echo $this->FileSizeConvert(floatval(disk_free_space(('c:'))));
+       echo date('dmY');
+       echo '<br/>';
+
+        $mytime = Carbon::now();
+        echo $mytime->toDateTimeString();
+
+       echo 'hora <br/>';
+       echo date('H:i');
+       echo '<br/>';
+       echo strftime("%H:%I");
 
       
     }

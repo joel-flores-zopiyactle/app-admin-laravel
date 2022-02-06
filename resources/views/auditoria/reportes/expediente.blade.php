@@ -72,7 +72,7 @@
             </tbody>
         </table>
 
-        {{-- Participantes--}}
+        {{-- Participantesde personal--}}
         <table class="table w-100 table-responsive mt-3">
             <thead class="table-dark">
                 <tr>
@@ -97,28 +97,32 @@
         {{-- Participantes--}}
         <hr>
         <h5 class="fs-5 mt-5">Participante</h5>
-        
-        <table class="table w-100 table-responsive">
-            <thead class="table-dark">
-                <tr>
-                    <td>Nombre</td>
-                    <td>Rol</td>
-                    <td>Descripción</td>
-                    <td>Asistencia</td>
-                </tr>
-            </thead>
+        @if (count($expediente->audiencia->participantes) >  0)
+            <table class="table w-100 table-responsive">
+                <thead class="table-dark">
+                    <tr>
+                        <td>Nombre</td>
+                        <td>Rol</td>
+                        <td>Descripción</td>
+                        <td>Asistencia</td>
+                    </tr>
+                </thead>
 
-            <tbody>
-                @foreach ($expediente->audiencia->participantes as $participante)
-                <tr>
-                    <td> {{ $participante->nombre }} </td>
-                    <td> {{ $participante->rol->rol }} </td>
-                    <td> {{ $participante->descripcion }} </td>
-                    <td> {{ $participante->asitencia->asistencia }}</td>
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
+                <tbody>
+                    @foreach ($expediente->audiencia->participantes as $participante)
+                    <tr>
+                        <td> {{ $participante->nombre }} </td>
+                        <td> {{ $participante->rol->rol }} </td>
+                        <td> {{ $participante->descripcion }} </td>
+                        <td> {{ $participante->asitencia->asistencia }}</td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        @else
+            <p class="text-center text-dark p-2">No hubo participantes a la audiencia</p>
+        @endif
+       
 
 
          {{-- Notas--}}
@@ -156,7 +160,7 @@
                 </tbody>
             </table>
         @else
-            <p class="text-center text-dark p-2">No se agregaron notas en la audiencia</p>
+            <p class="text-center text-dark p-2">No se agregaron notas a la audiencia</p>
         @endif
         
 
@@ -200,7 +204,7 @@
                 </tbody>
             </table>
         @else
-            <p class="text-center text-dark p-2">No se agregaron archivos en la audiencia</p>
+            <p class="text-center text-dark p-2">No se agregaron archivos a la audiencia</p>
         @endif
         
 

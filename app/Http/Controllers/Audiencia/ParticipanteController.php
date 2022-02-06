@@ -47,6 +47,13 @@ class ParticipanteController extends Controller
     public function store(Request $request)
     {
         //return $request->all();
+       
+        if(!$request->nombre) { // Si no hay lista entonces nos vaos directo a generar expediente
+            return redirect("/expediente/pdf/vista/$request->expediente_id");
+
+        }
+
+
         $validatedData = $request->validate([
             'nombre' => ['required', 'array'],
             'descripcion' => ['array'],
@@ -88,7 +95,7 @@ class ParticipanteController extends Controller
             // el id pasa encriptado 
             return redirect("/expediente/pdf/vista/$request->expediente_id");
 
-            return back()->with('success', 'Nuevo Participante registrado exitosamente!');
+            //return back()->with('success', 'Nuevo Participante registrado exitosamente!');
 
         } catch (\Throwable $th) {
             return back()->with('warning', 'Hubo un error al guardar los datos por favor verifique sus datos.' . $th);

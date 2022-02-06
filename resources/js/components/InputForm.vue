@@ -11,7 +11,7 @@
         </div>
 
         <div class="w-100">
-            <textarea class="form-control w-100" name="descripcion[]" rows="1" placeholder="Descripcíon"></textarea>
+            <textarea class="form-control w-100" name="descripcion[]" rows="1" placeholder="Descripción"></textarea>
         </div>
     </div>
 </template>

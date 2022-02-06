@@ -28,7 +28,7 @@
                     <th scope="col">Nombre</th>
                     <th scope="col">Correo</th>
                     <th scope="col">Teléfono</th>
-                    <th scope="col">Tipo de usuarios</th>
+                    <th scope="col">Tipo de usuario</th>
                     <th scope="col">Avatar</th>
                     <th class="text-center" scope="col"></th>
                 </tr>
@@ -42,7 +42,7 @@
                             <td>{{ $usuario->tipoUsuario->tipo }}</td>
                             <td>
                                {{--  <img width="40px" class="rounded-circle" style="background-image: url('')" alt=""> --}}
-                                <div class="avatar" style="background-image: url({{ Storage::url($usuario->avatar) }})"></div>
+                                <div class="avatar" style="background-image: url({{ asset(Storage::url($usuario->avatar)) }})"></div>
                             </td>
                             <td>
                                 <div class="text-center d-flex justify-content-end">
