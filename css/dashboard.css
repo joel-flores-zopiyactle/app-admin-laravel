@@ -1,7 +1,3 @@
-body {
-  font-size: .875rem;
-}
-
 header {
   background-color: #fff;
   position: static;
@@ -31,6 +27,12 @@ header {
   box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
 }
 
+.bg-brown {
+  background: #77241c;
+
+
+}
+
 @media (max-width: 767.98px) {
   .sidebar {
     top: 5rem;
@@ -48,7 +50,7 @@ header {
 
 .sidebar .nav-link {
   font-weight: 500;
-  color: #333;
+  color: rgb(252, 252, 252);
 }
 
 .sidebar .nav-link .feather {

@@ -39,9 +39,9 @@
   </head>
   <body class="bg-light">
     
-    <header class="navbar navbar-light sticky-top bg-light flex-md-nowrap p-0 shadow">
+    <header class="navbar navbar-light sticky-top bg-white flex-md-nowrap p-0 shadow">
         <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 text-center" href="#">
-            <img class="bg-white img-fluid" src="{{ asset('img/logo.jpg') }}" alt="Argumentalia">
+            <img class="img-fluid" src="{{ asset('img/logo.png') }}" alt="Argumentalia">
         </a>
             
         <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
