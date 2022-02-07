@@ -23,21 +23,3 @@ Laravel is accessible, powerful, and provides tools required for large, robust a
 
 
 
-### Version 1.0 - 07/02/2022
-
-Primera version de la aplicacion de Argumentaria 
-
-## instalación 
-- ** Instalar Xampp
-- ** Instalar composer
-- ** Crear base de datos con el nombre db_argumentalia
-- ** Instalar OBS y Configurar
-- ** Descargar el proyecto y mover a la carpeta htdocs de Xampp
-- ** Crear el archvio .env en el raiz del proyecto
-
-- ** Ejecutar los siguinetes comandos
-- **  composer update
-- **  npm install
-- **  Abrir protecto : localhost/argumentalia
-
-
