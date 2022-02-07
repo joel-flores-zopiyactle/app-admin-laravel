@@ -41,7 +41,7 @@
             <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
                 <div class="flex justify-center pt-8 sm:justify-start sm:pt-0">
                    <div>
-                    <img src="{{ asset('img/logo.jpg') }}" style="width: 100%" alt="imagen de sinjo">
+                    <img src="{{ asset('img/logo.jpg') }}" style="width: 100%" alt="{{ config('app.name', 'Laravel') }}">
                    </div>
                 </div>
 

@@ -42,7 +42,7 @@
     <div class="fixed-top">
         <header class="navbar navbar-light bg-light flex-md-nowrap p-0 shadow" style="z-index: 200;">
             <div class="navbar-brand col-md-3 col-lg-2 me-0 px-3 text-center bg-light">
-                <img class="img-fluid bg-white" src="{{ asset('img/logo.jpg') }}" alt="" srcset="">
+                <img class="img-fluid bg-white" src="{{ asset('img/logo.jpg') }}" alt="Argumentalia">
             </div>
                 
             <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
