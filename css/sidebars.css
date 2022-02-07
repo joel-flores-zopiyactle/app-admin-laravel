@@ -1,6 +1,8 @@
 body {
   min-height: 100vh;
   min-height: -webkit-fill-available;
+  background-color: #f7f4f4e0;
+  color: rgb(63, 18, 18);
 }
 
 html {
@@ -46,7 +48,7 @@ main {
 .btn-toggle:hover,
 .btn-toggle:focus {
   color: rgba(0, 0, 0, .85);
-  background-color: #d2f4ea;
+  background-color: #545454;
 }
 
 .btn-toggle::before {
@@ -73,7 +75,7 @@ main {
 }
 .btn-toggle-nav a:hover,
 .btn-toggle-nav a:focus {
-  background-color: #d2f4ea;
+  background-color: #545454;
 }
 
 .scrollarea {

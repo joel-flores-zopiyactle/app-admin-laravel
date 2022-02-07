@@ -40,9 +40,9 @@
   <body>
 
     <div class="fixed-top">
-        <header class="navbar navbar-light bg-light flex-md-nowrap p-0 shadow" style="z-index: 200;">
-            <div class="navbar-brand col-md-3 col-lg-2 me-0 px-3 text-center bg-light">
-                <img class="img-fluid bg-white" src="{{ asset('img/logo.jpg') }}" alt="Argumentalia">
+        <header class="navbar navbar-light bg-white flex-md-nowrap p-0 shadow" style="z-index: 200;">
+            <div class="navbar-brand col-md-3 col-lg-2 me-0 px-3 text-center bg-white">
+                <img class="img-fluid" src="{{ asset('img/logo.png') }}" alt="Argumentalia">
             </div>
                 
             <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
@@ -79,7 +79,7 @@
 
     <div class="container-fluid wh-100" id="app" style="z-index: 1;">
         <div class="row">
-            <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block sidebar collapse">
+            <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block sidebar collapse  bg-brown text-white">
                 <div class="position-sticky">
                     <x-nav-bar />
                 </div>

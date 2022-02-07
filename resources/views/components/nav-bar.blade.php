@@ -11,7 +11,7 @@
         <li class="mb-1" >
             <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                 <li>
-                    <a href="{{ route('home') }}" class="link-dark rounded">
+                    <a href="{{ route('home') }}" class="link-light rounded">
                         <span class="iconify h4 me-1" data-icon="bx:bx-home-alt"></span>Inicio
                     </a>
                 </li>
@@ -21,14 +21,14 @@
         {{-- Auditoria --}}
         @if (Auth::user()->tipoUsuario->permiso->ver_auditoria || Auth::user()->tipoUsuario->permiso->ver_lista_auditoria )
             <li class="mb-1">
-                <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true">
+                <button class="btn btn-toggle align-items-center rounded text-light collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true">
                     Audiencia
                 </button>
                 <div class="collapse show" id="home-collapse">
                 <ul class="btn-toggle-nav list-unstyled fw-normal pb-2 small">
                     @if (Auth::user()->tipoUsuario->permiso->ver_auditoria)
                         <li>
-                            <a href="{{ route('ingresar.evento') }}" class="link-dark rounded">
+                            <a href="{{ route('ingresar.evento') }}" class="link-light rounded">
                                 <span class="iconify h4 me-1" data-icon="ic:outline-record-voice-over"></span>
                                 Ingresar Audiencia
                             </a>
@@ -37,7 +37,7 @@
 
                     @if (Auth::user()->tipoUsuario->permiso->ver_lista_auditoria)
                         <li>
-                            <a href="{{ route('auditoria.lista') }}" class="link-dark rounded">
+                            <a href="{{ route('auditoria.lista') }}" class="link-light rounded">
                                 <span class="iconify h4 me-1" data-icon="tabler:report-search"></span>
                                 Reporte
                             </a>
@@ -54,7 +54,7 @@
             <li class="mb-1 me-2" >
                 <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                     <li>
-                        <a href="{{ route('book.new.room') }}" class="link-dark rounded">
+                        <a href="{{ route('book.new.room') }}" class="link-light rounded">
                             <span class="iconify h4 me-1" data-icon="fluent:calendar-agenda-28-regular"></span>
                             Agendar audiencia
                         </a>
@@ -67,7 +67,7 @@
         <li class="mb-1" >
             <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                 <li>
-                    <a  href="{{ route('buscar.expediente') }}" class="link-dark rounded">
+                    <a  href="{{ route('buscar.expediente') }}" class="link-light rounded">
                         <span class="iconify h4 me-1" data-icon="bx:bx-search"></span>
                         Buscar audiencia
                     </a>
@@ -81,7 +81,7 @@
         <li class="mb-1" >
             <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                 <li>
-                    <a href="{{ route('lista.audiencias') }}" class="link-dark rounded">
+                    <a href="{{ route('lista.audiencias') }}" class="link-light rounded">
                         <span class="iconify h4 me-1" data-icon="bx:bx-archive"></span>
                         Administración
                     </a>
@@ -95,7 +95,7 @@
         <li class="mb-1" >
             <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                 <li>
-                    <a href="{{ route('agenda') }}" class="link-dark rounded">
+                    <a href="{{ route('agenda') }}" class="link-light rounded">
                         <span class="iconify h4 me-1" data-icon="uil:calender"></span>
                         Agenda
                     </a>
@@ -109,7 +109,7 @@
         <li class="mb-1" >
             <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                 <li>
-                    <a href="{{ route('analisis.index') }}" class="link-dark rounded">
+                    <a href="{{ route('analisis.index') }}" class="link-light rounded">
                         <span class="iconify h4 me-1" data-icon="carbon:chart-line-data"></span>
                         Análisis estadístico
                     </a>
@@ -123,7 +123,7 @@
         <li class="mb-1" >
             <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                 <li>
-                    <a href="{{ route('invitado.login') }}" class="link-dark rounded">
+                    <a href="{{ route('invitado.login') }}" class="link-light rounded">
                         <span class="iconify h4 me-1" data-icon="bx:bx-lock-open-alt"></span>
                         Invitado
                     </a>
@@ -135,18 +135,18 @@
         {{-- Configuraciones del sistema  --}}
         @if (Auth::user()->tipoUsuario->permiso->ver_config)
         <li class="mb-1">
-            <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#orders-collapse" aria-expanded="false">
+            <button class="btn btn-toggle align-items-center rounded text-light collapsed" data-bs-toggle="collapse" data-bs-target="#orders-collapse" aria-expanded="false">
                 Configuraciones
             </button>
             <div class="collapse" id="orders-collapse">
             <ul class="btn-toggle-nav list-unstyled fw-normal pb-2 small">
-                <li><a href="{{ route('centro.justicia') }}"    class="link-dark rounded"><span class="iconify h4 me-1" data-icon="ps:justice"></span>Centro de justicia</a></li>
-                <li><a href="{{ route('roles') }}"              class="link-dark rounded"><span class="iconify h4 me-1" data-icon="eos-icons:cluster-role-binding"></span>Roles</a></li>
-                <li><a href="{{ route('salas') }}"              class="link-dark rounded"><span class="iconify h4 me-1" data-icon="fluent:conference-room-16-filled"></span>Sala</a></li>
-                <li><a href="{{ route('audiencias') }}"         class="link-dark rounded"><span class="iconify h4 me-1" data-icon="fluent:people-audience-20-filled"></span>Tipo de audiencias</a></li>
-                <li><a href="{{ route('juicios') }}"            class="link-dark rounded"><span class="iconify h4 me-1" data-icon="healthicons:justice"></span>Tipo de juicios</a></li>
-                <li><a href="{{ route('usuarios') }}"           class="link-dark rounded"><span class="iconify h4 me-1" data-icon="gridicons:multiple-users"></span>Control de usuarios</a></li>
-                <li><a href="{{ route('config.obs') }}"         class="link-dark rounded"><span class="iconify h4 me-1" data-icon="ri:remote-control-fill"></span>Configurar IP OBS</a></li>
+                <li><a href="{{ route('centro.justicia') }}"    class="link-light rounded"><span class="iconify h4 me-1" data-icon="ps:justice"></span>Centro de justicia</a></li>
+                <li><a href="{{ route('roles') }}"              class="link-light rounded"><span class="iconify h4 me-1" data-icon="eos-icons:cluster-role-binding"></span>Roles</a></li>
+                <li><a href="{{ route('salas') }}"              class="link-light rounded"><span class="iconify h4 me-1" data-icon="fluent:conference-room-16-filled"></span>Sala</a></li>
+                <li><a href="{{ route('audiencias') }}"         class="link-light rounded"><span class="iconify h4 me-1" data-icon="fluent:people-audience-20-filled"></span>Tipo de audiencias</a></li>
+                <li><a href="{{ route('juicios') }}"            class="link-light rounded"><span class="iconify h4 me-1" data-icon="healthicons:justice"></span>Tipo de juicios</a></li>
+                <li><a href="{{ route('usuarios') }}"           class="link-light rounded"><span class="iconify h4 me-1" data-icon="gridicons:multiple-users"></span>Control de usuarios</a></li>
+                <li><a href="{{ route('config.obs') }}"         class="link-light rounded"><span class="iconify h4 me-1" data-icon="ri:remote-control-fill"></span>Configurar IP OBS</a></li>
             </ul>
             </div>
         </li>

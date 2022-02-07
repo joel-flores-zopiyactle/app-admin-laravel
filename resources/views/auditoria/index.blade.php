@@ -1,7 +1,7 @@
 @extends('layouts.dashboardVideo')
 
 @section('title')
-    Auditoria en celebración
+    Audiencia en celebración
 @endsection
 
 @section('video')
