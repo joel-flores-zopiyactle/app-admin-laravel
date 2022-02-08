@@ -5328,11 +5328,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
 //var diskinfo = require('diskinfo')
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
@@ -77856,7 +77851,7 @@ var staticRenderFns = [
           attrs: { "data-icon": "ic:baseline-storage" },
         }),
         _c("br"),
-        _vm._v("Almacenamiento\n       "),
+        _vm._v("Almacenamiento\n     "),
       ]
     )
   },
