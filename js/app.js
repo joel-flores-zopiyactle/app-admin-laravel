@@ -6662,7 +6662,7 @@ var obs2 = new OBSWebSocket(); // Hace una conexion a una maquina externa median
       // Nombre del video grabado
       unidadDisk: '',
       // Nombre de la unidad donde se guarda el video
-      ip_address: '',
+      ip_address: '0.0.0.0',
       // Direccion ip para el obs externo
       // Crnometro
       tiempoRef: Date.now(),
@@ -6709,11 +6709,11 @@ var obs2 = new OBSWebSocket(); // Hace una conexion a una maquina externa median
 
             case 6:
               _context.next = 8;
-              return _this.connectOBSExterno();
+              return _this.connectOBS();
 
             case 8:
               _context.next = 10;
-              return _this.connectOBS();
+              return _this.connectOBSExterno();
 
             case 10:
             case "end":
@@ -6743,41 +6743,30 @@ var obs2 = new OBSWebSocket(); // Hace una conexion a una maquina externa median
     getIPAddress: function getIPAddress() {
       var _this2 = this;
 
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                _context2.next = 2;
-                return axios.get("".concat(baseURL, "/ajustes/obs/ip/address")).then(function (response) {
-                  return response.data;
-                }).then(function (ip) {
-                  if (ip === '0.0.0.0') {
-                    Swal.fire('Direccion IP?', 'Configura la dirección IP para la conexión remota a OBS?', 'question');
-                  }
+      ///ajustes/obs/ip/address
+      axios.get("".concat(baseURL, "/ajustes/obs/ip/address")).then(function (response) {
+        return response.data;
+      }).then(function (ip) {
+        console.log(ip);
 
-                  _this2.ip_address = ip;
-                })["catch"](function (error) {
-                  console.log(error);
-                });
+        if (ip == '0.0.0.0') {
+          Swal.fire('Direccion IP?', 'Configura la dirección IP para la conexión remota a OBS?', 'question');
+        }
 
-              case 2:
-              case "end":
-                return _context2.stop();
-            }
-          }
-        }, _callee2);
-      }))();
+        _this2.ip_address = ip;
+      })["catch"](function (error) {
+        console.log(error);
+      });
     },
     // Obtener video de la WebCam
     startVideoWebCam: function startVideoWebCam() {
       var _this3 = this;
 
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
         var constraints, stream;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
           while (1) {
-            switch (_context3.prev = _context3.next) {
+            switch (_context2.prev = _context2.next) {
               case 0:
                 _this3.video = document.getElementById('video-record');
                 constraints = {
@@ -6792,27 +6781,27 @@ var obs2 = new OBSWebSocket(); // Hace una conexion a una maquina externa median
                   }
                 };
                 navigator.getMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
-                _context3.prev = 3;
-                _context3.next = 6;
+                _context2.prev = 3;
+                _context2.next = 6;
                 return navigator.mediaDevices.getUserMedia(constraints);
 
               case 6:
-                stream = _context3.sent;
+                stream = _context2.sent;
                 _this3.video.srcObject = stream;
-                _context3.next = 13;
+                _context2.next = 13;
                 break;
 
               case 10:
-                _context3.prev = 10;
-                _context3.t0 = _context3["catch"](3);
-                console.log(_context3.t0);
+                _context2.prev = 10;
+                _context2.t0 = _context2["catch"](3);
+                console.log(_context2.t0);
 
               case 13:
               case "end":
-                return _context3.stop();
+                return _context2.stop();
             }
           }
-        }, _callee3, null, [[3, 10]]);
+        }, _callee2, null, [[3, 10]]);
       }))();
     },
     connectOBS: function connectOBS() {
@@ -6834,6 +6823,8 @@ var obs2 = new OBSWebSocket(); // Hace una conexion a una maquina externa median
       })["catch"](function (err) {
         // Promise convention dicates you have a catch on every chain.
         // console.log(err);
+        _this4.modal.hide();
+
         if (err.code === 'CONNECTION_ERROR') {
           Swal.fire({
             icon: 'error',
@@ -6847,34 +6838,28 @@ var obs2 = new OBSWebSocket(); // Hace una conexion a una maquina externa median
     connectOBSExterno: function connectOBSExterno() {
       var _this5 = this;
 
-      //console.log(this.ip_address);
       // Si la direccion es cambiada hay que actualizar por la nueva direccion de la maquina externa
       obs2.connect({
         address: "".concat(this.ip_address, ":4444"),
         password: ''
       }).then(function () {
-        // Conexion por direccion IP
-        // console.log(`Success! We're connected & authenticated.`);
-        return obs.send('GetSceneList');
-      }).then(function (data) {
-        //console.log(data.scenes);
+        _this5.modal.hide();
+
         obs2.send('SetFilenameFormatting', {
           'filename-formatting': "".concat(_this5.numeroExpediente, "-").concat(_this5.fechaCelebracionAudiencia)
         });
-
-        _this5.modal.hide(); //this.scenes = data.scenes
-
       })["catch"](function (err) {
         // Promise convention dicates you have a catch on every chain.
+        console.log(err);
+
         _this5.modal.hide();
 
-        Swal.fire('No se pudo conectar a OBS externo', 'No se pudo conectar a la aplicación de OBS, verifica que este activa o la dirección IP es incorrecta del PC a la que se esta conecta?', 'question');
-      });
+        Swal.fire('No se pudo conectar a OBS externo', 'No se pudo conectar a la aplicación de OBS, ya que no esta activa o la dirección IP es incorrecta para la conexión remota?', 'question');
+      }); //this.modal.hide()
     },
     changeSceneHD60_S: function changeSceneHD60_S() {
       obs.send('SetCurrentScene', {
         'scene-name': 'HD60-S'
-      }).then(function (data) {//console.log(data);
       })["catch"](function (err) {
         return console.log(err);
       });
@@ -6882,7 +6867,6 @@ var obs2 = new OBSWebSocket(); // Hace una conexion a una maquina externa median
     changeSceneHD60_Pro: function changeSceneHD60_Pro() {
       obs.send('SetCurrentScene', {
         'scene-name': 'HD60-PRO'
-      }).then(function (data) {//console.log(data);
       })["catch"](function (err) {
         return console.log(err);
       });
@@ -6968,9 +6952,13 @@ var obs2 = new OBSWebSocket(); // Hace una conexion a una maquina externa median
         /* Read more about isConfirmed, isDenied below */
         if (result.isConfirmed) {
           //Swal.fire('Saved!', '', 'success')
-          _this7.startRecord();
-
-          _this7.startRecordOBS2();
+          _this7.startRecord().then(function (res) {
+            if (res) {
+              _this7.startRecordOBS2();
+            }
+          })["catch"](function (err) {
+            console.log(err);
+          });
         }
       });
     },
@@ -7082,17 +7070,17 @@ var obs2 = new OBSWebSocket(); // Hace una conexion a una maquina externa median
     startRecord: function startRecord() {
       var _this11 = this;
 
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4() {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
           while (1) {
-            switch (_context4.prev = _context4.next) {
+            switch (_context3.prev = _context3.next) {
               case 0:
-                _context4.prev = 0;
+                _context3.prev = 0;
                 //if(!confirm('¿Esta seguro de empezara a grabar?')) return
                 // Se manda el comando para empezar a grabar
                 _this11.tiempoRef = Date.now();
                 _this11.acumulado = 0, _this11.tiempo = '00:00:00.000';
-                _context4.next = 5;
+                _context3.next = 5;
                 return obs.send('StartRecording');
 
               case 5:
@@ -7105,14 +7093,13 @@ var obs2 = new OBSWebSocket(); // Hace una conexion a una maquina externa median
                 _this11.video.play();
 
                 _this11.cronometrar = true;
-                _context4.next = 16;
-                break;
+                return _context3.abrupt("return", true);
 
-              case 13:
-                _context4.prev = 13;
-                _context4.t0 = _context4["catch"](0);
+              case 14:
+                _context3.prev = 14;
+                _context3.t0 = _context3["catch"](0);
 
-                if (_context4.t0.status === 'error') {
+                if (_context3.t0.status === 'error') {
                   Swal.fire({
                     icon: 'warning',
                     title: 'Oops...',
@@ -7120,15 +7107,53 @@ var obs2 = new OBSWebSocket(); // Hace una conexion a una maquina externa median
                   });
                 }
 
-              case 16:
+                return _context3.abrupt("return", false);
+
+              case 18:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3, null, [[0, 14]]);
+      }))();
+    },
+    startRecordOBS2: function startRecordOBS2() {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                _context4.prev = 0;
+                _context4.next = 3;
+                return obs2.send('StartRecording');
+
+              case 3:
+                _context4.next = 8;
+                break;
+
+              case 5:
+                _context4.prev = 5;
+                _context4.t0 = _context4["catch"](0);
+
+                if (_context4.t0.status === 'error') {
+                  Swal.fire({
+                    icon: 'warning',
+                    title: 'Oops...',
+                    text: '¿OBS Externo no esta activado?'
+                  });
+                }
+
+              case 8:
               case "end":
                 return _context4.stop();
             }
           }
-        }, _callee4, null, [[0, 13]]);
+        }, _callee4, null, [[0, 5]]);
       }))();
     },
-    startRecordOBS2: function startRecordOBS2() {
+    pauseRecord: function pauseRecord() {
+      var _this12 = this;
+
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee5() {
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee5$(_context5) {
           while (1) {
@@ -7136,42 +7161,6 @@ var obs2 = new OBSWebSocket(); // Hace una conexion a una maquina externa median
               case 0:
                 _context5.prev = 0;
                 _context5.next = 3;
-                return obs2.send('StartRecording');
-
-              case 3:
-                _context5.next = 8;
-                break;
-
-              case 5:
-                _context5.prev = 5;
-                _context5.t0 = _context5["catch"](0);
-
-                if (_context5.t0.status === 'error') {
-                  Swal.fire({
-                    icon: 'warning',
-                    title: 'Oops...',
-                    text: '¿Un OBS Externo no esta activado?. Para grabar hay que conectarse a OBS...'
-                  });
-                }
-
-              case 8:
-              case "end":
-                return _context5.stop();
-            }
-          }
-        }, _callee5, null, [[0, 5]]);
-      }))();
-    },
-    pauseRecord: function pauseRecord() {
-      var _this12 = this;
-
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee6() {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee6$(_context6) {
-          while (1) {
-            switch (_context6.prev = _context6.next) {
-              case 0:
-                _context6.prev = 0;
-                _context6.next = 3;
                 return obs.send('PauseRecording');
 
               case 3:
@@ -7182,33 +7171,33 @@ var obs2 = new OBSWebSocket(); // Hace una conexion a una maquina externa median
 
                 _this12.video.pause();
 
-                _context6.next = 9;
+                _context5.next = 9;
                 return obs2.send('PauseRecording');
 
               case 9:
-                _context6.next = 14;
+                _context5.next = 14;
                 break;
 
               case 11:
-                _context6.prev = 11;
-                _context6.t0 = _context6["catch"](0);
-                console.log(_context6.t0);
+                _context5.prev = 11;
+                _context5.t0 = _context5["catch"](0);
+                console.log(_context5.t0);
 
               case 14:
               case "end":
-                return _context6.stop();
+                return _context5.stop();
             }
           }
-        }, _callee6, null, [[0, 11]]);
+        }, _callee5, null, [[0, 11]]);
       }))();
     },
     resumenRecord: function resumenRecord() {
       var _this13 = this;
 
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee7() {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee7$(_context7) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee6() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee6$(_context6) {
           while (1) {
-            switch (_context7.prev = _context7.next) {
+            switch (_context6.prev = _context6.next) {
               case 0:
                 //if(!confirm('¿Estas seguro de seguir grabando?')) return
                 try {
@@ -7227,22 +7216,22 @@ var obs2 = new OBSWebSocket(); // Hace una conexion a una maquina externa median
 
               case 1:
               case "end":
-                return _context7.stop();
+                return _context6.stop();
             }
           }
-        }, _callee7);
+        }, _callee6);
       }))();
     },
     stopRecord: function stopRecord() {
       var _this14 = this;
 
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee8() {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee7() {
         var token, config, res;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee8$(_context8) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee7$(_context7) {
           while (1) {
-            switch (_context8.prev = _context8.next) {
+            switch (_context7.prev = _context7.next) {
               case 0:
-                _context8.prev = 0;
+                _context7.prev = 0;
                 token = document.getElementsByName('_token');
                 config = {
                   headers: {
@@ -7251,18 +7240,18 @@ var obs2 = new OBSWebSocket(); // Hace una conexion a una maquina externa median
                   'X-CSRF-TOKEN': token[0].value // <--- aquí el token
 
                 };
-                _context8.next = 5;
+                _context7.next = 5;
                 return axios.put("".concat(baseURL, "/audiencia/expediente/finalizar/").concat(_this14.expedienteID), config);
 
               case 5:
-                res = _context8.sent;
+                res = _context7.sent;
 
                 if (!(res.data.status === 200)) {
-                  _context8.next = 25;
+                  _context7.next = 25;
                   break;
                 }
 
-                _context8.next = 9;
+                _context7.next = 9;
                 return obs.send('StopRecording');
 
               case 9:
@@ -7270,7 +7259,7 @@ var obs2 = new OBSWebSocket(); // Hace una conexion a una maquina externa median
 
                 _this14.cronometrar = false; //Permite asignar el nombre del archivo
 
-                _context8.next = 13;
+                _context7.next = 13;
                 return obs.send('SetFilenameFormatting', {
                   'filename-formatting': "".concat(_this14.numeroExpediente, "-").concat(_this14.fechaCelebracionAudiencia)
                 });
@@ -7295,17 +7284,17 @@ var obs2 = new OBSWebSocket(); // Hace una conexion a una maquina externa median
                 // OBS 2
 
 
-                _context8.next = 21;
+                _context7.next = 21;
                 return obs2.send('StopRecording');
 
               case 21:
-                _context8.next = 23;
+                _context7.next = 23;
                 return obs2.send('SetFilenameFormatting', {
                   'filename-formatting': "".concat(_this14.numeroExpediente, "-").concat(_this14.fechaCelebracionAudiencia)
                 });
 
               case 23:
-                _context8.next = 26;
+                _context7.next = 26;
                 break;
 
               case 25:
@@ -7324,32 +7313,32 @@ var obs2 = new OBSWebSocket(); // Hace una conexion a una maquina externa median
                 }
 
               case 26:
-                _context8.next = 31;
+                _context7.next = 31;
                 break;
 
               case 28:
-                _context8.prev = 28;
-                _context8.t0 = _context8["catch"](0);
-                console.log(_context8.t0);
+                _context7.prev = 28;
+                _context7.t0 = _context7["catch"](0);
+                console.log(_context7.t0);
 
               case 31:
               case "end":
-                return _context8.stop();
+                return _context7.stop();
             }
           }
-        }, _callee8, null, [[0, 28]]);
+        }, _callee7, null, [[0, 28]]);
       }))();
     },
     recesoRecord: function recesoRecord() {
       var _this15 = this;
 
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee9() {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee8() {
         var token, config, res;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee9$(_context9) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee8$(_context8) {
           while (1) {
-            switch (_context9.prev = _context9.next) {
+            switch (_context8.prev = _context8.next) {
               case 0:
-                _context9.prev = 0;
+                _context8.prev = 0;
                 token = document.getElementsByName('_token');
                 config = {
                   headers: {
@@ -7358,18 +7347,18 @@ var obs2 = new OBSWebSocket(); // Hace una conexion a una maquina externa median
                   'X-CSRF-TOKEN': token[0].value // <--- aquí el token
 
                 };
-                _context9.next = 5;
+                _context8.next = 5;
                 return axios.put("".concat(baseURL, "/audiencia/expediente/pausar/").concat(_this15.expedienteID), config);
 
               case 5:
-                res = _context9.sent;
+                res = _context8.sent;
 
                 if (!(res.data.status === 200)) {
-                  _context9.next = 25;
+                  _context8.next = 25;
                   break;
                 }
 
-                _context9.next = 9;
+                _context8.next = 9;
                 return obs.send('StopRecording');
 
               case 9:
@@ -7377,7 +7366,7 @@ var obs2 = new OBSWebSocket(); // Hace una conexion a una maquina externa median
 
                 _this15.cronometrar = false; //Permite asignar el nombre del archivo
 
-                _context9.next = 13;
+                _context8.next = 13;
                 return obs.send('SetFilenameFormatting', {
                   'filename-formatting': "".concat(_this15.numeroExpediente, "-").concat(_this15.fechaCelebracionAudiencia)
                 });
@@ -7402,17 +7391,17 @@ var obs2 = new OBSWebSocket(); // Hace una conexion a una maquina externa median
                 // OBS 2
 
 
-                _context9.next = 21;
+                _context8.next = 21;
                 return obs2.send('StopRecording');
 
               case 21:
-                _context9.next = 23;
+                _context8.next = 23;
                 return obs2.send('SetFilenameFormatting', {
                   'filename-formatting': "".concat(_this15.numeroExpediente, "-").concat(_this15.fechaCelebracionAudiencia)
                 });
 
               case 23:
-                _context9.next = 26;
+                _context8.next = 26;
                 break;
 
               case 25:
@@ -7431,20 +7420,20 @@ var obs2 = new OBSWebSocket(); // Hace una conexion a una maquina externa median
                 }
 
               case 26:
-                _context9.next = 31;
+                _context8.next = 31;
                 break;
 
               case 28:
-                _context9.prev = 28;
-                _context9.t0 = _context9["catch"](0);
-                console.log(_context9.t0);
+                _context8.prev = 28;
+                _context8.t0 = _context8["catch"](0);
+                console.log(_context8.t0);
 
               case 31:
               case "end":
-                return _context9.stop();
+                return _context8.stop();
             }
           }
-        }, _callee9, null, [[0, 28]]);
+        }, _callee8, null, [[0, 28]]);
       }))();
     },
     cronometro: function cronometro() {
@@ -7525,11 +7514,11 @@ var obs2 = new OBSWebSocket(); // Hace una conexion a una maquina externa median
     saveInfoVideoRecord: function saveInfoVideoRecord() {
       var _this17 = this;
 
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee10() {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee9() {
         var formData, token, config, res;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee10$(_context10) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee9$(_context9) {
           while (1) {
-            switch (_context10.prev = _context10.next) {
+            switch (_context9.prev = _context9.next) {
               case 0:
                 formData = {
                   video: _this17.nameVideo,
@@ -7548,11 +7537,11 @@ var obs2 = new OBSWebSocket(); // Hace una conexion a una maquina externa median
 
                 }; // Envio los datos al servidor
 
-                _context10.next = 5;
+                _context9.next = 5;
                 return axios.post("".concat(baseURL, "/evento/video"), formData, config);
 
               case 5:
-                res = _context10.sent;
+                res = _context9.sent;
 
                 if (res.data.status === 201) {
                   // Alerta de exito
@@ -7578,21 +7567,21 @@ var obs2 = new OBSWebSocket(); // Hace una conexion a una maquina externa median
 
               case 8:
               case "end":
-                return _context10.stop();
+                return _context9.stop();
             }
           }
-        }, _callee10);
+        }, _callee9);
       }))();
     },
     getEstadoAudiencia: function getEstadoAudiencia() {
       var _this18 = this;
 
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee11() {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee11$(_context11) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee10() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee10$(_context10) {
           while (1) {
-            switch (_context11.prev = _context11.next) {
+            switch (_context10.prev = _context10.next) {
               case 0:
-                _context11.next = 2;
+                _context10.next = 2;
                 return axios.get("".concat(baseURL, "/audiencia/expediente/estado/").concat(_this18.expedienteID)).then(function (response) {
                   return response.data;
                 }).then(function (estado) {
@@ -7609,10 +7598,10 @@ var obs2 = new OBSWebSocket(); // Hace una conexion a una maquina externa median
 
               case 2:
               case "end":
-                return _context11.stop();
+                return _context10.stop();
             }
           }
-        }, _callee11);
+        }, _callee10);
       }))();
     }
   },
@@ -7653,6 +7642,8 @@ var obs2 = new OBSWebSocket(); // Hace una conexion a una maquina externa median
     };
   },
   destroyed: function destroyed() {
+    obs.send('StopRecording');
+    obs2.send('StopRecording');
     obs.disconnect();
     obs2.disconnect();
   }
