@@ -7636,9 +7636,19 @@ var obs2 = new OBSWebSocket(); // Hace una conexion a una maquina externa median
       _this19.listMediaDevices();
     };
   },
+  beforeDestroy: function beforeDestroy() {
+    try {
+      obs.send('StopRecording');
+      obs.send('SetFilenameFormatting', {
+        'filename-formatting': "".concat(this.numeroExpediente, "-").concat(this.fechaCelebracionAudiencia)
+      });
+      obs2.send('StopRecording');
+      obs2.send('SetFilenameFormatting', {
+        'filename-formatting': "".concat(this.numeroExpediente, "-").concat(this.fechaCelebracionAudiencia)
+      });
+    } catch (error) {}
+  },
   destroyed: function destroyed() {
-    obs.send('StopRecording');
-    obs2.send('StopRecording');
     obs.disconnect();
     obs2.disconnect();
   }
