@@ -6823,6 +6823,8 @@ var obs2 = new OBSWebSocket(); // Hace una conexion a una maquina externa median
       })["catch"](function (err) {
         // Promise convention dicates you have a catch on every chain.
         // console.log(err);
+        _this4.modal.hide();
+
         if (err.code === 'CONNECTION_ERROR') {
           Swal.fire({
             icon: 'error',
@@ -6852,7 +6854,7 @@ var obs2 = new OBSWebSocket(); // Hace una conexion a una maquina externa median
 
         _this5.modal.hide();
 
-        Swal.fire('No se pudo conectar a OBS externo', 'No se pudo conectar a la aplicación de OBS, verifica que este activa o la dirección IP es incorrecta del PC a la que se esta conecta?', 'question');
+        Swal.fire('No se pudo conectar a OBS externo', 'No se pudo conectar a la aplicación de OBS, ya que no esta activa o la dirección IP es incorrecta para la conexión remota?', 'question');
       }); //this.modal.hide()
     },
     changeSceneHD60_S: function changeSceneHD60_S() {
@@ -6950,9 +6952,13 @@ var obs2 = new OBSWebSocket(); // Hace una conexion a una maquina externa median
         /* Read more about isConfirmed, isDenied below */
         if (result.isConfirmed) {
           //Swal.fire('Saved!', '', 'success')
-          _this7.startRecord();
-
-          _this7.startRecordOBS2();
+          _this7.startRecord().then(function (res) {
+            if (res) {
+              _this7.startRecordOBS2();
+            }
+          })["catch"](function (err) {
+            console.log(err);
+          });
         }
       });
     },
@@ -7087,11 +7093,10 @@ var obs2 = new OBSWebSocket(); // Hace una conexion a una maquina externa median
                 _this11.video.play();
 
                 _this11.cronometrar = true;
-                _context3.next = 16;
-                break;
+                return _context3.abrupt("return", true);
 
-              case 13:
-                _context3.prev = 13;
+              case 14:
+                _context3.prev = 14;
                 _context3.t0 = _context3["catch"](0);
 
                 if (_context3.t0.status === 'error') {
@@ -7102,12 +7107,14 @@ var obs2 = new OBSWebSocket(); // Hace una conexion a una maquina externa median
                   });
                 }
 
-              case 16:
+                return _context3.abrupt("return", false);
+
+              case 18:
               case "end":
                 return _context3.stop();
             }
           }
-        }, _callee3, null, [[0, 13]]);
+        }, _callee3, null, [[0, 14]]);
       }))();
     },
     startRecordOBS2: function startRecordOBS2() {
@@ -7132,7 +7139,7 @@ var obs2 = new OBSWebSocket(); // Hace una conexion a una maquina externa median
                   Swal.fire({
                     icon: 'warning',
                     title: 'Oops...',
-                    text: '¿Un OBS Externo no esta activado?. Para grabar hay que conectarse a OBS...'
+                    text: '¿OBS Externo no esta activado?'
                   });
                 }
 
@@ -7635,6 +7642,8 @@ var obs2 = new OBSWebSocket(); // Hace una conexion a una maquina externa median
     };
   },
   destroyed: function destroyed() {
+    obs.send('StopRecording');
+    obs2.send('StopRecording');
     obs.disconnect();
     obs2.disconnect();
   }

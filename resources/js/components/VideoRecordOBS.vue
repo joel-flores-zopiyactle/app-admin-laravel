@@ -218,6 +218,7 @@ export default {
             })
             .catch(err => { // Promise convention dicates you have a catch on every chain.
                 // console.log(err);
+                this.modal.hide();
                 if(err.code === 'CONNECTION_ERROR') {
                     Swal.fire({
                         icon: 'error',
@@ -244,7 +245,7 @@ export default {
                 this.modal.hide();
                 Swal.fire(
                     'No se pudo conectar a OBS externo',
-                    'No se pudo conectar a la aplicación de OBS, verifica que este activa o la dirección IP es incorrecta del PC a la que se esta conecta?',
+                    'No se pudo conectar a la aplicación de OBS, ya que no esta activa o la dirección IP es incorrecta para la conexión remota?',
                     'question'
                 )
             });
@@ -327,6 +328,7 @@ export default {
         
         // Confirms Methods
         showConfirmRecordStart() {
+           
             Swal.fire({
                 title: '¿Estas seguro de empezar a grabar la audiencia?',
                 // consoleshowDenyButton: true,
@@ -337,8 +339,13 @@ export default {
                 /* Read more about isConfirmed, isDenied below */
                 if (result.isConfirmed) {
                     //Swal.fire('Saved!', '', 'success')
-                    this.startRecord()
-                    this.startRecordOBS2()
+                   
+                    this.startRecord().then(res => {
+                        if(res) {
+                            this.startRecordOBS2()
+                        }
+                    }).catch(err => {console.log(err);})                    
+                    
                 }
             })
         },
@@ -461,7 +468,9 @@ export default {
                 this.video.play()   
                 this.cronometrar = true   
 
+                return true;
             } catch (error) {
+
                 if(error.status === 'error') {
                     Swal.fire({
                         icon: 'warning',
@@ -469,6 +478,8 @@ export default {
                         text: '¿OBS no esta activado?. Para grabar hay que conectarse a OBS...',
                     })
                 }
+
+                return false; // para detener la grabacion y no seguirn con la ejecuacion 2 de obs
             }  
             
         },
@@ -484,7 +495,7 @@ export default {
                     Swal.fire({
                         icon: 'warning',
                         title: 'Oops...',
-                        text: '¿Un OBS Externo no esta activado?. Para grabar hay que conectarse a OBS...',
+                        text: '¿OBS Externo no esta activado?',
                     })
                 }
             }  
@@ -834,6 +845,8 @@ export default {
     },
 
     destroyed() {
+        obs.send('StopRecording')
+        obs2.send('StopRecording')
         obs.disconnect();
         obs2.disconnect();
     }
