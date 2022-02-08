@@ -844,11 +844,26 @@ export default {
         
     },
 
+    beforeDestroy() {
+       
+        try {
+            obs.send('StopRecording')
+            obs.send('SetFilenameFormatting', { 'filename-formatting': `${this.numeroExpediente}-${this.fechaCelebracionAudiencia}` })
+
+            obs2.send('StopRecording')
+            obs2.send('SetFilenameFormatting', { 'filename-formatting': `${this.numeroExpediente}-${this.fechaCelebracionAudiencia}` })
+        } catch (error) {
+                
+        }
+            
+
+        
+    },
+
     destroyed() {
-        obs.send('StopRecording')
-        obs2.send('StopRecording')
         obs.disconnect();
         obs2.disconnect();
+        
     }
 }
 </script>
