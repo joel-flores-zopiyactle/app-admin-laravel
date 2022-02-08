@@ -6,11 +6,6 @@
             <span class="iconify h4 me-1" data-icon="ic:baseline-storage"></span><br>Almacenamiento
         </button>
 
-        <!-- Button trigger modal -->
-       <!--  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-        Launch demo modal
-        </button>
- -->
         <!-- Modal -->
         <div class="modal fade" id="exampleModal" >
             <div class="modal-dialog modal-xl">

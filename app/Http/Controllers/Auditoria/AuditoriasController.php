@@ -77,6 +77,7 @@ class AuditoriasController extends Controller
             // $actualizarAudiencia = AudienciaModel::find($id);
             // $actualizarAudiencia->estadoAudiencia_id = 6; // estado celebrandose
             // $actualizarAudiencia->save();
+            return redirect('ingresar/evento');
 
             return view('auditoria.login');
 

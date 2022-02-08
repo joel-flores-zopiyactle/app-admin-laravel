@@ -5328,11 +5328,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
 //var diskinfo = require('diskinfo')
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
@@ -7641,9 +7636,19 @@ var obs2 = new OBSWebSocket(); // Hace una conexion a una maquina externa median
       _this19.listMediaDevices();
     };
   },
+  beforeDestroy: function beforeDestroy() {
+    try {
+      obs.send('StopRecording');
+      obs.send('SetFilenameFormatting', {
+        'filename-formatting': "".concat(this.numeroExpediente, "-").concat(this.fechaCelebracionAudiencia)
+      });
+      obs2.send('StopRecording');
+      obs2.send('SetFilenameFormatting', {
+        'filename-formatting': "".concat(this.numeroExpediente, "-").concat(this.fechaCelebracionAudiencia)
+      });
+    } catch (error) {}
+  },
   destroyed: function destroyed() {
-    obs.send('StopRecording');
-    obs2.send('StopRecording');
     obs.disconnect();
     obs2.disconnect();
   }
@@ -77856,7 +77861,7 @@ var staticRenderFns = [
           attrs: { "data-icon": "ic:baseline-storage" },
         }),
         _c("br"),
-        _vm._v("Almacenamiento\n       "),
+        _vm._v("Almacenamiento\n     "),
       ]
     )
   },
