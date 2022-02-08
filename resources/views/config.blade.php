@@ -24,7 +24,7 @@
 
            <div>
             <div class="mb-3 d-flex justify-content-center">
-                <img src="{{ asset('img/sinjo_logo.png') }}" class="w-25 img-fluid" alt="imagen de sinjo">
+                <img src="{{ asset('img/logo.png') }}" class="w-25 img-fluid" alt="imagen de sinjo">
             </div>
 
             <div class="bg-white shadow p-3 rounded">
