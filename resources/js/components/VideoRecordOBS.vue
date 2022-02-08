@@ -66,12 +66,28 @@
                 </div>
             </div>
         </div>
+        
+
+        <div class="modal fade" id="myModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="myModal" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="w-100 min-vh-100 d-flex justify-content-center align-items-center">
+                
+                    <div class="p-5">
+                        <div class="spinner-border text-light" style="width: 3rem; height: 3rem;"  role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+
     </div>
 </template>
 
 <script>
-
 // OBS 
+import { Modal } from 'bootstrap';
 const OBSWebSocket = require('obs-websocket-js');
 const Swal = require('sweetalert2')
 const obs = new OBSWebSocket();
@@ -79,6 +95,7 @@ const obs2 = new OBSWebSocket(); // Hace una conexion a una maquina externa medi
 export default {
     data() {
         return {
+            modal: null,
             video: [], // video del stream de la WebCam
             scenes: [], // Escenas disponibles en OBS
             videoSourcesSelect: [],
@@ -92,7 +109,7 @@ export default {
             ubicationVideo: '', // Ubicaccion del video gurdado desde OBS
             nameVideo: '', // Nombre del video grabado
             unidadDisk: '', // Nombre de la unidad donde se guarda el video
-            ip_address: '', // Direccion ip para el obs externo
+            ip_address: '0.0.0.0', // Direccion ip para el obs externo
             // Crnometro
             tiempoRef : Date.now(),
             cronometrar : false,
@@ -115,15 +132,23 @@ export default {
         }
     
     },
-    created() {
-        this.getIPAddress()
-        this.connectOBS()
-        this.connectOBSExterno()
-        this.getIdExpedinete()
-        this.getEstadoAudiencia()
+
+    async created() {
+       
+        await this.getIPAddress()
+        await this.getIdExpedinete()
+        await this.getEstadoAudiencia()
+        await this.connectOBS() 
+        await this.connectOBSExterno()
+              
     },
     
     methods: {
+
+        launchModal() {
+            this.modal = new Modal(document.getElementById('myModal'))
+            this.modal.show();
+        },
         // Obtener ID del expediente
         getIdExpedinete() {
             // ID
@@ -136,24 +161,25 @@ export default {
             //console.log(this.expedienteID);
         },
 
-        async getIPAddress() {
+        getIPAddress() {
             ///ajustes/obs/ip/address
-            await axios.get(`${baseURL}/ajustes/obs/ip/address`)
-                .then( response => response.data )
-                .then( ip => {
-                    if(ip === '0.0.0.0') {
-                        Swal.fire(
-                            'Direccion IP?',
-                            'Configura la dirección IP para la conexión remota a OBS?',
-                            'question'
-                        )
-                    }
-                    
-                    this.ip_address = ip                
-                }) 
-                .catch(function (error) {
-                    console.log(error);
-                })
+            axios.get(`${baseURL}/ajustes/obs/ip/address`)
+            .then( response => response.data )
+            .then( ip => {
+                console.log(ip);
+                if(ip == '0.0.0.0') {
+                    Swal.fire(
+                        'Direccion IP?',
+                        'Configura la dirección IP para la conexión remota a OBS?',
+                        'question'
+                    )
+                }
+                
+                this.ip_address = ip                
+            }) 
+            .catch(function (error) {
+                console.log(error);
+            })
         },
         // Obtener video de la WebCam
         async startVideoWebCam() {
@@ -179,6 +205,7 @@ export default {
                 console.log(error);
             }
         },
+
         connectOBS() {
             obs.connect({ address: 'localhost:4444', password: ''}).then(() => {
                 // console.log(`Success! We're connected & authenticated.`);
@@ -203,33 +230,35 @@ export default {
             });
            
         },
+
         connectOBSExterno() {
+           
             // Si la direccion es cambiada hay que actualizar por la nueva direccion de la maquina externa
-            obs2.connect({ address: `${this.ip_address}:4444`, password: ''}).then(() => { // Conexion por direccion IP
-                // console.log(`Success! We're connected & authenticated.`);
-                return obs.send('GetSceneList');
-            }).then(data => { 
-                console.log(data.scenes);
+                
+            obs2.connect({ address: `${this.ip_address}:4444`, password: ''}).then(() => {
+                this.modal.hide();
                 obs2.send('SetFilenameFormatting', { 'filename-formatting': `${this.numeroExpediente}-${this.fechaCelebracionAudiencia}` })
-                //this.scenes = data.scenes
             })
             .catch(err => { // Promise convention dicates you have a catch on every chain.
+                console.log(err);
+                this.modal.hide();
                 Swal.fire(
                     'No se pudo conectar a OBS externo',
-                    'No se pudo conectar a la aplicación de OBS, verifica que este activa o la dirección IP este correcta del PC a la que se esta conecta?',
+                    'No se pudo conectar a la aplicación de OBS, verifica que este activa o la dirección IP es incorrecta del PC a la que se esta conecta?',
                     'question'
                 )
             });
+                
+            //this.modal.hide()
+           
         },
+
         changeSceneHD60_S() {
-            obs.send('SetCurrentScene', {'scene-name': 'HD60-S'}).then( data => {
-                console.log(data);
-            }).catch( err => console.log(err)) 
+            obs.send('SetCurrentScene', {'scene-name': 'HD60-S'}).catch( err => console.log(err)) 
         },
+
         changeSceneHD60_Pro() {
-            obs.send('SetCurrentScene', {'scene-name': 'HD60-PRO'}).then( data => {
-                console.log(data);
-            }).catch( err => console.log(err)) 
+            obs.send('SetCurrentScene', {'scene-name': 'HD60-PRO'}).catch( err => console.log(err)) 
         },
 
         changeSceneAndCamera(video, scene) {
@@ -309,6 +338,7 @@ export default {
                 if (result.isConfirmed) {
                     //Swal.fire('Saved!', '', 'success')
                     this.startRecord()
+                    this.startRecordOBS2()
                 }
             })
         },
@@ -430,6 +460,22 @@ export default {
                 this.controls.showStop  = true;
                 this.video.play()   
                 this.cronometrar = true   
+
+            } catch (error) {
+                if(error.status === 'error') {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Oops...',
+                        text: '¿OBS no esta activado?. Para grabar hay que conectarse a OBS...',
+                    })
+                }
+            }  
+            
+        },
+
+        async startRecordOBS2() {
+    
+            try { 
                 
                 await obs2.send('StartRecording')  
 
@@ -438,7 +484,7 @@ export default {
                     Swal.fire({
                         icon: 'warning',
                         title: 'Oops...',
-                        text: '¿Un OBS no esta activado?. Para grabar hay que conectarse a OBS...',
+                        text: '¿Un OBS Externo no esta activado?. Para grabar hay que conectarse a OBS...',
                     })
                 }
             }  
@@ -631,61 +677,61 @@ export default {
             // console.log(this.file);
         },
 
-        async uploadFileVideo() {
+        // async uploadFileVideo() {
 
-            this.validateFormVideo.required = false
-            this.showSpinner = true
+        //     this.validateFormVideo.required = false
+        //     this.showSpinner = true
 
-            if(this.file === null) {
-                this.validateFormVideo.required = true
-                this.validateFormVideo.mensaje = 'Debe de seleccionar un archivo'
-                this.showSpinner = false
-                return
-            }
+        //     if(this.file === null) {
+        //         this.validateFormVideo.required = true
+        //         this.validateFormVideo.mensaje = 'Debe de seleccionar un archivo'
+        //         this.showSpinner = false
+        //         return
+        //     }
            
-            let formData = new FormData()
+        //     let formData = new FormData()
 
-            formData.append('video', this.file.files[0])
-            formData.append('expediente_id', this.expedienteID)
-            formData.append('duracion', this.durationVideo);
+        //     formData.append('video', this.file.files[0])
+        //     formData.append('expediente_id', this.expedienteID)
+        //     formData.append('duracion', this.durationVideo);
 
-            const token =  document.getElementsByName('_token')
+        //     const token =  document.getElementsByName('_token')
 
-            const config = { 
-                headers: { 'Content-Type': 'multipart/form-data' },
-                'X-CSRF-TOKEN': token[0].value,// <--- aquí el token
-            }
+        //     const config = { 
+        //         headers: { 'Content-Type': 'multipart/form-data' },
+        //         'X-CSRF-TOKEN': token[0].value,// <--- aquí el token
+        //     }
 
-            // Envio los datos al servidor
-            const res = await axios.post(`${baseURL}/evento/video`, formData, config)
-            // console.log(res);
+        //     // Envio los datos al servidor
+        //     const res = await axios.post(`${baseURL}/evento/video`, formData, config)
+        //     // console.log(res);
             
-            if(res.data.status === 201) {
+        //     if(res.data.status === 201) {
 
-                this.validateFormVideo.required = true
-                this.validateFormVideo.mensaje  = res.data.mensaje  
-                this.validateFormVideo.alert    = 'alert-success'
-                this.showSpinner = false
-                document.getElementById('uploadFileVideo').value = "";
+        //         this.validateFormVideo.required = true
+        //         this.validateFormVideo.mensaje  = res.data.mensaje  
+        //         this.validateFormVideo.alert    = 'alert-success'
+        //         this.showSpinner = false
+        //         document.getElementById('uploadFileVideo').value = "";
 
-            }
+        //     }
 
-            if(res.data.status === 404) {
-                this.validateFormVideo.required = true
-                this.validateFormVideo.mensaje  = res.data.mensaje  
-                this.validateFormVideo.alert    = 'alert-warning'
-                this.showSpinner = false
-                document.getElementById('uploadFileVideo').value = "";
-            }
+        //     if(res.data.status === 404) {
+        //         this.validateFormVideo.required = true
+        //         this.validateFormVideo.mensaje  = res.data.mensaje  
+        //         this.validateFormVideo.alert    = 'alert-warning'
+        //         this.showSpinner = false
+        //         document.getElementById('uploadFileVideo').value = "";
+        //     }
 
-            if(res.data.status === 500) {
-                this.validateFormVideo.required = true
-                this.validateFormVideo.mensaje  = res.data.mensaje  
-                this.validateFormVideo.alert    = 'alert-danger'
-                this.showSpinner = false
-                document.getElementById('uploadFileVideo').value = "";
-            }
-        },
+        //     if(res.data.status === 500) {
+        //         this.validateFormVideo.required = true
+        //         this.validateFormVideo.mensaje  = res.data.mensaje  
+        //         this.validateFormVideo.alert    = 'alert-danger'
+        //         this.showSpinner = false
+        //         document.getElementById('uploadFileVideo').value = "";
+        //     }
+        // },
 
         async saveInfoVideoRecord() {
             
@@ -756,6 +802,7 @@ export default {
     },
 
     mounted() {
+        this.launchModal();
         this.startVideoWebCam()
         this.listMediaDevices()
         this.cronometro()
@@ -768,7 +815,7 @@ export default {
         obs.on('RecordingStopping', data => {
                this.durationVideo   = data.recTimecode;
                this.ubicationVideo  = data.recordingFilename
-               console.log( data.recordingFilename);
+               //console.log( data.recordingFilename);
                let arrayName = data.recordingFilename.split('/'); // Separamos la ruta del video en un array
                arrayName.map(name => {
                    if(name === arrayName[0]) {this.unidadDisk = name}   // Recupera la unidad donde se guarda el video Ejempl en el disco  : 'D'
